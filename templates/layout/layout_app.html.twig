@@ -9,6 +9,11 @@
     {% include "layout/components/page-loader.html.twig" %}
 
     <div class="body">
+        <nav>
+            <a href="{{ path('app_homepage') }}">
+                <img src="{{ asset('build/app/images/logo.png') }}" alt="Logo logilink">
+            </a>
+        </nav>
         <main>
             <div>
                 {% block main_content %}{% endblock %}

@@ -1,6 +1,7 @@
 footer{
-  background-color: var(--color0Opacity4);
+  background-color: var(--color1);
   color: var(--alpha);
+  padding: var(--espaceDiv);
 
   a{
     color: var(--alpha);
@@ -16,7 +17,7 @@ footer{
 }
 
 .footer{
-  padding: var(--espaceDiv);
+  @include maxscreen();
 
   .footer-menu{
     @include flex(column, flex-start, flex-start, 24px);
@@ -66,7 +67,6 @@ footer{
 //                     |__|                       |__|
 @media (min-width: 1024px) {
   .footer{
-    padding: 1.8rem;
 
     .footer-logo{
       flex-direction: row;

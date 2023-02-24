@@ -1,0 +1,23 @@
+@import "../vars/vars";
+
+html{
+  background: linear-gradient(0.4turn, var(--color1), var(--color0));
+}
+
+.homepage-header{
+  min-height: 80vh;
+  color: var(--alpha);
+  margin: var(--espaceLayout);
+}
+
+.homepage-header-content{
+  @include maxscreen();
+
+  h1{
+    margin-bottom: var(--espaceDiv);
+  }
+
+  .cta{
+    max-width: 120px;
+  }
+}

@@ -1,0 +1,15 @@
+@import "../vars/vars";
+
+nav{
+  background-color: var(--color2);
+  @include maxscreen();
+  margin: var(--espaceDiv) auto;
+  border-radius: calc(var(--radius) * 2);
+  padding: 0.9rem var(--espaceDiv) 0.5rem var(--espaceDiv);
+  width: calc(100% - var(--espaceDiv) * 2);
+
+  img{
+    width: 100px;
+  }
+}
+

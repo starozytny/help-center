@@ -2,9 +2,12 @@
 @import "vars/vars";
 @import "vars/variables";
 
+@import "./components/layout";
+@import "./components/footer";
+
 @import "./components/cookies";
 @import "./components/loader";
-@import "components/elements/button";
+@import "./components/elements/button";
 @import "./components/elements/alert";
 @import "./components/form";
 @import "./components/modal";
