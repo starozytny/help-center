@@ -54,6 +54,15 @@ html{
   }
 }
 
+.homepage-section-0{
+  position: relative;
+  overflow: hidden;
+
+  [class^="deco-"]{
+    display: none;
+  }
+}
+
 .products{
   @include flex(row, center, center, var(--espaceDiv));
   flex-wrap: wrap;
@@ -107,6 +116,90 @@ html{
 
     .card-footer{
       @include flex(row, flex-start, flex-end);
+    }
+  }
+}
+
+//                      __   _  ___ ____  _  _     __
+//                     | _| / |/ _ \___ \| || |   |_ |
+//    _____ _____ _____| |  | | | | |__) | || |_   | |_____ _____ _____
+//   |_____|_____|_____| |  | | |_| / __/|__   _|  | |_____|_____|_____|
+//                     | |  |_|\___/_____|  |_|    | |
+//                     |__|                       |__|
+@media (min-width: 1024px) {
+  .homepage-section-0{
+    [class^="deco-"]{
+      display: block;
+    }
+
+    .deco-0, .deco-1{
+      position: absolute;
+      opacity: 0.75;
+      width: 53%;
+
+      path{
+        fill: var(--danger);
+      }
+    }
+
+    .deco-0{
+      top: 0; left: 0;
+      transform: translate(-320px, -222px);
+
+      path{
+        transform: translate(100px, 100px) rotate(10deg);
+      }
+    }
+
+    .deco-1{
+      bottom: 0;
+      right: 0;
+      transform: translate(320px, 222px);
+
+      path{
+        transform: translate(100px, 100px);
+      }
+    }
+  }
+
+  .homepage-section-container{
+    position: relative;
+  }
+}
+
+//                      __   _ _  _   _  _    ___    __
+//                     | _| / | || | | || |  / _ \  |_ |
+//    _____ _____ _____| |  | | || |_| || |_| | | |  | |_____ _____ _____
+//   |_____|_____|_____| |  | |__   _|__   _| |_| |  | |_____|_____|_____|
+//                     | |  |_|  |_|    |_|  \___/   | |
+//                     |__|                         |__|
+@media (min-width: 1440px){
+  .homepage-section-0{
+    .deco-0{
+      transform: translate(-408px, -292px);
+    }
+  }
+}
+
+//                      __   _  ___ ____   ___    __
+//                     | _| / |/ _ \___ \ / _ \  |_ |
+//    _____ _____ _____| |  | | (_) |__) | | | |  | |_____ _____ _____
+//   |_____|_____|_____| |  | |\__, / __/| |_| |  | |_____|_____|_____|
+//                     | |  |_|  /_/_____|\___/   | |
+//                     |__|                      |__|
+@media (min-width: 1920px){
+  .homepage-section-0{
+    .deco-0{
+      width: 45%;
+      transform: translate(-418px, -298px);
+
+      path{
+        transform: translate(100px, 100px) rotate(16deg);
+      }
+    }
+
+    .deco-1{
+      transform: translate(446px, 350px)
     }
   }
 }
