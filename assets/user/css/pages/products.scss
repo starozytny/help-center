@@ -17,6 +17,15 @@
     opacity: 0.85;
     font-size: 15px;
   }
+
+  .btn-add{
+    display: flex;
+    margin-top: var(--espaceDiv);
+
+    .btn{
+      width: auto;
+    }
+  }
 }
 
 .product-line-0{

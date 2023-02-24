@@ -47,6 +47,14 @@
                     <h2>Tutoriels</h2>
                     <div class="subtitle">Prenez en main facilement le {{ typeString }} avec des nos tutoriels</div>
                 </div>
+                {% if app.user.admin %}
+                    <div class="btn-add">
+                        <a href="" class="btn btn-primary">
+                            <span class="icon-add"></span>
+                            <span>Ajouter un tutoriel</span>
+                        </a>
+                    </div>
+                {% endif %}
                 <div class="tutorials">
                     <div class="card">
                         <div class="card-header">
@@ -98,6 +106,14 @@
                     <h2>Documentation</h2>
                     <div class="subtitle">Le meilleur moyen de maitriser l'utilisation du {{ typeString }}.</div>
                 </div>
+                {% if app.user.admin %}
+                    <div class="btn-add">
+                        <a href="" class="btn btn-primary">
+                            <span class="icon-add"></span>
+                            <span>Ajouter une documentation</span>
+                        </a>
+                    </div>
+                {% endif %}
                 <div class="tutorials documentations">
                     {% for el in docs %}
                         <div class="card">
