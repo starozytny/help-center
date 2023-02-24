@@ -12,6 +12,10 @@
 @import "./components/form";
 @import "./components/modal";
 
+html{
+  background: linear-gradient(0.4turn, var(--color1), var(--color0));
+}
+
 body {
   @include fontRegular();
 }
@@ -22,4 +26,151 @@ h1, b{
 
 h2{
   @include fontSemibold();
+}
+
+.homepage-header{
+  color: var(--alpha);
+  margin: var(--espaceLayout);
+  text-align: center;
+}
+
+.homepage-header-content{
+  @include maxscreen();
+  margin: calc(var(--espaceDiv) * 4) auto;
+
+  h1{
+    margin-bottom: var(--espaceEls);
+  }
+
+  .subtitle{
+    margin-bottom: var(--espaceLayout);
+    opacity: 0.75;
+  }
+
+  .cta{
+    max-width: 268px;
+    margin: 0 auto;
+
+    .btn{
+      padding: 14px 26px;
+    }
+  }
+}
+
+.homepage-section{
+  background-color: var(--color0);
+  color: var(--alpha);
+  min-height: 40vh;
+  padding: calc(var(--espaceLayout) * 2) var(--espaceLayout) calc(var(--espaceLayout) * 4) var(--espaceLayout);
+
+  .homepage-section-container{
+    @include maxscreen();
+  }
+
+  .homepage-section-title{
+    margin-bottom: calc(var(--espaceLayout) * 1.5);
+
+    h2{
+      text-align: center;
+      margin-bottom: var(--espaceEls);
+    }
+
+    .subtitle{
+      opacity: 0.75;
+      text-align: center;
+    }
+  }
+}
+
+.homepage-section-0{
+  position: relative;
+  overflow: hidden;
+
+  [class^="deco-"]{
+    display: none;
+  }
+}
+
+//                      __   _  ___ ____  _  _     __
+//                     | _| / |/ _ \___ \| || |   |_ |
+//    _____ _____ _____| |  | | | | |__) | || |_   | |_____ _____ _____
+//   |_____|_____|_____| |  | | |_| / __/|__   _|  | |_____|_____|_____|
+//                     | |  |_|\___/_____|  |_|    | |
+//                     |__|                       |__|
+@media (min-width: 1024px) {
+  .homepage-section-0{
+    [class^="deco-"]{
+      display: block;
+    }
+
+    .deco-0, .deco-1{
+      position: absolute;
+      opacity: 0.75;
+      width: 53%;
+
+      path{
+        fill: var(--danger);
+      }
+    }
+
+    .deco-0{
+      top: 0; left: 0;
+      transform: translate(-320px, -222px);
+
+      path{
+        transform: translate(100px, 100px) rotate(10deg);
+      }
+    }
+
+    .deco-1{
+      bottom: 0;
+      right: 0;
+      transform: translate(320px, 222px);
+
+      path{
+        transform: translate(100px, 100px);
+      }
+    }
+  }
+
+  .homepage-section-container{
+    position: relative;
+  }
+}
+
+//                      __   _ _  _   _  _    ___    __
+//                     | _| / | || | | || |  / _ \  |_ |
+//    _____ _____ _____| |  | | || |_| || |_| | | |  | |_____ _____ _____
+//   |_____|_____|_____| |  | |__   _|__   _| |_| |  | |_____|_____|_____|
+//                     | |  |_|  |_|    |_|  \___/   | |
+//                     |__|                         |__|
+@media (min-width: 1440px){
+  .homepage-section-0{
+    .deco-0{
+      transform: translate(-408px, -292px);
+    }
+  }
+}
+
+//                      __   _  ___ ____   ___    __
+//                     | _| / |/ _ \___ \ / _ \  |_ |
+//    _____ _____ _____| |  | | (_) |__) | | | |  | |_____ _____ _____
+//   |_____|_____|_____| |  | |\__, / __/| |_| |  | |_____|_____|_____|
+//                     | |  |_|  /_/_____|\___/   | |
+//                     |__|                      |__|
+@media (min-width: 1920px){
+  .homepage-section-0{
+    .deco-0{
+      width: 45%;
+      transform: translate(-418px, -298px);
+
+      path{
+        transform: translate(100px, 100px) rotate(16deg);
+      }
+    }
+
+    .deco-1{
+      transform: translate(446px, 350px)
+    }
+  }
 }

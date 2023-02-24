@@ -13,5 +13,14 @@ nav{
   img{
     width: 100px;
   }
+
+  .name{
+    text-align: right;
+  }
 }
 
+main{
+  & > div:first-child{
+    min-height: 63vh;
+  }
+}
