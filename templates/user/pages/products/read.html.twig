@@ -1,0 +1,15 @@
+{% extends 'user/pages/products/template.html.twig' %}
+
+{% set page_title %}{{ elem.name }}{% endset %}
+{% set page_subtitle %}Centre d'aide pour le {{ elem.webservice ? "webservice" : "logiciel" }} {{ elem.name }}{% endset %}
+
+{% block breadcrumb %}
+    {% set breadcrumbs = breadcrumbs | merge([{ text: page_title }]) %}
+    {{ parent() }}
+{% endblock %}
+
+{% block main_content %}
+    <div class="page-default">
+        ok
+    </div>
+{% endblock %}

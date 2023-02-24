@@ -43,21 +43,18 @@ class DonneesInitProductsCommand extends Command
 
         $data =  [
             [
-                'name' => "Lotys",
-                'type' => HelpType::Web,
-                'url' => 'lotys.fr',
+                'name' => "Lotys", 'type' => HelpType::Web, 'url' => 'lotys.fr', 'logo' => 'logo_lotys.svg',
                 'description' => 'Webservice pour la gestion des transactions immobilières.<br /> Diffusez facilement vos annonces sur différentes plateformes !'
             ],
             [
-                'name' => "Magesto",
-                'type' => HelpType::Web,
-                'url' => 'magesto.fr',
+                'name' => "Magesto", 'type' => HelpType::Web, 'url' => 'magesto.fr', 'logo' => 'logo_magesto.svg',
                 'description' => 'Webservice pour la gestion des factures, devis et avoirs.<br /> Programmez vos contrats pour rapidement générer et envoyer vos documents !'
             ],
         ];
 
         foreach($data as $obj){
             $obj = $this->dataMain->setDataProduct(new HeProduct(), json_decode(json_encode($obj)));
+            $obj->setLogo($obj['logo']);
 
             $this->em->persist($obj);
         }

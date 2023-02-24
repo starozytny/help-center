@@ -2,14 +2,17 @@
 
 namespace App\Entity\Main\Help;
 
+use App\Entity\DataEntity;
 use App\Entity\Enum\Help\HelpType;
 use App\Repository\Main\Help\HeProductRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: HeProductRepository::class)]
-class HeProduct
+class HeProduct extends DataEntity
 {
+    const FOLDER = "logos";
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -29,6 +32,9 @@ class HeProduct
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $logo = null;
 
     public function getId(): ?int
     {
@@ -93,5 +99,27 @@ class HeProduct
         $this->slug = $slug;
 
         return $this;
+    }
+
+    public function getLogo(): ?string
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(?string $logo): self
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    public function getLogoFile()
+    {
+        return $this->getFileOrDefault($this->logo, self::FOLDER);
+    }
+
+    public function isWebservice(): bool
+    {
+        return $this->getType() == HelpType::Web;
     }
 }
