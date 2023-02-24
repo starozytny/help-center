@@ -1,7 +1,9 @@
 {% extends 'user/pages/products/template.html.twig' %}
 
+{% set typeString = elem.webservice ? "webservice" : "logiciel" %}
+
 {% set page_title %}{{ elem.name }}{% endset %}
-{% set page_subtitle %}Centre d'aide pour le {{ elem.webservice ? "webservice" : "logiciel" }} {{ elem.name }}{% endset %}
+{% set page_subtitle %}Centre d'aide pour le {{ typeString }} {{ elem.name }}{% endset %}
 
 {% block breadcrumb %}
     {% set breadcrumbs = breadcrumbs | merge([{ text: page_title }]) %}
@@ -10,6 +12,139 @@
 
 {% block main_content %}
     <div class="page-default">
-        ok
+        <div class="product-read">
+            <div class="product-line-0">
+                <div class="guide-start">
+                    <div class="col-1">
+                        <h2>Guide de <br>Démarrage</h2>
+                        <div class="subtitle">Apprenez rapidement à prendre en main ce {{ typeString }} !</div>
+                    </div>
+
+                    <div class="col-2">
+                        <img src="{{ asset(elem.logoFile) }}" alt="logo {{ elem.name }}">
+                        <div class="cta">
+                            <a href="" class="btn btn-primary">
+                                <span>Démarrer</span>
+                                <span class="icon-right-arrow"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cta-faq">
+                    <h2><span class="icon-question-1"></span> F.A.Q.</h2>
+                    <div class="subtitle">Réponses aux questions les plus demandées !</div>
+                    <div class="cta">
+                        <a href="" class="txt-button txt-button-default">
+                            <span>Trouver ma réponse</span>
+                            <span class="icon-right-arrow"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-line-1">
+                <div class="product-line-title">
+                    <h2>Tutoriels</h2>
+                    <div class="subtitle">Prenez en main facilement le {{ typeString }} avec des nos tutoriels</div>
+                </div>
+                <div class="tutorials">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="name">Publies mes biens</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="content">
+                                Procédure complète de publication de biens immobilier
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a
+                                    href="{{ path('user_help_product', {'slug': elem.slug}) }}"
+                                    class="btn-icon"
+                            >
+                                <span class="icon-vision"></span>
+                                <span class="tooltip">Voir le tutoriel</span>
+                            </a>
+                            <a
+                                    href="{{ path('user_help_product', {'slug': elem.slug}) }}"
+                                    class="btn-icon"
+                            >
+                                <span class="icon-heart"></span>
+                                <span class="tooltip">Mettre en favoris</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <style>
+                .badges-custom{
+                    display: flex;
+                    gap: 8px;
+                    margin: 8px 0;
+                }
+
+                .badge-custom-lotys{
+                    display: flex; align-items: center; justify-content: center;
+                    background-color: var(--primaryOpacity4);
+                    color: var(--primary);
+                    border-radius: 20px;
+                    width: 24px; height: 24px;
+                }
+            </style>
+
+            <div class="product-line-2">
+                <div class="product-line-title">
+                    <h2>Documentation</h2>
+                    <div class="subtitle">Le meilleur moyen de maitriser l'utilisation du {{ typeString }}.</div>
+                </div>
+                <div class="tutorials">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="icon">
+                                <span class="icon-icon-check1"></span>
+                            </div>
+                            <div class="name">Le status des biens</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="content">
+                                Expliquons la signification des symboles
+                                <div class="badges-custom">
+                                    <span class="badge-custom-lotys">
+                                        <span class="icon-check1"></span>
+                                    </span>
+                                    <span class="badge-custom-lotys" style="color: var(--danger); background-color: var(--dangerOpacity4)">
+                                        <span class="icon-warning1"></span>
+                                    </span>
+                                    <span class="badge-custom-lotys" style="color: var(--txt); background-color: var(--grey0Opacity4)">
+                                        <span class="icon-pause"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a
+                                    href="{{ path('user_help_product', {'slug': elem.slug}) }}"
+                                    class="txt-button txt-button-primary"
+                            >
+                                <span>En savoir plus</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-line-3">
+                <div class="product-line-title">
+                    <h2>F.A.Q.</h2>
+                    <div class="subtitle">Retrouvez les réponses aux questions les plus demandées sur le {{ typeString }}</div>
+                </div>
+                <div class="faqs">
+                    <div id="help_faq_list">
+                        {% include "layout/components/loader.html.twig" %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

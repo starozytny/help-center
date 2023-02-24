@@ -42,7 +42,6 @@
 .btn{
   padding: 8px 20px;
   min-height: 36px;
-  opacity: 0.80;
 }
 
 .btn.btn-loader,
@@ -58,7 +57,7 @@
   }
 }
 
-.txt-link, .txt-button, .btn{
+.txt-link, .btn{
   & > [class^="icon"]{
     display: inline-block;
     transform: translateY(-1px);

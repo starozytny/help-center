@@ -4,12 +4,12 @@
     { icon: 'book-1', text: "Produits", url: path('user_homepage')  }
 ] %}
 
-{#{% block stylesheets %}#}
-{#    {{ parent() }}#}
-{#    {{ encore_entry_link_tags('admin_changelogs') }}#}
-{#{% endblock %}#}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('user_products') }}
+{% endblock %}
 
-{#{% block javascripts %}#}
-{#    {{ parent() }}#}
-{#    {{ encore_entry_script_tags('admin_changelogs') }}#}
-{#{% endblock %}#}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('user_products') }}
+{% endblock %}
