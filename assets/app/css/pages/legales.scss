@@ -1,1 +1,25 @@
 @import "../vars/vars";
+
+.main-content-legal{
+  h1{
+    text-align: center;
+    margin-bottom: var(--espaceLayout);
+  }
+
+  h2{
+    margin-bottom: 8px;
+  }
+
+  a{
+    color: var(--primary);
+  }
+
+  .legales{
+    @include maxscreen();
+    @include flex(column, flex-start, flex-start, var(--espaceDiv));
+
+    & > div{
+      @include flex(column, flex-start, flex-start, var(--espaceEls));
+    }
+  }
+}
