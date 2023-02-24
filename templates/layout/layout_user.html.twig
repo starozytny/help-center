@@ -24,15 +24,50 @@
                 </div>
 
                 <div class="nav-content">
-                    <div class="nav-menu">
-                        {% for item in menu %}
-                            <a class="nav-item {{- app.request.get('_route') == item.nameRoute ? " active" : "" -}}"
-                               href="{{ path(item.nameRoute) }}"
-                            >
-                                <span class="icon-{{ item.icon }}"></span>
-                                <span>{{ item.name }}</span>
+                    <div class="nav-header">
+                        <div class="avatar">
+                            {% if app.user.avatarFile %}
+                                <img src="{{ app.user.avatarFile }}" alt="Avatar utilisateur">
+                            {% else %}
+                                <div class="avatar-letter">{{ app.user.lastname | slice(0, 1) }}{{ app.user.firstname | slice(0,1) }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="nav-header-infos">
+                            <div>{{ app.user.userIdentifier }}</div>
+                            <div>{{ app.user.email }}</div>
+                        </div>
+                        <div class="nav-header-actions">
+                            <div id="notifs_list">
+                                {% include "layout/components/admin/loaders/btn-icon.html.twig" %}
+                            </div>
+                            <a href="{{ path('app_logout') }}" class="btn-icon btn-icon-outline-default">
+                                <span class="icon-logout"></span>
+                                <span class="tooltip" style="width: 108px;">Se déconnecter</span>
                             </a>
-                        {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="nav-menu">
+                        <div class="nav-items">
+                            {% for item in menu %}
+                                <a class="nav-item {{- app.request.get('_route') in item.matchRoute ? " active" : "" -}}"
+                                   href="{{ item.path }}"
+                                >
+                                    <span class="icon-{{ item.icon }}"></span>
+                                    <span>{{ item.name }}</span>
+                                </a>
+                            {% endfor %}
+                        </div>
+                        <div class="nav-items">
+                            {% for item in menu_bottom %}
+                                <a class="nav-item {{- app.request.get('_route') in item.matchRoute ? " active" : "" -}}"
+                                   href="{{ item.path }}"
+                                >
+                                    <span class="icon-{{ item.icon }}"></span>
+                                    <span>{{ item.name }}</span>
+                                </a>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
 
@@ -40,6 +75,10 @@
         </nav>
 
         <main>
+            {% block breadcrumb %}
+                {% include "admin/layout/components/breadcrumbs.html.twig" %}
+            {% endblock %}
+
             {% include "layout/components/admin/page_title.html.twig" %}
 
             <div>
