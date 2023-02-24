@@ -15,7 +15,12 @@ html{
   margin: calc(var(--espaceDiv) * 4) auto;
 
   h1{
-    margin-bottom: var(--espaceDiv);
+    margin-bottom: var(--espaceEls);
+  }
+
+  .subtitle{
+    margin-bottom: var(--espaceLayout);
+    opacity: 0.75;
   }
 
   .cta{
@@ -43,7 +48,7 @@ html{
     }
 
     .subtitle{
-      opacity: 0.85;
+      opacity: 0.75;
       text-align: center;
     }
   }
@@ -64,17 +69,40 @@ html{
     }
 
     .card-header{
+      @include flex(row, center, flex-start, 24px);
       border-bottom: 1px solid var(--color3);
 
+      .logo{
+        @include flex();
+        width: 64px;
+        height: 64px;
+      }
+
       .name{
-        @include fontSemibold();
-        font-size: 20px;
+        & > span:first-child{
+          @include fontSemibold();
+          font-size: 20px;
+        }
+        .linkTo{
+          margin-top: 2px;
+
+          a{
+            color: var(--primary);
+            @include flex(row, flex-start, flex-start, 6px);
+
+            [class^="icon-"]{
+              font-size: 12px;
+              transform: translateY(3px);
+            }
+          }
+        }
       }
     }
 
     .card-body{
       border-bottom: 1px solid var(--color3);
       opacity: 0.85;
+      font-size: 15px;
     }
 
     .card-footer{

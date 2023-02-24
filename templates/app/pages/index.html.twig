@@ -11,6 +11,10 @@
     <div class="homepage-header">
         <div class="homepage-header-content">
             <h1>Comment puis-je vous aider ? 👋</h1>
+            <div class="subtitle">
+                Accéder aux documentations, F.A.Q et tutoriels pour
+                mieux comprendre comment fonctionne nos logiciels !
+            </div>
 
             <div class="cta">
                 <a class="btn btn-primary" href="{{ path('app_login') }}">Accéder à mon espace</a>
@@ -20,13 +24,24 @@
     <div class="homepage-section">
         <div class="homepage-section-container">
             <div class="homepage-section-title">
-                <h2>Produits</h2>
+                <h2>Produits ⚒️</h2>
                 <div class="subtitle">Parcourez la documentation et les questions fréquentes de nos logiciels et webservices !</div>
             </div>
             <div class="products">
                 <div class="card">
                     <div class="card-header">
-                        <div class="name">Lotys</div>
+                        <div class="logo">
+                            <img src="{{ asset('logos/logo_lotys.svg') }}" alt="Logo lotys.fr">
+                        </div>
+                        <div class="name">
+                            <div>Lotys</div>
+                            <div class="linkTo">
+                                <a href="https://lotys.fr" title="lotys.fr">
+                                    <span>lotys.fr</span>
+                                    <span class="icon-link-2"></span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="content">
@@ -43,7 +58,19 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <div class="name">Magesto</div>
+                        <div class="logo">
+                            <img src="{{ asset('logos/logo_magesto.svg') }}" alt="Logo magesto.fr">
+                        </div>
+                        <div class="name">
+                            <div>Magesto</div>
+                            <div class="linkTo">
+                                <a href="https://magesto.fr" title="magesto.fr">
+                                    <span>magesto.fr</span>
+                                    <span class="icon-link-2"></span>
+                                </a>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="card-body">
                         <div class="content">
