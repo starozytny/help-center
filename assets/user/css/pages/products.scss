@@ -119,6 +119,21 @@
   }
 }
 
+.documentations{
+  .card{
+    .card-header{
+      @include flex(column, center, center, var(--espaceEls));
+
+      .icon{
+        @include flex(column, center, center);
+        width: 32px; height: 32px;
+        border-radius: var(--radius);
+        background-color: var(--color0);
+      }
+    }
+  }
+}
+
 .faqs{
   margin-top: var(--espaceDiv);
 

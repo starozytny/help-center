@@ -3,7 +3,10 @@
 namespace App\Entity\Main;
 
 use App\Entity\DataEntity;
+use App\Entity\Main\Help\HeDocumentation;
 use App\Repository\Main\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -90,6 +93,9 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     #[Groups(['user_list'])]
     private ?bool $blocked = false;
 
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: HeDocumentation::class)]
+    private Collection $documentations;
+
     /**
      * @throws Exception
      */
@@ -97,6 +103,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     {
         $this->createdAt = $this->initNewDateImmutable();
         $this->token = $this->initToken();
+        $this->documentations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -367,6 +374,36 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     public function setBlocked(bool $blocked): self
     {
         $this->blocked = $blocked;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HeDocumentation>
+     */
+    public function getDocumentations(): Collection
+    {
+        return $this->documentations;
+    }
+
+    public function addDocumentation(HeDocumentation $documentation): self
+    {
+        if (!$this->documentations->contains($documentation)) {
+            $this->documentations->add($documentation);
+            $documentation->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocumentation(HeDocumentation $documentation): self
+    {
+        if ($this->documentations->removeElement($documentation)) {
+            // set the owning side to null (unless already changed)
+            if ($documentation->getAuthor() === $this) {
+                $documentation->setAuthor(null);
+            }
+        }
 
         return $this;
     }

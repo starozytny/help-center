@@ -3,6 +3,7 @@
 namespace App\Service\Data;
 
 use App\Entity\Main\Help\HeCategory;
+use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
 use App\Service\SanitizeData;
@@ -21,6 +22,16 @@ class DataHelp
             ->setSlug($this->sanitizeData->slugString($data->name))
             ->setUrl($this->sanitizeData->trimData($data->url))
             ->setDescription($this->sanitizeData->trimData($data->description))
+        ;
+    }
+
+    public function setDataDocumentation(HeDocumentation $obj, $data): HeDocumentation
+    {
+        return ($obj)
+            ->setName($this->sanitizeData->trimData($data->name))
+            ->setSlug($this->sanitizeData->slugString($data->name))
+            ->setDescription($this->sanitizeData->trimData($data->description))
+            ->setDuration(null)
         ;
     }
 

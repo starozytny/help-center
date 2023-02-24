@@ -5,6 +5,8 @@ namespace App\Entity\Main\Help;
 use App\Entity\DataEntity;
 use App\Entity\Enum\Help\HelpType;
 use App\Repository\Main\Help\HeProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -35,6 +37,14 @@ class HeProduct extends DataEntity
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $logo = null;
+
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: HeDocumentation::class)]
+    private Collection $documentation;
+
+    public function __construct()
+    {
+        $this->documentation = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -121,5 +131,35 @@ class HeProduct extends DataEntity
     public function isWebservice(): bool
     {
         return $this->getType() == HelpType::Web;
+    }
+
+    /**
+     * @return Collection<int, HeDocumentation>
+     */
+    public function getDocumentation(): Collection
+    {
+        return $this->documentation;
+    }
+
+    public function addDocumentation(HeDocumentation $documentation): self
+    {
+        if (!$this->documentation->contains($documentation)) {
+            $this->documentation->add($documentation);
+            $documentation->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocumentation(HeDocumentation $documentation): self
+    {
+        if ($this->documentation->removeElement($documentation)) {
+            // set the owning side to null (unless already changed)
+            if ($documentation->getProduct() === $this) {
+                $documentation->setProduct(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -98,39 +98,30 @@
                     <h2>Documentation</h2>
                     <div class="subtitle">Le meilleur moyen de maitriser l'utilisation du {{ typeString }}.</div>
                 </div>
-                <div class="tutorials">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="icon">
-                                <span class="icon-icon-check1"></span>
+                <div class="tutorials documentations">
+                    {% for el in docs %}
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="icon">
+                                    <span class="{{ el.icon ? el.icon : 'icon-book' }}"></span>
+                                </div>
+                                <div class="name">{{ el.name }}</div>
                             </div>
-                            <div class="name">Le status des biens</div>
-                        </div>
-                        <div class="card-body">
-                            <div class="content">
-                                Expliquons la signification des symboles
-                                <div class="badges-custom">
-                                    <span class="badge-custom-lotys">
-                                        <span class="icon-check1"></span>
-                                    </span>
-                                    <span class="badge-custom-lotys" style="color: var(--danger); background-color: var(--dangerOpacity4)">
-                                        <span class="icon-warning1"></span>
-                                    </span>
-                                    <span class="badge-custom-lotys" style="color: var(--txt); background-color: var(--grey0Opacity4)">
-                                        <span class="icon-pause"></span>
-                                    </span>
+                            <div class="card-body">
+                                <div class="content">
+                                    {{ el.description | raw }}
                                 </div>
                             </div>
+                            <div class="card-footer">
+                                <a
+                                        href="{{ path('user_help_product', {'slug': elem.slug}) }}"
+                                        class="txt-button txt-button-primary"
+                                >
+                                    <span>En savoir plus</span>
+                                </a>
+                            </div>
                         </div>
-                        <div class="card-footer">
-                            <a
-                                    href="{{ path('user_help_product', {'slug': elem.slug}) }}"
-                                    class="txt-button txt-button-primary"
-                            >
-                                <span>En savoir plus</span>
-                            </a>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
 
