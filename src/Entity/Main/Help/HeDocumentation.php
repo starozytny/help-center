@@ -183,6 +183,9 @@ class HeDocumentation extends DataEntity
 
     public function getIcon(): ?string
     {
+        if(!$this->icon){
+            return 'book';
+        }
         return $this->icon;
     }
 

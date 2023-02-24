@@ -79,8 +79,9 @@
                 {% include "admin/layout/components/breadcrumbs.html.twig" %}
             {% endblock %}
 
-            {% include "layout/components/admin/page_title.html.twig" %}
-
+            {% if page_title is defined %}
+                {% include "layout/components/admin/page_title.html.twig" %}
+            {% endif %}
             <div>
                 {% block main_content %}{% endblock %}
             </div>

@@ -1,0 +1,28 @@
+@import "../vars/vars";
+
+.documentation-read{
+
+  .documentation-meta{
+    @include flex(row, center, space-between, var(--espaceEls));
+    border-top: 1px solid var(--color2);
+    border-bottom: 1px solid var(--color2);
+    padding: var(--espaceLayout) 0;
+  }
+
+  .features{
+    @include flex(column, flex-start, flex-start, 4px);
+  }
+
+  .duration, .product, .author{
+    @include flex(row, center, flex-start, 6px);
+  }
+
+  .duration, .product{
+    font-size: 14px;
+    opacity: 0.6;
+
+    [class^="icon-"]{
+      transform: translateY(-1px);
+    }
+  }
+}

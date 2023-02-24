@@ -1,0 +1,45 @@
+{% extends 'user/pages/documentations/template.html.twig' %}
+
+{% set product = elem.product %}
+{% set author = elem.author %}
+
+{% set page_title %}{{ elem.name }}{% endset %}
+{% set page_subtitle %}Documentation {{ product.name }}{% endset %}
+
+{% block breadcrumb %}
+    {% set breadcrumbs = breadcrumbs | merge([
+        { text: product.name, url: path('user_help_product', {'slug': product.name})  },
+        { text: page_title, icon: elem.icon }
+    ]) %}
+    {{ parent() }}
+{% endblock %}
+
+{% block main_content %}
+    {% include "layout/components/admin/page_toolbar.html.twig" with {
+        page_back: path('user_help_product', {'slug': product.slug}),
+        page_back_text: 'Retourner à ' ~ product.name
+    } %}
+
+    <div class="page-default">
+        <div class="documentation-read">
+            <div class="documentation-meta">
+                <div class="features">
+                    <div class="product">
+                        <span class="icon-book-1"></span>
+                        <span>{{ product.name }}</span>
+                    </div>
+                    <div class="duration">
+                        <span class="icon-time"></span>
+                        <span>5 minutes de lecture</span>
+                    </div>
+                </div>
+                <div class="author">
+                    <div class="name">{{ author.firstname }}</div>
+                    <div class="avatar">
+                        <div class="avatar-letter">{{ author.lastname | slice(0,1) }}{{ author.firstname | slice(0,1) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
