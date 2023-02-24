@@ -23,6 +23,9 @@ class HeDocumentation extends DataEntity
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    private ?string $content = null;
+
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
@@ -93,6 +96,18 @@ class HeDocumentation extends DataEntity
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content): self
+    {
+        $this->content = $content;
 
         return $this;
     }

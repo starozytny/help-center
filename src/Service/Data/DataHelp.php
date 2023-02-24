@@ -32,6 +32,7 @@ class DataHelp
             ->setSlug($this->sanitizeData->slugString($data->name))
             ->setDescription($this->sanitizeData->trimData($data->description))
             ->setDuration(null)
+            ->setContent($this->sanitizeData->trimData($data->content->html))
         ;
     }
 

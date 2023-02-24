@@ -70,7 +70,8 @@ class DonneesInitDocumentationsCommand extends Command
                         <span class="badge-custom-lotys" style="color: var(--txt); background-color: var(--grey0Opacity4)">
                             <span class="icon-pause"></span>
                         </span>
-                    </div>'
+                    </div>',
+                'content' => ['value' => '', 'html' => '']
             ],
         ];
 

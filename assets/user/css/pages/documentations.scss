@@ -12,17 +12,29 @@
   .features{
     @include flex(column, flex-start, flex-start, 4px);
   }
+  .author{
+    @include flex(column, flex-end, flex-start, 4px);
+  }
 
-  .duration, .product, .author{
+  .duration, .product, .user{
     @include flex(row, center, flex-start, 6px);
   }
 
-  .duration, .product{
+  .likes{
+    @include flex(row, center, flex-start, 12px);
+    margin-top: 4px;
+  }
+
+  .duration, .product, .date, .likes .item{
     font-size: 14px;
     opacity: 0.6;
 
     [class^="icon-"]{
       transform: translateY(-1px);
     }
+  }
+
+  .documentation-content{
+    padding: var(--espaceLayout) 0;
   }
 }
