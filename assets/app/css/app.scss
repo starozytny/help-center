@@ -7,10 +7,11 @@
 
 @import "./components/cookies";
 @import "./components/loader";
-@import "./components/elements/button";
-@import "./components/elements/alert";
 @import "./components/form";
 @import "./components/modal";
+
+@import "./components/elements/button";
+@import "./components/elements/alert";
 
 html{
   background: linear-gradient(0.4turn, var(--color1), var(--color0));
