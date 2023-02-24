@@ -1,0 +1,53 @@
+.products{
+  .card{
+    background-color: var(--color1);
+    border-radius: calc(var(--radius) * 2);
+    width: 100%;
+    max-width: 366px;
+
+    .card-header, .card-body, .card-footer{
+      padding: var(--espaceDiv);
+    }
+
+    .card-header{
+      @include flex(row, center, flex-start, 24px);
+      border-bottom: 1px solid var(--color3);
+
+      .logo{
+        @include flex();
+        width: 64px;
+        height: 64px;
+      }
+
+      .name{
+        & > span:first-child{
+          @include fontSemibold();
+          font-size: 20px;
+        }
+        .linkTo{
+          margin-top: 2px;
+
+          a{
+            color: var(--primary);
+            @include flex(row, flex-start, flex-start, 6px);
+
+            [class^="icon-"]{
+              font-size: 12px;
+              transform: translateY(3px);
+            }
+          }
+        }
+      }
+    }
+
+    .card-body{
+      border-bottom: 1px solid var(--color3);
+      opacity: 0.85;
+      font-size: 15px;
+    }
+
+    .card-footer{
+      @include flex(row, flex-start, flex-end);
+    }
+  }
+}

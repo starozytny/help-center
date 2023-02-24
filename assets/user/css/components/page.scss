@@ -1,6 +1,8 @@
 .page-title-container{
   padding: 1.8rem 1.2rem;
+}
 
+.page-title-container, .page-default-title{
   h1{
     margin-bottom: 4px;
   }
@@ -12,7 +14,7 @@
 
 .page-toolbar,
 .page-actions{
-  padding: 0 1.2rem;
+  padding: 0 var(--espaceLayout);
   margin-bottom: 1.2rem;
 }
 
@@ -39,6 +41,10 @@
       padding: 10px 12px;
     }
   }
+}
+
+.page-default{
+  padding: 0 var(--espaceLayout);
 }
 
 //                      __   _____ __    ___    __
