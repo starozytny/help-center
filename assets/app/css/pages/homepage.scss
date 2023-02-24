@@ -5,19 +5,80 @@ html{
 }
 
 .homepage-header{
-  min-height: 80vh;
   color: var(--alpha);
   margin: var(--espaceLayout);
+  text-align: center;
 }
 
 .homepage-header-content{
   @include maxscreen();
+  margin: calc(var(--espaceDiv) * 4) auto;
 
   h1{
     margin-bottom: var(--espaceDiv);
   }
 
   .cta{
-    max-width: 120px;
+    max-width: 228px;
+    margin: 0 auto;
+  }
+}
+
+.homepage-section{
+  background-color: var(--color0);
+  color: var(--alpha);
+  min-height: 40vh;
+  padding: calc(var(--espaceLayout) * 2) var(--espaceLayout) calc(var(--espaceLayout) * 4) var(--espaceLayout);
+
+  .homepage-section-container{
+    @include maxscreen();
+  }
+
+  .homepage-section-title{
+    margin-bottom: calc(var(--espaceLayout) * 1.5);
+
+    h2{
+      text-align: center;
+      margin-bottom: var(--espaceEls);
+    }
+
+    .subtitle{
+      opacity: 0.85;
+      text-align: center;
+    }
+  }
+}
+
+.products{
+  @include flex(row, center, center, var(--espaceDiv));
+  flex-wrap: wrap;
+
+  .card{
+    background-color: var(--color1);
+    border-radius: calc(var(--radius) * 2);
+    width: 100%;
+    max-width: 366px;
+
+    .card-header, .card-body, .card-footer{
+      padding: var(--espaceDiv);
+    }
+
+    .card-header{
+      border-bottom: 1px solid var(--color3);
+
+      .name{
+        @include fontSemibold();
+        font-size: 20px;
+      }
+    }
+
+    .card-body{
+      border-bottom: 1px solid var(--color3);
+      opacity: 0.85;
+    }
+
+    .card-footer{
+      @include flex(row, flex-start, flex-end);
+    }
   }
 }

@@ -10,10 +10,54 @@
 {% block main_content %}
     <div class="homepage-header">
         <div class="homepage-header-content">
-            <h1>Hello {{ controller_name }}! ✅</h1>
+            <h1>Comment puis-je vous aider ? 👋</h1>
 
             <div class="cta">
-                <a class="btn btn-primary" href="{{ path('app_login') }}">Connexion</a>
+                <a class="btn btn-primary" href="{{ path('app_login') }}">Accéder à mon espace</a>
+            </div>
+        </div>
+    </div>
+    <div class="homepage-section">
+        <div class="homepage-section-container">
+            <div class="homepage-section-title">
+                <h2>Produits</h2>
+                <div class="subtitle">Parcourez la documentation et les questions fréquentes de nos logiciels et webservices !</div>
+            </div>
+            <div class="products">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="name">Lotys</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="content">
+                            Webservice pour la gestion des transactions immobilières. <br>
+                            Diffusez facilement vos annonces sur différentes plateformes !
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="" class="txt-button txt-button-primary">
+                            <span>Découvrir Lotys</span>
+                            <span class="icon-right-arrow"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="name">Magesto</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="content">
+                            Webservice pour la gestion des factures, devis et avoirs. <br>
+                            Programmez vos contrats pour rapidement générer et envoyer vos documents !
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="" class="txt-button txt-button-primary">
+                            <span>Découvrir Magesto</span>
+                            <span class="icon-right-arrow"></span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
