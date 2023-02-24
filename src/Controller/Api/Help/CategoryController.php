@@ -6,7 +6,7 @@ use App\Entity\Main\Help\HeCategory;
 use App\Repository\Main\Help\HeCategoryRepository;
 use App\Repository\Main\Help\HeQuestionRepository;
 use App\Service\ApiResponse;
-use App\Service\Data\DataMain;
+use App\Service\Data\DataHelp;
 use App\Service\ValidatorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     public function submitForm($type, HeCategoryRepository $repository, HeCategory $obj, Request $request, ApiResponse $apiResponse,
-                               ValidatorService $validator, DataMain $dataEntity): JsonResponse
+                               ValidatorService $validator, DataHelp $dataEntity): JsonResponse
     {
         $data = json_decode($request->getContent());
         if ($data === null) {
@@ -38,14 +38,14 @@ class CategoryController extends AbstractController
 
     #[Route('/create', name: 'create', options: ['expose' => true], methods: 'POST')]
     public function create(Request $request, ApiResponse $apiResponse, ValidatorService $validator,
-                           DataMain $dataEntity, HeCategoryRepository $repository): Response
+                           DataHelp $dataEntity, HeCategoryRepository $repository): Response
     {
         return $this->submitForm("create", $repository, new HeCategory(), $request, $apiResponse, $validator, $dataEntity);
     }
 
     #[Route('/update/{id}', name: 'update', options: ['expose' => true], methods: 'PUT')]
     public function update(Request $request, HeCategory $obj, ApiResponse $apiResponse, ValidatorService $validator,
-                           DataMain $dataEntity, HeCategoryRepository $repository): Response
+                           DataHelp $dataEntity, HeCategoryRepository $repository): Response
     {
         return $this->submitForm("update", $repository, $obj, $request, $apiResponse, $validator, $dataEntity);
     }

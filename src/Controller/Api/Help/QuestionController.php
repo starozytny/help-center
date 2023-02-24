@@ -7,7 +7,7 @@ use App\Entity\Main\Help\HeQuestion;
 use App\Repository\Main\Help\HeCategoryRepository;
 use App\Repository\Main\Help\HeQuestionRepository;
 use App\Service\ApiResponse;
-use App\Service\Data\DataMain;
+use App\Service\Data\DataHelp;
 use App\Service\ValidatorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuestionController extends AbstractController
 {
     public function submitForm($type, HeQuestionRepository $repository, HeQuestion $obj, Request $request, ApiResponse $apiResponse,
-                               ValidatorService $validator, DataMain $dataEntity, HeCategoryRepository $categoryRepository): JsonResponse
+                               ValidatorService $validator, DataHelp $dataEntity, HeCategoryRepository $categoryRepository): JsonResponse
     {
         $data = json_decode($request->getContent());
         if ($data === null) {
@@ -45,14 +45,14 @@ class QuestionController extends AbstractController
 
     #[Route('/create', name: 'create', options: ['expose' => true], methods: 'POST')]
     public function create(Request $request, ApiResponse $apiResponse, ValidatorService $validator,
-                           DataMain $dataEntity, HeQuestionRepository $repository, HeCategoryRepository $categoryRepository): Response
+                           DataHelp $dataEntity, HeQuestionRepository $repository, HeCategoryRepository $categoryRepository): Response
     {
         return $this->submitForm("create", $repository, new HeQuestion(), $request, $apiResponse, $validator, $dataEntity, $categoryRepository);
     }
 
     #[Route('/update/{id}', name: 'update', options: ['expose' => true], methods: 'PUT')]
     public function update(Request $request, HeQuestion $obj, ApiResponse $apiResponse, ValidatorService $validator,
-                           DataMain $dataEntity, HeQuestionRepository $repository, HeCategoryRepository $categoryRepository): Response
+                           DataHelp $dataEntity, HeQuestionRepository $repository, HeCategoryRepository $categoryRepository): Response
     {
         return $this->submitForm("update", $repository, $obj, $request, $apiResponse, $validator, $dataEntity, $categoryRepository);
     }

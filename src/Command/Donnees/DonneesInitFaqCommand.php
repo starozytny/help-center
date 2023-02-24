@@ -4,6 +4,7 @@ namespace App\Command\Donnees;
 
 use App\Entity\Main\Help\HeCategory;
 use App\Entity\Main\Help\HeQuestion;
+use App\Service\Data\DataHelp;
 use App\Service\Data\DataMain;
 use App\Service\DatabaseService;
 use Doctrine\Persistence\ObjectManager;
@@ -20,9 +21,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class DonneesInitFaqCommand extends Command
 {
     private ObjectManager $em;
-    private DataMain $dataMain;
+    private DataHelp $dataMain;
 
-    public function __construct(DatabaseService $databaseService, DataMain $dataMain)
+    public function __construct(DatabaseService $databaseService, DataHelp $dataMain)
     {
         parent::__construct();
 

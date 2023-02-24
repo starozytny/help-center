@@ -14,4 +14,11 @@ class UserController extends AbstractController
     {
         return $this->render('user/pages/index.html.twig');
     }
+
+    #[Route('/help/{name}', name: 'help_name')]
+    public function help($name): Response
+    {
+
+        return $this->render('user/pages/index.html.twig');
+    }
 }
