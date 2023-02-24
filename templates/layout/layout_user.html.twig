@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('admin_app') }}
+    {{ encore_entry_link_tags('user_app') }}
 {% endblock %}
 
 {% block body %}
@@ -14,8 +14,8 @@
         <nav>
             <div class="nav-container">
                 <div class="nav-logo">
-                    <a href="{{ path('app_homepage') }}">
-                        <img src="{{ asset('build/admin/images/logo.png') }}" alt="Logo societe">
+                    <a href="{{ path('user_homepage') }}">
+                        <img src="{{ asset('build/user/images/logo.png') }}" alt="Logo societe">
                     </a>
                 </div>
 
@@ -40,19 +40,18 @@
         </nav>
 
         <main>
-
             {% include "layout/components/admin/page_title.html.twig" %}
 
             <div>
                 {% block main_content %}{% endblock %}
             </div>
-
-            {% block footer %}{% endblock %}
         </main>
     </div>
+
+    {% block footer %}{% endblock %}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('admin_app') }}
+    {{ encore_entry_script_tags('user_app') }}
 {% endblock %}

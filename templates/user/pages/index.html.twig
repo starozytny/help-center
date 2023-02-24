@@ -1,10 +1,15 @@
 {% extends 'user/layout/layout.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
-{% set page_title %}Hello UserController!{% endset %}
+{% block title %}Dashboard{% endblock %}
+{% set page_title %}Documentation, F.A.Q et tutoriels intégral !{% endset %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('user_homepage') }}
+{% endblock %}
 
 {% block main_content %}
-<div class="example-wrapper">
-    <h1>Hello world</h1>
-</div>
+    <div class="main-content">
+        ok
+    </div>
 {% endblock %}

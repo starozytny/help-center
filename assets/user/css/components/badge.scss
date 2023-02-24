@@ -1,0 +1,10 @@
+@import "../../../common/css/components/badge";
+
+.badge{
+  @include fontSemibold();
+}
+
+.badge.badge-disabled{
+  background-color: var(--overlay);
+  color: var(--greyOpacity4);
+}
