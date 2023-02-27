@@ -98,15 +98,17 @@ class ProductController extends AbstractController
         $product = $productRepository->findOneBy(['slug' => $slug]);
 
         $cat  = $serializer->serialize($category, 'json', ['groups' => HeCategory::LIST]);
-        return $this->render('user/pages/faq/question/create.html.twig', ['category' => $category, 'cat' => $cat]);
+        return $this->render('user/pages/faq/question/create.html.twig', ['product' => $product, 'category' => $category, 'cat' => $cat]);
     }
 
     #[Route('/produit/{slug}/question/{category}/modifier/{id}', name: 'question_update', options: ['expose' => true])]
     #[IsGranted('ROLE_ADMIN')]
-    public function questionUpdate(HeCategory $category, HeQuestion $elem, SerializerInterface $serializer): Response
+    public function questionUpdate($slug, HeCategory $category, HeQuestion $elem, HeProductRepository $productRepository, SerializerInterface $serializer): Response
     {
+        $product = $productRepository->findOneBy(['slug' => $slug]);
+
         $obj  = $serializer->serialize($elem, 'json', ['groups' => HeQuestion::FORM]);
         $cat  = $serializer->serialize($category, 'json', ['groups' => HeCategory::LIST]);
-        return $this->render('user/pages/faq/question/update.html.twig', ['category' => $category, 'cat' => $cat, 'elem' => $elem, 'obj' => $obj]);
+        return $this->render('user/pages/faq/question/update.html.twig', ['product' => $product, 'category' => $category, 'cat' => $cat, 'elem' => $elem, 'obj' => $obj]);
     }
 }

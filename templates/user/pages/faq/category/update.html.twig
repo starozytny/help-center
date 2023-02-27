@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block main_content %}
-    {% include "layout/components/admin/page_toolbar.html.twig" with { page_back: path('admin_help_faq_index', {'cat': elem.id}) } %}
+    {% include "layout/components/admin/page_toolbar.html.twig" with { page_back: path('user_help_product_read', {'slug': product.slug}) } %}
 
     <div id="help_faq_category_update"
          data-obj="{{ obj }}"

@@ -11,13 +11,13 @@ import { Button } from "@commonComponents/Elements/Button";
 import Formulaire from "@commonFunctions/formulaire";
 import Validateur from "@commonFunctions/validateur";
 
-const URL_INDEX_ELEMENTS    = "admin_help_faq_index";
+const URL_INDEX_ELEMENTS    = "user_help_product_read";
 const URL_CREATE_ELEMENT    = "api_help_faq_questions_create";
 const URL_UPDATE_GROUP      = "api_help_faq_questions_update";
 const TEXT_CREATE           = "Ajouter la question";
 const TEXT_UPDATE           = "Enregistrer les modifications";
 
-export function QuestionFormulaire ({ context, element, category })
+export function QuestionFormulaire ({ context, element, category, productSlug })
 {
     let url = Routing.generate(URL_CREATE_ELEMENT);
 
@@ -29,6 +29,7 @@ export function QuestionFormulaire ({ context, element, category })
         context={context}
         url={url}
         category={category}
+        productSlug={productSlug}
         name={element ? Formulaire.setValue(element.name) : ""}
         content={element ? Formulaire.setValue(element.content) : ""}
     />
@@ -37,6 +38,7 @@ export function QuestionFormulaire ({ context, element, category })
 }
 
 QuestionFormulaire.propTypes = {
+    productSlug: PropTypes.string.isRequired,
     context: PropTypes.string.isRequired,
     category: PropTypes.object.isRequired,
     element: PropTypes.object,
@@ -50,6 +52,7 @@ class Form extends Component {
 
         this.state = {
             category: props.category.id,
+            productSlug: props.productSlug,
             name: props.name,
             content: { value: content, html: content },
             errors: [],
@@ -68,7 +71,7 @@ class Form extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const { context, url } = this.props;
+        const { context, url, productSlug } = this.props;
         const { name, content, category } = this.state;
 
         this.setState({ errors: [] });
@@ -88,7 +91,7 @@ class Form extends Component {
 
             axios({ method: context === "update" ? "PUT" : "POST", url: url, data: this.state })
                 .then(function (response) {
-                    location.href = Routing.generate(URL_INDEX_ELEMENTS, {'cat': category});
+                    location.href = Routing.generate(URL_INDEX_ELEMENTS, {'slug': productSlug, 'cat': category});
                 })
                 .catch(function (error) { Formulaire.displayErrors(self, error); Formulaire.loader(false); })
             ;
@@ -133,6 +136,7 @@ class Form extends Component {
 }
 
 Form.propTypes = {
+    productSlug: PropTypes.string.isRequired,
     context: PropTypes.string.isRequired,
     url: PropTypes.node.isRequired,
     name: PropTypes.string.isRequired,

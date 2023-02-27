@@ -40,11 +40,13 @@ if(cat){
 let quest = document.getElementById("help_faq_question_update");
 if(quest){
     createRoot(quest).render(<QuestionFormulaire context="update" element={JSON.parse(quest.dataset.obj)}
-                                                 category={JSON.parse(quest.dataset.category)} />)
+                                                 category={JSON.parse(quest.dataset.category)}
+                                                 productSlug={quest.dataset.productSlug} />)
 }
 
 quest = document.getElementById("help_faq_question_create");
 if(quest){
     createRoot(quest).render(<QuestionFormulaire context="create" element={null}
-                                                 category={JSON.parse(quest.dataset.category)} />)
+                                                 category={JSON.parse(quest.dataset.category)}
+                                                 productSlug={quest.dataset.productSlug} />)
 }

@@ -56,7 +56,8 @@ export function FaqList ({ role, productSlug, categories, questions, defaultCate
         }, function(error) { return Promise.reject(error); });
         instance({ method: "DELETE", url: url, data: {} })
             .then(function (response) {
-                location.href = Routing.generate(URL_INDEX_ELEMENTS, {'slug': productSlug});
+                let params = response.data.message ? {'slug': productSlug} : {'slug': productSlug, 'cat': response.data.id};
+                location.href = Routing.generate(URL_INDEX_ELEMENTS, params);
             })
             .catch(function (error) { Formulaire.displayErrors(self, error); })
         ;

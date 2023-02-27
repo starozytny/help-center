@@ -1,17 +1,23 @@
 {% extends 'user/pages/products/template.html.twig' %}
 
-{% set page_title %}Création d'une question pour la catégorie : {{ category.name }}{% endset %}
-{% set page_subtitle %}Ajouter une question à {{ category.name }}{% endset %}
+{% set page_title %}Création d'une question pour la catégorie : {{ category.name }} de {{ product.name }}{% endset %}
+{% set page_subtitle %}Ajouter une question à la FAQ de {{ product.name }} à la catégorie {{ category.name }}{% endset %}
 
 {% block breadcrumb %}
-    {% set breadcrumbs = breadcrumbs | merge([{ icon:'add', text: page_title }]) %}
+    {% set breadcrumbs = breadcrumbs | merge([
+        { text: product.name, url: path('user_help_product_read', {'slug': product.name})  },
+        { text: page_title }
+    ]) %}
     {{ parent() }}
 {% endblock %}
 
 {% block main_content %}
-    {% include "layout/components/admin/page_toolbar.html.twig" with { page_back: path('admin_help_faq_index') } %}
+    {% include "layout/components/admin/page_toolbar.html.twig" with { page_back: path('user_help_product_read', {'slug': product.slug, 'cat': category.id}) } %}
 
-    <div id="help_faq_question_create" data-category="{{ cat }}">
+    <div id="help_faq_question_create"
+         data-category="{{ cat }}"
+         data-product-slug="{{ product.slug }}"
+    >
         {% include "layout/components/loader.html.twig" %}
     </div>
 {% endblock %}
