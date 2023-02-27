@@ -11,6 +11,23 @@
 {% endblock %}
 
 {% block main_content %}
+    {% set force_user = app.request.get('force_user') %}
+    {% if app.user.admin %}
+        <div class="page-actions">
+            {% if force_user == null %}
+                {% set url = path('user_help_product', {'slug': elem.slug, 'force_user': true}) %}
+            {% else %}
+                {% set url = path('user_help_product', {'slug': elem.slug}) %}
+            {% endif %}
+
+            <div>Vue actuel : <span class="txt-danger">{{ force_user == null ? "Administrateur" : "Utilisateur" }}</span></div>
+
+            <a href="{{ url }}" class="btn btn-default">
+                <span class="icon-vision"></span>
+                <span>Activer le vue {{ force_user == null ? "utilisateur" : "administrateur" }}</span>
+            </a>
+        </div>
+    {% endif %}
     <div class="page-default">
         <div class="product-read">
             <div class="product-line-0">
@@ -47,7 +64,7 @@
                     <h2>Tutoriels</h2>
                     <div class="subtitle">Prenez en main facilement le {{ typeString }} avec des nos tutoriels</div>
                 </div>
-                {% if app.user.admin %}
+                {% if app.user.admin and force_user == null %}
                     <div class="btn-add">
                         <a href="" class="btn btn-danger">
                             <span class="icon-add"></span>
@@ -106,7 +123,7 @@
                     <h2>Documentation</h2>
                     <div class="subtitle">Le meilleur moyen de maitriser l'utilisation du {{ typeString }}.</div>
                 </div>
-                {% if app.user.admin %}
+                {% if app.user.admin and force_user == null %}
                     <div class="btn-add">
                         <a href="" class="btn btn-danger">
                             <span class="icon-add"></span>
