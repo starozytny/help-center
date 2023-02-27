@@ -11,7 +11,7 @@
 {% block main_content %}
     {% include "layout/components/admin/page_toolbar.html.twig" with { page_back: path('user_help_product_read', {'slug': product.slug}) } %}
 
-    <div id="documentations_create">
+    <div id="documentations_create" data-product-slug="{{ product.slug }}">
         {% include "layout/components/loader.html.twig" %}
     </div>
 {% endblock %}

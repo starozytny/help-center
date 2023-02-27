@@ -71,6 +71,36 @@ Input.propTypes = {
 }
 
 /***************************************
+ * INPUT Icon
+ ***************************************/
+export function InputIcon (props)
+{
+    const { icons, valeur, onChange, children } = props;
+
+    let content = <>
+        <div className="icons-choice">
+            {icons.map((choice, index) => {
+                return <div className={"icon-choice" + (choice === valeur ? " active" : "")} key={index}
+                            onClick={() => onChange(choice)}>
+                    <span className={"icon-" + choice}></span>
+                </div>
+            })}
+        </div>
+    </>
+
+    return <Structure {...props} content={content} label={children} />
+}
+
+InputIcon.propTypes = {
+    identifiant: PropTypes.string.isRequired,
+    valeur: PropTypes.node.isRequired,
+    icons: PropTypes.array.isRequired,
+    errors: PropTypes.array.isRequired,
+    onChange: PropTypes.func.isRequired,
+    children: PropTypes.node,
+}
+
+/***************************************
  * INPUT CITY
  ***************************************/
 export function InputCity (props)

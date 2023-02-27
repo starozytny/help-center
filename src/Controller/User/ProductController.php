@@ -12,7 +12,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/espace-membre/produits', name: 'user_help_')]
 class ProductController extends AbstractController
 {
-    #[Route('/produit/{slug}', name: 'product_read')]
+    #[Route('/produit/{slug}', name: 'product_read', options: ['expose' => true])]
     public function productRead($slug, HeProductRepository $productRepository,
                             HeDocumentationRepository $documentationRepository): Response
     {

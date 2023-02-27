@@ -57,8 +57,9 @@ class DonneesInitDocumentationsCommand extends Command
 
         $data =  [
             [
+                'icon' => "check1",
                 'name' => "Le statut des biens",
-                'description' => '
+                'description' => ['value' => '', 'html' => '
                     Expliquons la signification des symboles
                     <div class="badges-custom">
                         <span class="badge-custom-lotys">
@@ -70,8 +71,9 @@ class DonneesInitDocumentationsCommand extends Command
                         <span class="badge-custom-lotys" style="color: var(--txt); background-color: var(--grey0Opacity4)">
                             <span class="icon-pause"></span>
                         </span>
-                    </div>',
-                'content' => ['value' => '', 'html' => '']
+                    </div>'],
+                'content' => ['value' => '', 'html' => ''],
+                'duration' => null
             ],
         ];
 

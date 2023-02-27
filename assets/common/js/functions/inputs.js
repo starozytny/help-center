@@ -29,6 +29,20 @@ function getZipcodes(self, name = "arrayZipcodes")
     ;
 }
 
+function getIcons(self, name = "icons", loadName = "loadIcons")
+{
+    fetch(window.location.origin + '/selection.json')
+        .then((response) => response.json())
+        .then((json) => {
+            let icons = json.icons;
+            let data = [];
+            icons.forEach(icon => {
+                data.push(icon.properties.name);
+            })
+            self.setState({ [name]: data, [loadName]: false })
+        });
+}
+
 function cityInput(self, e, source, zipcodes, nameStateCity = "city")
 {
     let name = e.currentTarget.name;
@@ -151,4 +165,5 @@ module.exports = {
     textNumericInput,
     textNumericWithMinusInput,
     textMoneyMinusInput,
+    getIcons,
 }

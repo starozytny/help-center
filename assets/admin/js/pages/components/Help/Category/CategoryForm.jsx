@@ -10,6 +10,7 @@ import { LoaderTxt }        from "@commonComponents/Elements/Loader";
 
 import Formulaire from "@commonFunctions/formulaire";
 import Validateur from "@commonFunctions/validateur";
+import Inputs from "@commonFunctions/inputs";
 
 const URL_INDEX_ELEMENTS    = "admin_help_faq_index";
 const URL_CREATE_ELEMENT    = "api_help_faq_categories_create";
@@ -59,19 +60,7 @@ class Form extends Component {
         }
     }
 
-    componentDidMount = () => {
-        let self = this;
-        fetch(window.location.origin + '/selection.json')
-            .then((response) => response.json())
-            .then((json) => {
-                let icons = json.icons;
-                let data = [];
-                icons.forEach(icon => {
-                    data.push(icon.properties.name);
-                })
-                self.setState({ icons: data, loadIcons: false })
-            });
-    }
+    componentDidMount = () => { Inputs.getIcons(this); }
 
     handleChange = (e) => { this.setState({[e.currentTarget.name]: e.currentTarget.value}) }
 

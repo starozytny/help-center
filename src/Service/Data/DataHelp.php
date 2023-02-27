@@ -27,11 +27,14 @@ class DataHelp
 
     public function setDataDocumentation(HeDocumentation $obj, $data): HeDocumentation
     {
+        $duration = str_replace('h', ':', $data->duration);
+
         return ($obj)
+            ->setIcon($this->sanitizeData->trimData($data->icon))
             ->setName($this->sanitizeData->trimData($data->name))
             ->setSlug($this->sanitizeData->slugString($data->name))
-            ->setDescription($this->sanitizeData->trimData($data->description))
-            ->setDuration(null)
+            ->setDuration($this->sanitizeData->createTimePicker($duration))
+            ->setDescription($this->sanitizeData->trimData($data->description->html))
             ->setContent($this->sanitizeData->trimData($data->content->html))
         ;
     }

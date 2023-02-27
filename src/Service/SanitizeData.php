@@ -69,4 +69,13 @@ class SanitizeData
 
         return $return;
     }
+
+    public function createTimePicker($value, $return = null): ?DateTime
+    {
+        if($value != "" && $value != null){
+            return DateTime::createFromFormat('H:i', $value);
+        }
+
+        return $return;
+    }
 }
