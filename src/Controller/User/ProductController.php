@@ -2,17 +2,19 @@
 
 namespace App\Controller\User;
 
+use App\Entity\Main\Help\HeDocumentation;
 use App\Repository\Main\Help\HeDocumentationRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/espace-membre/produits', name: 'user_help_')]
 class ProductController extends AbstractController
 {
-    #[Route('/produit/{slug}', name: 'product_read', options: ['expose' => true])]
+    #[Route('/produit/{slug}', name: 'product_read')]
     public function productRead($slug, HeProductRepository $productRepository,
                             HeDocumentationRepository $documentationRepository): Response
     {
@@ -25,7 +27,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/{p_slug}/documentation/{slug}', name: 'documentation_read')]
+    #[Route('/produit/{p_slug}/documentation/{slug}', name: 'documentation_read', options: ['expose' => true])]
     public function documentationRead($p_slug, $slug, HeProductRepository $productRepository,
                          HeDocumentationRepository $documentationRepository): Response
     {
@@ -45,6 +47,21 @@ class ProductController extends AbstractController
 
         return $this->render('user/pages/documentations/create.html.twig', [
             'product' => $product,
+        ]);
+    }
+
+    #[Route('/produit/{slug}/documentations/update/{id}', name: 'documentation_update')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function documentationUpdate($slug, HeDocumentation $obj, HeProductRepository $productRepository,
+                                        SerializerInterface $serializer): Response
+    {
+        $product = $productRepository->findOneBy(['slug' => $slug]);
+        $element = $serializer->serialize($obj, 'json', ['groups' => HeDocumentation::FORM]);
+
+        return $this->render('user/pages/documentations/update.html.twig', [
+            'product' => $product,
+            'elem' => $obj,
+            'element' => $element,
         ]);
     }
 }

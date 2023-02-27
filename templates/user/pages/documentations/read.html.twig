@@ -28,18 +28,20 @@
                         <span class="icon-book-1"></span>
                         <span>{{ product.name }}</span>
                     </div>
-                    <div class="duration">
-                        <span class="icon-time"></span>
-                        <span>5 minutes de lecture</span>
-                    </div>
+                    {% if elem.duration %}
+                        <div class="duration">
+                            <span class="icon-time"></span>
+                            <span>{{ elem.duration | date("H\\hi") }} temps de lecture</span>
+                        </div>
+                    {% endif %}
                     <div class="likes">
                         <div class="item">
                             <span class="icon-like"></span>
-                            <span>0</span>
+                            <span>{{ elem.nbLike }}</span>
                         </div>
                         <div class="item">
                             <span class="icon-dislike"></span>
-                            <span>0</span>
+                            <span>{{ elem.nbDislike }}</span>
                         </div>
                     </div>
                 </div>

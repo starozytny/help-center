@@ -7,7 +7,7 @@ import { DocumentationFormulaire } from "./components/Documentations/Documentati
 let el = document.getElementById("documentations_update");
 if(el){
     createRoot(el).render(<DocumentationFormulaire context="update" productSlug={el.dataset.productSlug}
-                                                   element={JSON.parse(el.dataset.obj)} />)
+                                                   element={JSON.parse(el.dataset.element)} />)
 }
 
 el = document.getElementById("documentations_create");

@@ -1,7 +1,7 @@
 {% extends 'user/pages/documentations/template.html.twig' %}
 
-{% set page_title %}Création d'une documentation pour {{ product.name }}{% endset %}
-{% set page_subtitle %}Décrivez une fonctionnalité ou caractéristique de votre solution.{% endset %}
+{% set page_title %}Modifier : {{ elem.name }}{% endset %}
+{% set page_subtitle %}Modifiez les informations de la documentation {{ product.name }} : {{ elem.name }}.{% endset %}
 
 {% block breadcrumb %}
     {% set breadcrumbs = breadcrumbs | merge([
@@ -14,7 +14,7 @@
 {% block main_content %}
     {% include "layout/components/admin/page_toolbar.html.twig" with { page_back: path('user_help_product_read', {'slug': product.slug}) } %}
 
-    <div id="documentations_create" data-product-slug="{{ product.slug }}">
+    <div id="documentations_update" data-element="{{ element }}" data-product-slug="{{ product.slug }}">
         {% include "layout/components/loader.html.twig" %}
     </div>
 {% endblock %}

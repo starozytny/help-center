@@ -13,7 +13,7 @@ import Formulaire           from "@commonFunctions/formulaire";
 import Validateur           from "@commonFunctions/validateur";
 import Inputs               from "@commonFunctions/inputs";
 
-const URL_INDEX_ELEMENTS    = "user_help_product_read";
+const URL_INDEX_ELEMENTS    = "user_help_documentation_read";
 const URL_CREATE_ELEMENT    = "api_help_documentations_create";
 const URL_UPDATE_GROUP      = "api_help_documentations_update";
 const TEXT_CREATE           = "Ajouter la documentation";
@@ -117,7 +117,9 @@ class Form extends Component {
             let self = this;
             Formulaire.loader(true);
             axios({ method: context === "update" ? "PUT" : "POST", url: url, data: this.state })
-                .then(function (response) { location.href = Routing.generate(URL_INDEX_ELEMENTS, {'slug': productSlug}); })
+                .then(function (response) {
+                    location.href = Routing.generate(URL_INDEX_ELEMENTS, {'p_slug': productSlug, 'slug': response.data.slug});
+                })
                 .catch(function (error) { Formulaire.displayErrors(self, error); Formulaire.loader(false); })
             ;
         }

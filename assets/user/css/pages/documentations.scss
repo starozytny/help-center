@@ -18,7 +18,7 @@
     @include flex(column, flex-end, flex-start, 4px);
   }
 
-  .duration, .product, .user{
+  .duration, .product, .user, .likes .item{
     @include flex(row, center, flex-start, 6px);
   }
 

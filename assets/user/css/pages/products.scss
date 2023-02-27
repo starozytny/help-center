@@ -69,7 +69,7 @@
     background-color: var(--color0Opacity4);
     border-radius: calc(var(--radius) * 2);
     width: 100%;
-    max-width: 366px;
+    max-width: 321px;
 
     .card-header, .card-body{
       padding: var(--espaceDiv);
@@ -88,6 +88,7 @@
       border-bottom: 1px solid var(--color3);
       opacity: 0.85;
       font-size: 15px;
+      min-height: 100px;
     }
 
     .card-footer{

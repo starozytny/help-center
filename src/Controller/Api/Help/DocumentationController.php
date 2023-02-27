@@ -49,7 +49,7 @@ class DocumentationController extends AbstractController
         }
 
         $repository->save($obj, true);
-        return $apiResponse->apiJsonResponseSuccessful("ok");
+        return $apiResponse->apiJsonResponse($obj, HeDocumentation::READ);
     }
 
     #[Route('/product/{slug}/documentation/create', name: 'create', options: ['expose' => true], methods: 'POST')]
@@ -60,7 +60,7 @@ class DocumentationController extends AbstractController
     }
 
     #[Route('/product/{slug}/documentation/update/{id}', name: 'update', options: ['expose' => true], methods: 'PUT')]
-    public function update(Request $request, HeProduct $slug, HeDocumentation $obj, ApiResponse $apiResponse, ValidatorService $validator,
+    public function update(Request $request, $slug, HeDocumentation $obj, ApiResponse $apiResponse, ValidatorService $validator,
                            DataHelp $dataEntity, HeDocumentationRepository $repository, HeProductRepository $productRepository): Response
     {
         return $this->submitForm("update", $repository, $obj, $slug, $request, $apiResponse, $validator, $dataEntity, $productRepository);

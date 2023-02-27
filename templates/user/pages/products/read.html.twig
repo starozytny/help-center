@@ -146,12 +146,36 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <a
-                                        href="{{ path('user_help_documentation_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
-                                        class="txt-button txt-button-primary"
-                                >
-                                    <span>En savoir plus</span>
-                                </a>
+                                {% if app.user.admin and force_user == null %}
+                                    <a
+                                            href="{{ path('user_help_documentation_update', {'slug': elem.slug, 'id': el.id}) }}"
+                                            class="btn-icon"
+                                    >
+                                        <span class="icon-pencil"></span>
+                                        <span class="tooltip">Modifier</span>
+                                    </a>
+                                    <a
+                                            href="{{ path('user_help_product_read', {'slug': elem.slug}) }}"
+                                            class="btn-icon"
+                                    >
+                                        <span class="icon-trash"></span>
+                                        <span class="tooltip">Supprimer</span>
+                                    </a>
+                                    <a
+                                            href="{{ path('user_help_documentation_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
+                                            class="btn-icon"
+                                    >
+                                        <span class="icon-vision"></span>
+                                        <span class="tooltip" style="width: 96px">En savoir plus</span>
+                                    </a>
+                                {% else %}
+                                    <a
+                                            href="{{ path('user_help_documentation_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
+                                            class="txt-button txt-button-primary"
+                                    >
+                                        <span>En savoir plus</span>
+                                    </a>
+                                {% endif %}
                             </div>
                         </div>
                     {% endfor %}

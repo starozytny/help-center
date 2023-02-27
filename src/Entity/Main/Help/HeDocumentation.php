@@ -7,28 +7,38 @@ use App\Entity\Main\User;
 use App\Repository\Main\Help\HeDocumentationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: HeDocumentationRepository::class)]
 class HeDocumentation extends DataEntity
 {
+    const FORM = ['doc_form'];
+    const READ = ['doc_read'];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['doc_form', 'doc_read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['doc_form'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['doc_read'])]
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['doc_form'])]
     private ?string $content = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['doc_form'])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    #[Groups(['doc_form'])]
     private ?\DateTimeInterface $duration = null;
 
     #[ORM\Column]
@@ -52,6 +62,7 @@ class HeDocumentation extends DataEntity
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['doc_form'])]
     private ?string $icon = null;
 
     public function __construct()
