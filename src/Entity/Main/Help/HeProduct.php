@@ -39,14 +39,18 @@ class HeProduct extends DataEntity
     private ?string $logo = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: HeDocumentation::class)]
-    private Collection $documentation;
+    private Collection $documentations;
+
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: HeTutorial::class)]
+    private Collection $tutorials;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: HeCategory::class)]
     private Collection $categories;
 
     public function __construct()
     {
-        $this->documentation = new ArrayCollection();
+        $this->documentations = new ArrayCollection();
+        $this->tutorials = new ArrayCollection();
         $this->categories = new ArrayCollection();
     }
 
@@ -140,15 +144,15 @@ class HeProduct extends DataEntity
     /**
      * @return Collection<int, HeDocumentation>
      */
-    public function getDocumentation(): Collection
+    public function getDocumentations(): Collection
     {
-        return $this->documentation;
+        return $this->documentations;
     }
 
     public function addDocumentation(HeDocumentation $documentation): self
     {
-        if (!$this->documentation->contains($documentation)) {
-            $this->documentation->add($documentation);
+        if (!$this->documentations->contains($documentation)) {
+            $this->documentations->add($documentation);
             $documentation->setProduct($this);
         }
 
@@ -157,10 +161,40 @@ class HeProduct extends DataEntity
 
     public function removeDocumentation(HeDocumentation $documentation): self
     {
-        if ($this->documentation->removeElement($documentation)) {
+        if ($this->documentations->removeElement($documentation)) {
             // set the owning side to null (unless already changed)
             if ($documentation->getProduct() === $this) {
                 $documentation->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HeTutorial>
+     */
+    public function getTutorials(): Collection
+    {
+        return $this->tutorials;
+    }
+
+    public function addTutorial(HeTutorial $tutorial): self
+    {
+        if (!$this->tutorials->contains($tutorial)) {
+            $this->tutorials->add($tutorial);
+            $tutorial->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTutorial(HeTutorial $tutorial): self
+    {
+        if ($this->tutorials->removeElement($tutorial)) {
+            // set the owning side to null (unless already changed)
+            if ($tutorial->getProduct() === $this) {
+                $tutorial->setProduct(null);
             }
         }
 

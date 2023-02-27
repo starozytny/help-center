@@ -73,32 +73,34 @@
                     </div>
                 {% endif %}
                 <div class="tutorials">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="name">Publies mes biens</div>
-                        </div>
-                        <div class="card-body">
-                            <div class="content">
-                                Procédure complète de publication de biens immobilier
+                    {% for el in tutorials %}
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="name">{{ el.name }}</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="content">
+                                    {{ el.description | raw }}
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a
+                                        href="{{ path('user_help_product_read', {'slug': elem.slug}) }}"
+                                        class="btn-icon"
+                                >
+                                    <span class="icon-vision"></span>
+                                    <span class="tooltip">Voir le tutoriel</span>
+                                </a>
+                                <a
+                                        href="{{ path('user_help_product_read', {'slug': elem.slug}) }}"
+                                        class="btn-icon"
+                                >
+                                    <span class="icon-heart"></span>
+                                    <span class="tooltip">Mettre en favoris</span>
+                                </a>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <a
-                                    href="{{ path('user_help_product_read', {'slug': elem.slug}) }}"
-                                    class="btn-icon"
-                            >
-                                <span class="icon-vision"></span>
-                                <span class="tooltip">Voir le tutoriel</span>
-                            </a>
-                            <a
-                                    href="{{ path('user_help_product_read', {'slug': elem.slug}) }}"
-                                    class="btn-icon"
-                            >
-                                <span class="icon-heart"></span>
-                                <span class="tooltip">Mettre en favoris</span>
-                            </a>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
 

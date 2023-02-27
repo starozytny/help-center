@@ -7,6 +7,7 @@ use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeQuestion;
 use App\Repository\Main\Help\HeDocumentationRepository;
 use App\Repository\Main\Help\HeProductRepository;
+use App\Repository\Main\Help\HeTutorialRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,14 +19,17 @@ class ProductController extends AbstractController
 {
     #[Route('/produit/{slug}', name: 'product_read', options: ['expose' => true])]
     public function productRead($slug, HeProductRepository $productRepository,
-                            HeDocumentationRepository $documentationRepository): Response
+                                HeDocumentationRepository $documentationRepository,
+                                HeTutorialRepository $tutorialRepository): Response
     {
         $obj = $productRepository->findOneBy(['slug' => $slug]);
         $documentations = $documentationRepository->findBy(['product' => $obj]);
+        $tutorials      = $tutorialRepository->findBy(['product' => $obj]);
 
         return $this->render('user/pages/products/read.html.twig', [
             'elem' => $obj,
-            'docs' => $documentations
+            'docs' => $documentations,
+            'tutorials' => $tutorials,
         ]);
     }
 

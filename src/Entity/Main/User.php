@@ -4,6 +4,7 @@ namespace App\Entity\Main;
 
 use App\Entity\DataEntity;
 use App\Entity\Main\Help\HeDocumentation;
+use App\Entity\Main\Help\HeTutorial;
 use App\Repository\Main\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -96,6 +97,9 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: HeDocumentation::class)]
     private Collection $documentations;
 
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: HeTutorial::class)]
+    private Collection $tutorials;
+
     /**
      * @throws Exception
      */
@@ -104,6 +108,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
         $this->createdAt = $this->initNewDateImmutable();
         $this->token = $this->initToken();
         $this->documentations = new ArrayCollection();
+        $this->tutorials = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -407,6 +412,36 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
             // set the owning side to null (unless already changed)
             if ($documentation->getAuthor() === $this) {
                 $documentation->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HeTutorial>
+     */
+    public function getTutorials(): Collection
+    {
+        return $this->tutorials;
+    }
+
+    public function addTutorial(HeTutorial $tutorial): self
+    {
+        if (!$this->tutorials->contains($tutorial)) {
+            $this->tutorials->add($tutorial);
+            $tutorial->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTutorial(HeTutorial $tutorial): self
+    {
+        if ($this->tutorials->removeElement($tutorial)) {
+            // set the owning side to null (unless already changed)
+            if ($tutorial->getAuthor() === $this) {
+                $tutorial->setAuthor(null);
             }
         }
 
