@@ -15,9 +15,9 @@
     {% if app.user.admin %}
         <div class="page-actions">
             {% if force_user == null %}
-                {% set url = path('user_help_product', {'slug': elem.slug, 'force_user': true}) %}
+                {% set url = path('user_help_product_read', {'slug': elem.slug, 'force_user': true}) %}
             {% else %}
-                {% set url = path('user_help_product', {'slug': elem.slug}) %}
+                {% set url = path('user_help_product_read', {'slug': elem.slug}) %}
             {% endif %}
 
             <div>Vue actuel : <span class="txt-danger">{{ force_user == null ? "Administrateur" : "Utilisateur" }}</span></div>
@@ -84,14 +84,14 @@
                         </div>
                         <div class="card-footer">
                             <a
-                                    href="{{ path('user_help_product', {'slug': elem.slug}) }}"
+                                    href="{{ path('user_help_product_read', {'slug': elem.slug}) }}"
                                     class="btn-icon"
                             >
                                 <span class="icon-vision"></span>
                                 <span class="tooltip">Voir le tutoriel</span>
                             </a>
                             <a
-                                    href="{{ path('user_help_product', {'slug': elem.slug}) }}"
+                                    href="{{ path('user_help_product_read', {'slug': elem.slug}) }}"
                                     class="btn-icon"
                             >
                                 <span class="icon-heart"></span>
@@ -125,7 +125,7 @@
                 </div>
                 {% if app.user.admin and force_user == null %}
                     <div class="btn-add">
-                        <a href="" class="btn btn-danger">
+                        <a href="{{ path('user_help_documentation_create', {'slug': elem.slug}) }}" class="btn btn-danger">
                             <span class="icon-add"></span>
                             <span>Ajouter une documentation</span>
                         </a>
@@ -147,7 +147,7 @@
                             </div>
                             <div class="card-footer">
                                 <a
-                                        href="{{ path('user_help_documentation', {'p_slug': elem.slug, 'slug': el.slug}) }}"
+                                        href="{{ path('user_help_documentation_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
                                         class="txt-button txt-button-primary"
                                 >
                                     <span>En savoir plus</span>

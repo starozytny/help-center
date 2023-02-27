@@ -8,7 +8,7 @@
 
 {% block breadcrumb %}
     {% set breadcrumbs = breadcrumbs | merge([
-        { text: product.name, url: path('user_help_product', {'slug': product.name})  },
+        { text: product.name, url: path('user_help_product_read', {'slug': product.name})  },
         { text: page_title, icon: elem.icon }
     ]) %}
     {{ parent() }}
@@ -16,7 +16,7 @@
 
 {% block main_content %}
     {% include "layout/components/admin/page_toolbar.html.twig" with {
-        page_back: path('user_help_product', {'slug': product.slug}),
+        page_back: path('user_help_product_read', {'slug': product.slug}),
         page_back_text: 'Retourner à ' ~ product.name
     } %}
 
