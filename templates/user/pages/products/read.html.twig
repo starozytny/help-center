@@ -190,6 +190,7 @@
                 <div class="faqs">
                     <div id="help_faq_list"
                          data-role="{{ app.user.admin and force_user == null ? "admin" : "user" }}"
+                         data-category="{{ app.request.get('cat') }}"
                          data-product-id="{{ elem.id }}"
                          data-product-slug="{{ elem.slug }}"
                     >

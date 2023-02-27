@@ -75,15 +75,19 @@ class ProductController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
 
-        return $this->render('user/pages/faq/category/create.html.twig');
+        return $this->render('user/pages/faq/category/create.html.twig', [
+            'product' => $product,
+        ]);
     }
 
     #[Route('/produit/{slug}/categorie/modifier/{id}', name: 'category_update', options: ['expose' => true])]
     #[IsGranted('ROLE_ADMIN')]
-    public function categoryUpdate(HeCategory $elem, SerializerInterface $serializer): Response
+    public function categoryUpdate($slug, HeCategory $elem, HeProductRepository $productRepository, SerializerInterface $serializer): Response
     {
+        $product = $productRepository->findOneBy(['slug' => $slug]);
+
         $obj  = $serializer->serialize($elem, 'json', ['groups' => HeCategory::FORM]);
-        return $this->render('user/pages/faq/category/update.html.twig', ['elem' => $elem, 'obj' => $obj]);
+        return $this->render('user/pages/faq/category/update.html.twig', ['product' => $product, 'elem' => $elem, 'obj' => $obj]);
     }
 
     #[Route('/produit/{slug}/question/{category}/ajouter', name: 'question_create', options: ['expose' => true])]

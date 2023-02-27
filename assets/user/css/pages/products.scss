@@ -1,5 +1,6 @@
 @import "../vars/vars";
 
+@import "./components/form";
 @import "../components/help";
 
 .delete-doc{
@@ -164,7 +165,7 @@
     margin: 0;
   }
 
-  .help-categories > .item{
+  .help-categories > .item:not(.active){
     background-color: var(--color0Opacity1);
   }
 }

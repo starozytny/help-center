@@ -12,13 +12,13 @@ import Formulaire from "@commonFunctions/formulaire";
 import Validateur from "@commonFunctions/validateur";
 import Inputs from "@commonFunctions/inputs";
 
-const URL_INDEX_ELEMENTS    = "admin_help_faq_index";
+const URL_INDEX_ELEMENTS    = "user_help_product_read";
 const URL_CREATE_ELEMENT    = "api_help_faq_categories_create";
 const URL_UPDATE_GROUP      = "api_help_faq_categories_update";
 const TEXT_CREATE           = "Ajouter la catégorie";
 const TEXT_UPDATE           = "Enregistrer les modifications";
 
-export function CategoryFormulaire ({ context, element })
+export function CategoryFormulaire ({ context, element, productSlug })
 {
     let url = Routing.generate(URL_CREATE_ELEMENT);
 
@@ -29,6 +29,7 @@ export function CategoryFormulaire ({ context, element })
     let form = <Form
         context={context}
         url={url}
+        productSlug={productSlug}
         id={element ? element.id : ""}
         name={element ? Formulaire.setValue(element.name) : ""}
         icon={element ? Formulaire.setValue(element.icon) : ""}
@@ -41,6 +42,7 @@ export function CategoryFormulaire ({ context, element })
 
 CategoryFormulaire.propTypes = {
     context: PropTypes.string.isRequired,
+    productSlug: PropTypes.string.isRequired,
     element: PropTypes.object,
 }
 
@@ -49,6 +51,7 @@ class Form extends Component {
         super(props);
 
         this.state = {
+            productSlug: props.productSlug,
             name: props.name,
             icon: props.icon,
             subtitle: props.subtitle,
@@ -69,7 +72,7 @@ class Form extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const { context, url, id } = this.props;
+        const { context, url, productSlug } = this.props;
         const { name, icon, subtitle } = this.state;
 
         this.setState({ errors: [] });
@@ -89,7 +92,7 @@ class Form extends Component {
 
             axios({ method: context === "update" ? "PUT" : "POST", url: url, data: this.state })
                 .then(function (response) {
-                    location.href = Routing.generate(URL_INDEX_ELEMENTS, {'cat': response.data.id});
+                    location.href = Routing.generate(URL_INDEX_ELEMENTS, {'slug': productSlug, 'cat': response.data.id});
                 })
                 .catch(function (error) { Formulaire.displayErrors(self, error); Formulaire.loader(false); })
             ;
@@ -173,6 +176,7 @@ class Form extends Component {
 Form.propTypes = {
     context: PropTypes.string.isRequired,
     url: PropTypes.node.isRequired,
+    productSlug: PropTypes.string.isRequired,
     id: PropTypes.node.isRequired,
     name: PropTypes.string.isRequired,
     icon: PropTypes.string.isRequired,

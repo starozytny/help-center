@@ -1,10 +1,13 @@
-{% extends 'user/pages/faq/template.html.twig' %}
+{% extends 'user/pages/products/template.html.twig' %}
 
-{% set page_title %}Modifier {{ elem.name }} #{{ elem.id }}{% endset %}
-{% set page_subtitle %}Modifier les informations de {{ elem.name}} : #{{ elem.id }}.{% endset %}
+{% set page_title %}Modifier : {{ elem.name }}{% endset %}
+{% set page_subtitle %}Modifiez les informations de la FAQ de {{ product.name }} : {{ elem.name}}{% endset %}
 
 {% block breadcrumb %}
-    {% set breadcrumbs = breadcrumbs | merge([{ icon:'pencil', text: page_title }]) %}
+    {% set breadcrumbs = breadcrumbs | merge([
+        { text: product.name, url: path('user_help_product_read', {'slug': product.name})  },
+        { text: page_title }
+    ]) %}
     {{ parent() }}
 {% endblock %}
 
@@ -13,6 +16,7 @@
 
     <div id="help_faq_category_update"
          data-obj="{{ obj }}"
+         data-product-slug="{{ product.slug }}"
     >
         {% include "layout/components/loader.html.twig" %}
     </div>

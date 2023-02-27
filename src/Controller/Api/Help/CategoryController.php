@@ -4,6 +4,7 @@ namespace App\Controller\Api\Help;
 
 use App\Entity\Main\Help\HeCategory;
 use App\Repository\Main\Help\HeCategoryRepository;
+use App\Repository\Main\Help\HeProductRepository;
 use App\Repository\Main\Help\HeQuestionRepository;
 use App\Service\ApiResponse;
 use App\Service\Data\DataHelp;
@@ -18,14 +19,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     public function submitForm($type, HeCategoryRepository $repository, HeCategory $obj, Request $request, ApiResponse $apiResponse,
-                               ValidatorService $validator, DataHelp $dataEntity): JsonResponse
+                               ValidatorService $validator, DataHelp $dataEntity, HeProductRepository $productRepository): JsonResponse
     {
         $data = json_decode($request->getContent());
         if ($data === null) {
             return $apiResponse->apiJsonResponseBadRequest('Les données sont vides.');
         }
 
+        $product = $productRepository->findOneBy(['slug' => $data->productSlug]);
+        if(!$product){
+            return $apiResponse->apiJsonResponseBadRequest('Produit introuvable.');
+        }
+
         $obj = $dataEntity->setDataHeCategory($obj, $data);
+        $obj->setProduct($product);
 
         $noErrors = $validator->validate($obj);
         if ($noErrors !== true) {
@@ -38,16 +45,16 @@ class CategoryController extends AbstractController
 
     #[Route('/create', name: 'create', options: ['expose' => true], methods: 'POST')]
     public function create(Request $request, ApiResponse $apiResponse, ValidatorService $validator,
-                           DataHelp $dataEntity, HeCategoryRepository $repository): Response
+                           DataHelp $dataEntity, HeCategoryRepository $repository, HeProductRepository $productRepository): Response
     {
-        return $this->submitForm("create", $repository, new HeCategory(), $request, $apiResponse, $validator, $dataEntity);
+        return $this->submitForm("create", $repository, new HeCategory(), $request, $apiResponse, $validator, $dataEntity, $productRepository);
     }
 
     #[Route('/update/{id}', name: 'update', options: ['expose' => true], methods: 'PUT')]
     public function update(Request $request, HeCategory $obj, ApiResponse $apiResponse, ValidatorService $validator,
-                           DataHelp $dataEntity, HeCategoryRepository $repository): Response
+                           DataHelp $dataEntity, HeCategoryRepository $repository, HeProductRepository $productRepository): Response
     {
-        return $this->submitForm("update", $repository, $obj, $request, $apiResponse, $validator, $dataEntity);
+        return $this->submitForm("update", $repository, $obj, $request, $apiResponse, $validator, $dataEntity, $productRepository);
     }
 
     #[Route('/delete/{id}', name: 'delete', options: ['expose' => true], methods: 'DELETE')]
