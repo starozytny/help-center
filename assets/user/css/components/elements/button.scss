@@ -16,6 +16,7 @@ $data:
         "grey3" var(--grey3) var(--grey3) var(--alpha),
         "grey4" var(--grey4) var(--grey4) var(--alpha),
         "default" var(--alpha) var(--grey2) var(--txt),
+        "reverse" var(--grey2) var(--grey2) var(--txt),
 ;
 
 @each $name, $bg, $border, $txt in $data {

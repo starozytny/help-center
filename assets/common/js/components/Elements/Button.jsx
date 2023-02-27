@@ -10,12 +10,12 @@ export function Button(props){
     if(element === "button"){
         return <button className={`btn${loaderClasse} btn-${outline ? "outline-" : ""}${type}`}
                        type={isSubmit ? "submit" : "button"} onClick={onClick}>
-            <Content icon={icon} iconPosition={iconPosition} children={children} />
+            <Content icon={icon ? icon : (isLoader ? 'chart-3' : '')} iconPosition={iconPosition} children={children} />
         </button>
     }else{
         return <a className={`btn${loaderClasse} btn-${outline ? "outline-" : ""}${type}`}
                   target={target} href={onClick}>
-            <Content icon={icon} iconPosition={iconPosition} children={children} />
+            <Content icon={icon ? icon : (isLoader ? 'chart-3' : '')} iconPosition={iconPosition} children={children} />
         </a>
     }
 }

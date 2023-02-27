@@ -3,7 +3,6 @@
 namespace App\Controller\Api\Help;
 
 use App\Entity\Main\Help\HeDocumentation;
-use App\Entity\Main\Help\HeProduct;
 use App\Repository\Main\Help\HeDocumentationRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Service\ApiResponse;

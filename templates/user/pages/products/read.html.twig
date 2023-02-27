@@ -154,13 +154,13 @@
                                         <span class="icon-pencil"></span>
                                         <span class="tooltip">Modifier</span>
                                     </a>
-                                    <a
-                                            href="{{ path('user_help_product_read', {'slug': elem.slug}) }}"
-                                            class="btn-icon"
+                                    <div class="delete-doc"
+                                         data-id="{{ el.id }}"
+                                         data-name="{{ el.name }}"
+                                         data-product-slug="{{ elem.slug }}"
                                     >
-                                        <span class="icon-trash"></span>
-                                        <span class="tooltip">Supprimer</span>
-                                    </a>
+                                        <button class="btn-icon btn-loader-without-text"><div class="icon-chart-3"></div></button>
+                                    </div>
                                     <a
                                             href="{{ path('user_help_documentation_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
                                             class="btn-icon"

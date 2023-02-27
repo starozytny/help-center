@@ -2,6 +2,10 @@
 
 @import "../components/help";
 
+.delete-doc{
+  @include flex(row, center, center);
+}
+
 .product-read{
   @include flex(column, flex-start, flex-start, calc(var(--espaceLayout) * 2));
 
@@ -102,15 +106,24 @@
         color: var(--alpha);
       }
 
+      & > .delete-doc .btn-icon{
+        &:hover{
+          .tooltip{
+            top: -27px;
+            right: -22px;
+          }
+        }
+      }
+
       & > *{
         position: relative;
         width: 100%;
         min-height: 48px;
 
-        &:hover{
+        &:not(.delete-doc):hover{
           .tooltip{
             top: -18px;
-            right: 40px;
+            right: 22px;
           }
         }
 
