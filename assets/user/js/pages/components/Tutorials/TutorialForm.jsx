@@ -4,22 +4,21 @@ import PropTypes from 'prop-types';
 import axios from "axios";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import { Input, InputIcon } from "@commonComponents/Elements/Fields";
-import { Trumb }            from "@commonComponents/Elements/Trumb";
-import { Button }           from "@commonComponents/Elements/Button";
-import { LoaderTxt }        from "@commonComponents/Elements/Loader";
+import { Input }    from "@commonComponents/Elements/Fields";
+import { Trumb }    from "@commonComponents/Elements/Trumb";
+import { Button }   from "@commonComponents/Elements/Button";
 
-import Formulaire           from "@commonFunctions/formulaire";
-import Validateur           from "@commonFunctions/validateur";
-import Inputs               from "@commonFunctions/inputs";
+import Formulaire   from "@commonFunctions/formulaire";
+import Validateur   from "@commonFunctions/validateur";
+import Inputs       from "@commonFunctions/inputs";
 
-const URL_INDEX_ELEMENTS    = "user_help_documentation_read";
-const URL_CREATE_ELEMENT    = "api_help_documentations_create";
-const URL_UPDATE_GROUP      = "api_help_documentations_update";
+const URL_INDEX_ELEMENTS    = "user_help_tutorial_read";
+const URL_CREATE_ELEMENT    = "api_help_tutorials_create";
+const URL_UPDATE_GROUP      = "api_help_tutorials_update";
 const TEXT_CREATE           = "Ajouter la documentation";
 const TEXT_UPDATE           = "Enregistrer les modifications";
 
-export function DocumentationFormulaire ({ context, element, productSlug })
+export function TutorialFormulaire ({ context, element, productSlug })
 {
     let url = Routing.generate(URL_CREATE_ELEMENT);
 
@@ -31,17 +30,15 @@ export function DocumentationFormulaire ({ context, element, productSlug })
         productSlug={productSlug}
         context={context}
         url={url}
-        icon={element ? Formulaire.setValue(element.icon) : ""}
         name={element ? Formulaire.setValue(element.name) : ""}
         duration={element ? Formulaire.setValueTime(element.duration) : ""}
         description={element ? Formulaire.setValue(element.description) : ""}
-        content={element ? Formulaire.setValue(element.content) : ""}
     />
 
     return <div className="formulaire">{form}</div>;
 }
 
-DocumentationFormulaire.propTypes = {
+TutorialFormulaire.propTypes = {
     productSlug: PropTypes.string.isRequired,
     context: PropTypes.string.isRequired,
     element: PropTypes.object,
@@ -52,22 +49,15 @@ class Form extends Component {
         super(props);
 
         let description = props.description ? props.description : "";
-        let content = props.content ? props.content : "";
 
         this.state = {
             productSlug: props.productSlug,
-            icon: props.icon,
             name: props.name,
             duration: props.duration,
             description: { value: description, html: description },
-            content: { value: content, html: content },
             errors: [],
-            icons: [],
-            loadIcons: true,
         }
     }
-
-    componentDidMount = () => { Inputs.getIcons(this); }
 
     handleChange = (e) => {
         let name  = e.currentTarget.name;
@@ -87,25 +77,18 @@ class Form extends Component {
         this.setState({[name]: {value: [name].value, html: text}})
     }
 
-    handleClickIcon = (icon) => { this.setState({ icon }) }
-
     handleSubmit = (e) => {
         e.preventDefault();
 
         const { context, url, productSlug } = this.props;
-        const { name, icon, duration, description, content } = this.state;
+        const { name, duration, description } = this.state;
 
         this.setState({ errors: [] });
 
         let paramsToValidate = [
             {type: "text",  id: 'name', value: name},
             {type: "text",  id: 'description', value: description.html},
-            {type: "text",  id: 'content', value: content.html},
         ];
-
-        if(icon !== ""){
-            paramsToValidate = [...paramsToValidate, ...[ {type: "text", id: 'icon', value: icon} ]];
-        }
 
         if(duration !== ""){
             paramsToValidate = [...paramsToValidate, ...[ {type: "time", id: 'duration', value: duration} ]];
@@ -128,10 +111,9 @@ class Form extends Component {
 
     render () {
         const { context } = this.props;
-        const { errors, loadIcons, name, icon, duration, description, content, icons } = this.state;
+        const { errors, name, duration, description, content } = this.state;
 
         let params  = { errors: errors, onChange: this.handleChange }
-        let params1 = { errors: errors, onChange: this.handleClickIcon }
 
         return <>
             <form onSubmit={this.handleSubmit}>
@@ -140,40 +122,19 @@ class Form extends Component {
                         <div className="line-col-1">
                             <div className="title">Informations générales</div>
                             <div className="subtitle">
-                                La description doit être très courte pour décrire rapidement à quoi sert cette documentation
+                                La description doit être très courte pour décrire rapidement à quoi sert ce tutoriel
                             </div>
                         </div>
                         <div className="line-col-2">
                             <div className="line">
                                 <Input identifiant="name" valeur={name} {...params}>Intitulé *</Input>
                             </div>
-                            {loadIcons
-                                ? <LoaderTxt text="Chargement des icônes" />
-                                : <div className="line line-icons">
-                                    <InputIcon identifiant="icon" valeur={icon} icons={icons} {...params1}>Icône</InputIcon>
-                                </div>
-                            }
                             <div className="line">
                                 <Input identifiant="duration" valeur={duration} placeholder="00h00" {...params}>Durée de lecture</Input>
                             </div>
                             <div className="line">
                                 <Trumb identifiant="description" valeur={description.value} errors={errors} onChange={this.handleChangeTrumb}>
                                     Courte description *
-                                </Trumb>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="line">
-                        <div className="line-col-1">
-                            <div className="title">Contenu</div>
-                            <div className="subtitle">
-                                Documentation complète de la fonctionnalité ou caractéristique de votre solution
-                            </div>
-                        </div>
-                        <div className="line-col-2">
-                            <div className="line">
-                                <Trumb identifiant="content" valeur={content.value} errors={errors} onChange={this.handleChangeTrumb}>
-                                    Description *
                                 </Trumb>
                             </div>
                         </div>
@@ -192,9 +153,7 @@ Form.propTypes = {
     productSlug: PropTypes.string.isRequired,
     context: PropTypes.string.isRequired,
     url: PropTypes.node.isRequired,
-    icon: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     duration: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
 }

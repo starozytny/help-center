@@ -1,0 +1,85 @@
+{% extends 'user/pages/tutorials/template.html.twig' %}
+
+{% set product = elem.product %}
+{% set author = elem.author %}
+
+{% set page_title %}{{ elem.name }}{% endset %}
+{% set page_subtitle %}Tutoriel {{ product.name }}{% endset %}
+
+{% block breadcrumb %}
+    {% set breadcrumbs = breadcrumbs | merge([
+        { text: product.name, url: path('user_help_product_read', {'slug': product.name})  },
+        { text: page_title }
+    ]) %}
+    {{ parent() }}
+{% endblock %}
+
+{% block main_content %}
+    <div class="page-actions">
+        <div class="col-1">
+            <a href="{{ path('user_help_product_read', {'slug': product.slug}) }}" class="btn btn-outline-default">
+                <span class="icon-left-arrow"></span>
+                <span>Retourner à {{ product.name }}</span>
+            </a>
+        </div>
+        <div class="col-2">
+            <a href="{{ path('user_help_tutorial_update', {'p_slug': product.slug, 'slug': elem.slug}) }}" class="btn btn-warning">
+                <span class="icon-pencil"></span>
+                <span>Modifier</span>
+            </a>
+            <div class="delete-tuto"
+                 data-id="{{ elem.id }}"
+                 data-name="{{ elem.name }}"
+                 data-product-slug="{{ product.slug }}"
+            >
+                <button class="btn btn-danger btn-loader-without-text">
+                    <span class="icon-chart-3"></span>
+                    <span>Supprimer</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-default">
+        <div class="tutorial-read">
+            <div class="tutorial-meta">
+                <div class="features">
+                    <div class="product">
+                        <span class="icon-book-1"></span>
+                        <span>{{ product.name }}</span>
+                    </div>
+                    {% if elem.duration %}
+                        <div class="duration">
+                            <span class="icon-time"></span>
+                            <span>{{ elem.duration | date("H\\hi") }} temps de lecture</span>
+                        </div>
+                    {% endif %}
+                    <div class="likes">
+                        <div class="item">
+                            <span class="icon-like"></span>
+                            <span>{{ elem.nbLike }}</span>
+                        </div>
+                        <div class="item">
+                            <span class="icon-dislike"></span>
+                            <span>{{ elem.nbDislike }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="author">
+                    <div class="user">
+                        <div class="name">{{ author.firstname }}</div>
+                        <div class="avatar">
+                            <div class="avatar-letter">{{ author.lastname | slice(0,1) }}{{ author.firstname | slice(0,1) }}</div>
+                        </div>
+                    </div>
+                    <div class="date">
+                        <div class="sub">{{ elem.createdAt | date('d/m/Y') }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="tutorial-content">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

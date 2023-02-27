@@ -5,6 +5,7 @@ namespace App\Controller\User;
 use App\Entity\Main\Help\HeCategory;
 use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeQuestion;
+use App\Entity\Main\Help\HeTutorial;
 use App\Repository\Main\Help\HeDocumentationRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
@@ -45,7 +46,47 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/{slug}/documentation/ajouter', name: 'documentation_create')]
+    #[Route('/produit/{p_slug}/tutoriel/{slug}', name: 'tutorial_read', options: ['expose' => true])]
+    public function tutorialRead($p_slug, $slug, HeProductRepository $productRepository,
+                                      HeTutorialRepository $tutorialRepository): Response
+    {
+        $product = $productRepository->findOneBy(['slug' => $p_slug]);
+        $obj = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);
+
+        return $this->render('user/pages/tutorials/read.html.twig', [
+            'elem' => $obj,
+        ]);
+    }
+
+    #[Route('/produit/{slug}/tutoriels/ajouter', name: 'tutorial_create')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function tutorialCreate($slug, HeProductRepository $productRepository): Response
+    {
+        $product = $productRepository->findOneBy(['slug' => $slug]);
+
+        return $this->render('user/pages/tutorials/create.html.twig', [
+            'product' => $product,
+        ]);
+    }
+
+    #[Route('/produit/{p_slug}/tutoriels/modifier/{slug}', name: 'tutorial_update')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function tutorialUpdate($p_slug, $slug, HeTutorialRepository $tutorialRepository,
+                                        HeProductRepository $productRepository, SerializerInterface $serializer): Response
+    {
+        $product = $productRepository->findOneBy(['slug' => $p_slug]);
+        $obj     = $tutorialRepository->findOneBy(['slug' => $slug]);
+
+        $element = $serializer->serialize($obj, 'json', ['groups' => HeTutorial::FORM]);
+
+        return $this->render('user/pages/tutorials/update.html.twig', [
+            'product' => $product,
+            'elem' => $obj,
+            'element' => $element,
+        ]);
+    }
+
+    #[Route('/produit/{slug}/documentations/ajouter', name: 'documentation_create')]
     #[IsGranted('ROLE_ADMIN')]
     public function documentationCreate($slug, HeProductRepository $productRepository): Response
     {
@@ -56,7 +97,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/{p_slug}/documentation/modifier/{slug}', name: 'documentation_update')]
+    #[Route('/produit/{p_slug}/documentations/modifier/{slug}', name: 'documentation_update')]
     #[IsGranted('ROLE_ADMIN')]
     public function documentationUpdate($p_slug, $slug, HeDocumentationRepository $documentationRepository,
                                         HeProductRepository $productRepository, SerializerInterface $serializer): Response
@@ -73,7 +114,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/{slug}/categorie/ajouter', name: 'category_create', options: ['expose' => true])]
+    #[Route('/produit/{slug}/categories/ajouter', name: 'category_create', options: ['expose' => true])]
     #[IsGranted('ROLE_ADMIN')]
     public function categoryCreate($slug, HeProductRepository $productRepository): Response
     {
@@ -84,7 +125,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/{slug}/categorie/modifier/{id}', name: 'category_update', options: ['expose' => true])]
+    #[Route('/produit/{slug}/categories/modifier/{id}', name: 'category_update', options: ['expose' => true])]
     #[IsGranted('ROLE_ADMIN')]
     public function categoryUpdate($slug, HeCategory $elem, HeProductRepository $productRepository, SerializerInterface $serializer): Response
     {
@@ -94,7 +135,7 @@ class ProductController extends AbstractController
         return $this->render('user/pages/faq/category/update.html.twig', ['product' => $product, 'elem' => $elem, 'obj' => $obj]);
     }
 
-    #[Route('/produit/{slug}/question/{category}/ajouter', name: 'question_create', options: ['expose' => true])]
+    #[Route('/produit/{slug}/questions/{category}/ajouter', name: 'question_create', options: ['expose' => true])]
     #[IsGranted('ROLE_ADMIN')]
     public function questionCreate($slug, HeCategory $category, SerializerInterface $serializer,
                                    HeProductRepository $productRepository): Response
@@ -105,7 +146,7 @@ class ProductController extends AbstractController
         return $this->render('user/pages/faq/question/create.html.twig', ['product' => $product, 'category' => $category, 'cat' => $cat]);
     }
 
-    #[Route('/produit/{slug}/question/{category}/modifier/{id}', name: 'question_update', options: ['expose' => true])]
+    #[Route('/produit/{slug}/questions/{category}/modifier/{id}', name: 'question_update', options: ['expose' => true])]
     #[IsGranted('ROLE_ADMIN')]
     public function questionUpdate($slug, HeCategory $category, HeQuestion $elem, HeProductRepository $productRepository, SerializerInterface $serializer): Response
     {

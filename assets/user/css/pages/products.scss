@@ -3,7 +3,7 @@
 @import "./components/form";
 @import "../components/help";
 
-.delete-doc{
+.delete-doc, .delete-tuto{
   @include flex(row, center, center);
 }
 
@@ -107,7 +107,7 @@
         color: var(--alpha);
       }
 
-      & > .delete-doc .btn-icon{
+      & > .delete-doc .btn-icon, & > .delete-tuto .btn-icon{
         &:hover{
           .tooltip{
             top: -27px;
@@ -121,7 +121,7 @@
         width: 100%;
         min-height: 48px;
 
-        &:not(.delete-doc):hover{
+        &:not(.delete-doc, .delete-tuto):hover{
           .tooltip{
             top: -18px;
             right: 22px;

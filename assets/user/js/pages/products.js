@@ -6,9 +6,10 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min';
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Faq } from "@userPages/Faq/Faq";
-import { DocumentationDelete } from "@userPages/Documentations/DocumentationDelete";
-import { CategoryFormulaire }  from "@userPages/Faq/Category/CategoryForm";
-import { QuestionFormulaire }  from "@userPages/Faq/Question/QuestionForm";
+import { DocumentationDelete }  from "@userPages/Documentations/DocumentationDelete";
+import { TutorialDelete }       from "@userPages/Tutorials/DocumentationDelete";
+import { CategoryFormulaire }   from "@userPages/Faq/Category/CategoryForm";
+import { QuestionFormulaire }   from "@userPages/Faq/Question/QuestionForm";
 
 Routing.setRoutingData(routes);
 
@@ -21,6 +22,13 @@ let deletesDoc = document.querySelectorAll('.delete-doc');
 if(deletesDoc){
     deletesDoc.forEach(elem => {
         createRoot(elem).render(<DocumentationDelete context="product" {...elem.dataset} />)
+    })
+}
+
+let deletesTuto = document.querySelectorAll('.delete-tuto');
+if(deletesTuto){
+    deletesTuto.forEach(elem => {
+        createRoot(elem).render(<TutorialDelete context="product" {...elem.dataset} />)
     })
 }
 

@@ -1,0 +1,20 @@
+{% extends 'user/pages/tutorials/template.html.twig' %}
+
+{% set page_title %}Création d'un tutoriel pour {{ product.name }}{% endset %}
+{% set page_subtitle %}Décrivez le cheminement d'une fonctionnalité de votre solution.{% endset %}
+
+{% block breadcrumb %}
+    {% set breadcrumbs = breadcrumbs | merge([
+        { text: product.name, url: path('user_help_product_read', {'slug': product.name})  },
+        { text: page_title }
+    ]) %}
+    {{ parent() }}
+{% endblock %}
+
+{% block main_content %}
+    {% include "layout/components/admin/page_toolbar.html.twig" with { page_back: path('user_help_product_read', {'slug': product.slug}) } %}
+
+    <div id="tutorials_create" data-product-slug="{{ product.slug }}">
+        {% include "layout/components/loader.html.twig" %}
+    </div>
+{% endblock %}

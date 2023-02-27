@@ -1,0 +1,42 @@
+@import "../vars/vars";
+
+@import "./components/form";
+
+.tutorial-read{
+
+  .tutorial-meta{
+    @include flex(row, center, space-between, var(--espaceEls));
+    border-top: 1px solid var(--color2);
+    border-bottom: 1px solid var(--color2);
+    padding: var(--espaceLayout) 0;
+  }
+
+  .features{
+    @include flex(column, flex-start, flex-start, 4px);
+  }
+  .author{
+    @include flex(column, flex-end, flex-start, 4px);
+  }
+
+  .duration, .product, .user, .likes .item{
+    @include flex(row, center, flex-start, 6px);
+  }
+
+  .likes{
+    @include flex(row, center, flex-start, 12px);
+    margin-top: 4px;
+  }
+
+  .duration, .product, .date, .likes .item{
+    font-size: 14px;
+    opacity: 0.6;
+
+    [class^="icon-"]{
+      transform: translateY(-1px);
+    }
+  }
+
+  .tutorial-content{
+    padding: var(--espaceLayout) 0;
+  }
+}

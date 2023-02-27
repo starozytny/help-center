@@ -51,7 +51,7 @@
                     <h2><span class="icon-question-1"></span> F.A.Q.</h2>
                     <div class="subtitle">Réponses aux questions les plus demandées !</div>
                     <div class="cta">
-                        <a href="" class="txt-button txt-button-default">
+                        <a href="#faq" class="txt-button txt-button-default">
                             <span>Trouver ma réponse</span>
                             <span class="icon-right-arrow"></span>
                         </a>
@@ -66,7 +66,7 @@
                 </div>
                 {% if app.user.admin and force_user == null %}
                     <div class="btn-add">
-                        <a href="" class="btn btn-danger">
+                        <a href="{{ path('user_help_tutorial_create', {'slug': elem.slug}) }}" class="btn btn-danger">
                             <span class="icon-add"></span>
                             <span>Ajouter un tutoriel</span>
                         </a>
@@ -84,8 +84,24 @@
                                 </div>
                             </div>
                             <div class="card-footer">
+                                {% if app.user.admin and force_user == null %}
+                                    <a
+                                            href="{{ path('user_help_tutorial_update', {'p_slug': elem.slug, 'slug': el.slug}) }}"
+                                            class="btn-icon"
+                                    >
+                                        <span class="icon-pencil"></span>
+                                        <span class="tooltip">Modifier</span>
+                                    </a>
+                                    <div class="delete-tuto"
+                                         data-id="{{ el.id }}"
+                                         data-name="{{ el.name }}"
+                                         data-product-slug="{{ elem.slug }}"
+                                    >
+                                        <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
+                                    </div>
+                                {% endif %}
                                 <a
-                                        href="{{ path('user_help_product_read', {'slug': elem.slug}) }}"
+                                        href="{{ path('user_help_tutorial_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
                                         class="btn-icon"
                                 >
                                     <span class="icon-vision"></span>
@@ -184,7 +200,7 @@
                 </div>
             </div>
 
-            <div class="product-line-3">
+            <div class="product-line-3" id="faq">
                 <div class="product-line-title">
                     <h2>F.A.Q.</h2>
                     <div class="subtitle">Retrouvez les réponses aux questions les plus demandées sur le {{ typeString }}</div>

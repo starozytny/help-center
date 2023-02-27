@@ -6,6 +6,7 @@ use App\Entity\Main\Help\HeCategory;
 use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
+use App\Entity\Main\Help\HeTutorial;
 use App\Service\SanitizeData;
 
 class DataHelp
@@ -22,6 +23,18 @@ class DataHelp
             ->setSlug($this->sanitizeData->slugString($data->name))
             ->setUrl($this->sanitizeData->trimData($data->url))
             ->setDescription($this->sanitizeData->trimData($data->description))
+        ;
+    }
+
+    public function setDataTutorial(HeTutorial $obj, $data): HeTutorial
+    {
+        $duration = str_replace('h', ':', $data->duration);
+
+        return ($obj)
+            ->setName($this->sanitizeData->trimData($data->name))
+            ->setSlug($this->sanitizeData->slugString($data->name))
+            ->setDuration($this->sanitizeData->createTimePicker($duration))
+            ->setDescription($this->sanitizeData->trimData($data->description->html))
         ;
     }
 

@@ -85,6 +85,7 @@ Encore
     .addEntry('user_homepage',       './assets/user/js/pages/homepage.js')
     .addEntry('user_products',       './assets/user/js/pages/products.js')
     .addEntry('user_documentations', './assets/user/js/pages/documentations.js')
+    .addEntry('user_tutorials',      './assets/user/js/pages/tutorials.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
