@@ -5,6 +5,8 @@ namespace App\Entity\Main\Help;
 use App\Entity\DataEntity;
 use App\Entity\Main\User;
 use App\Repository\Main\Help\HeTutorialRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -57,9 +59,13 @@ class HeTutorial extends DataEntity
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
+    #[ORM\OneToMany(mappedBy: 'tutorial', targetEntity: HeStep::class)]
+    private Collection $steps;
+
     public function __construct()
     {
         $this->createdAt = $this->initNewDateImmutable();
+        $this->steps = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -184,6 +190,36 @@ class HeTutorial extends DataEntity
     {
         $updatedAt->setTimezone(new \DateTimeZone("Europe/Paris"));
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HeStep>
+     */
+    public function getSteps(): Collection
+    {
+        return $this->steps;
+    }
+
+    public function addStep(HeStep $step): self
+    {
+        if (!$this->steps->contains($step)) {
+            $this->steps->add($step);
+            $step->setTutorial($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStep(HeStep $step): self
+    {
+        if ($this->steps->removeElement($step)) {
+            // set the owning side to null (unless already changed)
+            if ($step->getTutorial() === $this) {
+                $step->setTutorial(null);
+            }
+        }
 
         return $this;
     }

@@ -3,7 +3,7 @@ import '../../css/pages/tutorials.scss';
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { TutorialFormulaire } from "@userPages/Tutorials/TutorialForm";
-import { TutorialDelete } from "@userPages/Tutorials/DocumentationDelete";
+import { TutorialDelete } from "@userPages/Tutorials/TutorialDelete";
 
 let el = document.getElementById("tutorials_update");
 if(el){

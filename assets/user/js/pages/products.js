@@ -7,7 +7,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { Faq } from "@userPages/Faq/Faq";
 import { DocumentationDelete }  from "@userPages/Documentations/DocumentationDelete";
-import { TutorialDelete }       from "@userPages/Tutorials/DocumentationDelete";
+import { TutorialDelete }       from "@userPages/Tutorials/TutorialDelete";
 import { CategoryFormulaire }   from "@userPages/Faq/Category/CategoryForm";
 import { QuestionFormulaire }   from "@userPages/Faq/Question/QuestionForm";
 
