@@ -21,8 +21,10 @@ export class Faq extends Component {
     }
 
     componentDidMount = () => {
+        const { productId } = this.props;
+
         let self = this;
-        axios({ method: "GET", url: Routing.generate(URL_GET_DATA), data: {} })
+        axios({ method: "GET", url: Routing.generate(URL_GET_DATA, {'id': productId}), data: {} })
             .then(function (response) {
                 let data = response.data;
 
@@ -36,12 +38,12 @@ export class Faq extends Component {
     }
 
     render () {
-        const { category } = this.props;
+        const { role, category, productSlug } = this.props;
         const { loadingData, categories, questions } = this.state;
 
         return loadingData
             ? <LoaderElements />
-            : <FaqList role="admin" categories={categories} questions={questions}
+            : <FaqList role={role} productSlug={productSlug} categories={categories} questions={questions}
                        defaultCategory={category ? parseInt(category): null} />
     }
 }

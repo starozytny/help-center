@@ -148,7 +148,7 @@
                             <div class="card-footer">
                                 {% if app.user.admin and force_user == null %}
                                     <a
-                                            href="{{ path('user_help_documentation_update', {'slug': elem.slug, 'id': el.id}) }}"
+                                            href="{{ path('user_help_documentation_update', {'p_slug': elem.slug, 'slug': el.slug}) }}"
                                             class="btn-icon"
                                     >
                                         <span class="icon-pencil"></span>
@@ -188,7 +188,11 @@
                     <div class="subtitle">Retrouvez les réponses aux questions les plus demandées sur le {{ typeString }}</div>
                 </div>
                 <div class="faqs">
-                    <div id="help_faq_list">
+                    <div id="help_faq_list"
+                         data-role="{{ app.user.admin and force_user == null ? "admin" : "user" }}"
+                         data-product-id="{{ elem.id }}"
+                         data-product-slug="{{ elem.slug }}"
+                    >
                         {% include "layout/components/loader.html.twig" %}
                     </div>
                 </div>

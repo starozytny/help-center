@@ -10,17 +10,17 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 import { Button, ButtonIcon } from "@commonComponents/Elements/Button";
 import { Modal } from "@commonComponents/Elements/Modal";
 
-const URL_INDEX_ELEMENTS  = "admin_help_faq_index";
+const URL_INDEX_ELEMENTS  = "user_help_product_read";
 
-const URL_CREATE_CATEGORY = "admin_help_faq_categories_create";
-const URL_UPDATE_CATEGORY = "admin_help_faq_categories_update";
+const URL_CREATE_CATEGORY = "user_help_category_create";
+const URL_UPDATE_CATEGORY = "user_help_category_update";
 const URL_DELETE_CATEGORY = "api_help_faq_categories_delete";
 
-const URL_CREATE_QUESTION = "admin_help_faq_questions_create";
-const URL_UPDATE_QUESTION = "admin_help_faq_questions_update";
+const URL_CREATE_QUESTION = "user_help_question_create";
+const URL_UPDATE_QUESTION = "user_help_question_update";
 const URL_DELETE_QUESTION = "api_help_faq_questions_delete";
 
-export function FaqList ({ role, categories, questions, defaultCategory })
+export function FaqList ({ role, productSlug, categories, questions, defaultCategory })
 {
     const [category, setCategory] = useState(defaultCategory);
     const [question, setQuestion] = useState(null);
@@ -56,8 +56,7 @@ export function FaqList ({ role, categories, questions, defaultCategory })
         }, function(error) { return Promise.reject(error); });
         instance({ method: "DELETE", url: url, data: {} })
             .then(function (response) {
-                let params = response.data.message ? {} : {'cat': response.data.id};
-                location.href = Routing.generate(URL_INDEX_ELEMENTS, params);
+                location.href = Routing.generate(URL_INDEX_ELEMENTS, {'slug': productSlug});
             })
             .catch(function (error) { Formulaire.displayErrors(self, error); })
         ;
@@ -67,8 +66,8 @@ export function FaqList ({ role, categories, questions, defaultCategory })
         <div className="help-line-1">
             <div className="col-1">
                 <div className="help-categories">
-                    {role === "admin" && <Button icon="add" type="primary" element="a"
-                                                 onClick={Routing.generate(URL_CREATE_CATEGORY)}>
+                    {role === "admin" && <Button icon="add" type="danger" element="a"
+                                                 onClick={Routing.generate(URL_CREATE_CATEGORY, {'slug': productSlug})}>
                         Ajouter une catégorie
                     </Button>}
                     {categories.map((elem, index) => {
@@ -94,7 +93,7 @@ export function FaqList ({ role, categories, questions, defaultCategory })
                                         <div className="sub">{elem.subtitle}</div>
                                     </div>
                                     {role === "admin" && <div className="actions">
-                                        <ButtonIcon icon="pencil" element="a" onClick={Routing.generate(URL_UPDATE_CATEGORY, {'id': elem.id})}>
+                                        <ButtonIcon icon="pencil" element="a" onClick={Routing.generate(URL_UPDATE_CATEGORY, {'slug': productSlug, 'id': elem.id})}>
                                             Modifier
                                         </ButtonIcon>
                                         <ButtonIcon icon="trash" onClick={() => handleModal('delete-category', elem.id)}>
@@ -116,8 +115,8 @@ export function FaqList ({ role, categories, questions, defaultCategory })
                     }
 
                     <div className="questions-body">
-                        {(role === "admin" && category) && <Button icon="add" type="primary" element="a"
-                                                     onClick={Routing.generate(URL_CREATE_QUESTION, {'category': category})}>
+                        {(role === "admin" && category) && <Button icon="add" type="danger" element="a"
+                                                     onClick={Routing.generate(URL_CREATE_QUESTION, {'slug': productSlug, 'category': category})}>
                             Ajouter une question-réponse
                         </Button>}
                         {questions.map((elem, index) => {
@@ -130,7 +129,7 @@ export function FaqList ({ role, categories, questions, defaultCategory })
                                     <div className="question-body">
                                         {role === "admin" && <div className="actions">
                                             <ButtonIcon icon="pencil" element="a"
-                                                        onClick={Routing.generate(URL_UPDATE_QUESTION, {'category': elem.category.id, 'id': elem.id})}>
+                                                        onClick={Routing.generate(URL_UPDATE_QUESTION, {'slug': productSlug, 'category': elem.category.id, 'id': elem.id})}>
                                                 Modifier
                                             </ButtonIcon>
                                             <ButtonIcon icon="trash" onClick={() => handleModal('delete-question', elem.id, elem.category.id)}>

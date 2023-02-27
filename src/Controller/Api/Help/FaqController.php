@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Controller\Api;
+namespace App\Controller\Api\Help;
 
 use App\Entity\Main\Help\HeCategory;
+use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
 use App\Repository\Main\Help\HeCategoryRepository;
 use App\Repository\Main\Help\HeQuestionRepository;
@@ -13,14 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/api/help/faq', name: 'api_help_faq_')]
-class HelpController extends AbstractController
+class FaqController extends AbstractController
 {
-    #[Route('/list', name: 'list', options: ['expose' => true], methods: 'GET')]
-    public function list(HeCategoryRepository $categoryRepository, HeQuestionRepository $questionRepository,
+    #[Route('/list/{id}', name: 'list', options: ['expose' => true], methods: 'GET')]
+    public function list(HeProduct $product, HeCategoryRepository $categoryRepository, HeQuestionRepository $questionRepository,
                          ApiResponse $apiResponse, SerializerInterface $serializer): Response
     {
-        $categories = $categoryRepository->findAll();
-        $questions  = $questionRepository->findAll();
+        $categories = $categoryRepository->findBy(['product' => $product]);
+        $questions  = $questionRepository->findBy(['category' => $categories]);
 
         $categories = $serializer->serialize($categories, 'json', ['groups' => HeCategory::LIST]);
         $questions  = $serializer->serialize($questions,  'json', ['groups' => HeQuestion::LIST]);

@@ -20,10 +20,6 @@ if(el){
 let deletesDoc = document.querySelectorAll('.delete-doc');
 if(deletesDoc){
     deletesDoc.forEach(elem => {
-        createRoot(elem).render(<DocumentationDelete context="read"
-                                                     id={elem.dataset.id}
-                                                     name={elem.dataset.name}
-                                                     productSlug={elem.dataset.productSlug}
-        />)
+        createRoot(elem).render(<DocumentationDelete context="read" {...elem.dataset}/>)
     })
 }

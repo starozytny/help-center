@@ -2,7 +2,9 @@
 
 namespace App\Controller\User;
 
+use App\Entity\Main\Help\HeCategory;
 use App\Entity\Main\Help\HeDocumentation;
+use App\Entity\Main\Help\HeQuestion;
 use App\Repository\Main\Help\HeDocumentationRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,7 +41,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/{slug}/documentations/create', name: 'documentation_create')]
+    #[Route('/produit/{slug}/documentation/ajouter', name: 'documentation_create')]
     #[IsGranted('ROLE_ADMIN')]
     public function documentationCreate($slug, HeProductRepository $productRepository): Response
     {
@@ -50,12 +52,14 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/{slug}/documentations/update/{id}', name: 'documentation_update')]
+    #[Route('/produit/{p_slug}/documentation/modifier/{slug}', name: 'documentation_update')]
     #[IsGranted('ROLE_ADMIN')]
-    public function documentationUpdate($slug, HeDocumentation $obj, HeProductRepository $productRepository,
-                                        SerializerInterface $serializer): Response
+    public function documentationUpdate($p_slug, $slug, HeDocumentationRepository $documentationRepository,
+                                        HeProductRepository $productRepository, SerializerInterface $serializer): Response
     {
-        $product = $productRepository->findOneBy(['slug' => $slug]);
+        $product = $productRepository->findOneBy(['slug' => $p_slug]);
+        $obj     = $documentationRepository->findOneBy(['slug' => $slug]);
+
         $element = $serializer->serialize($obj, 'json', ['groups' => HeDocumentation::FORM]);
 
         return $this->render('user/pages/documentations/update.html.twig', [
@@ -63,5 +67,42 @@ class ProductController extends AbstractController
             'elem' => $obj,
             'element' => $element,
         ]);
+    }
+
+    #[Route('/produit/{slug}/categorie/ajouter', name: 'category_create', options: ['expose' => true])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function categoryCreate($slug, HeProductRepository $productRepository): Response
+    {
+        $product = $productRepository->findOneBy(['slug' => $slug]);
+
+        return $this->render('user/pages/faq/category/create.html.twig');
+    }
+
+    #[Route('/produit/{slug}/categorie/modifier/{id}', name: 'category_update', options: ['expose' => true])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function categoryUpdate(HeCategory $elem, SerializerInterface $serializer): Response
+    {
+        $obj  = $serializer->serialize($elem, 'json', ['groups' => HeCategory::FORM]);
+        return $this->render('user/pages/faq/category/update.html.twig', ['elem' => $elem, 'obj' => $obj]);
+    }
+
+    #[Route('/produit/{slug}/question/{category}/ajouter', name: 'question_create', options: ['expose' => true])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function questionCreate($slug, HeCategory $category, SerializerInterface $serializer,
+                                   HeProductRepository $productRepository): Response
+    {
+        $product = $productRepository->findOneBy(['slug' => $slug]);
+
+        $cat  = $serializer->serialize($category, 'json', ['groups' => HeCategory::LIST]);
+        return $this->render('user/pages/faq/question/create.html.twig', ['category' => $category, 'cat' => $cat]);
+    }
+
+    #[Route('/produit/{slug}/question/{category}/modifier/{id}', name: 'question_update', options: ['expose' => true])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function questionUpdate(HeCategory $category, HeQuestion $elem, SerializerInterface $serializer): Response
+    {
+        $obj  = $serializer->serialize($elem, 'json', ['groups' => HeQuestion::FORM]);
+        $cat  = $serializer->serialize($category, 'json', ['groups' => HeCategory::LIST]);
+        return $this->render('user/pages/faq/question/update.html.twig', ['category' => $category, 'cat' => $cat, 'elem' => $elem, 'obj' => $obj]);
     }
 }

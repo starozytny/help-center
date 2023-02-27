@@ -41,9 +41,13 @@ class HeProduct extends DataEntity
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: HeDocumentation::class)]
     private Collection $documentation;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: HeCategory::class)]
+    private Collection $categories;
+
     public function __construct()
     {
         $this->documentation = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,6 +161,36 @@ class HeProduct extends DataEntity
             // set the owning side to null (unless already changed)
             if ($documentation->getProduct() === $this) {
                 $documentation->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HeCategory>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(HeCategory $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+            $category->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(HeCategory $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            // set the owning side to null (unless already changed)
+            if ($category->getProduct() === $this) {
+                $category->setProduct(null);
             }
         }
 

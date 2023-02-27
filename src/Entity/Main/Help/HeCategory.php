@@ -45,6 +45,10 @@ class HeCategory
     #[ORM\Column]
     private ?int $rank = null;
 
+    #[ORM\ManyToOne(inversedBy: 'categories')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?HeProduct $product = null;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
@@ -141,6 +145,18 @@ class HeCategory
     public function setRank(int $rank): self
     {
         $this->rank = $rank;
+
+        return $this;
+    }
+
+    public function getProduct(): ?HeProduct
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?HeProduct $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }
