@@ -3,6 +3,7 @@ import '../../css/pages/documentations.scss';
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { DocumentationFormulaire } from "./components/Documentations/DocumentationForm";
+import { DocumentationDelete } from "@userPages/Documentations/DocumentationDelete";
 
 let el = document.getElementById("documentations_update");
 if(el){
@@ -14,4 +15,15 @@ el = document.getElementById("documentations_create");
 if(el){
     createRoot(el).render(<DocumentationFormulaire context="create" productSlug={el.dataset.productSlug}
                                                    element={null} />)
+}
+
+let deletesDoc = document.querySelectorAll('.delete-doc');
+if(deletesDoc){
+    deletesDoc.forEach(elem => {
+        createRoot(elem).render(<DocumentationDelete context="read"
+                                                     id={elem.dataset.id}
+                                                     name={elem.dataset.name}
+                                                     productSlug={elem.dataset.productSlug}
+        />)
+    })
 }

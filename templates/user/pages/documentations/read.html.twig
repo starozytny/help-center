@@ -27,10 +27,16 @@
                 <span class="icon-pencil"></span>
                 <span>Modifier</span>
             </a>
-            <a href="{{ path('user_help_product_read', {'slug': product.slug}) }}" class="btn btn-danger">
-                <span class="icon-trash"></span>
-                <span>Supprimer</span>
-            </a>
+            <div class="delete-doc"
+                 data-id="{{ elem.id }}"
+                 data-name="{{ elem.name }}"
+                 data-product-slug="{{ product.slug }}"
+            >
+                <button class="btn btn-danger btn-loader-without-text">
+                    <span class="icon-chart-3"></span>
+                    <span>Supprimer</span>
+                </button>
+            </div>
         </div>
     </div>
 

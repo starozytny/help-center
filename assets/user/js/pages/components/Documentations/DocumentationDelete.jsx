@@ -12,7 +12,7 @@ import { Modal } from "@commonComponents/Elements/Modal";
 const URL_INDEX_ELEMENTS = 'user_help_product_read';
 const URL_DELETE_ELEMENT = 'api_help_documentations_delete';
 
-export function DocumentationDelete ({ id, name, productSlug })
+export function DocumentationDelete ({ context, id, name, productSlug })
 {
     let modalRef = useRef(null);
 
@@ -31,7 +31,10 @@ export function DocumentationDelete ({ id, name, productSlug })
     }
 
     return <>
-        <ButtonIcon icon="trash" type="none" onClick={handleClick}>Supprimer</ButtonIcon>
+        {context === "read"
+            ? <Button icon="trash" type="danger" onClick={handleClick}>Supprimer</Button>
+            : <ButtonIcon icon="trash" type="none" onClick={handleClick}>Supprimer</ButtonIcon>
+        }
         <Modal ref={modalRef} identifiant={`delete-${id}`} maxWidth={414} title="Supprimer la documentation"
                content={<p>Etes-vous sûr de vouloir supprimer la documentation : <b>{name}</b> ?</p>}
                footer={<Button type="danger" onClick={handleDelete}>Confirmer la suppression</Button>} closeTxt="Annuler" />
@@ -39,6 +42,7 @@ export function DocumentationDelete ({ id, name, productSlug })
 }
 
 DocumentationDelete.propTypes = {
+    context: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     productSlug: PropTypes.string.isRequired,
