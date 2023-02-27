@@ -94,10 +94,12 @@ export function FaqList ({ role, productSlug, categories, questions, defaultCate
                                         <div className="sub">{elem.subtitle}</div>
                                     </div>
                                     {role === "admin" && <div className="actions">
-                                        <ButtonIcon icon="pencil" element="a" onClick={Routing.generate(URL_UPDATE_CATEGORY, {'slug': productSlug, 'id': elem.id})}>
+                                        <ButtonIcon icon="pencil" element="a" type="warning"
+                                                    onClick={Routing.generate(URL_UPDATE_CATEGORY, {'slug': productSlug, 'id': elem.id})}>
                                             Modifier
                                         </ButtonIcon>
-                                        <ButtonIcon icon="trash" onClick={() => handleModal('delete-category', elem.id)}>
+                                        <ButtonIcon icon="trash" type="danger"
+                                                    onClick={() => handleModal('delete-category', elem.id)}>
                                             Supprimer
                                         </ButtonIcon>
                                     </div>}
@@ -129,11 +131,12 @@ export function FaqList ({ role, productSlug, categories, questions, defaultCate
                                     </div>
                                     <div className="question-body">
                                         {role === "admin" && <div className="actions">
-                                            <ButtonIcon icon="pencil" element="a"
+                                            <ButtonIcon icon="pencil" element="a" type="warning"
                                                         onClick={Routing.generate(URL_UPDATE_QUESTION, {'slug': productSlug, 'category': elem.category.id, 'id': elem.id})}>
                                                 Modifier
                                             </ButtonIcon>
-                                            <ButtonIcon icon="trash" onClick={() => handleModal('delete-question', elem.id, elem.category.id)}>
+                                            <ButtonIcon icon="trash" type="danger"
+                                                        onClick={() => handleModal('delete-question', elem.id, elem.category.id)}>
                                                 Supprimer
                                             </ButtonIcon>
                                         </div>}

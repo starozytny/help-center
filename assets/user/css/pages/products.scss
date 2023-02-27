@@ -166,7 +166,17 @@
   }
 
   .help-categories > .item:not(.active){
-    background-color: var(--color0Opacity1);
+    background-color: var(--color0Opacity4);
+
+    &:hover{
+      background-color: var(--color0);
+    }
+  }
+
+  .question.active{
+    .question-header, .question-body{
+      background-color: var(--color0);
+    }
   }
 }
 
