@@ -2,8 +2,10 @@
 
 namespace App\Controller\Api\Help;
 
+use App\Entity\Main\Help\HeStep;
 use App\Entity\Main\Help\HeTutorial;
 use App\Repository\Main\Help\HeProductRepository;
+use App\Repository\Main\Help\HeStepRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
 use App\Service\ApiResponse;
 use App\Service\Data\DataHelp;
@@ -19,7 +21,8 @@ class TutorialController extends AbstractController
 {
     public function submitForm($type, HeTutorialRepository $repository, HeTutorial $obj,
                                Request $request, ApiResponse $apiResponse,
-                               ValidatorService $validator, DataHelp $dataEntity, HeProductRepository $productRepository): JsonResponse
+                               ValidatorService $validator, DataHelp $dataEntity,
+                               HeProductRepository $productRepository, HeStepRepository $stepRepository): JsonResponse
     {
         $data = json_decode($request->getContent());
         if ($data === null) {
@@ -35,6 +38,20 @@ class TutorialController extends AbstractController
         $obj = ($obj)
             ->setProduct($product)
         ;
+
+        $dataArray = (array) $data;
+        for ($i = 1 ; $i <= $data->nbSteps ; $i++){
+            $name = 'step' . $i;
+
+            $step = (new HeStep())
+                ->setPosition($i)
+                ->setContent($dataArray[$name])
+                ->setTutorial($obj)
+            ;
+
+            $stepRepository->save($step);
+        }
+        dump($data->step[$i]);
 
         if($type == "create") {
             $obj->setAuthor($this->getUser());
@@ -53,16 +70,18 @@ class TutorialController extends AbstractController
 
     #[Route('/create', name: 'create', options: ['expose' => true], methods: 'POST')]
     public function create(Request $request, ApiResponse $apiResponse, ValidatorService $validator,
-                           DataHelp $dataEntity, HeTutorialRepository $repository, HeProductRepository $productRepository): Response
+                           DataHelp $dataEntity, HeTutorialRepository $repository, HeProductRepository $productRepository,
+                           HeStepRepository $stepRepository): Response
     {
-        return $this->submitForm("create", $repository, new HeTutorial(), $request, $apiResponse, $validator, $dataEntity, $productRepository);
+        return $this->submitForm("create", $repository, new HeTutorial(), $request, $apiResponse, $validator, $dataEntity, $productRepository, $stepRepository);
     }
 
     #[Route('/update/{id}', name: 'update', options: ['expose' => true], methods: 'PUT')]
     public function update(Request $request, HeTutorial $obj, ApiResponse $apiResponse, ValidatorService $validator,
-                           DataHelp $dataEntity, HeTutorialRepository $repository, HeProductRepository $productRepository): Response
+                           DataHelp $dataEntity, HeTutorialRepository $repository, HeProductRepository $productRepository,
+                           HeStepRepository $stepRepository): Response
     {
-        return $this->submitForm("update", $repository, $obj, $request, $apiResponse, $validator, $dataEntity, $productRepository);
+        return $this->submitForm("update", $repository, $obj, $request, $apiResponse, $validator, $dataEntity, $productRepository, $stepRepository);
     }
 
     #[Route('/delete/{id}', name: 'delete', options: ['expose' => true], methods: 'DELETE')]
