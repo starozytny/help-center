@@ -31,9 +31,9 @@
   & > .col-1,
   & > .col-2{
     gap: 8px;
+    flex-wrap: wrap;
 
     .btn, .btn-icon{
-      display: inline-block;
       width: auto;
     }
 
