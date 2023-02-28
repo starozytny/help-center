@@ -45,6 +45,13 @@ b, strong{
   @include fontBold();
 }
 
+hr{
+  background-color: var(--color3);
+  height: 1px;
+  border: 0;
+  width: 65%;
+}
+
 #toast-container{
   .toast{
     .toast-title{
