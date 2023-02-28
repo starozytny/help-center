@@ -46,8 +46,40 @@
       font-size: 15px;
     }
 
-    .card-footer{
+    .card-footer, .card-footer-admin{
       @include flex(row, flex-start, flex-end);
+    }
+
+    .card-footer-admin{
+      border-top: 1px solid var(--color3);
+
+      .btn-icon{
+        color: var(--alpha);
+      }
+
+      & > *{
+        position: relative;
+        width: 100%;
+        min-height: 48px;
+
+        &:not(.delete-product):hover{
+          .tooltip{
+            top: -18px;
+            right: 54px;
+          }
+        }
+
+        &:not(:last-child){
+          &:after{
+            content: "";
+            display: block;
+            width: 1px; height: calc(100% - 16px);
+            position: absolute;
+            top: 8px; right: 0;
+            background-color: var(--color3);
+          }
+        }
+      }
     }
   }
 }

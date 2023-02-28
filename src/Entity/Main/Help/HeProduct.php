@@ -9,33 +9,42 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: HeProductRepository::class)]
 class HeProduct extends DataEntity
 {
     const FOLDER = "logos";
 
+    const FORM = ['product_form'];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['product_form'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['product_form'])]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Groups(['product_form'])]
     private ?int $type = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['product_form'])]
     private ?string $url = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['product_form'])]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['product_form'])]
     private ?string $logo = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: HeDocumentation::class)]

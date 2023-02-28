@@ -5,6 +5,7 @@ namespace App\Controller\User;
 use App\Entity\Enum\Help\HelpFavorite;
 use App\Entity\Main\Help\HeCategory;
 use App\Entity\Main\Help\HeDocumentation;
+use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
 use App\Entity\Main\Help\HeStep;
 use App\Entity\Main\Help\HeTutorial;
@@ -30,7 +31,6 @@ class ProductController extends AbstractController
             'products' => $productRepository->findAll()
         ]);
     }
-
 
     #[Route('/produit/{slug}', name: 'product_read', options: ['expose' => true])]
     public function productRead($slug, HeProductRepository $productRepository,
@@ -93,6 +93,26 @@ class ProductController extends AbstractController
             'answer' => $answer ? $answer->getAnswer() : 2,
             'haveAnswer' => (bool)$answer,
             'type' => HelpFavorite::Tutorial
+        ]);
+    }
+
+    #[Route('/produits/ajouter', name: 'product_create')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function productCreate(): Response
+    {
+        return $this->render('user/pages/products/create.html.twig');
+    }
+
+    #[Route('/produits/modifier/{slug}', name: 'product_update')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function productUpdate($slug, HeProductRepository $productRepository, SerializerInterface $serializer): Response
+    {
+        $obj = $productRepository->findOneBy(['slug' => $slug]);
+
+        $element = $serializer->serialize($obj,   'json', ['groups' => HeProduct::FORM]);
+        return $this->render('user/pages/products/update.html.twig', [
+            'elem' => $obj,
+            'element' => $element,
         ]);
     }
 

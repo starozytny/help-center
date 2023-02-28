@@ -9,6 +9,14 @@
 {% endblock %}
 
 {% block main_content %}
+    {% if app.user.admin %}
+        <div class="page-actions">
+            <a href="{{ path('user_help_product_create') }}" class="btn btn-danger">
+                <span class="icon-add"></span>
+                <span>Ajouter un produit</span>
+            </a>
+        </div>
+    {% endif %}
     <div class="page-default">
         <div class="products">
             {% for elem in products %}
@@ -45,6 +53,24 @@
                             <span class="icon-right-arrow"></span>
                         </a>
                     </div>
+                    {% if app.user.admin %}
+                        <div class="card-footer-admin">
+                            <a
+                                    href="{{ path('user_help_product_update', {'slug': elem.slug}) }}"
+                                    class="btn-icon"
+                            >
+                                <span class="icon-pencil"></span>
+                                <span class="tooltip">Modifier</span>
+                            </a>
+                            <a
+                                    href=""
+                                    class="btn-icon"
+                            >
+                                <span class="icon-trash"></span>
+                                <span class="tooltip">Supprimer</span>
+                            </a>
+                        </div>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
