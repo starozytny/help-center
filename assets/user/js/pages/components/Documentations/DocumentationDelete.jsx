@@ -35,7 +35,7 @@ export function DocumentationDelete ({ context, id, name, productSlug })
             ? <Button icon="trash" type="danger" onClick={handleClick}>Supprimer</Button>
             : <ButtonIcon icon="trash" type="none" onClick={handleClick}>Supprimer</ButtonIcon>
         }
-        <Modal ref={modalRef} identifiant={`delete-${id}`} maxWidth={414} title="Supprimer la documentation"
+        <Modal ref={modalRef} identifiant={`delete-doc-${id}`} maxWidth={414} title="Supprimer la documentation"
                content={<p>Etes-vous sûr de vouloir supprimer la documentation : <b>{name}</b> ?</p>}
                footer={<Button type="danger" onClick={handleDelete}>Confirmer la suppression</Button>} closeTxt="Annuler" />
     </>

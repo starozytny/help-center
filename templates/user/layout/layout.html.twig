@@ -6,15 +6,22 @@
     { name: "Dashboard",    icon: "home",
         path: path('user_homepage'), matchRoute: ['user_homepage']
     },
+    { name: "Produits",    icon: "book-1",
+        path: path('user_help_products_index'), matchRoute: [
+            'user_help_products_index',
+            'user_help_product_read', 'user_help_documentation_read', 'user_help_tutorial_read',
+            'user_help_product_read', 'user_help_documentation_create', 'user_help_tutorial_create',
+            'user_help_product_read', 'user_help_documentation_update', 'user_help_tutorial_update',
+            'user_help_category_create', 'user_help_category_update',
+            'user_help_question_create', 'user_help_question_update',
+        ]
+    },
     { name: "Favoris",    icon: "heart",
         path: path('user_favorite'), matchRoute: ['user_favorite']
     }
 ] %}
 
-{% set menu_bottom = [
-    { name: "Page accueil",  icon: "earth",
-        path: path('app_homepage'), matchRoute: ['app_homepage'] },
-] %}
+{% set menu_bottom = [] %}
 
 {% block footer %}
     {% include "user/layout/components/footer.html.twig" %}

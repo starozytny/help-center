@@ -2,8 +2,10 @@
 
 namespace App\Controller\Api\Help;
 
+use App\Entity\Enum\Help\HelpFavorite;
 use App\Entity\Main\Help\HeDocumentation;
 use App\Repository\Main\Help\HeDocumentationRepository;
+use App\Repository\Main\Help\HeLikeRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Service\ApiResponse;
 use App\Service\Data\DataHelp;
@@ -66,8 +68,13 @@ class DocumentationController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'delete', options: ['expose' => true], methods: 'DELETE')]
-    public function delete(HeDocumentation $obj, HeDocumentationRepository $repository, ApiResponse $apiResponse): Response
+    public function delete(HeDocumentation $obj, HeDocumentationRepository $repository, HeLikeRepository $likeRepository, ApiResponse $apiResponse): Response
     {
+        $likes = $likeRepository->findBy(['type' => HelpFavorite::Documentation, 'identifiant' => $obj->getId()]);
+        foreach($likes as $like){
+            $likeRepository->remove($like);
+        }
+
         $repository->remove($obj, true);
         return $apiResponse->apiJsonResponseSuccessful("ok");
     }

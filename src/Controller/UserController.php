@@ -20,6 +20,7 @@ class UserController extends AbstractController
             'products' => $productRepository->findAll()
         ]);
     }
+
     #[Route('/favoris', name: 'favorite')]
     public function favorite(HeFavoriteRepository $favoriteRepository, HeTutorialRepository $tutorialRepository): Response
     {

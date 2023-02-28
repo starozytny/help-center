@@ -23,6 +23,15 @@ use Symfony\Component\Serializer\SerializerInterface;
 #[Route('/espace-membre/produits', name: 'user_help_')]
 class ProductController extends AbstractController
 {
+    #[Route('/', name: 'products_index')]
+    public function index(HeProductRepository $productRepository): Response
+    {
+        return $this->render('user/pages/products/index.html.twig', [
+            'products' => $productRepository->findAll()
+        ]);
+    }
+
+
     #[Route('/produit/{slug}', name: 'product_read', options: ['expose' => true])]
     public function productRead($slug, HeProductRepository $productRepository,
                                 HeDocumentationRepository $documentationRepository,
