@@ -2,6 +2,13 @@
 
 @import "./components/form";
 
+.line-tuto-step{
+  label{
+    @include flex(row, center, space-between, var(--espaceEls));
+    width: 100%;
+  }
+}
+
 .tutorial-read{
 
   .tutorial-meta{

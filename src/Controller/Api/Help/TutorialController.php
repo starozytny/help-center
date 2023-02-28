@@ -57,7 +57,7 @@ class TutorialController extends AbstractController
             if($dataArray[$name] != "" && $dataArray[$name] != "<p><br></p>"){
                 $step = (new HeStep())
                     ->setPosition($order)
-                    ->setContent($dataArray[$name])
+                    ->setContent($dataArray[$name]->value)
                     ->setTutorial($obj)
                 ;
 

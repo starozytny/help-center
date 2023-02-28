@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import axios from "axios";
+import { uid } from "uid";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import { Input }    from "@commonComponents/Elements/Fields";
-import { Trumb }    from "@commonComponents/Elements/Trumb";
-import { Button }   from "@commonComponents/Elements/Button";
+import { Input }     from "@commonComponents/Elements/Fields";
+import { Trumb }     from "@commonComponents/Elements/Trumb";
+import { Button }    from "@commonComponents/Elements/Button";
+import { LoaderTxt } from "@commonComponents/Elements/Loader";
+import { StepFormulaire } from "@userPages/Tutorials/StepForm";
 
 import Formulaire   from "@commonFunctions/formulaire";
 import Validateur   from "@commonFunctions/validateur";
 import Inputs       from "@commonFunctions/inputs";
-import {StepFormulaire} from "@userPages/Tutorials/StepForm";
-import {LoaderTxt} from "@commonComponents/Elements/Loader";
 
 const URL_INDEX_ELEMENTS    = "user_help_tutorial_read";
 const URL_CREATE_ELEMENT    = "api_help_tutorials_create";
@@ -72,10 +73,10 @@ class Form extends Component {
         if(steps.length > 0){
             let self = this;
             steps.forEach((s, index) => {
-                self.setState({ [`step${index + 1}`]: s.content })
+                self.setState({ [`step${index + 1}`]: { uid: uid(), value: s.content} })
             })
         }else{
-            this.setState({ step1: '' })
+            this.setState({ step1: { uid: uid(), value: '' } })
         }
 
         this.setState({ nbSteps: nbSteps, loadStep: false })
@@ -100,10 +101,28 @@ class Form extends Component {
     }
 
     handleIncreaseStep = () => { this.setState((prevState, prevProps) => ({
-        nbSteps: prevState.nbSteps + 1, [`step${(prevState.nbSteps + 1)}`]: ''
+        nbSteps: prevState.nbSteps + 1, [`step${(prevState.nbSteps + 1)}`]: { uid: uid(), value: '' }
     })) }
 
-    handleUpdateContentStep = (step, content) => { this.setState({ ['step' + step]: content }) }
+    handleUpdateContentStep = (i, content) => {
+        let name = `step${i}`;
+        this.setState({ [name]: { uid: this.state[name].uid, value: content } })
+    }
+
+    handleRemoveStep = (step) => {
+        const { nbSteps } = this.state;
+
+        this.setState({ loadStep: true })
+
+        let newNbSteps = nbSteps - 1;
+        if(step !== nbSteps){
+            for(let i = step + 1; i <= nbSteps ; i++){
+                this.setState({ [`step${i - 1}`]: { uid: uid(), value: this.state[`step${i}`].value } })
+            }
+        }
+
+        this.setState({ nbSteps: newNbSteps, loadStep: false })
+    }
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -145,8 +164,10 @@ class Form extends Component {
 
         let steps = [];
         for(let i = 1 ; i <= nbSteps ; i++){
-            steps.push(<StepFormulaire key={i} content={this.state[`step${i}`]} step={i}
-                                       onUpdateData={this.handleUpdateContentStep} />)
+            let val = this.state[`step${i}`];
+            steps.push(<StepFormulaire key={val.uid} content={val.value} step={i}
+                                       onUpdateData={this.handleUpdateContentStep}
+                                       onRemoveStep={this.handleRemoveStep} />)
         }
 
         return <>
