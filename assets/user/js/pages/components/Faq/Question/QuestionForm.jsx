@@ -113,14 +113,14 @@ class Form extends Component {
                         </div>
                         <div className="line-col-2">
                             <div className="line">
-                                <InputView valeur={category.name} errors={errors}>Catégorie</InputView>
+                                <InputView valeur={category.name} errors={errors}>Catégorie *</InputView>
                             </div>
                             <div className="line">
-                                <Input identifiant="name" valeur={name} {...params}>Intitulé</Input>
+                                <Input identifiant="name" valeur={name} {...params}>Intitulé *</Input>
                             </div>
                             <div className="line">
                                 <Trumb identifiant="content" valeur={content.value} errors={errors} onChange={this.handleChangeTrumb}>
-                                    Description
+                                    Description *
                                 </Trumb>
                             </div>
                         </div>

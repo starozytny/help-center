@@ -130,7 +130,7 @@ class Form extends Component {
                         <div className="line-col-2">
                             <div className="line line-fat-box">
                                 <Radiobox items={visibilityItems} identifiant="visibility" valeur={visibility} {...params}>
-                                    Visibilité
+                                    Visibilité *
                                 </Radiobox>
                             </div>
                         </div>
@@ -141,14 +141,14 @@ class Form extends Component {
                         </div>
                         <div className="line-col-2">
                             <div className="line line-2">
-                                <Input identifiant="name" valeur={name} {...params}>Intitulé</Input>
-                                <Input identifiant="subtitle" valeur={subtitle} {...params}>Sous titre</Input>
+                                <Input identifiant="name" valeur={name} {...params}>Intitulé *</Input>
+                                <Input identifiant="subtitle" valeur={subtitle} {...params}>Sous titre *</Input>
                             </div>
                             {loadIcons
                                 ? <LoaderTxt text="Chargement des icônes" />
                                 : <div className="line line-icons">
                                     <div className={'form-group' + (error ? " form-group-error" : "")}>
-                                        <label htmlFor="icon">Icône</label>
+                                        <label htmlFor="icon">Icône *</label>
                                         <div className="icons-choice">
                                             {icons.map((choice, index) => {
                                                 return <div className={"icon-choice" + (choice === icon ? " active" : "")} key={index}
