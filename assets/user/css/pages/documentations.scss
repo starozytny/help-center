@@ -24,6 +24,24 @@
 
   .likes{
     @include flex(row, center, flex-start, 12px);
+
+    .item{
+      cursor: pointer;
+      transition: opacity 0.2s ease-in-out;
+
+      &.active{
+        &:first-child{
+          color: var(--primary);
+        }
+        &:last-child{
+          color: var(--danger);
+        }
+      }
+
+      &:hover{
+        opacity: 0.9;
+      }
+    }
   }
 
   .duration, .product, .date, .likes .item{

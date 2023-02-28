@@ -46,13 +46,19 @@ class ProductController extends AbstractController
 
     #[Route('/produit/{p_slug}/documentation/{slug}', name: 'documentation_read', options: ['expose' => true])]
     public function documentationRead($p_slug, $slug, HeProductRepository $productRepository,
-                         HeDocumentationRepository $documentationRepository): Response
+                                      HeDocumentationRepository $documentationRepository, HeLikeRepository $likeRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
         $obj     = $documentationRepository->findOneBy(['product' => $product, 'slug' => $slug]);
+        $answer  = $likeRepository->findOneBy([
+            'user' => $this->getUser(), 'type' => HelpFavorite::Documentation, 'identifiant' => $obj->getId()
+        ]);
 
         return $this->render('user/pages/documentations/read.html.twig', [
             'elem' => $obj,
+            'answer' => $answer ? $answer->getAnswer() : 2,
+            'haveAnswer' => (bool)$answer,
+            'type' => HelpFavorite::Documentation
         ]);
     }
 
@@ -77,6 +83,7 @@ class ProductController extends AbstractController
             'isFav' => (bool)$fav,
             'answer' => $answer ? $answer->getAnswer() : 2,
             'haveAnswer' => (bool)$answer,
+            'type' => HelpFavorite::Tutorial
         ]);
     }
 
