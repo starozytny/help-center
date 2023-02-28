@@ -107,7 +107,9 @@
         color: var(--alpha);
       }
 
-      & > .delete-doc .btn-icon, & > .delete-tuto .btn-icon{
+      & > .delete-doc .btn-icon,
+      & > .delete-tuto .btn-icon,
+      & > .favorite-tuto .btn-icon{
         &:hover{
           .tooltip{
             top: -27px;
@@ -121,7 +123,7 @@
         width: 100%;
         min-height: 48px;
 
-        &:not(.delete-doc, .delete-tuto):hover{
+        &:not(.delete-doc, .delete-tuto, .favorite-tuto):hover{
           .tooltip{
             top: -18px;
             right: 22px;

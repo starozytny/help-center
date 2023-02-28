@@ -37,7 +37,7 @@ export function Favorite ({ context, type, id, isFav })
     return <>
         {context === "read"
             ? <ButtonIcon icon={icon} outline={true} onClick={handleClick} tooltipWidth={128}>{text}</ButtonIcon>
-            : <ButtonIcon icon={icon} type="none" onClick={handleClick}>{text}</ButtonIcon>
+            : <ButtonIcon icon={icon} type="none" onClick={handleClick} tooltipWidth={128}>{text}</ButtonIcon>
         }
     </>
 }
