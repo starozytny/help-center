@@ -73,57 +73,65 @@
                     </div>
                 {% endif %}
                 <div class="tutorials">
-                    {% for el in tutorials %}
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="name">{{ el.name }}</div>
+                    {% if tutorials | length == 0 %}
+                        <div class="alert alert-primary">
+                            <div class="alert-container">
+                                <p>Aucun tutoriel pour {{ elem.name }}.</p>
                             </div>
-                            <div class="card-body">
-                                <div class="content">
-                                    {{ el.description | raw }}
+                        </div>
+                    {% else %}
+                        {% for el in tutorials %}
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="name">{{ el.name }}</div>
                                 </div>
-                            </div>
-                            <div class="card-footer">
-                                {% if app.user.admin and force_user == null %}
+                                <div class="card-body">
+                                    <div class="content">
+                                        {{ el.description | raw }}
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    {% if app.user.admin and force_user == null %}
+                                        <a
+                                                href="{{ path('user_help_tutorial_update', {'p_slug': elem.slug, 'slug': el.slug}) }}"
+                                                class="btn-icon"
+                                        >
+                                            <span class="icon-pencil"></span>
+                                            <span class="tooltip">Modifier</span>
+                                        </a>
+                                        <div class="delete-tuto"
+                                             data-id="{{ el.id }}"
+                                             data-name="{{ el.name }}"
+                                             data-product-slug="{{ elem.slug }}"
+                                        >
+                                            <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
+                                        </div>
+                                    {% endif %}
+
+                                    {% set isFav = 0 %}
+                                    {% for fav in favoritesTuto %}
+                                        {% if fav.identifiant == el.id %}
+                                            {% set isFav = 1 %}
+                                        {% endif %}
+                                    {% endfor %}
                                     <a
-                                            href="{{ path('user_help_tutorial_update', {'p_slug': elem.slug, 'slug': el.slug}) }}"
+                                            href="{{ path('user_help_tutorial_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
                                             class="btn-icon"
                                     >
-                                        <span class="icon-pencil"></span>
-                                        <span class="tooltip">Modifier</span>
+                                        <span class="icon-vision"></span>
+                                        <span class="tooltip">Voir le tutoriel</span>
                                     </a>
-                                    <div class="delete-tuto"
+                                    <div class="favorite-tuto"
                                          data-id="{{ el.id }}"
-                                         data-name="{{ el.name }}"
-                                         data-product-slug="{{ elem.slug }}"
+                                         data-type="0"
+                                         data-is-fav="{{ isFav }}"
                                     >
                                         <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
                                     </div>
-                                {% endif %}
-
-                                {% set isFav = 0 %}
-                                {% for fav in favoritesTuto %}
-                                    {% if fav.identifiant == el.id %}
-                                        {% set isFav = 1 %}
-                                    {% endif %}
-                                {% endfor %}
-                                <a
-                                        href="{{ path('user_help_tutorial_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
-                                        class="btn-icon"
-                                >
-                                    <span class="icon-vision"></span>
-                                    <span class="tooltip">Voir le tutoriel</span>
-                                </a>
-                                <div class="favorite-tuto"
-                                     data-id="{{ el.id }}"
-                                     data-type="0"
-                                     data-is-fav="{{ isFav }}"
-                                >
-                                    <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
                                 </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
 
@@ -157,53 +165,61 @@
                     </div>
                 {% endif %}
                 <div class="tutorials documentations">
-                    {% for el in docs %}
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="icon">
-                                    <span class="icon-{{ el.icon }}"></span>
-                                </div>
-                                <div class="name">{{ el.name }}</div>
-                            </div>
-                            <div class="card-body">
-                                <div class="content">
-                                    {{ el.description | raw }}
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                {% if app.user.admin and force_user == null %}
-                                    <a
-                                            href="{{ path('user_help_documentation_update', {'p_slug': elem.slug, 'slug': el.slug}) }}"
-                                            class="btn-icon"
-                                    >
-                                        <span class="icon-pencil"></span>
-                                        <span class="tooltip">Modifier</span>
-                                    </a>
-                                    <div class="delete-doc"
-                                         data-id="{{ el.id }}"
-                                         data-name="{{ el.name }}"
-                                         data-product-slug="{{ elem.slug }}"
-                                    >
-                                        <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
-                                    </div>
-                                    <a
-                                            href="{{ path('user_help_documentation_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
-                                            class="btn-icon"
-                                    >
-                                        <span class="icon-vision"></span>
-                                        <span class="tooltip" style="width: 96px">En savoir plus</span>
-                                    </a>
-                                {% else %}
-                                    <a
-                                            href="{{ path('user_help_documentation_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
-                                            class="txt-button txt-button-primary"
-                                    >
-                                        <span>En savoir plus</span>
-                                    </a>
-                                {% endif %}
+                    {% if tutorials | length == 0 %}
+                        <div class="alert alert-primary">
+                            <div class="alert-container">
+                                <p>Aucune documentation pour {{ elem.name }}.</p>
                             </div>
                         </div>
-                    {% endfor %}
+                    {% else %}
+                        {% for el in docs %}
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="icon">
+                                        <span class="icon-{{ el.icon }}"></span>
+                                    </div>
+                                    <div class="name">{{ el.name }}</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="content">
+                                        {{ el.description | raw }}
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    {% if app.user.admin and force_user == null %}
+                                        <a
+                                                href="{{ path('user_help_documentation_update', {'p_slug': elem.slug, 'slug': el.slug}) }}"
+                                                class="btn-icon"
+                                        >
+                                            <span class="icon-pencil"></span>
+                                            <span class="tooltip">Modifier</span>
+                                        </a>
+                                        <div class="delete-doc"
+                                             data-id="{{ el.id }}"
+                                             data-name="{{ el.name }}"
+                                             data-product-slug="{{ elem.slug }}"
+                                        >
+                                            <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
+                                        </div>
+                                        <a
+                                                href="{{ path('user_help_documentation_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
+                                                class="btn-icon"
+                                        >
+                                            <span class="icon-vision"></span>
+                                            <span class="tooltip" style="width: 96px">En savoir plus</span>
+                                        </a>
+                                    {% else %}
+                                        <a
+                                                href="{{ path('user_help_documentation_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
+                                                class="txt-button txt-button-primary"
+                                        >
+                                            <span>En savoir plus</span>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
 

@@ -18,34 +18,42 @@
                     <h2>Tutoriels</h2>
                 </div>
                 <div class="tutorials">
-                    {% for el in tutorials %}
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="name">{{ el.product.name }} : {{ el.name }}</div>
-                            </div>
-                            <div class="card-body">
-                                <div class="content">
-                                    {{ el.description | raw }}
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <a
-                                        href="{{ path('user_help_tutorial_read', {'p_slug': el.product.slug, 'slug': el.slug}) }}"
-                                        class="btn-icon"
-                                >
-                                    <span class="icon-vision"></span>
-                                    <span class="tooltip">Voir le tutoriel</span>
-                                </a>
-                                <div class="favorite-tuto"
-                                     data-id="{{ el.id }}"
-                                     data-type="0"
-                                     data-is-fav="1"
-                                >
-                                    <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
-                                </div>
+                    {% if tutorials | length == 0 %}
+                        <div class="alert alert-primary">
+                            <div class="alert-container">
+                                <p>Aucun tutoriel mis en favoris.</p>
                             </div>
                         </div>
-                    {% endfor %}
+                    {% else %}
+                        {% for el in tutorials %}
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="name">{{ el.product.name }} : {{ el.name }}</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="content">
+                                        {{ el.description | raw }}
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <a
+                                            href="{{ path('user_help_tutorial_read', {'p_slug': el.product.slug, 'slug': el.slug}) }}"
+                                            class="btn-icon"
+                                    >
+                                        <span class="icon-vision"></span>
+                                        <span class="tooltip">Voir le tutoriel</span>
+                                    </a>
+                                    <div class="favorite-tuto"
+                                         data-id="{{ el.id }}"
+                                         data-type="0"
+                                         data-is-fav="1"
+                                    >
+                                        <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         </div>

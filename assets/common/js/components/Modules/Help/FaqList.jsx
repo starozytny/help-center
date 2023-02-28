@@ -9,6 +9,7 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import { Button, ButtonIcon } from "@commonComponents/Elements/Button";
 import { Modal } from "@commonComponents/Elements/Modal";
+import {Alert} from "@commonComponents/Elements/Alert";
 
 const URL_INDEX_ELEMENTS  = "user_help_product_read";
 
@@ -71,13 +72,15 @@ export function FaqList ({ role, productSlug, categories, questions, defaultCate
                                                  onClick={Routing.generate(URL_CREATE_CATEGORY, {'slug': productSlug})}>
                         Ajouter une catégorie
                     </Button>}
-                    {categories.map((elem, index) => {
-                        return <div className={"item" + (elem.id === category ? " active" : "")} key={index}
-                                    onClick={() => setCategory(elem.id)} >
-                            <span className={"icon-" + elem.icon} />
-                            <span>{elem.name}</span>
-                        </div>
-                    })}
+                    {categories.length !== 0
+                        ? (categories.map((elem, index) => {
+                            return <div className={"item" + (elem.id === category ? " active" : "")} key={index}
+                                        onClick={() => setCategory(elem.id)} >
+                                <span className={"icon-" + elem.icon} />
+                                <span>{elem.name}</span>
+                            </div>
+                        })) : <Alert type="primary" withIcon={false}>Aucun question-réponse pour le moment.</Alert>
+                    }
                 </div>
             </div>
             <div className="col-2">
@@ -106,15 +109,16 @@ export function FaqList ({ role, productSlug, categories, questions, defaultCate
                                 </div>
                             }
                         }))
-                        : <div className="questions-header">
-                            <div className="icon">
-                                <span className="icon-question" />
-                            </div>
-                            <div className="title">
-                                <div className="name">Sélectionnez une catégorie</div>
-                                <div className="sub">Cliquez sur la catégorie souhaitée.</div>
-                            </div>
-                        </div>
+                        : (categories.length !== 0
+                            ? <div className="questions-header">
+                                <div className="icon">
+                                    <span className="icon-question" />
+                                </div>
+                                <div className="title">
+                                    <div className="name">Sélectionnez une catégorie</div>
+                                    <div className="sub">Cliquez sur la catégorie souhaitée.</div>
+                                </div>
+                            </div> : null)
                     }
 
                     <div className="questions-body">
