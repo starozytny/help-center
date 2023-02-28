@@ -25,7 +25,6 @@ if(el){
     createRoot(el).render(<ProductFormulaire context="create" element={null} />)
 }
 
-
 let deletesDoc = document.querySelectorAll('.delete-doc');
 if(deletesDoc){
     deletesDoc.forEach(elem => {

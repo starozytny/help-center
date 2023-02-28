@@ -3,10 +3,9 @@
 namespace App\Controller\Api\Help;
 
 use App\Entity\Enum\Help\HelpFavorite;
-use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeFavorite;
+use App\Entity\Main\Help\HeLike;
 use App\Entity\Main\Help\HeProduct;
-use App\Repository\Main\Help\HeLikeRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Service\ApiResponse;
 use App\Service\Data\DataHelp;
@@ -94,10 +93,10 @@ class ProductController extends AbstractController
         $favorites = $em->getRepository(HeFavorite::class)->findBy([
             'type' => HelpFavorite::Tutorial, 'identifiant' => $tutosIds
         ]);
-        $tutoAnswers = $em->getRepository(HeLikeRepository::class)->findBy([
+        $tutoAnswers = $em->getRepository(HeLike::class)->findBy([
             'type' => HelpFavorite::Tutorial, 'identifiant' => $tutosIds
         ]);
-        $docAnswers = $em->getRepository(HeLikeRepository::class)->findBy([
+        $docAnswers = $em->getRepository(HeLike::class)->findBy([
             'type' => HelpFavorite::Documentation, 'identifiant' => $docsIds
         ]);
 

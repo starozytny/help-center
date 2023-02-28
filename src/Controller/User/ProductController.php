@@ -24,7 +24,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 #[Route('/espace-membre/produits', name: 'user_help_')]
 class ProductController extends AbstractController
 {
-    #[Route('/', name: 'products_index')]
+    #[Route('/', name: 'products_index', options: ['expose' => true])]
     public function index(HeProductRepository $productRepository): Response
     {
         return $this->render('user/pages/products/index.html.twig', [
