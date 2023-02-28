@@ -109,7 +109,9 @@ class ProductController extends AbstractController
     {
         $obj = $productRepository->findOneBy(['slug' => $slug]);
 
-        $element = $serializer->serialize($obj,   'json', ['groups' => HeProduct::FORM]);
+        $element = $serializer->serialize($obj,'json', ['groups' => HeProduct::FORM]);
+        dump($element);
+
         return $this->render('user/pages/products/update.html.twig', [
             'elem' => $obj,
             'element' => $element,

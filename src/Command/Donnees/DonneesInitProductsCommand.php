@@ -43,12 +43,16 @@ class DonneesInitProductsCommand extends Command
 
         $data =  [
             [
-                'name' => "Lotys", 'type' => HelpType::Web, 'url' => 'lotys.fr', 'logo' => 'logo_lotys.svg',
-                'description' => 'Webservice pour la gestion des transactions immobilières.<br /> Diffusez facilement vos annonces sur différentes plateformes !'
+                'name' => "Lotys", 'type' => HelpType::Web, 'website' => 'lotys.fr', 'logo' => 'logo_lotys.svg',
+                'description' => [
+                    'html' => 'Webservice pour la gestion des transactions immobilières.<br /> Diffusez facilement vos annonces sur différentes plateformes !'
+                ]
             ],
             [
-                'name' => "Magesto", 'type' => HelpType::Web, 'url' => 'magesto.fr', 'logo' => 'logo_magesto.svg',
-                'description' => 'Webservice pour la gestion des factures, devis et avoirs.<br /> Programmez vos contrats pour rapidement générer et envoyer vos documents !'
+                'name' => "Magesto", 'type' => HelpType::Web, 'website' => 'magesto.fr', 'logo' => 'logo_magesto.svg',
+                'description' => [
+                    'html' => 'Webservice pour la gestion des factures, devis et avoirs.<br /> Programmez vos contrats pour rapidement générer et envoyer vos documents !'
+                ]
             ],
         ];
 

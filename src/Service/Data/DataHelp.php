@@ -24,8 +24,8 @@ class DataHelp
             ->setName($this->sanitizeData->trimData($data->name))
             ->setType((int) $data->type)
             ->setSlug($this->sanitizeData->slugString($data->name))
-            ->setUrl($this->sanitizeData->trimData($data->url))
-            ->setDescription($this->sanitizeData->trimData($data->description))
+            ->setUrl($this->sanitizeData->trimData($data->website))
+            ->setDescription($this->sanitizeData->trimData($data->description->html))
         ;
     }
 

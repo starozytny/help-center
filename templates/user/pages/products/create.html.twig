@@ -1,4 +1,4 @@
-{% extends 'user/pages/documentations/template.html.twig' %}
+{% extends 'user/pages/products/template.html.twig' %}
 
 {% set page_title %}Création d'un produit{% endset %}
 {% set page_subtitle %}Créez une page spécifique pour un produit.{% endset %}
@@ -7,8 +7,6 @@
     {% set breadcrumbs = breadcrumbs | merge([ { text: page_title } ]) %}
     {{ parent() }}
 {% endblock %}
-
-{% set full_width = true %}
 
 {% block main_content %}
     {% include "layout/components/admin/page_toolbar.html.twig" with { page_back: path('user_help_products_index') } %}

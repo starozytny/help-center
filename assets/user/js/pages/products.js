@@ -3,16 +3,28 @@ import '../../css/pages/products.scss';
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Faq } from "@userPages/Faq/Faq";
+import { ProductFormulaire }    from "@userPages/Products/ProductForm";
 import { DocumentationDelete }  from "@userPages/Documentations/DocumentationDelete";
 import { TutorialDelete }       from "@userPages/Tutorials/TutorialDelete";
 import { CategoryFormulaire }   from "@userPages/Faq/Category/CategoryForm";
 import { QuestionFormulaire }   from "@userPages/Faq/Question/QuestionForm";
-import {Favorite} from "@userPages/Favorite/Favorite";
+import { Favorite }             from "@userPages/Favorite/Favorite";
 
 let el = document.getElementById("help_faq_list");
 if(el){
     createRoot(el).render(<Faq {...el.dataset} />)
 }
+
+el = document.getElementById("products_update");
+if(el){
+    createRoot(el).render(<ProductFormulaire context="update" element={JSON.parse(el.dataset.element)} />)
+}
+
+el = document.getElementById("products_create");
+if(el){
+    createRoot(el).render(<ProductFormulaire context="create" element={null} />)
+}
+
 
 let deletesDoc = document.querySelectorAll('.delete-doc');
 if(deletesDoc){

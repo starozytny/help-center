@@ -17,11 +17,12 @@ class HeProduct extends DataEntity
     const FOLDER = "logos";
 
     const FORM = ['product_form'];
+    const READ = ['product_read'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['product_form'])]
+    #[Groups(['product_form', 'product_read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -41,10 +42,10 @@ class HeProduct extends DataEntity
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['product_read'])]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['product_form'])]
     private ?string $logo = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: HeDocumentation::class)]
@@ -140,6 +141,7 @@ class HeProduct extends DataEntity
         return $this;
     }
 
+    #[Groups(['product_form'])]
     public function getLogoFile()
     {
         return $this->getFileOrDefault($this->logo, self::FOLDER);
