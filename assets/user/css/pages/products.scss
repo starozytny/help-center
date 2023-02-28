@@ -3,7 +3,7 @@
 @import "./components/form";
 @import "../components/help";
 
-.delete-doc, .delete-tuto{
+.delete-doc, .delete-tuto, .favorite-tuto{
   @include flex(row, center, center);
 }
 

@@ -100,6 +100,13 @@
                                         <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
                                     </div>
                                 {% endif %}
+
+                                {% set isFav = 0 %}
+                                {% for fav in favoritesTuto %}
+                                    {% if fav.identifiant == el.id %}
+                                        {% set isFav = 1 %}
+                                    {% endif %}
+                                {% endfor %}
                                 <a
                                         href="{{ path('user_help_tutorial_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
                                         class="btn-icon"
@@ -107,13 +114,13 @@
                                     <span class="icon-vision"></span>
                                     <span class="tooltip">Voir le tutoriel</span>
                                 </a>
-                                <a
-                                        href="{{ path('user_help_product_read', {'slug': elem.slug}) }}"
-                                        class="btn-icon"
+                                <div class="favorite-tuto"
+                                     data-id="{{ el.id }}"
+                                     data-type="0"
+                                     data-is-fav="{{ isFav }}"
                                 >
-                                    <span class="icon-heart"></span>
-                                    <span class="tooltip">Mettre en favoris</span>
-                                </a>
+                                    <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
+                                </div>
                             </div>
                         </div>
                     {% endfor %}

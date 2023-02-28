@@ -4,6 +4,7 @@ namespace App\Entity\Main;
 
 use App\Entity\DataEntity;
 use App\Entity\Main\Help\HeDocumentation;
+use App\Entity\Main\Help\HeFavorite;
 use App\Entity\Main\Help\HeTutorial;
 use App\Repository\Main\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -100,6 +101,9 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: HeTutorial::class)]
     private Collection $tutorials;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: HeFavorite::class)]
+    private Collection $heFavorites;
+
     /**
      * @throws Exception
      */
@@ -109,6 +113,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
         $this->token = $this->initToken();
         $this->documentations = new ArrayCollection();
         $this->tutorials = new ArrayCollection();
+        $this->heFavorites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -442,6 +447,36 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
             // set the owning side to null (unless already changed)
             if ($tutorial->getAuthor() === $this) {
                 $tutorial->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HeFavorite>
+     */
+    public function getHeFavorites(): Collection
+    {
+        return $this->heFavorites;
+    }
+
+    public function addHeFavorite(HeFavorite $heFavorite): self
+    {
+        if (!$this->heFavorites->contains($heFavorite)) {
+            $this->heFavorites->add($heFavorite);
+            $heFavorite->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHeFavorite(HeFavorite $heFavorite): self
+    {
+        if ($this->heFavorites->removeElement($heFavorite)) {
+            // set the owning side to null (unless already changed)
+            if ($heFavorite->getUser() === $this) {
+                $heFavorite->setUser(null);
             }
         }
 

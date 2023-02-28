@@ -10,6 +10,7 @@ import { DocumentationDelete }  from "@userPages/Documentations/DocumentationDel
 import { TutorialDelete }       from "@userPages/Tutorials/TutorialDelete";
 import { CategoryFormulaire }   from "@userPages/Faq/Category/CategoryForm";
 import { QuestionFormulaire }   from "@userPages/Faq/Question/QuestionForm";
+import {Favorite} from "@userPages/Favorite/Favorite";
 
 Routing.setRoutingData(routes);
 
@@ -29,6 +30,13 @@ let deletesTuto = document.querySelectorAll('.delete-tuto');
 if(deletesTuto){
     deletesTuto.forEach(elem => {
         createRoot(elem).render(<TutorialDelete context="product" {...elem.dataset} />)
+    })
+}
+
+let favoritesTuto = document.querySelectorAll('.favorite-tuto');
+if(favoritesTuto){
+    favoritesTuto.forEach(elem => {
+        createRoot(elem).render(<Favorite context="product" {...elem.dataset} />)
     })
 }
 

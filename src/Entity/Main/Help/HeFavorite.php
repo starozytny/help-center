@@ -2,6 +2,7 @@
 
 namespace App\Entity\Main\Help;
 
+use App\Entity\Main\User;
 use App\Repository\Main\Help\HeFavoriteRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,6 +19,10 @@ class HeFavorite
 
     #[ORM\Column]
     private ?int $identifiant = null;
+
+    #[ORM\ManyToOne(inversedBy: 'heFavorites')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -44,6 +49,18 @@ class HeFavorite
     public function setIdentifiant(int $identifiant): self
     {
         $this->identifiant = $identifiant;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

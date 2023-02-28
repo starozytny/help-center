@@ -1,4 +1,10 @@
 
+.icon-heart1:before {
+  content: "\e99d";
+}
+.icon-share:before {
+  content: "\e965";
+}
 .icon-close:before {
   content: "\e99b";
 }
@@ -397,9 +403,6 @@
 }
 .icon-settings:before {
   content: "\e906";
-}
-.icon-share:before {
-  content: "\e965";
 }
 .icon-shield:before {
   content: "\e962";
