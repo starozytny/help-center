@@ -143,7 +143,7 @@ class Form extends Component {
                             </div>
                             {parseInt(type) === 0
                                 ? <div className="line">
-                                    <Input identifiant="website" valeur={website} placeholder="https://website.fr" {...params}>
+                                    <Input identifiant="website" valeur={website} placeholder="website.fr" {...params}>
                                         Site internet *
                                     </Input>
                                 </div>

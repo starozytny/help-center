@@ -30,63 +30,37 @@
                 <div class="subtitle">Parcourez la documentation et les questions fréquentes de nos logiciels et webservices !</div>
             </div>
             <div class="products">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="logo">
-                            <img src="{{ asset('logos/logo_lotys.svg') }}" alt="Logo lotys.fr">
-                        </div>
-                        <div class="name">
-                            <div>Lotys</div>
-                            <div class="linkTo">
-                                <a href="https://lotys.fr" title="lotys.fr">
-                                    <span>lotys.fr</span>
-                                    <span class="icon-link-2"></span>
-                                </a>
+                {% for elem in products %}
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="logo">
+                                <img src="{{ asset(elem.logoFile) }}" alt="Logo {{ elem.name }}">
+                            </div>
+                            <div class="name">
+                                <div>{{ elem.name }}</div>
+                                <div class="linkTo">
+                                    <a href="https://{{ elem.url }}" title="{{ elem.url }}" target="_blank">
+                                        <span>{{ elem.url }}</span>
+                                        <span class="icon-link-2"></span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="content">
-                            Webservice pour la gestion des transactions immobilières. <br>
-                            Diffusez facilement vos annonces sur différentes plateformes !
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="" class="txt-button txt-button-primary">
-                            <span>Découvrir Lotys</span>
-                            <span class="icon-right-arrow"></span>
-                        </a>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <div class="logo">
-                            <img src="{{ asset('logos/logo_magesto.svg') }}" alt="Logo magesto.fr">
-                        </div>
-                        <div class="name">
-                            <div>Magesto</div>
-                            <div class="linkTo">
-                                <a href="https://magesto.fr" title="magesto.fr">
-                                    <span>magesto.fr</span>
-                                    <span class="icon-link-2"></span>
-                                </a>
+                        <div class="card-body">
+                            <div class="content">
+                                {{ elem.description | raw }}
                             </div>
                         </div>
-
-                    </div>
-                    <div class="card-body">
-                        <div class="content">
-                            Webservice pour la gestion des factures, devis et avoirs. <br>
-                            Programmez vos contrats pour rapidement générer et envoyer vos documents !
+                        <div class="card-footer">
+                            <a href="{{ path('user_help_product_read', {'slug': elem.slug}) }}"
+                               class="txt-button txt-button-primary"
+                            >
+                                <span>Découvrir {{ elem.name }}</span>
+                                <span class="icon-right-arrow"></span>
+                            </a>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <a href="" class="txt-button txt-button-primary">
-                            <span>Découvrir Magesto</span>
-                            <span class="icon-right-arrow"></span>
-                        </a>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
