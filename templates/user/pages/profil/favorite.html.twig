@@ -1,0 +1,17 @@
+{% extends 'user/pages/profil/template.html.twig' %}
+
+{% set page_title %}Mes favoris{% endset %}
+{% set page_subtitle %}Accédez rapidement aux tutoriels mis en favoris !{% endset %}
+
+{% block breadcrumb %}
+    {% set breadcrumbs = breadcrumbs | merge([
+        { text: page_title, icon: 'heart', url: path('user_favorite')  },
+    ]) %}
+    {{ parent() }}
+{% endblock %}
+
+{% block main_content %}
+    <div class="page-default">
+       Hello
+    </div>
+{% endblock %}
