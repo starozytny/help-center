@@ -56,9 +56,9 @@ class DonneesInitProductsCommand extends Command
             ],
         ];
 
-        foreach($data as $obj){
-            $obj = $this->dataMain->setDataProduct(new HeProduct(), json_decode(json_encode($obj)));
-            $obj->setLogo($obj['logo']);
+        foreach($data as $item){
+            $obj = $this->dataMain->setDataProduct(new HeProduct(), json_decode(json_encode($item)));
+            $obj->setLogo($item['logo']);
 
             $this->em->persist($obj);
         }
