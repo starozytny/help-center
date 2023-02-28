@@ -5,9 +5,11 @@ namespace App\Controller\User;
 use App\Entity\Main\Help\HeCategory;
 use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeQuestion;
+use App\Entity\Main\Help\HeStep;
 use App\Entity\Main\Help\HeTutorial;
 use App\Repository\Main\Help\HeDocumentationRepository;
 use App\Repository\Main\Help\HeProductRepository;
+use App\Repository\Main\Help\HeStepRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,17 +74,21 @@ class ProductController extends AbstractController
     #[Route('/produit/{p_slug}/tutoriels/modifier/{slug}', name: 'tutorial_update')]
     #[IsGranted('ROLE_ADMIN')]
     public function tutorialUpdate($p_slug, $slug, HeTutorialRepository $tutorialRepository,
-                                        HeProductRepository $productRepository, SerializerInterface $serializer): Response
+                                   HeProductRepository $productRepository, HeStepRepository $stepRepository,
+                                   SerializerInterface $serializer): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
         $obj     = $tutorialRepository->findOneBy(['slug' => $slug]);
+        $steps   = $stepRepository->findBy(['tutorial' => $obj]);
 
-        $element = $serializer->serialize($obj, 'json', ['groups' => HeTutorial::FORM]);
+        $element = $serializer->serialize($obj,   'json', ['groups' => HeTutorial::FORM]);
+        $steps   = $serializer->serialize($steps, 'json', ['groups' => HeStep::FORM]);
 
         return $this->render('user/pages/tutorials/update.html.twig', [
             'product' => $product,
             'elem' => $obj,
             'element' => $element,
+            'steps' => $steps,
         ]);
     }
 

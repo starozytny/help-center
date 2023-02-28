@@ -12,6 +12,7 @@ import Formulaire   from "@commonFunctions/formulaire";
 import Validateur   from "@commonFunctions/validateur";
 import Inputs       from "@commonFunctions/inputs";
 import {StepFormulaire} from "@userPages/Tutorials/StepForm";
+import {LoaderTxt} from "@commonComponents/Elements/Loader";
 
 const URL_INDEX_ELEMENTS    = "user_help_tutorial_read";
 const URL_CREATE_ELEMENT    = "api_help_tutorials_create";
@@ -19,7 +20,7 @@ const URL_UPDATE_GROUP      = "api_help_tutorials_update";
 const TEXT_CREATE           = "Ajouter la documentation";
 const TEXT_UPDATE           = "Enregistrer les modifications";
 
-export function TutorialFormulaire ({ context, element, productSlug })
+export function TutorialFormulaire ({ context, productSlug, element, steps })
 {
     let url = Routing.generate(URL_CREATE_ELEMENT);
 
@@ -31,6 +32,7 @@ export function TutorialFormulaire ({ context, element, productSlug })
         productSlug={productSlug}
         context={context}
         url={url}
+        steps={steps}
         name={element ? Formulaire.setValue(element.name) : ""}
         duration={element ? Formulaire.setValueTime(element.duration) : ""}
         description={element ? Formulaire.setValue(element.description) : ""}
@@ -42,6 +44,7 @@ export function TutorialFormulaire ({ context, element, productSlug })
 TutorialFormulaire.propTypes = {
     productSlug: PropTypes.string.isRequired,
     context: PropTypes.string.isRequired,
+    steps: PropTypes.array,
     element: PropTypes.object,
 }
 
@@ -57,9 +60,25 @@ class Form extends Component {
             duration: props.duration,
             description: { value: description, html: description },
             errors: [],
-            step1: '',
-            nbSteps: 1
+            loadSteps: true,
         }
+    }
+
+    componentDidMount = () => {
+        const { steps } = this.props;
+
+        let nbSteps = steps.length > 0 ? steps.length : 1;
+
+        if(steps.length > 0){
+            let self = this;
+            steps.forEach((s, index) => {
+                self.setState({ [`step${index + 1}`]: s.content })
+            })
+        }else{
+            this.setState({ step1: '' })
+        }
+
+        this.setState({ nbSteps: nbSteps, loadStep: false })
     }
 
     handleChange = (e) => {
@@ -81,7 +100,7 @@ class Form extends Component {
     }
 
     handleIncreaseStep = () => { this.setState((prevState, prevProps) => ({
-        nbSteps: prevState.nbSteps + 1, ['step' + (prevState.nbSteps + 1)]: ''
+        nbSteps: prevState.nbSteps + 1, [`step${(prevState.nbSteps + 1)}`]: ''
     })) }
 
     handleUpdateContentStep = (step, content) => { this.setState({ ['step' + step]: content }) }
@@ -120,13 +139,13 @@ class Form extends Component {
 
     render () {
         const { context } = this.props;
-        const { errors, name, duration, description, nbSteps } = this.state;
+        const { errors, loadStep, name, duration, description, nbSteps } = this.state;
 
         let params  = { errors: errors, onChange: this.handleChange }
 
         let steps = [];
         for(let i = 1 ; i <= nbSteps ; i++){
-            steps.push(<StepFormulaire key={i} content={this.state["step" + i]} step={i}
+            steps.push(<StepFormulaire key={i} content={this.state[`step${i}`]} step={i}
                                        onUpdateData={this.handleUpdateContentStep} />)
         }
 
@@ -163,10 +182,16 @@ class Form extends Component {
                             </div>
                         </div>
                         <div className="line-col-2">
-                            {steps}
-                            <div className="line">
-                                <Button outline={true} type="primary" onClick={this.handleIncreaseStep}>Ajouter une étape</Button>
-                            </div>
+                            {loadStep
+                                ? <LoaderTxt />
+                                : <>
+                                    {steps}
+                                    <div className="line">
+                                        <Button outline={true} type="primary" onClick={this.handleIncreaseStep}>Ajouter une étape</Button>
+                                    </div>
+                                </>
+                            }
+
                         </div>
                     </div>
                 </div>

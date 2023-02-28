@@ -5,10 +5,13 @@ namespace App\Entity\Main\Help;
 use App\Repository\Main\Help\HeStepRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: HeStepRepository::class)]
 class HeStep
 {
+    const FORM = ['step_form'];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -18,6 +21,7 @@ class HeStep
     private ?int $position = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['step_form'])]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'steps')]

@@ -39,24 +39,31 @@ class TutorialController extends AbstractController
             ->setProduct($product)
         ;
 
-        $dataArray = (array) $data;
-        for ($i = 1 ; $i <= $data->nbSteps ; $i++){
-            $name = 'step' . $i;
-
-            $step = (new HeStep())
-                ->setPosition($i)
-                ->setContent($dataArray[$name])
-                ->setTutorial($obj)
-            ;
-
-            $stepRepository->save($step);
-        }
-        dump($data->step[$i]);
-
         if($type == "create") {
             $obj->setAuthor($this->getUser());
         }else{
             $obj->setUpdatedAt(new \DateTime());
+
+            $steps = $stepRepository->findBy(['tutorial' => $obj]);
+            foreach($steps as $s){
+                $stepRepository->remove($s);
+            }
+        }
+
+        $dataArray = (array) $data; $order = 1;
+        for ($i = 1 ; $i <= $data->nbSteps ; $i++){
+            $name = 'step' . $i;
+
+            if($dataArray[$name] != "" && $dataArray[$name] != "<p><br></p>"){
+                $step = (new HeStep())
+                    ->setPosition($order)
+                    ->setContent($dataArray[$name])
+                    ->setTutorial($obj)
+                ;
+
+                $stepRepository->save($step);
+                $order++;
+            }
         }
 
         $noErrors = $validator->validate($obj);

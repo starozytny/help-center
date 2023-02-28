@@ -26,7 +26,11 @@
         <div class="col-2"></div>
     </div>
 
-    <div id="tutorials_update" data-element="{{ element }}" data-product-slug="{{ product.slug }}">
+    <div id="tutorials_update"
+         data-product-slug="{{ product.slug }}"
+         data-element="{{ element }}"
+         data-steps="{{ steps }}"
+    >
         {% include "layout/components/loader.html.twig" %}
     </div>
 {% endblock %}
