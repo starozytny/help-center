@@ -1,8 +1,5 @@
 import '../../css/pages/products.scss';
 
-const routes = require('@publicFolder/js/fos_js_routes.json');
-import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min';
-
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Faq } from "@userPages/Faq/Faq";
@@ -11,8 +8,6 @@ import { TutorialDelete }       from "@userPages/Tutorials/TutorialDelete";
 import { CategoryFormulaire }   from "@userPages/Faq/Category/CategoryForm";
 import { QuestionFormulaire }   from "@userPages/Faq/Question/QuestionForm";
 import {Favorite} from "@userPages/Favorite/Favorite";
-
-Routing.setRoutingData(routes);
 
 let el = document.getElementById("help_faq_list");
 if(el){

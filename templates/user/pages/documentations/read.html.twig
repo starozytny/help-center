@@ -23,20 +23,22 @@
             </a>
         </div>
         <div class="col-2">
-            <a href="{{ path('user_help_documentation_update', {'p_slug': product.slug, 'slug': elem.slug}) }}" class="btn btn-warning">
-                <span class="icon-pencil"></span>
-                <span>Modifier</span>
-            </a>
-            <div class="delete-doc"
-                 data-id="{{ elem.id }}"
-                 data-name="{{ elem.name }}"
-                 data-product-slug="{{ product.slug }}"
-            >
-                <button class="btn btn-danger btn-loader-without-text">
-                    <span class="icon-chart-3"></span>
-                    <span>Supprimer</span>
-                </button>
-            </div>
+            {% if app.user.admin %}
+                <a href="{{ path('user_help_documentation_update', {'p_slug': product.slug, 'slug': elem.slug}) }}" class="btn btn-warning">
+                    <span class="icon-pencil"></span>
+                    <span>Modifier</span>
+                </a>
+                <div class="delete-doc"
+                     data-id="{{ elem.id }}"
+                     data-name="{{ elem.name }}"
+                     data-product-slug="{{ product.slug }}"
+                >
+                    <button class="btn btn-danger btn-loader-without-text">
+                        <span class="icon-chart-3"></span>
+                        <span>Supprimer</span>
+                    </button>
+                </div>
+            {% endif %}
         </div>
     </div>
 

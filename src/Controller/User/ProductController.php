@@ -57,15 +57,20 @@ class ProductController extends AbstractController
 
     #[Route('/produit/{p_slug}/tutoriel/{slug}', name: 'tutorial_read', options: ['expose' => true])]
     public function tutorialRead($p_slug, $slug, HeProductRepository $productRepository,
-                                      HeTutorialRepository $tutorialRepository, HeStepRepository $stepRepository): Response
+                                      HeTutorialRepository $tutorialRepository, HeStepRepository $stepRepository,
+                                 HeFavoriteRepository $favoriteRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
         $obj     = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);
         $steps   = $stepRepository->findBy(['tutorial' => $obj]);
+        $fav     = $favoriteRepository->findOneBy([
+            'user' => $this->getUser(), 'type' => HelpFavorite::Tutorial, 'identifiant' => $obj->getId()
+        ]);
 
         return $this->render('user/pages/tutorials/read.html.twig', [
             'elem' => $obj,
             'steps' => $steps,
+            'isFav' => (bool)$fav
         ]);
     }
 

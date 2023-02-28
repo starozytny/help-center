@@ -4,6 +4,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { TutorialFormulaire } from "@userPages/Tutorials/TutorialForm";
 import { TutorialDelete } from "@userPages/Tutorials/TutorialDelete";
+import { Favorite } from "@userPages/Favorite/Favorite";
 
 let el = document.getElementById("tutorials_update");
 if(el){
@@ -22,5 +23,12 @@ let deletesTuto = document.querySelectorAll('.delete-tuto');
 if(deletesTuto){
     deletesTuto.forEach(elem => {
         createRoot(elem).render(<TutorialDelete context="read" {...elem.dataset}/>)
+    })
+}
+
+let favoritesTuto = document.querySelectorAll('.favorite-tuto');
+if(favoritesTuto){
+    favoritesTuto.forEach(elem => {
+        createRoot(elem).render(<Favorite context="read" {...elem.dataset} />)
     })
 }
