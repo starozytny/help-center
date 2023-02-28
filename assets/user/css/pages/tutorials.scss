@@ -39,4 +39,58 @@
   .tutorial-content{
     padding: var(--espaceLayout) 0;
   }
+
+  .steps{
+    position: relative;
+    @include flex(column, flex-start, flex-start, calc(var(--espaceLayout) * 2));
+
+    &:before{
+      content: "";
+      background-color: var(--color3);
+      display: block;
+      width: 3px; height: 100%;
+      position: absolute;
+      top: 0; left: 15px;
+    }
+
+    .step{
+      position: relative;
+      @include flex(row, flex-start, flex-start, var(--espaceDiv));
+    }
+
+    .number{
+      @include flex();
+      border-radius: var(--radius);
+      background-color: var(--color0);
+      width: 32px; height: 32px;
+      @include fontSemibold();
+    }
+
+    .content{
+      padding-top: 4px;
+    }
+  }
+}
+
+
+//                      __   _ ____  ___   ___    __
+//                     | _| / |___ \( _ ) / _ \  |_ |
+//    _____ _____ _____| |  | | __) / _ \| | | |  | |_____ _____ _____
+//   |_____|_____|_____| |  | |/ __/ (_) | |_| |  | |_____|_____|_____|
+//                     | |  |_|_____\___/ \___/   | |
+//                     |__|                      |__|
+@media (min-width:1280px) {
+  .tutorial-read{
+    .steps{
+      &:before{
+        left: 23px;
+      }
+
+      .number{
+        width: 48px;
+        height: 48px;
+        font-size: 18px;
+      }
+    }
+  }
 }

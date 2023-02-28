@@ -78,7 +78,14 @@
                 </div>
             </div>
             <div class="tutorial-content">
-
+                <div class="steps">
+                    {% for step in steps %}
+                        <div class="step">
+                            <div class="number">{{ step.position }}</div>
+                            <div class="content">{{ step.content | raw }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>

@@ -20,6 +20,7 @@
 
 .page-actions{
   @include flex(row, center, space-between, 8px);
+  flex-wrap: wrap;
 
   & > .col-1{
     @include flex(row, center, flex-start);

@@ -41,7 +41,7 @@ class ProductController extends AbstractController
                          HeDocumentationRepository $documentationRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
-        $obj = $documentationRepository->findOneBy(['product' => $product, 'slug' => $slug]);
+        $obj     = $documentationRepository->findOneBy(['product' => $product, 'slug' => $slug]);
 
         return $this->render('user/pages/documentations/read.html.twig', [
             'elem' => $obj,
@@ -50,13 +50,15 @@ class ProductController extends AbstractController
 
     #[Route('/produit/{p_slug}/tutoriel/{slug}', name: 'tutorial_read', options: ['expose' => true])]
     public function tutorialRead($p_slug, $slug, HeProductRepository $productRepository,
-                                      HeTutorialRepository $tutorialRepository): Response
+                                      HeTutorialRepository $tutorialRepository, HeStepRepository $stepRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
-        $obj = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);
+        $obj     = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);
+        $steps   = $stepRepository->findBy(['tutorial' => $obj]);
 
         return $this->render('user/pages/tutorials/read.html.twig', [
             'elem' => $obj,
+            'steps' => $steps,
         ]);
     }
 
