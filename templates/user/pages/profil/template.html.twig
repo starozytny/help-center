@@ -3,3 +3,13 @@
 {% set breadcrumbs = [
     { icon: 'user-octagon', text: "Profil"  }
 ] %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('user_products') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('user_products') }}
+{% endblock %}
