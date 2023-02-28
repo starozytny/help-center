@@ -5,6 +5,7 @@ namespace App\Entity\Main;
 use App\Entity\DataEntity;
 use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeFavorite;
+use App\Entity\Main\Help\HeLike;
 use App\Entity\Main\Help\HeTutorial;
 use App\Repository\Main\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -104,6 +105,9 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: HeFavorite::class)]
     private Collection $heFavorites;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: HeLike::class)]
+    private Collection $heLikes;
+
     /**
      * @throws Exception
      */
@@ -114,6 +118,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
         $this->documentations = new ArrayCollection();
         $this->tutorials = new ArrayCollection();
         $this->heFavorites = new ArrayCollection();
+        $this->heLikes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -477,6 +482,36 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
             // set the owning side to null (unless already changed)
             if ($heFavorite->getUser() === $this) {
                 $heFavorite->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HeLike>
+     */
+    public function getHeLikes(): Collection
+    {
+        return $this->heLikes;
+    }
+
+    public function addHeLike(HeLike $heLike): self
+    {
+        if (!$this->heLikes->contains($heLike)) {
+            $this->heLikes->add($heLike);
+            $heLike->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHeLike(HeLike $heLike): self
+    {
+        if ($this->heLikes->removeElement($heLike)) {
+            // set the owning side to null (unless already changed)
+            if ($heLike->getUser() === $this) {
+                $heLike->setUser(null);
             }
         }
 

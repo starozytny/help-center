@@ -63,15 +63,15 @@
                             <span>{{ elem.duration | date("H\\hi") }} temps de lecture</span>
                         </div>
                     {% endif %}
-                    <div class="likes">
-                        <div class="item">
-                            <span class="icon-like"></span>
-                            <span>{{ elem.nbLike }}</span>
-                        </div>
-                        <div class="item">
-                            <span class="icon-dislike"></span>
-                            <span>{{ elem.nbDislike }}</span>
-                        </div>
+                    <div id="likes" class="likes"
+                         data-id="{{ elem.id }}"
+                         data-type="0"
+                         data-answer="{{ answer }}"
+                         data-have-answer="{{ haveAnswer }}"
+                         data-nb-likes="{{ elem.nbLike }}"
+                         data-nb-dislikes="{{ elem.nbDislike }}"
+                    >
+                        <div class="item"><span class="icon-chart-3"></span></div>
                     </div>
                 </div>
                 <div class="author">

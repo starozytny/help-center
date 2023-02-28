@@ -24,7 +24,6 @@
 
   .likes{
     @include flex(row, center, flex-start, 12px);
-    margin-top: 4px;
   }
 
   .duration, .product, .date, .likes .item{

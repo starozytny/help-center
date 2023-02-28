@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import axios from "axios";
@@ -6,14 +6,14 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import Formulaire from "@commonFunctions/formulaire";
 
-import { Button, ButtonIcon } from "@commonComponents/Elements/Button";
+import { ButtonIcon } from "@commonComponents/Elements/Button";
 
 const URL_FAVORITE_ELEMENT = 'api_help_favorites_favorite';
 
 export function Favorite ({ context, type, id, isFav })
 {
     const [fav, setFav] = useState(parseInt(isFav) === 1);
-    const [loadFav, setLoadFav] = useState(false)
+    const [loadFav, setLoadFav] = useState(false);
 
     const handleClick = () => {
         let self = this;

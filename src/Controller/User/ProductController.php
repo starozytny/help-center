@@ -10,6 +10,7 @@ use App\Entity\Main\Help\HeStep;
 use App\Entity\Main\Help\HeTutorial;
 use App\Repository\Main\Help\HeDocumentationRepository;
 use App\Repository\Main\Help\HeFavoriteRepository;
+use App\Repository\Main\Help\HeLikeRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Repository\Main\Help\HeStepRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
@@ -57,8 +58,8 @@ class ProductController extends AbstractController
 
     #[Route('/produit/{p_slug}/tutoriel/{slug}', name: 'tutorial_read', options: ['expose' => true])]
     public function tutorialRead($p_slug, $slug, HeProductRepository $productRepository,
-                                      HeTutorialRepository $tutorialRepository, HeStepRepository $stepRepository,
-                                 HeFavoriteRepository $favoriteRepository): Response
+                                 HeTutorialRepository $tutorialRepository, HeStepRepository $stepRepository,
+                                 HeFavoriteRepository $favoriteRepository, HeLikeRepository $likeRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
         $obj     = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);
@@ -66,11 +67,16 @@ class ProductController extends AbstractController
         $fav     = $favoriteRepository->findOneBy([
             'user' => $this->getUser(), 'type' => HelpFavorite::Tutorial, 'identifiant' => $obj->getId()
         ]);
+        $answer  = $likeRepository->findOneBy([
+            'user' => $this->getUser(), 'type' => HelpFavorite::Tutorial, 'identifiant' => $obj->getId()
+        ]);
 
         return $this->render('user/pages/tutorials/read.html.twig', [
             'elem' => $obj,
             'steps' => $steps,
-            'isFav' => (bool)$fav
+            'isFav' => (bool)$fav,
+            'answer' => $answer ? $answer->getAnswer() : 2,
+            'haveAnswer' => (bool)$answer,
         ]);
     }
 
