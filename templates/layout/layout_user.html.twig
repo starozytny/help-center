@@ -74,7 +74,7 @@
             </div>
         </nav>
 
-        <main>
+        <main class="{{ full_width is defined ? 'full-width' : '' }}">
             {% block breadcrumb %}
                 {% include "user/layout/components/breadcrumbs.html.twig" %}
             {% endblock %}

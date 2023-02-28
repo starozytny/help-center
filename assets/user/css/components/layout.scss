@@ -54,6 +54,9 @@ main{
 
   main{
     width: calc(100% - 280px);
-    max-width: 1060px;
+
+    &:not(.full-width){
+      max-width: 1060px;
+    }
   }
 }

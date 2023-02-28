@@ -11,6 +11,8 @@
     {{ parent() }}
 {% endblock %}
 
+{% set full_width = true %}
+
 {% block main_content %}
     {% include "layout/components/admin/page_toolbar.html.twig" with { page_back: path('user_help_product_read', {'slug': product.slug}) } %}
 
