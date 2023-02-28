@@ -1,0 +1,103 @@
+RewriteOptions inherit
+RewriteEngine on
+RewriteBase /
+
+<files .htaccess>
+    order allow,deny
+    deny from all
+</files>
+
+<Files ".env">
+  Order Allow,Deny
+  Deny from all
+</Files>
+
+IndexIgnore *
+
+Options +FollowSymlinks
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header set Content-Security-Policy "script-src base-uri 'self'  https://www.api.lotys.fr https://matomo.demodirecte.fr/"
+    Header always set X-FRAME-OPTIONS "DENY"
+</IfModule>
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 7200 seconds"
+    ExpiresByType image/jpg "access plus 2592000 seconds"
+    ExpiresByType image/jpeg "access plus 2592000 seconds"
+    ExpiresByType image/png "access plus 2592000 seconds"
+    ExpiresByType image/gif "access plus 2592000 seconds"
+    ExpiresByType image/svg+xml "access plus 2592000 seconds"
+    ExpiresByType text/html "access plus 7200 seconds"
+    ExpiresByType text/javascript "access plus 2592000 seconds"
+    ExpiresByType text/css "access plus 2592000 seconds"
+    ExpiresByType application/xhtml+xml "access plus 7200 seconds"
+    ExpiresByType application/javascript "access plus 2592000 seconds"
+    ExpiresByType application/x-javascript "access plus 2592000 seconds"
+
+# Webfonts
+  ExpiresByType application/vnd.ms-fontobject "access plus 2592000 seconds"
+  ExpiresByType application/x-font-ttf    "access plus 2592000 seconds"
+  ExpiresByType application/x-font-woff   "access plus 2592000 seconds"
+  ExpiresByType font/opentype             "access plus 2592000 seconds"
+
+</IfModule>
+
+# compress text, html, javascript, css, xml:
+
+#Check to see if browser can accept gzip files. If so and we have it - serve it!
+ReWriteCond %{HTTP:accept-encoding} gzip
+RewriteCond %{HTTP_USER_AGENT} !Safari
+#make sure there's no trailing .gz on the url
+ReWriteCond %{REQUEST_FILENAME} !^.+\.gz$
+#check to see if a .gz version of the file exists.
+RewriteCond %{REQUEST_FILENAME}.gz -f
+#All conditions met so add .gz to URL filename (invisibly)
+RewriteRule ^(.+) $1.gz [QSA,L]
+
+RewriteCond %{HTTP_HOST} ^www.aide.logilink.fr$
+RewriteRule ^(.*) http://aide.logilink.fr/$1 [QSA,L,R=301]
+
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+<IfModule mod_gzip.c>
+    mod_gzip_on Yes
+    mod_gzip_dechunk Yes
+    mod_gzip_keep_workfiles No
+    mod_gzip_can_negotiate Yes
+    mod_gzip_add_header_count Yes
+    mod_gzip_send_vary Yes
+    mod_gzip_command_version '/mod_gzip_status'
+    mod_gzip_min_http 1000
+    mod_gzip_minimum_file_size 300
+    mod_gzip_maximum_file_size 512000
+    mod_gzip_maximum_inmem_size 60000
+    mod_gzip_handle_methods GET POST
+    mod_gzip_temp_dir /tmp
+    mod_gzip_item_include file \.html$
+    mod_gzip_item_include file \.php$
+    mod_gzip_item_include file \.pl$
+    mod_gzip_item_include file \.rb$
+    mod_gzip_item_include file \.py$
+    mod_gzip_item_include file \.cgi$
+    mod_gzip_item_include file \.css$
+    mod_gzip_item_include file \.svg$
+    mod_gzip_item_include file \.js$
+    mod_gzip_item_include mime ^application/javascript$
+    mod_gzip_item_include mime ^application/x-javascript$
+    mod_gzip_item_include mime ^text/.*
+    mod_gzip_item_include mime ^httpd/unix-directory$
+    mod_gzip_item_include handler ^cgi-script$
+    mod_gzip_item_include handler ^server-status$
+    mod_gzip_item_include handler ^server-info$
+    mod_gzip_item_include handler ^application/x-httpd-php
+    mod_gzip_item_exclude mime ^image/.*
+</IfModule>
+
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ /public/$1 [L]
