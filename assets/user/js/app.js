@@ -6,6 +6,7 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min';
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Notifications } from "@commonComponents/Elements/Notifications";
+import {Theme} from "@userPages/Theme/Theme";
 
 Routing.setRoutingData(routes);
 
@@ -28,4 +29,9 @@ function menu() {
             }
         })
     }
+}
+
+let theme = document.getElementById('theme');
+if(theme){
+    createRoot(theme).render(<Theme />)
 }
