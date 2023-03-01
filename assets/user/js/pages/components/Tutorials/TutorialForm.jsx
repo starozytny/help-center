@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import axios from "axios";
+import toastr from "toastr";
 import { uid } from "uid";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
@@ -124,7 +125,7 @@ class Form extends Component {
         this.setState({ nbSteps: newNbSteps, loadStep: false })
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = (e, stay = false) => {
         e.preventDefault();
 
         const { context, url, productSlug } = this.props;
@@ -149,7 +150,12 @@ class Form extends Component {
             Formulaire.loader(true);
             axios({ method: context === "update" ? "PUT" : "POST", url: url, data: this.state })
                 .then(function (response) {
-                    location.href = Routing.generate(URL_INDEX_ELEMENTS, {'p_slug': productSlug, 'slug': response.data.slug});
+                    if(!stay){
+                        location.href = Routing.generate(URL_INDEX_ELEMENTS, {'p_slug': productSlug, 'slug': response.data.slug});
+                    }else{
+                        toastr.info('Données enregistrées.');
+                        Formulaire.loader(false);
+                    }
                 })
                 .catch(function (error) { Formulaire.displayErrors(self, error); Formulaire.loader(false); })
             ;
@@ -219,6 +225,9 @@ class Form extends Component {
 
                 <div className="line-buttons">
                     <Button isSubmit={true} type="primary">{context === "create" ? TEXT_CREATE : TEXT_UPDATE}</Button>
+                    {context !== "create" && <>
+                        <Button isSubmit={true} outline={true} type="primary" onClick={(e) => this.handleSubmit(e, true)}>Enregistrer et rester sur la page</Button>
+                    </>}
                 </div>
             </form>
         </>

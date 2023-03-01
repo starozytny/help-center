@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import 'jquery-resizable-dom/dist/jquery-resizable';
 // import Routing     from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import Trumbowyg from 'react-trumbowyg';
