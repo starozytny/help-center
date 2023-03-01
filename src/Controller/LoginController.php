@@ -8,16 +8,18 @@ use App\Service\Expiration;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
+
     #[Route('/connexion', name: 'app_login', options: ['expose' => true])]
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
@@ -84,11 +86,13 @@ class LoginController extends AbstractController
         return $this->render('app/pages/security/reinit.html.twig', ['token' => $token]);
     }
 
-    #[Route('/api/login', name: 'api_login')]
-    public function requestLoginLink(#[CurrentUser] ?User $user): Response
+    #[Route('/auto-connect/{token}', name: 'auto_connect')]
+    public function autoConnect(Request $request, $token, UserRepository $repository, Security $security): Response
     {
-        if (null === $user) {
-            return $this->json(['message' => 'missing credentials'], Response::HTTP_UNAUTHORIZED);
+        $user = $repository->findOneBy(['token' => $token]);
+
+        if($user){
+            $security->login($user);
         }
 
         return $this->redirectToRoute('app_login');

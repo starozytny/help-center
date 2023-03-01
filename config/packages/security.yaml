@@ -19,10 +19,6 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
-            json_login:
-                check_path: api_login
-            access_token:
-                token_handler: App\Security\AccessTokenHandler
             logout:
                 path: app_logout
 
@@ -39,7 +35,6 @@ security:
         ROLE_DEVELOPER: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
 
     access_control:
-         - { path: ^/api/login,              roles: PUBLIC_ACCESS }
          - { path: ^/api/users/password,     roles: PUBLIC_ACCESS }
          - { path: ^/api,                    roles: ROLE_USER }
          - { path: ^/espace-membre,          roles: ROLE_USER }
