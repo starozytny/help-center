@@ -13,6 +13,7 @@ import '@nodeModulesFolder/trumbowyg/dist/plugins/fontsize/trumbowyg.fontsize';
 import '@nodeModulesFolder/trumbowyg/dist/plugins/pasteimage/trumbowyg.pasteimage';
 import '@nodeModulesFolder/trumbowyg/dist/plugins/history/trumbowyg.history';
 import '@nodeModulesFolder/trumbowyg/dist/plugins/upload/trumbowyg.upload';
+import '@nodeModulesFolder/trumbowyg/dist/plugins/resizimg/trumbowyg.resizimg';
 
 import { Structure } from "@commonComponents/Elements/Fields";
 
@@ -43,6 +44,10 @@ export function Trumb (props){
                              onChange={onChange}
                              ref={reference}
                              plugins= {{
+                                 resizimg: {
+                                     minSize: 32,
+                                     step: 16,
+                                 },
                                  upload: {
                                      serverPath: url,
                                      fileFieldName: 'image',
