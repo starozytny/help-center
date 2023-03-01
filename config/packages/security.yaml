@@ -21,6 +21,8 @@ security:
                 enable_csrf: true
             json_login:
                 check_path: api_login
+            access_token:
+                token_handler: App\Security\AccessTokenHandler
             logout:
                 path: app_logout
 
