@@ -30,8 +30,6 @@ export function Trumb (props){
                                      ['fontsize'],
                                      ['bold', 'italic', 'underline', 'strikethrough'],
                                      ['link'],
-                                     ['insertImage'],
-                                     ['upload'],
                                      ['base64'],
                                      ['foreColor', 'backColor'],
                                      'btnGrp-justify',
