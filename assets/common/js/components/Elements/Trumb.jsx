@@ -28,7 +28,7 @@ export function Trumb (props){
                                      ['historyUndo', 'historyRedo'],
                                      ['formatting'],
                                      ['fontsize'],
-                                     'btnGrp-semantic',
+                                     ['bold', 'italic', 'underline', 'strikethrough'],
                                      ['link'],
                                      ['insertImage'],
                                      ['upload'],
