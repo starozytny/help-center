@@ -7,7 +7,7 @@ import Sort     from "@commonFunctions/sort";
 import Search   from "@commonFunctions/search";
 import Sanitaze from "@commonFunctions/sanitaze";
 
-import {Button, ButtonIcon} from "@commonComponents/Elements/Button";
+import { Button, ButtonIcon } from "@commonComponents/Elements/Button";
 
 /***************************************
  * INPUT View
