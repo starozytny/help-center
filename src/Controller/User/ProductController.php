@@ -71,11 +71,12 @@ class ProductController extends AbstractController
                                       HeDocumentationRepository $documentationRepository, HeLikeRepository $likeRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
-        $obj     = $documentationRepository->findOneBy(['product' => $product, 'slug' => $slug]);
 
-//        if(!in_array($obj->getId(), $this->getUser()->getAccess())){
-//            throw new AccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
-//        }
+        if(!in_array($product->getId(), $this->getUser()->getAccess())){
+            throw new AccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
+        }
+
+        $obj     = $documentationRepository->findOneBy(['product' => $product, 'slug' => $slug]);
 
         if($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')){
             throw new NotFoundHttpException("Cette page n'existe pas.");
@@ -99,11 +100,12 @@ class ProductController extends AbstractController
                                  HeFavoriteRepository $favoriteRepository, HeLikeRepository $likeRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
-        $obj     = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);
 
-//        if(!in_array($obj->getId(), $this->getUser()->getAccess())){
-//            throw new AccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
-//        }
+        if(!in_array($product->getId(), $this->getUser()->getAccess())){
+            throw new AccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
+        }
+
+        $obj     = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);
 
         if($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')){
             throw new NotFoundHttpException("Cette page n'existe pas.");
