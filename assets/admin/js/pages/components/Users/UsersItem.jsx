@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import PropTypes from 'prop-types';
+
+import toastr from 'toastr';
 import Routing   from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import moment from "moment";
@@ -22,6 +24,11 @@ export function UsersItem ({ elem, highlight, onModal })
             refItem.current.scrollIntoView({block: "center"})
         }
     })
+
+    const handleCopyToken = () => {
+        navigator.clipboard.writeText(elem.token);
+        toastr.info('Token de '+ elem.username +' copié dans le presse papier.')
+    }
 
     let urlUpdate = Routing.generate(URL_UPDATE_PAGE,   {'id': elem.id});
     let urlRead   = Routing.generate(URL_READ_PAGE,     {'id': elem.id});
@@ -60,7 +67,9 @@ export function UsersItem ({ elem, highlight, onModal })
                             {elem.blocked ? <span className="icon-disabled" /> : null}
                         </div>
                         <div className="sub">{elem.society.code} - {elem.society.name}</div>
-                        <div className="sub">{elem.token}</div>
+                        <div className="sub" onClick={handleCopyToken} style={{cursor: "pointer"}}>
+                            <span>Copier le Token</span> <span className="icon-copy txt-primary" />
+                        </div>
                         <div className="sub">{lastLoginAt ? "connecté " + lastLoginAt.fromNow() : ""}</div>
                     </div>
                 </div>

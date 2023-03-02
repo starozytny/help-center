@@ -32,11 +32,11 @@ function setValue (value, defaultValue = "") {
 }
 
 function setValueDate (value, defaultValue = "") {
-    return value === null ? defaultValue : moment(value).format('DD/MM/YYYY');
+    return value === null ? defaultValue : moment(value).utcOffset(0, true).format('DD/MM/YYYY');
 }
 
 function setValueTime (value, defaultValue = "") {
-    return value === null ? defaultValue : moment(value).format('HH[h]mm');
+    return value === null ? defaultValue : moment(value).utcOffset(0, true).format('HH[h]mm');
 }
 
 function showErrors(self, validate, text="Veuillez vérifier les informations transmises.", toTop = false)
