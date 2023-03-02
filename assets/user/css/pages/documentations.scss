@@ -57,3 +57,21 @@
     padding: var(--espaceLayout) 0;
   }
 }
+
+//                      __   _____ __    ___    __
+//                     | _| |___  / /_  ( _ )  |_ |
+//    _____ _____ _____| |     / / '_ \ / _ \   | |_____ _____ _____
+//   |_____|_____|_____| |    / /| (_) | (_) |  | |_____|_____|_____|
+//                     | |   /_/  \___/ \___/   | |
+//                     |__|                    |__|
+@media (min-width:768px) {
+  #documentations_create, #documentations_update{
+    .line-buttons{
+      flex-direction: row;
+
+      .btn{
+        width: 100%;
+      }
+    }
+  }
+}

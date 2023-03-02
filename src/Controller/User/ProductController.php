@@ -160,7 +160,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/{p_slug}/documentations/modifier/{slug}', name: 'documentation_update')]
+    #[Route('/produit/{p_slug}/documentations/modifier/{slug}', name: 'documentation_update', options: ['expose' => true])]
     #[IsGranted('ROLE_ADMIN')]
     public function documentationUpdate($p_slug, $slug, HeDocumentationRepository $documentationRepository,
                                         HeProductRepository $productRepository, SerializerInterface $serializer): Response
