@@ -40,6 +40,7 @@ class TutorialController extends AbstractController
         $obj = $dataEntity->setDataTutorial($obj, $data);
         $obj = ($obj)
             ->setProduct($product)
+            ->setStatus((int) $data->status)
         ;
 
         if($type == "create") {

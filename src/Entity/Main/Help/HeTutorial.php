@@ -3,6 +3,7 @@
 namespace App\Entity\Main\Help;
 
 use App\Entity\DataEntity;
+use App\Entity\Enum\Help\HelpStatut;
 use App\Entity\Main\User;
 use App\Repository\Main\Help\HeTutorialRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -44,6 +45,10 @@ class HeTutorial extends DataEntity
 
     #[ORM\Column]
     private ?int $nbDislike = 0;
+
+    #[ORM\Column]
+    #[Groups(['tuto_form'])]
+    private ?int $status = HelpStatut::Draft;
 
     #[ORM\ManyToOne(inversedBy: 'tutorials')]
     #[ORM\JoinColumn(nullable: false)]
@@ -141,6 +146,18 @@ class HeTutorial extends DataEntity
     public function setNbDislike(int $nbDislike): self
     {
         $this->nbDislike = $nbDislike;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

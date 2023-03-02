@@ -3,12 +3,14 @@
 namespace App\Controller\User;
 
 use App\Entity\Enum\Help\HelpFavorite;
+use App\Entity\Enum\Help\HelpStatut;
 use App\Entity\Main\Help\HeCategory;
 use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
 use App\Entity\Main\Help\HeStep;
 use App\Entity\Main\Help\HeTutorial;
+use App\Entity\Main\User;
 use App\Repository\Main\Help\HeDocumentationRepository;
 use App\Repository\Main\Help\HeFavoriteRepository;
 use App\Repository\Main\Help\HeLikeRepository;
@@ -17,6 +19,7 @@ use App\Repository\Main\Help\HeStepRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -38,11 +41,18 @@ class ProductController extends AbstractController
                                 HeTutorialRepository $tutorialRepository,
                                 HeFavoriteRepository $favoriteRepository): Response
     {
+        /** @var User $user */
         $user = $this->getUser();
 
         $obj = $productRepository->findOneBy(['slug' => $slug]);
         $documentations = $documentationRepository->findBy(['product' => $obj]);
-        $tutorials      = $tutorialRepository->findBy(['product' => $obj]);
+
+        if($user->getHighRoleCode() == User::CODE_ROLE_USER){
+            $tutorials = $tutorialRepository->findBy(['product' => $obj, 'status' => HelpStatut::Active]);
+        }else{
+            $tutorials = $tutorialRepository->findBy(['product' => $obj]);
+        }
+
         $favoritesTuto  = $favoriteRepository->findBy(['user' => $user, 'type' => HelpFavorite::Tutorial]);
 
         return $this->render('user/pages/products/read.html.twig', [
@@ -78,6 +88,11 @@ class ProductController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
         $obj     = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);
+
+        if($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')){
+            throw new NotFoundHttpException("Cette page n'existe pas.");
+        }
+
         $steps   = $stepRepository->findBy(['tutorial' => $obj]);
         $fav     = $favoriteRepository->findOneBy([
             'user' => $this->getUser(), 'type' => HelpFavorite::Tutorial, 'identifiant' => $obj->getId()
