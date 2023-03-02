@@ -30,215 +30,226 @@
     {% endif %}
     <div class="page-default">
         <div class="product-read">
-            <div class="product-line-0">
-                <div class="guide-start">
-                    <div class="col-1">
-                        <h2>Guide de <br>Démarrage</h2>
-                        <div class="subtitle">Apprenez rapidement à prendre en main ce {{ typeString }} !</div>
-                    </div>
+            {% if canRead %}
+                <div class="product-line-0">
+                    <div class="guide-start">
+                        <div class="col-1">
+                            <h2>Guide de <br>Démarrage</h2>
+                            <div class="subtitle">Apprenez rapidement à prendre en main ce {{ typeString }} !</div>
+                        </div>
 
-                    <div class="col-2">
-                        <img src="{{ asset(elem.logoFile) }}" alt="logo {{ elem.name }}">
+                        <div class="col-2">
+                            <img src="{{ asset(elem.logoFile) }}" alt="logo {{ elem.name }}">
+                            <div class="cta">
+                                <a href="https://pitch.com/public/b49ac20a-d322-4a29-b8a4-2d9db07766fb" target="_blank" class="btn btn-primary">
+                                    <span>Démarrer</span>
+                                    <span class="icon-right-arrow"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cta-faq">
+                        <h2><span class="icon-question-1"></span> F.A.Q.</h2>
+                        <div class="subtitle">Réponses aux questions les plus demandées !</div>
                         <div class="cta">
-                            <a href="https://pitch.com/public/b49ac20a-d322-4a29-b8a4-2d9db07766fb" target="_blank" class="btn btn-primary">
-                                <span>Démarrer</span>
+                            <a href="#faq" class="txt-button txt-button-default">
+                                <span>Trouver ma réponse</span>
                                 <span class="icon-right-arrow"></span>
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="cta-faq">
-                    <h2><span class="icon-question-1"></span> F.A.Q.</h2>
-                    <div class="subtitle">Réponses aux questions les plus demandées !</div>
-                    <div class="cta">
-                        <a href="#faq" class="txt-button txt-button-default">
-                            <span>Trouver ma réponse</span>
-                            <span class="icon-right-arrow"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
 
-            <div class="product-line-1">
-                <div class="product-line-title">
-                    <h2>Tutoriels</h2>
-                    <div class="subtitle">Prenez en main facilement le {{ typeString }} avec des nos tutoriels</div>
-                </div>
-                {% if app.user.admin and force_user == null %}
-                    <div class="btn-add">
-                        <a href="{{ path('user_help_tutorial_create', {'slug': elem.slug}) }}" class="btn btn-danger">
-                            <span class="icon-add"></span>
-                            <span>Ajouter un tutoriel</span>
-                        </a>
+                <div class="product-line-1">
+                    <div class="product-line-title">
+                        <h2>Tutoriels</h2>
+                        <div class="subtitle">Prenez en main facilement le {{ typeString }} avec des nos tutoriels</div>
                     </div>
-                {% endif %}
-                <div class="tutorials">
-                    {% if tutorials | length == 0 %}
-                        <div class="alert alert-primary">
-                            <div class="alert-container">
-                                <p>Aucun tutoriel pour {{ elem.name }}.</p>
-                            </div>
+                    {% if app.user.admin and force_user == null %}
+                        <div class="btn-add">
+                            <a href="{{ path('user_help_tutorial_create', {'slug': elem.slug}) }}" class="btn btn-danger">
+                                <span class="icon-add"></span>
+                                <span>Ajouter un tutoriel</span>
+                            </a>
                         </div>
-                    {% else %}
-                        {% for el in tutorials %}
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="name">{{ el.name }} {{ el.status == 0 ? "<span class='txt-danger'>[HORS LIGNE]</span>" : "" }}</div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="content">
-                                        {{ el.description | raw }}
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    {% if app.user.admin and force_user == null %}
-                                        <a
-                                                href="{{ path('user_help_tutorial_update', {'p_slug': elem.slug, 'slug': el.slug}) }}"
-                                                class="btn-icon"
-                                        >
-                                            <span class="icon-pencil"></span>
-                                            <span class="tooltip">Modifier</span>
-                                        </a>
-                                        <div class="delete-tuto"
-                                             data-id="{{ el.id }}"
-                                             data-name="{{ el.name }}"
-                                             data-product-slug="{{ elem.slug }}"
-                                        >
-                                            <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
-                                        </div>
-                                    {% endif %}
-
-                                    {% set isFav = 0 %}
-                                    {% for fav in favoritesTuto %}
-                                        {% if fav.identifiant == el.id %}
-                                            {% set isFav = 1 %}
-                                        {% endif %}
-                                    {% endfor %}
-                                    <a
-                                            href="{{ path('user_help_tutorial_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
-                                            class="btn-icon"
-                                    >
-                                        <span class="icon-vision"></span>
-                                        <span class="tooltip">Voir le tutoriel</span>
-                                    </a>
-                                    <div class="favorite-tuto"
-                                         data-id="{{ el.id }}"
-                                         data-type="0"
-                                         data-is-fav="{{ isFav }}"
-                                    >
-                                        <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
                     {% endif %}
-                </div>
-            </div>
-
-            <style>
-                .badges-custom{
-                    display: flex;
-                    gap: 8px;
-                    margin: 8px 0;
-                }
-
-                .badge-custom-lotys{
-                    display: flex; align-items: center; justify-content: center;
-                    background-color: var(--primaryOpacity4);
-                    color: var(--primary);
-                    border-radius: 20px;
-                    width: 24px; height: 24px;
-                }
-            </style>
-
-            <div class="product-line-2">
-                <div class="product-line-title">
-                    <h2>Documentation</h2>
-                    <div class="subtitle">Le meilleur moyen de maitriser l'utilisation du {{ typeString }}.</div>
-                </div>
-                {% if app.user.admin and force_user == null %}
-                    <div class="btn-add">
-                        <a href="{{ path('user_help_documentation_create', {'slug': elem.slug}) }}" class="btn btn-danger">
-                            <span class="icon-add"></span>
-                            <span>Ajouter une documentation</span>
-                        </a>
-                    </div>
-                {% endif %}
-                <div class="tutorials documentations">
-                    {% if docs | length == 0 %}
-                        <div class="alert alert-primary">
-                            <div class="alert-container">
-                                <p>Aucune documentation pour {{ elem.name }}.</p>
+                    <div class="tutorials">
+                        {% if tutorials | length == 0 %}
+                            <div class="alert alert-primary">
+                                <div class="alert-container">
+                                    <p>Aucun tutoriel pour {{ elem.name }}.</p>
+                                </div>
                             </div>
-                        </div>
-                    {% else %}
-                        {% for el in docs %}
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="icon">
-                                        <span class="icon-{{ el.icon }}"></span>
+                        {% else %}
+                            {% for el in tutorials %}
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="name">{{ el.name }} {{ el.status == 0 ? "<span class='txt-danger'>[HORS LIGNE]</span>" : "" }}</div>
                                     </div>
-                                    <div class="name">{{ el.name }} {{ el.status == 0 ? "<span class='txt-danger'>[HORS LIGNE]</span>" : "" }}</div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="content">
-                                        {{ el.description | raw }}
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    {% if app.user.admin and force_user == null %}
-                                        <a
-                                                href="{{ path('user_help_documentation_update', {'p_slug': elem.slug, 'slug': el.slug}) }}"
-                                                class="btn-icon"
-                                        >
-                                            <span class="icon-pencil"></span>
-                                            <span class="tooltip">Modifier</span>
-                                        </a>
-                                        <div class="delete-doc"
-                                             data-id="{{ el.id }}"
-                                             data-name="{{ el.name }}"
-                                             data-product-slug="{{ elem.slug }}"
-                                        >
-                                            <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
+                                    <div class="card-body">
+                                        <div class="content">
+                                            {{ el.description | raw }}
                                         </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        {% if app.user.admin and force_user == null %}
+                                            <a
+                                                    href="{{ path('user_help_tutorial_update', {'p_slug': elem.slug, 'slug': el.slug}) }}"
+                                                    class="btn-icon"
+                                            >
+                                                <span class="icon-pencil"></span>
+                                                <span class="tooltip">Modifier</span>
+                                            </a>
+                                            <div class="delete-tuto"
+                                                 data-id="{{ el.id }}"
+                                                 data-name="{{ el.name }}"
+                                                 data-product-slug="{{ elem.slug }}"
+                                            >
+                                                <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
+                                            </div>
+                                        {% endif %}
+
+                                        {% set isFav = 0 %}
+                                        {% for fav in favoritesTuto %}
+                                            {% if fav.identifiant == el.id %}
+                                                {% set isFav = 1 %}
+                                            {% endif %}
+                                        {% endfor %}
                                         <a
-                                                href="{{ path('user_help_documentation_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
+                                                href="{{ path('user_help_tutorial_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
                                                 class="btn-icon"
                                         >
                                             <span class="icon-vision"></span>
-                                            <span class="tooltip" style="width: 96px">En savoir plus</span>
+                                            <span class="tooltip">Voir le tutoriel</span>
                                         </a>
-                                    {% else %}
-                                        <a
-                                                href="{{ path('user_help_documentation_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
-                                                class="txt-button txt-button-primary"
+                                        <div class="favorite-tuto"
+                                             data-id="{{ el.id }}"
+                                             data-type="0"
+                                             data-is-fav="{{ isFav }}"
                                         >
-                                            <span>En savoir plus</span>
-                                        </a>
-                                    {% endif %}
+                                            <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="product-line-3" id="faq">
-                <div class="product-line-title">
-                    <h2>F.A.Q.</h2>
-                    <div class="subtitle">Retrouvez les réponses aux questions les plus demandées sur le {{ typeString }}</div>
-                </div>
-                <div class="faqs">
-                    <div id="help_faq_list"
-                         data-role="{{ app.user.admin and force_user == null ? "admin" : "user" }}"
-                         data-category="{{ app.request.get('cat') }}"
-                         data-product-id="{{ elem.id }}"
-                         data-product-slug="{{ elem.slug }}"
-                    >
-                        {% include "layout/components/loader.html.twig" %}
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
-            </div>
+
+                <style>
+                    .badges-custom{
+                        display: flex;
+                        gap: 8px;
+                        margin: 8px 0;
+                    }
+
+                    .badge-custom-lotys{
+                        display: flex; align-items: center; justify-content: center;
+                        background-color: var(--primaryOpacity4);
+                        color: var(--primary);
+                        border-radius: 20px;
+                        width: 24px; height: 24px;
+                    }
+                </style>
+
+                <div class="product-line-2">
+                    <div class="product-line-title">
+                        <h2>Documentation</h2>
+                        <div class="subtitle">Le meilleur moyen de maitriser l'utilisation du {{ typeString }}.</div>
+                    </div>
+                    {% if app.user.admin and force_user == null %}
+                        <div class="btn-add">
+                            <a href="{{ path('user_help_documentation_create', {'slug': elem.slug}) }}" class="btn btn-danger">
+                                <span class="icon-add"></span>
+                                <span>Ajouter une documentation</span>
+                            </a>
+                        </div>
+                    {% endif %}
+                    <div class="tutorials documentations">
+                        {% if docs | length == 0 %}
+                            <div class="alert alert-primary">
+                                <div class="alert-container">
+                                    <p>Aucune documentation pour {{ elem.name }}.</p>
+                                </div>
+                            </div>
+                        {% else %}
+                            {% for el in docs %}
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="icon">
+                                            <span class="icon-{{ el.icon }}"></span>
+                                        </div>
+                                        <div class="name">{{ el.name }} {{ el.status == 0 ? "<span class='txt-danger'>[HORS LIGNE]</span>" : "" }}</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="content">
+                                            {{ el.description | raw }}
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        {% if app.user.admin and force_user == null %}
+                                            <a
+                                                    href="{{ path('user_help_documentation_update', {'p_slug': elem.slug, 'slug': el.slug}) }}"
+                                                    class="btn-icon"
+                                            >
+                                                <span class="icon-pencil"></span>
+                                                <span class="tooltip">Modifier</span>
+                                            </a>
+                                            <div class="delete-doc"
+                                                 data-id="{{ el.id }}"
+                                                 data-name="{{ el.name }}"
+                                                 data-product-slug="{{ elem.slug }}"
+                                            >
+                                                <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
+                                            </div>
+                                            <a
+                                                    href="{{ path('user_help_documentation_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
+                                                    class="btn-icon"
+                                            >
+                                                <span class="icon-vision"></span>
+                                                <span class="tooltip" style="width: 96px">En savoir plus</span>
+                                            </a>
+                                        {% else %}
+                                            <a
+                                                    href="{{ path('user_help_documentation_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"
+                                                    class="txt-button txt-button-primary"
+                                            >
+                                                <span>En savoir plus</span>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="product-line-3" id="faq">
+                    <div class="product-line-title">
+                        <h2>F.A.Q.</h2>
+                        <div class="subtitle">Retrouvez les réponses aux questions les plus demandées sur le {{ typeString }}</div>
+                    </div>
+                    <div class="faqs">
+                        <div id="help_faq_list"
+                             data-role="{{ app.user.admin and force_user == null ? "admin" : "user" }}"
+                             data-category="{{ app.request.get('cat') }}"
+                             data-product-id="{{ elem.id }}"
+                             data-product-slug="{{ elem.slug }}"
+                        >
+                            {% include "layout/components/loader.html.twig" %}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="product-line-0">
+                    <div class="access-restricted">
+                        <div class="col-1">
+                            <h2>Restreint</h2>
+                            <div class="subtitle">Vous n'avez pas l'autorisation d'accéder à ces informations avec ce compte.</div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

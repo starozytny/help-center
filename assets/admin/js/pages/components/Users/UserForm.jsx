@@ -22,7 +22,7 @@ const TEXT_UPDATE           = "Enregistrer les modifications";
 
 let societies = [];
 
-export function UserFormulaire ({ context, element })
+export function UserFormulaire ({ context, element, products })
 {
     let url = Routing.generate(URL_CREATE_ELEMENT);
 
@@ -41,6 +41,8 @@ export function UserFormulaire ({ context, element })
         avatarFile={element ? Formulaire.setValue(element.avatarFile) : null}
         roles={element ? Formulaire.setValue(element.roles, []) : []}
         access={element ? Formulaire.setValue(element.access, []) : []}
+
+        products={products}
     />
 
     return <div className="formulaire">{form}</div>;
@@ -100,7 +102,7 @@ class Form extends Component {
         let value = e.currentTarget.value;
 
         if(name === "roles" || name === "access"){
-            value = Formulaire.updateValueCheckbox(e, this.state[name], value);
+            value = Formulaire.updateValueCheckbox(e, this.state[name], name === "access" ? parseInt(value) : value);
         }
 
         this.setState({[name]: value})
@@ -160,7 +162,7 @@ class Form extends Component {
     }
 
     render () {
-        const { context, avatarFile } = this.props;
+        const { context, avatarFile, products } = this.props;
         const { errors, username, firstname, lastname, email, password, password2, roles, access, societyName, loadData } = this.state;
 
         let rolesItems = [
@@ -168,10 +170,10 @@ class Form extends Component {
             { value: 'ROLE_USER',       label: 'Utilisateur',    identifiant: 'utilisateur' },
         ]
 
-        let accessItems = [
-            { value: 'Lotys',      label: 'Lotys',      identifiant: 'lotys' },
-            { value: 'Magesto',    label: 'Magesto',    identifiant: 'magesto' },
-        ]
+        let accessItems = [];
+        products.forEach(pr => {
+            accessItems.push({ value: pr.id, label: pr.name,      identifiant: 'pr-' + pr.id })
+        })
 
         let params = { errors: errors }
         let paramsInput0 = {...params, ...{ onChange: this.handleChange }}
@@ -236,7 +238,7 @@ class Form extends Component {
 
                             <div className="line line-fat-box">
                                 <Checkbox items={accessItems} identifiant="access" valeur={access} {...paramsInput0}>
-                                    Accès
+                                    Accès aux logiciels
                                 </Checkbox>
                             </div>
                         </div>
@@ -262,4 +264,5 @@ Form.propTypes = {
     avatarFile: PropTypes.node,
     roles: PropTypes.array.isRequired,
     access: PropTypes.array.isRequired,
+    products: PropTypes.array.isRequired,
 }

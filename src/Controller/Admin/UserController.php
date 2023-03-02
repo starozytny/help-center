@@ -2,7 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\User;
+use App\Repository\Main\Help\HeProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,16 +21,18 @@ class UserController extends AbstractController
     }
 
     #[Route('/utilisateur/ajouter', name: 'create', options: ['expose' => true])]
-    public function create(): Response
+    public function create(HeProductRepository $productRepository, SerializerInterface $serializer): Response
     {
-        return $this->render('admin/pages/users/create.html.twig');
+        $products = $serializer->serialize($productRepository->findAll(), 'json', ['groups' => HeProduct::ACCESS]);
+        return $this->render('admin/pages/users/create.html.twig', ['products' => $products]);
     }
 
     #[Route('/utilisateur/modifier/{id}', name: 'update', options: ['expose' => true])]
-    public function update(User $elem, SerializerInterface $serializer): Response
+    public function update(User $elem, HeProductRepository $productRepository, SerializerInterface $serializer): Response
     {
-        $obj = $serializer->serialize($elem, 'json', ['groups' => User::FORM]);
-        return $this->render('admin/pages/users/update.html.twig', ['elem' => $elem, 'obj' => $obj]);
+        $obj      = $serializer->serialize($elem, 'json', ['groups' => User::FORM]);
+        $products = $serializer->serialize($productRepository->findAll(), 'json', ['groups' => HeProduct::ACCESS]);
+        return $this->render('admin/pages/users/update.html.twig', ['elem' => $elem, 'obj' => $obj, 'products' => $products]);
     }
 
     #[Route('/utilisateur/consulter/{id}', name: 'read', options: ['expose' => true])]

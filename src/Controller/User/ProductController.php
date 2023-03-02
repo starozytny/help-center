@@ -21,6 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -61,6 +62,7 @@ class ProductController extends AbstractController
             'docs' => $documentations,
             'tutorials' => $tutorials,
             'favoritesTuto' => $favoritesTuto,
+            'canRead' => in_array($obj->getId(), $user->getAccess())
         ]);
     }
 
@@ -70,6 +72,10 @@ class ProductController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
         $obj     = $documentationRepository->findOneBy(['product' => $product, 'slug' => $slug]);
+
+        if(!in_array($obj->getId(), $this->getUser()->getAccess())){
+            throw new AccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
+        }
 
         if($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')){
             throw new NotFoundHttpException("Cette page n'existe pas.");
@@ -94,6 +100,10 @@ class ProductController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
         $obj     = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);
+
+        if(!in_array($obj->getId(), $this->getUser()->getAccess())){
+            throw new AccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
+        }
 
         if($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')){
             throw new NotFoundHttpException("Cette page n'existe pas.");
