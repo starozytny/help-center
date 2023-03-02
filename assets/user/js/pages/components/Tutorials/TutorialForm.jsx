@@ -31,8 +31,6 @@ export function TutorialFormulaire ({ context, productSlug, element, steps })
         url = Routing.generate(URL_UPDATE_ELEMENT, {'id': element.id});
     }
 
-    console.log(element.status);
-
     let form = <Form
         productSlug={productSlug}
         context={context}

@@ -45,11 +45,12 @@ class ProductController extends AbstractController
         $user = $this->getUser();
 
         $obj = $productRepository->findOneBy(['slug' => $slug]);
-        $documentations = $documentationRepository->findBy(['product' => $obj]);
 
         if($user->getHighRoleCode() == User::CODE_ROLE_USER){
+            $documentations = $documentationRepository->findBy(['product' => $obj, 'status' => HelpStatut::Active]);
             $tutorials = $tutorialRepository->findBy(['product' => $obj, 'status' => HelpStatut::Active]);
         }else{
+            $documentations = $documentationRepository->findBy(['product' => $obj]);
             $tutorials = $tutorialRepository->findBy(['product' => $obj]);
         }
 
@@ -69,6 +70,11 @@ class ProductController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
         $obj     = $documentationRepository->findOneBy(['product' => $product, 'slug' => $slug]);
+
+        if($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')){
+            throw new NotFoundHttpException("Cette page n'existe pas.");
+        }
+
         $answer  = $likeRepository->findOneBy([
             'user' => $this->getUser(), 'type' => HelpFavorite::Documentation, 'identifiant' => $obj->getId()
         ]);

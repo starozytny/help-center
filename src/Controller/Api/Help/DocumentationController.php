@@ -36,6 +36,7 @@ class DocumentationController extends AbstractController
         $obj = $dataEntity->setDataDocumentation($obj, $data);
         $obj = ($obj)
             ->setProduct($product)
+            ->setStatus((int) $data->status)
         ;
 
         if($type == "create") {

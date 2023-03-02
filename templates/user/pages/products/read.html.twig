@@ -178,7 +178,7 @@
                                     <div class="icon">
                                         <span class="icon-{{ el.icon }}"></span>
                                     </div>
-                                    <div class="name">{{ el.name }}</div>
+                                    <div class="name">{{ el.name }} {{ el.status == 0 ? "<span class='txt-danger'>[HORS LIGNE]</span>" : "" }}</div>
                                 </div>
                                 <div class="card-body">
                                     <div class="content">
