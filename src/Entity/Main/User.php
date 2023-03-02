@@ -42,6 +42,10 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     #[Groups(['user_form'])]
     private array $roles = [];
 
+    #[ORM\Column]
+    #[Groups(['user_form'])]
+    private array $access = [];
+
     /**
      * @var string The hashed password
      */
@@ -193,6 +197,20 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getAccess(): array
+    {
+        $access = $this->access;
+
+        return array_unique($access);
+    }
+
+    public function setAccess(array $access): self
+    {
+        $this->access = $access;
 
         return $this;
     }

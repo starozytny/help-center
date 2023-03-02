@@ -40,6 +40,7 @@ export function UserFormulaire ({ context, element })
         email={element ? Formulaire.setValue(element.email) : ""}
         avatarFile={element ? Formulaire.setValue(element.avatarFile) : null}
         roles={element ? Formulaire.setValue(element.roles, []) : []}
+        access={element ? Formulaire.setValue(element.access, []) : []}
     />
 
     return <div className="formulaire">{form}</div>;
@@ -61,6 +62,7 @@ class Form extends Component {
             lastname: props.lastname,
             email: props.email,
             roles: props.roles,
+            access: props.access,
             password: '',
             password2: '',
             errors: [],
@@ -94,13 +96,11 @@ class Form extends Component {
     }
 
     handleChange = (e) => {
-        const { roles } = this.state
-
         let name = e.currentTarget.name;
         let value = e.currentTarget.value;
 
-        if(name === "roles"){
-            value = Formulaire.updateValueCheckbox(e, roles, value);
+        if(name === "roles" || name === "access"){
+            value = Formulaire.updateValueCheckbox(e, this.state[name], value);
         }
 
         this.setState({[name]: value})
@@ -115,7 +115,7 @@ class Form extends Component {
         e.preventDefault();
 
         const { context, url } = this.props;
-        const { username, firstname, lastname, password, password2, email, roles, society } = this.state;
+        const { username, firstname, lastname, password, password2, email, roles, access, society } = this.state;
 
         this.setState({ errors: [] });
 
@@ -125,7 +125,7 @@ class Form extends Component {
             {type: "text",  id: 'lastname',  value: lastname},
             {type: "email", id: 'email',     value: email},
             {type: "array", id: 'roles',     value: roles},
-            {type: "text",  id: 'society',    value: society}
+            {type: "text",  id: 'society',   value: society},
         ];
         if(context === "create"){
             if(password !== ""){
@@ -161,11 +161,16 @@ class Form extends Component {
 
     render () {
         const { context, avatarFile } = this.props;
-        const { errors, username, firstname, lastname, email, password, password2, roles, societyName, loadData } = this.state;
+        const { errors, username, firstname, lastname, email, password, password2, roles, access, societyName, loadData } = this.state;
 
         let rolesItems = [
             { value: 'ROLE_ADMIN',      label: 'Admin',          identifiant: 'admin' },
             { value: 'ROLE_USER',       label: 'Utilisateur',    identifiant: 'utilisateur' },
+        ]
+
+        let accessItems = [
+            { value: 'Lotys',      label: 'Lotys',      identifiant: 'lotys' },
+            { value: 'Magesto',    label: 'Magesto',    identifiant: 'magesto' },
         ]
 
         let params = { errors: errors }
@@ -228,6 +233,12 @@ class Form extends Component {
                                     Avatar
                                 </InputFile>
                             </div>
+
+                            <div className="line line-fat-box">
+                                <Checkbox items={accessItems} identifiant="access" valeur={access} {...paramsInput0}>
+                                    Accès
+                                </Checkbox>
+                            </div>
                         </div>
                     </div>
 
@@ -250,4 +261,5 @@ Form.propTypes = {
     email: PropTypes.string.isRequired,
     avatarFile: PropTypes.node,
     roles: PropTypes.array.isRequired,
+    access: PropTypes.array.isRequired,
 }

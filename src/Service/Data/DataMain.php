@@ -23,6 +23,7 @@ class DataMain
     public function setDataUser(User $obj, $data): User
     {
         if (isset($data->roles)) $obj->setRoles($data->roles);
+        if (isset($data->access)) $obj->setAccess($data->access);
 
         return ($obj)
             ->setUsername($this->sanitizeData->fullSanitize($data->username))
