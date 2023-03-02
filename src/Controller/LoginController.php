@@ -92,6 +92,11 @@ class LoginController extends AbstractController
 
         if($user){
             $security->login($user);
+
+            $page = $request->query->get('page');
+            if($page){
+                return $this->redirectToRoute('user_help_product_read', ['slug' => $page]);
+            }
         }
 
         return $this->redirectToRoute('app_login');
