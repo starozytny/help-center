@@ -73,13 +73,13 @@ class UserController extends AbstractController
             }
         }
 
-        if($em->getRepository(User::class)->findOneBy(['email' => $obj->getEmail()])){
-            if($type == "create" || ($type == "update" && $existe->getId() != $obj->getId())){
-                return $apiResponse->apiJsonResponseValidationFailed([
-                    ["name" => "email", "message" => "Cette addresse e-mail existe déjà."]
-                ]);
-            }
-        }
+//        if($em->getRepository(User::class)->findOneBy(['email' => $obj->getEmail()])){
+//            if($type == "create" || ($type == "update" && $existe->getId() != $obj->getId())){
+//                return $apiResponse->apiJsonResponseValidationFailed([
+//                    ["name" => "email", "message" => "Cette addresse e-mail existe déjà."]
+//                ]);
+//            }
+//        }
 
         $noErrors = $validator->validate($obj);
         if ($noErrors !== true) {
