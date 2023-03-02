@@ -37,10 +37,14 @@
   @include flex(column, flex-start, flex-start, var(--espaceDiv));
 }
 
-.guide-start, .cta-faq{
+.access-restricted, .guide-start, .cta-faq{
   width: 100%;
   border-radius: calc(var(--radius) * 2);
   padding: var(--espaceDiv);
+}
+
+.access-restricted{
+  background-color: var(--dangerOpacity4);
 }
 
 .guide-start{

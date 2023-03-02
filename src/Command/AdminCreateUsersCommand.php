@@ -69,19 +69,22 @@ class AdminCreateUsersCommand extends Command
                 'username' => 'shanbo',
                 'firstname' => 'Dev', 'lastname' => 'Shanbora',
                 'email' => 'chanbora.chhun@outlook.fr',
-                'roles' => ['ROLE_USER','ROLE_ADMIN', 'ROLE_DEVELOPER']
+                'roles' => ['ROLE_USER','ROLE_ADMIN', 'ROLE_DEVELOPER'],
+                'access' => ['Lotys', 'Magesto']
             ],
             [
                 'username' => 'staro',
                 'firstname' => 'Admin', 'lastname' => 'Starozytny',
                 'email' => 'starozytny@hotmail.fr',
-                'roles' => ['ROLE_USER','ROLE_ADMIN']
+                'roles' => ['ROLE_USER','ROLE_ADMIN'],
+                'access' => ['Lotys', 'Magesto']
             ],
             [
                 'username' => 'shanks',
                 'firstname' => 'User', 'lastname' => 'Shanks',
                 'email' => 'shanks@hotmail.fr',
-                'roles' => ['ROLE_USER']
+                'roles' => ['ROLE_USER'],
+                'access' => ['Lotys', 'Magesto']
             ],
         ];
 
@@ -110,7 +113,8 @@ class AdminCreateUsersCommand extends Command
                     'username' => $i . $fake->userName,
                     'firstname' => $fake->firstName, 'lastname' => $fake->lastName,
                     'email' => $fake->email,
-                    'roles' => ['ROLE_USER']
+                    'roles' => ['ROLE_USER'],
+                    'access' => ['Lotys', 'Magesto']
                 ];
 
                 $obj = $this->dataMain->setDataUser(new User(), json_decode(json_encode($user)));

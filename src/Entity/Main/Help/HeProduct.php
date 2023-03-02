@@ -16,17 +16,18 @@ class HeProduct extends DataEntity
 {
     const FOLDER = "logos";
 
-    const FORM = ['product_form'];
-    const READ = ['product_read'];
+    const ACCESS = ['product_access'];
+    const FORM   = ['product_form'];
+    const READ   = ['product_read'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['product_form', 'product_read'])]
+    #[Groups(['product_access', 'product_form', 'product_read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['product_form'])]
+    #[Groups(['product_access', 'product_form'])]
     private ?string $name = null;
 
     #[ORM\Column]
