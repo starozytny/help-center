@@ -110,7 +110,6 @@ class ProductController extends AbstractController
         $obj = $productRepository->findOneBy(['slug' => $slug]);
 
         $element = $serializer->serialize($obj,'json', ['groups' => HeProduct::FORM]);
-        dump($element);
 
         return $this->render('user/pages/products/update.html.twig', [
             'elem' => $obj,
@@ -129,7 +128,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/{p_slug}/tutoriels/modifier/{slug}', name: 'tutorial_update')]
+    #[Route('/produit/{p_slug}/tutoriels/modifier/{slug}', name: 'tutorial_update', options: ['expose' => true])]
     #[IsGranted('ROLE_ADMIN')]
     public function tutorialUpdate($p_slug, $slug, HeTutorialRepository $tutorialRepository,
                                    HeProductRepository $productRepository, HeStepRepository $stepRepository,

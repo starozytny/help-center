@@ -16,9 +16,10 @@ import Formulaire   from "@commonFunctions/formulaire";
 import Validateur   from "@commonFunctions/validateur";
 import Inputs       from "@commonFunctions/inputs";
 
-const URL_INDEX_ELEMENTS    = "user_help_tutorial_read";
+const URL_INDEX_PAGE        = "user_help_tutorial_read";
+const URL_UPDATE_PAGE       = "user_help_tutorial_update";
 const URL_CREATE_ELEMENT    = "api_help_tutorials_create";
-const URL_UPDATE_GROUP      = "api_help_tutorials_update";
+const URL_UPDATE_ELEMENT    = "api_help_tutorials_update";
 const TEXT_CREATE           = "Ajouter la documentation";
 const TEXT_UPDATE           = "Enregistrer les modifications";
 
@@ -27,7 +28,7 @@ export function TutorialFormulaire ({ context, productSlug, element, steps })
     let url = Routing.generate(URL_CREATE_ELEMENT);
 
     if(context === "update"){
-        url = Routing.generate(URL_UPDATE_GROUP, {'id': element.id});
+        url = Routing.generate(URL_UPDATE_ELEMENT, {'id': element.id});
     }
 
     let form = <Form
@@ -151,10 +152,15 @@ class Form extends Component {
             axios({ method: context === "update" ? "PUT" : "POST", url: url, data: this.state })
                 .then(function (response) {
                     if(!stay){
-                        location.href = Routing.generate(URL_INDEX_ELEMENTS, {'p_slug': productSlug, 'slug': response.data.slug});
+                        location.href = Routing.generate(URL_INDEX_PAGE, {'p_slug': productSlug, 'slug': response.data.slug});
                     }else{
                         toastr.info('Données enregistrées.');
-                        Formulaire.loader(false);
+
+                        if(context === "create"){
+                            location.href = Routing.generate(URL_UPDATE_PAGE, {'p_slug': productSlug, 'slug': response.data.slug});
+                        }else{
+                            Formulaire.loader(false);
+                        }
                     }
                 })
                 .catch(function (error) { Formulaire.displayErrors(self, error); Formulaire.loader(false); })
@@ -214,20 +220,17 @@ class Form extends Component {
                                 : <>
                                     {steps}
                                     <div className="line">
-                                        <Button outline={true} type="primary" onClick={this.handleIncreaseStep}>Ajouter une étape</Button>
+                                        <Button outline={true} type="warning" onClick={this.handleIncreaseStep}>Ajouter une étape</Button>
                                     </div>
                                 </>
                             }
-
                         </div>
                     </div>
                 </div>
 
                 <div className="line-buttons">
                     <Button isSubmit={true} type="primary">{context === "create" ? TEXT_CREATE : TEXT_UPDATE}</Button>
-                    {context !== "create" && <>
-                        <Button isSubmit={true} outline={true} type="primary" onClick={(e) => this.handleSubmit(e, true)}>Enregistrer et rester sur la page</Button>
-                    </>}
+                    <Button isSubmit={true} outline={true} type="primary" onClick={(e) => this.handleSubmit(e, true)}>Enregistrer et rester sur la page</Button>
                 </div>
             </form>
         </>
