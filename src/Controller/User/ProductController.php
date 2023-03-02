@@ -101,9 +101,9 @@ class ProductController extends AbstractController
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
         $obj     = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);
 
-        if(!in_array($obj->getId(), $this->getUser()->getAccess())){
-            throw new AccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
-        }
+//        if(!in_array($obj->getId(), $this->getUser()->getAccess())){
+//            throw new AccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
+//        }
 
         if($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')){
             throw new NotFoundHttpException("Cette page n'existe pas.");
