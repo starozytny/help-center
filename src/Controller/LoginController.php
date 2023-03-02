@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
@@ -24,7 +23,7 @@ class LoginController extends AbstractController
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            if($this->isGranted('ROLE_ADMIN')) return $this->redirectToRoute('admin_homepage');
+            if($this->isGranted('ROLE_ADMIN')) return $this->redirectToRoute('user_homepage');
             if($this->isGranted('ROLE_USER')) return $this->redirectToRoute('user_homepage');
         }
 
@@ -47,7 +46,7 @@ class LoginController extends AbstractController
             $user->setLastLoginAt(new \DateTime());
             $registry->getManager()->flush();
 
-            if($this->isGranted('ROLE_ADMIN')) return $this->redirectToRoute('admin_homepage');
+            if($this->isGranted('ROLE_ADMIN')) return $this->redirectToRoute('user_homepage');
             if($this->isGranted('ROLE_USER')) return $this->redirectToRoute('user_homepage');
         }
 
