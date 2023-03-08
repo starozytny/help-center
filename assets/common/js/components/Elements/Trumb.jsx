@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import 'jquery-resizable-dom/dist/jquery-resizable';
-// import Routing     from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
+import Routing     from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import Trumbowyg from 'react-trumbowyg';
 import 'react-trumbowyg/dist/trumbowyg.min.css';
@@ -22,6 +22,12 @@ export function Trumb (props){
     const { identifiant, valeur, onChange, errors, url, reference, children } = props;
 
     let content = <Trumbowyg id={identifiant}
+                             btnsDef={{
+                                 image: {
+                                     dropdown: ['upload', 'base64'],
+                                     ico: 'insertImage'
+                                 }
+                             }}
                              buttons={
                                  [
                                      ['viewHTML'],
@@ -30,7 +36,7 @@ export function Trumb (props){
                                      ['fontsize'],
                                      ['bold', 'italic', 'underline', 'strikethrough'],
                                      ['link'],
-                                     ['base64'],
+                                     ['upload', 'base64'],
                                      ['foreColor', 'backColor'],
                                      'btnGrp-justify',
                                      'btnGrp-lists',
