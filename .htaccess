@@ -18,7 +18,7 @@ Options +FollowSymlinks
 
 <IfModule mod_headers.c>
     Header always set X-Content-Type-Options "nosniff"
-    Header set Content-Security-Policy "script-src base-uri 'self'  https://www.api.lotys.fr https://matomo.demodirecte.fr/"
+    Header set Content-Security-Policy "script-src base-uri 'self'  https://aide.logilink.fr https://matomo.demodirecte.fr/"
     Header always set X-FRAME-OPTIONS "DENY"
 </IfModule>
 
