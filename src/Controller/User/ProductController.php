@@ -200,9 +200,14 @@ class ProductController extends AbstractController
 
     #[Route('/produit/{slug}/documentations/ajouter', name: 'documentation_create')]
     #[IsGranted('ROLE_ADMIN')]
-    public function documentationCreate($slug, HeProductRepository $productRepository): Response
+    public function documentationCreate(Request $request, $slug, HeProductRepository $productRepository,
+                                        FileUploader $fileUploader, ImageRepository $imageRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
+
+        if($request->isMethod('POST')){
+            return $fileUploader->uploadTrumb($request, $imageRepository, HeDocumentation::FOLDER, ImageType::Documentation, null);
+        }
 
         return $this->render('user/pages/documentations/create.html.twig', [
             'product' => $product,
@@ -211,13 +216,18 @@ class ProductController extends AbstractController
 
     #[Route('/produit/{p_slug}/documentations/modifier/{slug}', name: 'documentation_update', options: ['expose' => true])]
     #[IsGranted('ROLE_ADMIN')]
-    public function documentationUpdate($p_slug, $slug, HeDocumentationRepository $documentationRepository,
-                                        HeProductRepository $productRepository, SerializerInterface $serializer): Response
+    public function documentationUpdate(Request $request, $p_slug, $slug, HeDocumentationRepository $documentationRepository,
+                                        HeProductRepository $productRepository, SerializerInterface $serializer,
+                                        ImageRepository $imageRepository, FileUploader $fileUploader): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
         $obj     = $documentationRepository->findOneBy(['slug' => $slug]);
 
         $element = $serializer->serialize($obj, 'json', ['groups' => HeDocumentation::FORM]);
+
+        if($request->isMethod('POST')){
+            return $fileUploader->uploadTrumb($request, $imageRepository, HeDocumentation::FOLDER, ImageType::Documentation, $obj->getId());
+        }
 
         return $this->render('user/pages/documentations/update.html.twig', [
             'product' => $product,

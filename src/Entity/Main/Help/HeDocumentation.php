@@ -13,6 +13,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: HeDocumentationRepository::class)]
 class HeDocumentation extends DataEntity
 {
+    const FOLDER = "help/documentations";
+
     const FORM = ['doc_form'];
     const READ = ['doc_read'];
 
