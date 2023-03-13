@@ -67,8 +67,6 @@ class Form extends Component {
             errors: [],
             loadSteps: true,
         }
-
-        this.editorDescr = React.createRef();
     }
 
     componentDidMount = () => {
@@ -99,17 +97,8 @@ class Form extends Component {
         this.setState({[name]: value})
     }
 
-    handleChangeTrumb = (e) => {
-        let name = e.currentTarget.id;
-        let text = e.currentTarget.innerHTML;
-
-        this.setState({[name]: {value: [name].value, html: text}})
-    }
-
-    handleChangeTinyMCE = (e, name, selecteur) => {
-        if(selecteur && selecteur.current){
-            this.setState({ [name]: {value: this.state[name].value, html: selecteur.current.getContent()} })
-        }
+    handleChangeTinyMCE = (name, html) => {
+        this.setState({ [name]: {value: this.state[name].value, html: html} })
     }
 
     handleIncreaseStep = () => { this.setState((prevState, prevProps) => ({
@@ -221,8 +210,8 @@ class Form extends Component {
                                 <Input identifiant="duration" valeur={duration} placeholder="00h00" {...params}>Durée de lecture</Input>
                             </div>
                             <div className="line">
-                                <TinyMCE reference={this.editorDescr} type={0} identifiant='description' valeur={description.value}
-                                         errors={errors} onChange={this.handleChangeTinyMCE}>
+                                <TinyMCE type={0} identifiant='description' valeur={description.value}
+                                         errors={errors} onUpdateData={this.handleChangeTinyMCE}>
                                     Courte description
                                 </TinyMCE>
                             </div>

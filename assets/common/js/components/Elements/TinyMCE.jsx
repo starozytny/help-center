@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
@@ -9,13 +9,22 @@ import { Editor } from "@tinymce/tinymce-react";
 const URL_UPLOAD_IMAGE = 'api_images_upload';
 
 export function TinyMCE (props){
-    const { reference, identifiant, valeur, type, onChange, children } = props;
+    const { identifiant, valeur, type, onUpdateData, children } = props;
+
+    const editorRef = useRef(null);
+    const [val, setVal] = useState(valeur);
+
+    const handleChange = () => {
+        if(editorRef && editorRef.current){
+            onUpdateData(identifiant, editorRef.current.getContent());
+        }
+    }
 
     let content = <Editor
         tinymceScriptSrc={location.origin + '/tinymce/tinymce.min.js'}
-        onInit={(evt, editor) => reference.current = editor}
+        onInit={(evt, editor) => editorRef.current = editor}
         id={identifiant}
-        initialValue={valeur}
+        initialValue={val}
         init={{
             menubar: false,
             plugins: [
@@ -33,18 +42,17 @@ export function TinyMCE (props){
             automatic_uploads: true,
             images_upload_url: Routing.generate(URL_UPLOAD_IMAGE, {'type': type}),
         }}
-        onChange={(e) => onChange(e, identifiant, reference)}
+        onChange={handleChange}
     />
 
     return (<Structure {...props} content={content} label={children} />)
 }
 
 TinyMCE.propTypes = {
-    reference: PropTypes.node.isRequired,
     identifiant: PropTypes.string.isRequired,
     type: PropTypes.number.isRequired,
     valeur: PropTypes.node,
     errors: PropTypes.array.isRequired,
     children: PropTypes.node.isRequired,
-    onChange: PropTypes.func.isRequired,
+    onUpdateData: PropTypes.func.isRequired,
 }
