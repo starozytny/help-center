@@ -6,7 +6,11 @@ namespace App\Service;
 
 use App\Entity\Enum\Image\ImageType;
 use App\Entity\Image;
+use App\Entity\Main\Agenda\AgEvent;
+use App\Entity\Main\Changelog;
 use App\Entity\Main\Help\HeDocumentation;
+use App\Entity\Main\Help\HeProduct;
+use App\Entity\Main\Help\HeQuestion;
 use App\Entity\Main\Help\HeTutorial;
 use App\Repository\ImageRepository;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -105,8 +109,12 @@ class FileUploader
         $file = $request->files->get('file');
         if($file){
             $folder = match ($type){
+                ImageType::Changelog => Changelog::FOLDER,
+                ImageType::AgEvent => AgEvent::FOLDER,
                 ImageType::Tutorial => HeTutorial::FOLDER,
-                ImageType::Documentation => HeDocumentation::FOLDER
+                ImageType::Documentation => HeDocumentation::FOLDER,
+                ImageType::Product => HeProduct::FOLDER,
+                ImageType::Question => HeQuestion::FOLDER,
             };
 
             $fileName = $this->replaceFile($file, $folder);

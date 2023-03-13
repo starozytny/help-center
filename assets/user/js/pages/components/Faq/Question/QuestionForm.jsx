@@ -116,7 +116,7 @@ class Form extends Component {
                                 <Input identifiant="name" valeur={name} {...params}>Intitulé *</Input>
                             </div>
                             <div className="line">
-                                <TinyMCE type={0} identifiant='content' valeur={content.value}
+                                <TinyMCE type={6} identifiant='content' valeur={content.value}
                                          errors={errors} onUpdateData={this.handleChangeTinyMCE}>
                                     Description *
                                 </TinyMCE>

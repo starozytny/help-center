@@ -210,7 +210,7 @@ class Form extends Component {
                                 <Input identifiant="duration" valeur={duration} placeholder="00h00" {...params}>Durée de lecture</Input>
                             </div>
                             <div className="line">
-                                <TinyMCE type={0} identifiant='description' valeur={description.value}
+                                <TinyMCE type={3} identifiant='description' valeur={description.value}
                                          errors={errors} onUpdateData={this.handleChangeTinyMCE}>
                                     Courte description
                                 </TinyMCE>

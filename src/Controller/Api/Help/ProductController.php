@@ -39,7 +39,7 @@ class ProductController extends AbstractController
 
         $file = $request->files->get('logo');
         if ($file) {
-            $fileName = $fileUploader->replaceFile($file, HeProduct::FOLDER, $obj->getLogo());
+            $fileName = $fileUploader->replaceFile($file, HeProduct::FOLDER_LOGO, $obj->getLogo());
             $obj->setLogo($fileName);
         }
 
@@ -104,7 +104,7 @@ class ProductController extends AbstractController
         foreach($tutoAnswers as $item) $em->remove($item);
         foreach($docAnswers as $item) $em->remove($item);
 
-        $fileUploader->deleteFile($obj->getLogo(), HeProduct::FOLDER);
+        $fileUploader->deleteFile($obj->getLogo(), HeProduct::FOLDER_LOGO);
 
         $em->remove($obj);
         $em->flush($obj);

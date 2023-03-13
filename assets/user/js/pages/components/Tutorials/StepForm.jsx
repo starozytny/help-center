@@ -59,7 +59,7 @@ class Form extends Component {
             {loadData
                 ? <LoaderTxt />
                 :
-                <TinyMCE type={0} identifiant={`content-${step}`} valeur={this.state['content-' + step].value}
+                <TinyMCE type={3} identifiant={`content-${step}`} valeur={this.state['content-' + step].value}
                          errors={errors} onUpdateData={this.handleChangeTinyMCE}>
                     <span>Etape {step}</span>
                     <ButtonIcon icon="close" type="danger" onClick={this.handleRemove}>Enlever</ButtonIcon>
