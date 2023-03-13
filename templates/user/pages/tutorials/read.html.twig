@@ -61,7 +61,7 @@
                     {% if elem.duration %}
                         <div class="duration">
                             <span class="icon-time"></span>
-                            <span>{{ elem.duration | date("H\\hi") }} temps de lecture</span>
+                            <span>{{ elem.duration | date("H\\hi") | duration }} de temps de lecture</span>
                         </div>
                     {% endif %}
                     <div id="likes" class="likes"
