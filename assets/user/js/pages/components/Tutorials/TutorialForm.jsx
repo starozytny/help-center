@@ -6,6 +6,7 @@ import toastr from "toastr";
 import { uid } from "uid";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
+import { Editor }    from "@tinymce/tinymce-react";
 import { Trumb }     from "@commonComponents/Elements/Trumb";
 import { Button }    from "@commonComponents/Elements/Button";
 import { LoaderTxt } from "@commonComponents/Elements/Loader";
@@ -68,6 +69,8 @@ class Form extends Component {
             errors: [],
             loadSteps: true,
         }
+
+        this.editorDescr = React.createRef();
     }
 
     componentDidMount = () => {
@@ -103,6 +106,12 @@ class Form extends Component {
         let text = e.currentTarget.innerHTML;
 
         this.setState({[name]: {value: [name].value, html: text}})
+    }
+
+    handleChangeTinyMCE = (e, name, selecteur) => {
+        if(selecteur && selecteur.current){
+            this.setState({ [name]: {html: this.state[name].html, value: selecteur.current.getContent()} })
+        }
     }
 
     handleIncreaseStep = () => { this.setState((prevState, prevProps) => ({
@@ -214,10 +223,30 @@ class Form extends Component {
                                 <Input identifiant="duration" valeur={duration} placeholder="00h00" {...params}>Durée de lecture</Input>
                             </div>
                             <div className="line">
-                                <Trumb identifiant="description" valeur={description.value}
-                                       errors={errors} onChange={this.handleChangeTrumb}>
-                                    Courte description *
-                                </Trumb>
+                                <Editor
+                                    tinymceScriptSrc={location.origin + '/tinymce/tinymce.min.js'}
+                                    onInit={(evt, editor) => this.editorDescr.current = editor}
+                                    id='description'
+                                    initialValue={description.html}
+                                    init={{
+                                        menubar: false,
+                                        plugins: [
+                                            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
+                                            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                                            'insertdatetime', 'media', 'table', 'help', 'wordcount',
+                                            'image', 'autoresize', 'emoticons'
+                                        ],
+                                        toolbar: 'undo redo | blocks | ' +
+                                            'bold italic forecolor | image emoticons | ' +
+                                            'alignleft aligncenter alignright alignjustify | ' +
+                                            'bullist numlist outdent indent | ' +
+                                            'removeformat | help',
+                                        content_style: 'body { font-family:Barlow,Helvetica,Arial,sans-serif; font-size:14px }',
+                                        automatic_uploads: true,
+                                        images_upload_url: Routing.generate(URL_UPLOAD_IMAGE, {'type': 0}),
+                                    }}
+                                    onChange={(e) => this.handleChangeTinyMCE(e, 'description', this.editorDescr)}
+                                />
                             </div>
                         </div>
                     </div>

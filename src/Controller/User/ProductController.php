@@ -163,10 +163,6 @@ class ProductController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
 
-        if($request->isMethod('POST')){
-            return $fileUploader->uploadTrumb($request, $imageRepository, HeTutorial::FOLDER, ImageType::Tutorial, null);
-        }
-
         return $this->render('user/pages/tutorials/create.html.twig', [
             'product' => $product,
         ]);
@@ -186,10 +182,6 @@ class ProductController extends AbstractController
         $element = $serializer->serialize($obj,   'json', ['groups' => HeTutorial::FORM]);
         $steps   = $serializer->serialize($steps, 'json', ['groups' => HeStep::FORM]);
 
-        if($request->isMethod('POST')){
-            return $fileUploader->uploadTrumb($request, $imageRepository, HeTutorial::FOLDER, ImageType::Tutorial, $obj->getId());
-        }
-
         return $this->render('user/pages/tutorials/update.html.twig', [
             'product' => $product,
             'elem' => $obj,
@@ -204,10 +196,6 @@ class ProductController extends AbstractController
                                         FileUploader $fileUploader, ImageRepository $imageRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
-
-        if($request->isMethod('POST')){
-            return $fileUploader->uploadTrumb($request, $imageRepository, HeDocumentation::FOLDER, ImageType::Documentation, null);
-        }
 
         return $this->render('user/pages/documentations/create.html.twig', [
             'product' => $product,
@@ -224,10 +212,6 @@ class ProductController extends AbstractController
         $obj     = $documentationRepository->findOneBy(['slug' => $slug]);
 
         $element = $serializer->serialize($obj, 'json', ['groups' => HeDocumentation::FORM]);
-
-        if($request->isMethod('POST')){
-            return $fileUploader->uploadTrumb($request, $imageRepository, HeDocumentation::FOLDER, ImageType::Documentation, $obj->getId());
-        }
 
         return $this->render('user/pages/documentations/update.html.twig', [
             'product' => $product,

@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Entity\Enum\Image\ImageType;
 use App\Entity\Image;
+use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeTutorial;
 use App\Repository\ImageRepository;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -99,10 +100,15 @@ class FileUploader
         return $this->privateDirectory;
     }
 
-    public function uploadTrumb(Request $request, ImageRepository $repository, $folder, $type, $identifiant): JsonResponse
+    public function uploadTinyMCE(Request $request, ImageRepository $repository, $type, $identifiant = null): JsonResponse
     {
-        $file = $request->files->get('fileToUpload');
+        $file = $request->files->get('file');
         if($file){
+            $folder = match ($type){
+                ImageType::Tutorial => HeTutorial::FOLDER,
+                ImageType::Documentation => HeDocumentation::FOLDER
+            };
+
             $fileName = $this->replaceFile($file, $folder);
 
             $obj = (new Image())
@@ -112,16 +118,14 @@ class FileUploader
             ;
 
             $repository->save($obj, true);
-            dump('in');
+
+            $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? "https://" : "http://";
             return new JsonResponse([
                 'success' => true,
-                'file' => 'https://' . $request->getHttpHost() . '/' . $folder . '/' . $fileName
+                'location' => $protocol . $request->getHttpHost() . '/' . $folder . '/' . $fileName
             ]);
         }
 
-
-        return new JsonResponse([
-            'success' => false,
-        ]);
+        return new JsonResponse(['success' => false,]);
     }
 }
