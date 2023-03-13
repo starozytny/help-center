@@ -20,6 +20,7 @@ const URL_INDEX_PAGE        = "user_help_tutorial_read";
 const URL_UPDATE_PAGE       = "user_help_tutorial_update";
 const URL_CREATE_ELEMENT    = "api_help_tutorials_create";
 const URL_UPDATE_ELEMENT    = "api_help_tutorials_update";
+const URL_UPLOAD_IMAGE      = "api_images_upload";
 const TEXT_CREATE           = "Ajouter la documentation";
 const TEXT_UPDATE           = "Enregistrer les modifications";
 
@@ -213,7 +214,8 @@ class Form extends Component {
                                 <Input identifiant="duration" valeur={duration} placeholder="00h00" {...params}>Durée de lecture</Input>
                             </div>
                             <div className="line">
-                                <Trumb identifiant="description" valeur={description.value} errors={errors} onChange={this.handleChangeTrumb}>
+                                <Trumb identifiant="description" valeur={description.value}
+                                       errors={errors} onChange={this.handleChangeTrumb}>
                                     Courte description *
                                 </Trumb>
                             </div>
