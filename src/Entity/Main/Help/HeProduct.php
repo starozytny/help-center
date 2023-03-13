@@ -14,7 +14,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: HeProductRepository::class)]
 class HeProduct extends DataEntity
 {
-    const FOLDER = "logos";
+    const FOLDER_LOGO = "logos";
+    const FOLDER = "images/editor/products";
 
     const ACCESS = ['product_access'];
     const FORM   = ['product_form'];
@@ -145,7 +146,7 @@ class HeProduct extends DataEntity
     #[Groups(['product_form'])]
     public function getLogoFile()
     {
-        return $this->getFileOrDefault($this->logo, self::FOLDER);
+        return $this->getFileOrDefault($this->logo, self::FOLDER_LOGO);
     }
 
     public function isWebservice(): bool

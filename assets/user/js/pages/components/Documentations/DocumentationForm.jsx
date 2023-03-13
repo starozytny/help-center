@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import axios from "axios";
+import axios  from "axios";
+import toastr from "toastr";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import {Input, InputIcon, Radiobox} from "@commonComponents/Elements/Fields";
-import { Trumb }            from "@commonComponents/Elements/Trumb";
+import { Input, InputIcon, Radiobox } from "@commonComponents/Elements/Fields";
+import { TinyMCE }          from "@commonComponents/Elements/TinyMCE";
 import { Button }           from "@commonComponents/Elements/Button";
 import { LoaderTxt }        from "@commonComponents/Elements/Loader";
 
 import Formulaire           from "@commonFunctions/formulaire";
 import Validateur           from "@commonFunctions/validateur";
 import Inputs               from "@commonFunctions/inputs";
-import toastr from "toastr";
 
 const URL_INDEX_PAGE        = "user_help_documentation_read";
 const URL_UPDATE_PAGE       = "user_help_documentation_update";
@@ -84,11 +84,8 @@ class Form extends Component {
         this.setState({[name]: value})
     }
 
-    handleChangeTrumb = (e) => {
-        let name = e.currentTarget.id;
-        let text = e.currentTarget.innerHTML;
-
-        this.setState({[name]: {value: [name].value, html: text}})
+    handleChangeTinyMCE = (name, html) => {
+        this.setState({ [name]: {value: this.state[name].value, html: html} })
     }
 
     handleClickIcon = (icon) => { this.setState({ icon }) }
@@ -182,9 +179,10 @@ class Form extends Component {
                                 <Input identifiant="duration" valeur={duration} placeholder="00h00" {...params}>Durée de lecture</Input>
                             </div>
                             <div className="line">
-                                <Trumb identifiant="description" valeur={description.value} errors={errors} onChange={this.handleChangeTrumb}>
+                                <TinyMCE type={4} identifiant='description' valeur={description.value}
+                                         errors={errors} onUpdateData={this.handleChangeTinyMCE}>
                                     Courte description *
-                                </Trumb>
+                                </TinyMCE>
                             </div>
                         </div>
                     </div>
@@ -197,9 +195,10 @@ class Form extends Component {
                         </div>
                         <div className="line-col-2">
                             <div className="line">
-                                <Trumb identifiant="content" valeur={content.value} errors={errors} onChange={this.handleChangeTrumb}>
+                                <TinyMCE type={4} identifiant='content' valeur={content.value}
+                                         errors={errors} onUpdateData={this.handleChangeTinyMCE}>
                                     Description *
-                                </Trumb>
+                                </TinyMCE>
                             </div>
                         </div>
                     </div>

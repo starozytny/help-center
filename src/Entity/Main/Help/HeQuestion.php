@@ -10,6 +10,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: HeQuestionRepository::class)]
 class HeQuestion
 {
+    const FOLDER = "images/editor/questions";
+
     const LIST = ["help_quest_list"];
     const FORM = ["help_quest_form"];
 

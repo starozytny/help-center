@@ -4,6 +4,11 @@ namespace App\Entity\Enum\Image;
 
 enum ImageType: int
 {
-    const Tutorial = 0;
-    const Documentation = 1;
+    const Changelog = 0;
+    const AgEvent = 1;
+    const Mail = 2;
+    const Tutorial = 3;
+    const Documentation = 4;
+    const Product = 5;
+    const Question = 6;
 }

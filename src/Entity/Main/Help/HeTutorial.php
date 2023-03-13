@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: HeTutorialRepository::class)]
 class HeTutorial extends DataEntity
 {
-    const FOLDER = "help/tutorials";
+    const FOLDER = "images/editor/tutorials";
 
     const FORM = ['tuto_form'];
     const READ = ['tuto_read'];

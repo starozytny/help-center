@@ -6,7 +6,6 @@ import toastr from "toastr";
 import { uid } from "uid";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import { Trumb }     from "@commonComponents/Elements/Trumb";
 import { Button }    from "@commonComponents/Elements/Button";
 import { LoaderTxt } from "@commonComponents/Elements/Loader";
 import { StepFormulaire } from "@userPages/Tutorials/StepForm";
@@ -15,12 +14,12 @@ import { Input, Radiobox } from "@commonComponents/Elements/Fields";
 import Formulaire   from "@commonFunctions/formulaire";
 import Validateur   from "@commonFunctions/validateur";
 import Inputs       from "@commonFunctions/inputs";
+import {TinyMCE} from "@commonComponents/Elements/TinyMCE";
 
 const URL_INDEX_PAGE        = "user_help_tutorial_read";
 const URL_UPDATE_PAGE       = "user_help_tutorial_update";
 const URL_CREATE_ELEMENT    = "api_help_tutorials_create";
 const URL_UPDATE_ELEMENT    = "api_help_tutorials_update";
-const URL_UPLOAD_IMAGE      = "api_images_upload";
 const TEXT_CREATE           = "Ajouter la documentation";
 const TEXT_UPDATE           = "Enregistrer les modifications";
 
@@ -98,11 +97,8 @@ class Form extends Component {
         this.setState({[name]: value})
     }
 
-    handleChangeTrumb = (e) => {
-        let name = e.currentTarget.id;
-        let text = e.currentTarget.innerHTML;
-
-        this.setState({[name]: {value: [name].value, html: text}})
+    handleChangeTinyMCE = (name, html) => {
+        this.setState({ [name]: {value: this.state[name].value, html: html} })
     }
 
     handleIncreaseStep = () => { this.setState((prevState, prevProps) => ({
@@ -214,10 +210,10 @@ class Form extends Component {
                                 <Input identifiant="duration" valeur={duration} placeholder="00h00" {...params}>Durée de lecture</Input>
                             </div>
                             <div className="line">
-                                <Trumb identifiant="description" valeur={description.value}
-                                       errors={errors} onChange={this.handleChangeTrumb}>
-                                    Courte description *
-                                </Trumb>
+                                <TinyMCE type={3} identifiant='description' valeur={description.value}
+                                         errors={errors} onUpdateData={this.handleChangeTinyMCE}>
+                                    Courte description
+                                </TinyMCE>
                             </div>
                         </div>
                     </div>

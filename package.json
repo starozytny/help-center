@@ -21,7 +21,8 @@
         "dev-server": "encore dev-server",
         "dev": "encore dev",
         "watch": "encore dev --watch",
-        "build": "encore production --progress"
+        "build": "encore production --progress",
+        "postinstall": "node ./postinstall.js"
     },
     "dependencies": {
         "@fullcalendar/core": "^6.0.3",
@@ -30,7 +31,9 @@
         "@fullcalendar/list": "^6.0.3",
         "@fullcalendar/react": "^6.0.4",
         "@fullcalendar/timegrid": "^6.0.3",
+        "@tinymce/tinymce-react": "^4.3.0",
         "axios": "^1.2.1",
+        "fs-extra": "^11.1.0",
         "jquery-resizable-dom": "^0.35.0",
         "js-datepicker": "^5.18.2",
         "lodash": "^4.17.21",
@@ -40,7 +43,7 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-paginate": "^8.1.4",
-        "react-trumbowyg": "^1.1.0",
+        "tinymce": "^6.3.2",
         "toastr": "^2.1.4",
         "uid": "^2.0.1"
     }
