@@ -5,8 +5,8 @@ import axios   from 'axios';
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import { Input, InputView } from "@commonComponents/Elements/Fields";
-import { Trumb }  from "@commonComponents/Elements/Trumb";
-import { Button } from "@commonComponents/Elements/Button";
+import { TinyMCE } from "@commonComponents/Elements/TinyMCE";
+import { Button }  from "@commonComponents/Elements/Button";
 
 import Formulaire from "@commonFunctions/formulaire";
 import Validateur from "@commonFunctions/validateur";
@@ -61,11 +61,8 @@ class Form extends Component {
 
     handleChange = (e) => { this.setState({[e.currentTarget.name]: e.currentTarget.value}) }
 
-    handleChangeTrumb = (e) => {
-        let name = e.currentTarget.id;
-        let text = e.currentTarget.innerHTML;
-
-        this.setState({[name]: {value: [name].value, html: text}})
+    handleChangeTinyMCE = (name, html) => {
+        this.setState({ [name]: {value: this.state[name].value, html: html} })
     }
 
     handleSubmit = (e) => {
@@ -119,9 +116,10 @@ class Form extends Component {
                                 <Input identifiant="name" valeur={name} {...params}>Intitulé *</Input>
                             </div>
                             <div className="line">
-                                <Trumb identifiant="content" valeur={content.value} errors={errors} onChange={this.handleChangeTrumb}>
+                                <TinyMCE type={0} identifiant='content' valeur={content.value}
+                                         errors={errors} onUpdateData={this.handleChangeTinyMCE}>
                                     Description *
-                                </Trumb>
+                                </TinyMCE>
                             </div>
                         </div>
                     </div>
