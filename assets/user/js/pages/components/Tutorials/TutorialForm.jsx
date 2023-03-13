@@ -6,8 +6,6 @@ import toastr from "toastr";
 import { uid } from "uid";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import { Editor }    from "@tinymce/tinymce-react";
-import { Trumb }     from "@commonComponents/Elements/Trumb";
 import { Button }    from "@commonComponents/Elements/Button";
 import { LoaderTxt } from "@commonComponents/Elements/Loader";
 import { StepFormulaire } from "@userPages/Tutorials/StepForm";
@@ -16,12 +14,12 @@ import { Input, Radiobox } from "@commonComponents/Elements/Fields";
 import Formulaire   from "@commonFunctions/formulaire";
 import Validateur   from "@commonFunctions/validateur";
 import Inputs       from "@commonFunctions/inputs";
+import {TinyMCE} from "@commonComponents/Elements/TinyMCE";
 
 const URL_INDEX_PAGE        = "user_help_tutorial_read";
 const URL_UPDATE_PAGE       = "user_help_tutorial_update";
 const URL_CREATE_ELEMENT    = "api_help_tutorials_create";
 const URL_UPDATE_ELEMENT    = "api_help_tutorials_update";
-const URL_UPLOAD_IMAGE      = "api_images_upload";
 const TEXT_CREATE           = "Ajouter la documentation";
 const TEXT_UPDATE           = "Enregistrer les modifications";
 
@@ -110,7 +108,7 @@ class Form extends Component {
 
     handleChangeTinyMCE = (e, name, selecteur) => {
         if(selecteur && selecteur.current){
-            this.setState({ [name]: {html: this.state[name].html, value: selecteur.current.getContent()} })
+            this.setState({ [name]: {value: this.state[name].value, html: selecteur.current.getContent()} })
         }
     }
 
@@ -223,30 +221,10 @@ class Form extends Component {
                                 <Input identifiant="duration" valeur={duration} placeholder="00h00" {...params}>Durée de lecture</Input>
                             </div>
                             <div className="line">
-                                <Editor
-                                    tinymceScriptSrc={location.origin + '/tinymce/tinymce.min.js'}
-                                    onInit={(evt, editor) => this.editorDescr.current = editor}
-                                    id='description'
-                                    initialValue={description.html}
-                                    init={{
-                                        menubar: false,
-                                        plugins: [
-                                            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
-                                            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                                            'insertdatetime', 'media', 'table', 'help', 'wordcount',
-                                            'image', 'autoresize', 'emoticons'
-                                        ],
-                                        toolbar: 'undo redo | blocks | ' +
-                                            'bold italic forecolor | image emoticons | ' +
-                                            'alignleft aligncenter alignright alignjustify | ' +
-                                            'bullist numlist outdent indent | ' +
-                                            'removeformat | help',
-                                        content_style: 'body { font-family:Barlow,Helvetica,Arial,sans-serif; font-size:14px }',
-                                        automatic_uploads: true,
-                                        images_upload_url: Routing.generate(URL_UPLOAD_IMAGE, {'type': 0}),
-                                    }}
-                                    onChange={(e) => this.handleChangeTinyMCE(e, 'description', this.editorDescr)}
-                                />
+                                <TinyMCE reference={this.editorDescr} type={0} identifiant='description' valeur={description.value}
+                                         errors={errors} onChange={this.handleChangeTinyMCE}>
+                                    Courte description
+                                </TinyMCE>
                             </div>
                         </div>
                     </div>

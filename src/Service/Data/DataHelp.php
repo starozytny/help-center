@@ -37,7 +37,7 @@ class DataHelp
             ->setName($this->sanitizeData->trimData($data->name))
             ->setSlug($this->sanitizeData->slugString($data->name))
             ->setDuration($this->sanitizeData->createTimePicker($duration))
-            ->setDescription($this->sanitizeData->trimData($data->description->value))
+            ->setDescription($this->sanitizeData->trimData($data->description->html))
         ;
     }
 
