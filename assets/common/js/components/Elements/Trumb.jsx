@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import 'jquery-resizable-dom/dist/jquery-resizable';
-import Routing     from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import Trumbowyg from 'react-trumbowyg';
 import 'react-trumbowyg/dist/trumbowyg.min.css';
@@ -19,15 +18,9 @@ import '@nodeModulesFolder/trumbowyg/dist/plugins/resizimg/trumbowyg.resizimg';
 import { Structure } from "@commonComponents/Elements/Fields";
 
 export function Trumb (props){
-    const { identifiant, valeur, onChange, errors, url, reference, children } = props;
+    const { identifiant, valeur, onChange, reference, children } = props;
 
     let content = <Trumbowyg id={identifiant}
-                             btnsDef={{
-                                 image: {
-                                     dropdown: ['upload', 'base64'],
-                                     ico: 'insertImage'
-                                 }
-                             }}
                              buttons={
                                  [
                                      ['viewHTML'],
@@ -52,11 +45,6 @@ export function Trumb (props){
                                  resizimg: {
                                      minSize: 32,
                                      step: 16,
-                                 },
-                                 upload: {
-                                     serverPath: url,
-                                     fileFieldName: 'image',
-                                     urlPropertyName: 'data.link'
                                  }
                              }}
     />
@@ -70,6 +58,5 @@ Trumb.propTypes = {
     errors: PropTypes.array.isRequired,
     children: PropTypes.node.isRequired,
     onChange: PropTypes.func.isRequired,
-    url: PropTypes.string,
     reference: PropTypes.string,
 }

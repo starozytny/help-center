@@ -4,6 +4,8 @@ namespace App\Controller\User;
 
 use App\Entity\Enum\Help\HelpFavorite;
 use App\Entity\Enum\Help\HelpStatut;
+use App\Entity\Enum\Image\ImageType;
+use App\Entity\Image;
 use App\Entity\Main\Help\HeCategory;
 use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeProduct;
@@ -11,13 +13,17 @@ use App\Entity\Main\Help\HeQuestion;
 use App\Entity\Main\Help\HeStep;
 use App\Entity\Main\Help\HeTutorial;
 use App\Entity\Main\User;
+use App\Repository\ImageRepository;
 use App\Repository\Main\Help\HeDocumentationRepository;
 use App\Repository\Main\Help\HeFavoriteRepository;
 use App\Repository\Main\Help\HeLikeRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Repository\Main\Help\HeStepRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
+use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -105,7 +111,7 @@ class ProductController extends AbstractController
             throw new AccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
         }
 
-        $obj     = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);
+        $obj = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);
 
         if($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')){
             throw new NotFoundHttpException("Cette page n'existe pas.");
@@ -152,9 +158,14 @@ class ProductController extends AbstractController
 
     #[Route('/produit/{slug}/tutoriels/ajouter', name: 'tutorial_create')]
     #[IsGranted('ROLE_ADMIN')]
-    public function tutorialCreate($slug, HeProductRepository $productRepository): Response
+    public function tutorialCreate(Request $request, $slug, HeProductRepository $productRepository,
+                                   ImageRepository $imageRepository, FileUploader $fileUploader): Response
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
+
+        if($request->isMethod('POST')){
+            return $fileUploader->uploadTrumb($request, $imageRepository, HeTutorial::FOLDER, ImageType::Tutorial, null);
+        }
 
         return $this->render('user/pages/tutorials/create.html.twig', [
             'product' => $product,
@@ -163,9 +174,10 @@ class ProductController extends AbstractController
 
     #[Route('/produit/{p_slug}/tutoriels/modifier/{slug}', name: 'tutorial_update', options: ['expose' => true])]
     #[IsGranted('ROLE_ADMIN')]
-    public function tutorialUpdate($p_slug, $slug, HeTutorialRepository $tutorialRepository,
+    public function tutorialUpdate(Request $request, $p_slug, $slug, HeTutorialRepository $tutorialRepository,
                                    HeProductRepository $productRepository, HeStepRepository $stepRepository,
-                                   SerializerInterface $serializer): Response
+                                   SerializerInterface $serializer,
+                                   ImageRepository $imageRepository, FileUploader $fileUploader): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
         $obj     = $tutorialRepository->findOneBy(['slug' => $slug]);
@@ -173,6 +185,10 @@ class ProductController extends AbstractController
 
         $element = $serializer->serialize($obj,   'json', ['groups' => HeTutorial::FORM]);
         $steps   = $serializer->serialize($steps, 'json', ['groups' => HeStep::FORM]);
+
+        if($request->isMethod('POST')){
+            return $fileUploader->uploadTrumb($request, $imageRepository, HeTutorial::FOLDER, ImageType::Tutorial, $obj->getId());
+        }
 
         return $this->render('user/pages/tutorials/update.html.twig', [
             'product' => $product,

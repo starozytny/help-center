@@ -4,8 +4,14 @@
 namespace App\Service;
 
 
+use App\Entity\Enum\Image\ImageType;
+use App\Entity\Image;
+use App\Entity\Main\Help\HeTutorial;
+use App\Repository\ImageRepository;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class FileUploader
@@ -93,5 +99,29 @@ class FileUploader
         return $this->privateDirectory;
     }
 
+    public function uploadTrumb(Request $request, ImageRepository $repository, $folder, $type, $identifiant): JsonResponse
+    {
+        $file = $request->files->get('fileToUpload');
+        if($file){
+            $fileName = $this->replaceFile($file, $folder);
 
+            $obj = (new Image())
+                ->setType($type)
+                ->setName($fileName)
+                ->setIdentifiant($identifiant)
+            ;
+
+            $repository->save($obj, true);
+            dump('in');
+            return new JsonResponse([
+                'success' => true,
+                'file' => 'https://' . $request->getHttpHost() . '/' . $folder . '/' . $fileName
+            ]);
+        }
+
+
+        return new JsonResponse([
+            'success' => false,
+        ]);
+    }
 }
