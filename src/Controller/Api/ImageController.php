@@ -2,7 +2,7 @@
 
 namespace App\Controller\Api;
 
-use App\Repository\ImageRepository;
+use App\Repository\Main\ImageRepository;
 use App\Service\ApiResponse;
 use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

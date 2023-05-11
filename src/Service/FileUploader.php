@@ -5,14 +5,14 @@ namespace App\Service;
 
 
 use App\Entity\Enum\Image\ImageType;
-use App\Entity\Image;
 use App\Entity\Main\Agenda\AgEvent;
 use App\Entity\Main\Changelog;
 use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
 use App\Entity\Main\Help\HeTutorial;
-use App\Repository\ImageRepository;
+use App\Entity\Main\Image;
+use App\Repository\Main\ImageRepository;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -22,6 +22,13 @@
 ] %}
 
 {% set menu_bottom = [] %}
+{% if is_granted('ROLE_ADMIN') %}
+    {% set menu_bottom = [
+        { name: "Espace admin", icon: 'earth',
+            path: path('admin_homepage'), matchRoute: ['admin_homepage']
+        }
+    ] %}
+{% endif %}
 
 {% block footer %}
     {% include "user/layout/components/footer.html.twig" %}
