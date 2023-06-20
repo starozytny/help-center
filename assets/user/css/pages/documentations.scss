@@ -4,6 +4,10 @@
 
 .documentation-read{
 
+  img{
+    width: auto;
+  }
+
   .documentation-meta{
     @include flex(row, center, space-between, var(--espaceEls));
     border-top: 1px solid var(--color2);
