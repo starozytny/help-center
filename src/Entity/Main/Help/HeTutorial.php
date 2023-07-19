@@ -4,6 +4,7 @@ namespace App\Entity\Main\Help;
 
 use App\Entity\DataEntity;
 use App\Entity\Enum\Help\HelpStatut;
+use App\Entity\Enum\Help\HelpVisibility;
 use App\Entity\Main\User;
 use App\Repository\Main\Help\HeTutorialRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -51,6 +52,10 @@ class HeTutorial extends DataEntity
     #[ORM\Column]
     #[Groups(['tuto_form'])]
     private ?int $status = HelpStatut::Draft;
+
+    #[ORM\Column]
+    #[Groups(['tuto_form'])]
+    private ?int $visibility = HelpVisibility::All;
 
     #[ORM\ManyToOne(inversedBy: 'tutorials')]
     #[ORM\JoinColumn(nullable: false)]
@@ -160,6 +165,18 @@ class HeTutorial extends DataEntity
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getVisibility(): ?int
+    {
+        return $this->visibility;
+    }
+
+    public function setVisibility(int $visibility): self
+    {
+        $this->visibility = $visibility;
 
         return $this;
     }

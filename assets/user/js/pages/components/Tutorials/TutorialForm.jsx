@@ -8,13 +8,14 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import { Button }    from "@commonComponents/Elements/Button";
 import { LoaderTxt } from "@commonComponents/Elements/Loader";
-import { StepFormulaire } from "@userPages/Tutorials/StepForm";
+import { TinyMCE } from "@commonComponents/Elements/TinyMCE";
 import { Input, Radiobox } from "@commonComponents/Elements/Fields";
 
 import Formulaire   from "@commonFunctions/formulaire";
 import Validateur   from "@commonFunctions/validateur";
 import Inputs       from "@commonFunctions/inputs";
-import {TinyMCE} from "@commonComponents/Elements/TinyMCE";
+
+import { StepFormulaire } from "@userPages/Tutorials/StepForm";
 
 const URL_INDEX_PAGE        = "user_help_tutorial_read";
 const URL_UPDATE_PAGE       = "user_help_tutorial_update";
@@ -40,6 +41,7 @@ export function TutorialFormulaire ({ context, productSlug, element, steps })
         duration={element ? Formulaire.setValueTime(element.duration) : ""}
         status={element ? Formulaire.setValue(element.status) : 0}
         description={element ? Formulaire.setValue(element.description) : ""}
+        visibility={element ? Formulaire.setValue(element.visibility) : 0}
     />
 
     return <div className="formulaire">{form}</div>;
@@ -64,6 +66,7 @@ class Form extends Component {
             duration: props.duration,
             status: props.status,
             description: { value: description, html: description },
+            visibility: props.visibility,
             errors: [],
             loadSteps: true,
         }
@@ -170,7 +173,7 @@ class Form extends Component {
 
     render () {
         const { context } = this.props;
-        const { errors, loadStep, name, status, duration, description, nbSteps } = this.state;
+        const { errors, loadStep, name, status, duration, description, nbSteps, visibility } = this.state;
 
         let params  = { errors: errors, onChange: this.handleChange }
 
@@ -187,6 +190,11 @@ class Form extends Component {
             { value: 1, label: 'En ligne',   identifiant: 'type-1' },
         ]
 
+        let visibilityItems = [
+            { value: 0, label: 'Pour tous',             identifiant: 'visi-0' },
+            { value: 1, label: 'Pour administration',   identifiant: 'visi-1' },
+        ]
+
         return <>
             <form onSubmit={this.handleSubmit}>
                 <div className="line-container">
@@ -198,8 +206,11 @@ class Form extends Component {
                             </div>
                         </div>
                         <div className="line-col-2">
-                            <div className="line line-fat-box">
+                            <div className="line line-2 line-fat-box">
                                 <Radiobox items={statusItems} identifiant="status" valeur={status} {...params}>
+                                    Statut *
+                                </Radiobox>
+                                <Radiobox items={visibilityItems} identifiant="visibility" valeur={visibility} {...params}>
                                     Visibilité *
                                 </Radiobox>
                             </div>
