@@ -17,14 +17,9 @@ use App\Repository\Main\Help\HeLikeRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Repository\Main\Help\HeStepRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
-use App\Repository\Main\ImageRepository;
-use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -76,13 +71,13 @@ class ProductController extends AbstractController
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
 
         if(!in_array($product->getId(), $this->getUser()->getAccess())){
-            throw new AccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
+            throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
         }
 
         $obj     = $documentationRepository->findOneBy(['product' => $product, 'slug' => $slug]);
 
         if($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')){
-            throw new NotFoundHttpException("Cette page n'existe pas.");
+            throw $this->createAccessDeniedException("Cette page n'existe pas.");
         }
 
         $answer  = $likeRepository->findOneBy([
@@ -105,13 +100,13 @@ class ProductController extends AbstractController
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
 
         if(!in_array($product->getId(), $this->getUser()->getAccess())){
-            throw new AccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
+            throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
         }
 
         $obj = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);
 
         if($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')){
-            throw new NotFoundHttpException("Cette page n'existe pas.");
+            throw $this->createAccessDeniedException("Cette page n'existe pas.");
         }
 
         $steps   = $stepRepository->findBy(['tutorial' => $obj]);
@@ -155,8 +150,7 @@ class ProductController extends AbstractController
 
     #[Route('/produit/{slug}/tutoriels/ajouter', name: 'tutorial_create')]
     #[IsGranted('ROLE_ADMIN')]
-    public function tutorialCreate(Request $request, $slug, HeProductRepository $productRepository,
-                                   ImageRepository $imageRepository, FileUploader $fileUploader): Response
+    public function tutorialCreate($slug, HeProductRepository $productRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
 
@@ -167,10 +161,9 @@ class ProductController extends AbstractController
 
     #[Route('/produit/{p_slug}/tutoriels/modifier/{slug}', name: 'tutorial_update', options: ['expose' => true])]
     #[IsGranted('ROLE_ADMIN')]
-    public function tutorialUpdate(Request $request, $p_slug, $slug, HeTutorialRepository $tutorialRepository,
+    public function tutorialUpdate($p_slug, $slug, HeTutorialRepository $tutorialRepository,
                                    HeProductRepository $productRepository, HeStepRepository $stepRepository,
-                                   SerializerInterface $serializer,
-                                   ImageRepository $imageRepository, FileUploader $fileUploader): Response
+                                   SerializerInterface $serializer): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
         $obj     = $tutorialRepository->findOneBy(['slug' => $slug]);
@@ -189,8 +182,7 @@ class ProductController extends AbstractController
 
     #[Route('/produit/{slug}/documentations/ajouter', name: 'documentation_create')]
     #[IsGranted('ROLE_ADMIN')]
-    public function documentationCreate(Request $request, $slug, HeProductRepository $productRepository,
-                                        FileUploader $fileUploader, ImageRepository $imageRepository): Response
+    public function documentationCreate($slug, HeProductRepository $productRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
 
@@ -201,9 +193,8 @@ class ProductController extends AbstractController
 
     #[Route('/produit/{p_slug}/documentations/modifier/{slug}', name: 'documentation_update', options: ['expose' => true])]
     #[IsGranted('ROLE_ADMIN')]
-    public function documentationUpdate(Request $request, $p_slug, $slug, HeDocumentationRepository $documentationRepository,
-                                        HeProductRepository $productRepository, SerializerInterface $serializer,
-                                        ImageRepository $imageRepository, FileUploader $fileUploader): Response
+    public function documentationUpdate($p_slug, $slug, HeDocumentationRepository $documentationRepository,
+                                        HeProductRepository $productRepository, SerializerInterface $serializer): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
         $obj     = $documentationRepository->findOneBy(['slug' => $slug]);

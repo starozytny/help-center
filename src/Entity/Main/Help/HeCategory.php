@@ -2,6 +2,7 @@
 
 namespace App\Entity\Main\Help;
 
+use App\Entity\Enum\Help\HelpVisibility;
 use App\Repository\Main\Help\HeCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,9 +14,6 @@ class HeCategory
 {
     const LIST = ["help_cat_list"];
     const FORM = ["help_cat_form"];
-
-    const VISIBILITY_ALL = 0;
-    const VISIBILITY_ADMIN = 1;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -33,7 +31,7 @@ class HeCategory
 
     #[ORM\Column]
     #[Groups(['help_cat_form'])]
-    private ?int $visibility = self::VISIBILITY_ALL;
+    private ?int $visibility = HelpVisibility::All;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: HeQuestion::class)]
     private Collection $questions;

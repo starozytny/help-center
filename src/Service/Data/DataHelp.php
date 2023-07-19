@@ -38,6 +38,7 @@ class DataHelp
             ->setSlug($this->sanitizeData->slugString($data->name))
             ->setDuration($this->sanitizeData->createTimePicker($duration))
             ->setDescription($this->sanitizeData->trimData($data->description->html))
+            ->setVisibility((int) $data->visibility)
         ;
     }
 
@@ -52,6 +53,7 @@ class DataHelp
             ->setDuration($this->sanitizeData->createTimePicker($duration))
             ->setDescription($this->sanitizeData->trimData($data->description->html))
             ->setContent($this->sanitizeData->trimData($data->content->html))
+            ->setVisibility((int) $data->visibility)
         ;
     }
 

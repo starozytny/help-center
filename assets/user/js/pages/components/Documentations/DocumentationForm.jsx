@@ -39,6 +39,7 @@ export function DocumentationFormulaire ({ context, element, productSlug })
         status={element ? Formulaire.setValue(element.status) : 0}
         description={element ? Formulaire.setValue(element.description) : ""}
         content={element ? Formulaire.setValue(element.content) : ""}
+        visibility={element ? Formulaire.setValue(element.visibility) : 0}
     />
 
     return <div className="formulaire">{form}</div>;
@@ -65,6 +66,7 @@ class Form extends Component {
             status: props.status,
             description: { value: description, html: description },
             content: { value: content, html: content },
+            visibility: props.visibility,
             errors: [],
             icons: [],
             loadIcons: true,
@@ -140,7 +142,7 @@ class Form extends Component {
 
     render () {
         const { context } = this.props;
-        const { errors, loadIcons, name, icon, duration, status, description, content, icons } = this.state;
+        const { errors, loadIcons, name, icon, duration, status, description, content, icons, visibility } = this.state;
 
         let params  = { errors: errors, onChange: this.handleChange }
         let params1 = { errors: errors, onChange: this.handleClickIcon }
@@ -148,6 +150,11 @@ class Form extends Component {
         let statusItems = [
             { value: 0, label: 'Hors ligne', identifiant: 'type-0' },
             { value: 1, label: 'En ligne',   identifiant: 'type-1' },
+        ]
+
+        let visibilityItems = [
+            { value: 0, label: 'Pour tous',             identifiant: 'visi-0' },
+            { value: 1, label: 'Pour administration',   identifiant: 'visi-1' },
         ]
 
         return <>
@@ -163,6 +170,9 @@ class Form extends Component {
                         <div className="line-col-2">
                             <div className="line line-fat-box">
                                 <Radiobox items={statusItems} identifiant="status" valeur={status} {...params}>
+                                    Statut *
+                                </Radiobox>
+                                <Radiobox items={visibilityItems} identifiant="visibility" valeur={visibility} {...params}>
                                     Visibilité *
                                 </Radiobox>
                             </div>
