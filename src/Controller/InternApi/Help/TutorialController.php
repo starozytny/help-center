@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Api\Help;
+namespace App\Controller\InternApi\Help;
 
 use App\Entity\Enum\Help\HelpFavorite;
 use App\Entity\Main\Help\HeStep;
@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/help/tutorials', name: 'api_help_tutorials_')]
+#[Route('/intern/api/help/tutorials', name: 'intern_api_help_tutorials_')]
 class TutorialController extends AbstractController
 {
     public function submitForm($type, HeTutorialRepository $repository, HeTutorial $obj,

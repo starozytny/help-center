@@ -44,7 +44,7 @@ class FileUploader
 
             if($directory){
                 if(!is_dir($directory)){
-                    mkdir($directory);
+                    mkdir($directory, 0777, true);
                 }
             }
 

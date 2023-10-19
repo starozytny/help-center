@@ -11,9 +11,11 @@ import { Button }  from "@commonComponents/Elements/Button";
 import Formulaire from "@commonFunctions/formulaire";
 import Validateur from "@commonFunctions/validateur";
 
+
 const URL_INDEX_ELEMENTS    = "user_help_product_read";
-const URL_CREATE_ELEMENT    = "api_help_faq_questions_create";
-const URL_UPDATE_GROUP      = "api_help_faq_questions_update";
+const URL_CREATE_ELEMENT    = "intern_api_help_faq_questions_create";
+const URL_UPDATE_GROUP      = "intern_api_help_faq_questions_update";
+
 const TEXT_CREATE           = "Ajouter la question";
 const TEXT_UPDATE           = "Enregistrer les modifications";
 
