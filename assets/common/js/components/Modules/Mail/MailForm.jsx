@@ -7,6 +7,7 @@ import { uid } from 'uid'
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import { Input, InputFile, SelectMultipleCustom } from "@commonComponents/Elements/Fields";
+
 import { TinyMCE }          from "@commonComponents/Elements/TinyMCE";
 import { Button }           from "@commonComponents/Elements/Button";
 import { Alert }            from "@commonComponents/Elements/Alert";
@@ -15,7 +16,7 @@ import Formulaire from "@commonFunctions/formulaire";
 import Inputs     from "@commonFunctions/inputs";
 import Validateur from "@commonFunctions/validateur";
 
-const URL_CREATE_ELEMENT    = "api_mails_send";
+const URL_CREATE_ELEMENT    = "intern_api_mails_send";
 const TEXT_CREATE           = "Envoyer le message";
 
 export function MailFormulaire ({ identifiant, element, tos })
@@ -120,7 +121,7 @@ class Form extends Component {
         e.preventDefault();
 
         const { url } = this.props;
-        const { to, name, message } = this.state;
+        const { loadSendData, to, name, message } = this.state;
 
         this.setState({ errors: [], success: null });
 
@@ -134,31 +135,32 @@ class Form extends Component {
         if(!validate.code){
             Formulaire.showErrors(this, validate);
         }else {
-            Formulaire.loader(true);
-            let self = this;
+            if(!loadSendData){
+                this.setState({ loadSendData: true });
 
-            let formData = new FormData();
-            formData.append("data", JSON.stringify(this.state));
+                Formulaire.loader(true);
+                let self = this;
 
-            let file = this.file.current;
-            if(file.state.files.length > 0) {
-                file.state.files.forEach((f, index) => {
-                    formData.append("file-" + index, f);
-                })
+                let formData = new FormData();
+                formData.append("data", JSON.stringify(this.state));
+
+                let file = this.file.current;
+                if(file.state.files.length > 0) {
+                    file.state.files.forEach((f, index) => {
+                        formData.append("file-" + index, f);
+                    })
+                }
+
+                axios({ method: "POST", url: url, data: formData, headers: {'Content-Type': 'multipart/form-data'} })
+                    .then(function (response) {
+                        toastr.info("Message envoyé.");
+                        self.setState({ success: "Message envoyé.", name: "", message: {value: "", html: ""} });
+                    })
+                    .catch(function (error) { Formulaire.displayErrors(self, error);  })
+                    .then(function () { Formulaire.loader(false); self.setState({ loadSendData: false })  })
+                ;
             }
 
-            let instance = axios.create();
-            instance.interceptors.request.use((config) => {
-                self.setState({ loadSendData: true }); return config;
-            }, function(error) { return Promise.reject(error); });
-            instance({ method: "POST", url: url, data: formData, headers: {'Content-Type': 'multipart/form-data'} })
-                .then(function (response) {
-                    toastr.info("Message envoyé.");
-                    self.setState({ loadSendData: false, success: "Message envoyé.", name: "", message: {value: "", html: ""} });
-                })
-                .catch(function (error) { console.log(error); Formulaire.displayErrors(self, error);  })
-                .then(function () { Formulaire.loader(false);  })
-            ;
         }
     }
 

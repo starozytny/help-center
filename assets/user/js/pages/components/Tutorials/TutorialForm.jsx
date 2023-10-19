@@ -19,8 +19,8 @@ import { StepFormulaire } from "@userPages/Tutorials/StepForm";
 
 const URL_INDEX_PAGE        = "user_help_tutorial_read";
 const URL_UPDATE_PAGE       = "user_help_tutorial_update";
-const URL_CREATE_ELEMENT    = "api_help_tutorials_create";
-const URL_UPDATE_ELEMENT    = "api_help_tutorials_update";
+const URL_CREATE_ELEMENT    = "intern_api_help_tutorials_create";
+const URL_UPDATE_ELEMENT    = "intern_api_help_tutorials_update";
 const TEXT_CREATE           = "Ajouter la documentation";
 const TEXT_UPDATE           = "Enregistrer les modifications";
 

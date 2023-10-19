@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Controller\Api;
+namespace App\Controller\InternApi;
 
 use App\Entity\Main\Society;
 use App\Entity\Main\User;
 use App\Repository\Main\UserRepository;
 use App\Service\ApiResponse;
 use App\Service\Data\DataMain;
-use App\Service\Export;
 use App\Service\FileUploader;
 use App\Service\MailerService;
 use App\Service\SanitizeData;
@@ -17,7 +16,6 @@ use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,14 +25,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/api/users', name: 'api_users_')]
+#[Route('/intern/api/users', name: 'intern_api_users_')]
 class UserController extends AbstractController
 {
     #[Route('/list', name: 'list', options: ['expose' => true], methods: 'GET')]
+    #[IsGranted('ROLE_ADMIN')]
     public function list(UserRepository $repository, ApiResponse $apiResponse): Response
     {
         return $apiResponse->apiJsonResponse($repository->findAll(), User::LIST);
     }
+
     #[Route('/society/{society}', name: 'society', options: ['expose' => true], methods: 'GET')]
     public function society(Society $society, UserRepository $repository, ApiResponse $apiResponse): Response
     {
@@ -108,24 +108,6 @@ class UserController extends AbstractController
         $em = $doctrine->getManager();
         return $this->submitForm("update", $repository, $obj, $request, $apiResponse, $validator, $dataEntity,
             $em, $passwordHasher, $fileUploader);
-    }
-
-    #[Route('/delete/{id}', name: 'delete', options: ['expose' => true], methods: 'DELETE')]
-    #[IsGranted('ROLE_ADMIN')]
-    public function delete(User $obj, UserRepository $repository, ApiResponse $apiResponse, FileUploader $fileUploader): Response
-    {
-        if ($obj->getHighRoleCode() === User::CODE_ROLE_DEVELOPER) {
-            return $apiResponse->apiJsonResponseForbidden();
-        }
-
-        if ($obj === $this->getUser()) {
-            return $apiResponse->apiJsonResponseBadRequest('Vous ne pouvez pas vous supprimer.');
-        }
-
-        $repository->remove($obj, true);
-
-        $fileUploader->deleteFile($obj->getAvatar(), User::FOLDER);
-        return $apiResponse->apiJsonResponseSuccessful("ok");
     }
 
     #[Route('/password/forget', name: 'password_forget', options: ['expose' => true], methods: 'post')]
@@ -241,48 +223,5 @@ class UserController extends AbstractController
 
         $repository->save($user, true);
         return $apiResponse->apiJsonResponse($user, User::LIST);
-    }
-
-    #[Route('/export/{format}', name: 'export', options: ['expose' => true], methods: 'get')]
-    public function export(Request $request, Export $export, $format, UserRepository $repository, ApiResponse $apiResponse): BinaryFileResponse|JsonResponse
-    {
-        $nameFile = 'utilisateurs';
-        $nameFolder = 'export/';
-
-        if($format == 'excel'){
-            $fileName = $nameFile . '.xlsx';
-            $header = [['ID', 'Nom/Prenom', 'Identifiant', 'Role', 'Email', 'Date de creation']];
-        }else{
-            $fileName = $nameFile . '.csv';
-            $header = [['id', 'name', 'username', 'role', 'email', 'createAt']];
-
-            header('Content-Type: application/csv');
-            header('Content-Disposition: attachment; filename="'.$fileName.'"');
-        }
-
-        $type = $request->query->get('file');
-        if($type){
-            return $this->file($this->getParameter('private_directory'). $nameFolder . $fileName);
-        }
-
-        $objs = $repository->findBy([], ['lastname' => 'ASC']);
-        $data = [];
-
-        foreach ($objs as $obj) {
-            $tmp = [
-                $obj->getId(),
-                $obj->getLastname() . " " . $obj->getFirstname(),
-                $obj->getUsername(),
-                $obj->getHighRole(),
-                $obj->getEmail(),
-                date_format($obj->getCreatedAt(), 'd/m/Y'),
-            ];
-            if(!in_array($tmp, $data)){
-                $data[] = $tmp;
-            }
-        }
-
-        $export->createFile($format, 'Liste des ' . $nameFile, $fileName , $header, $data, 6, $nameFolder);
-        return $apiResponse->apiJsonResponseCustom(['url' => $this->generateUrl('api_users_export', ['format' => $format, 'file' => 1])]);
     }
 }

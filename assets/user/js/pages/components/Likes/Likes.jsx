@@ -6,7 +6,7 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import Formulaire from "@commonFunctions/formulaire";
 
-const URL_LIKES_ELEMENT = 'api_help_likes_like';
+const URL_LIKES_ELEMENT = 'intern_api_help_likes_like';
 
 export function Likes ({ type, id, answer, haveAnswer, nbLikes, nbDislikes })
 {

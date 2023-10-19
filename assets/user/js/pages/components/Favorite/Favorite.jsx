@@ -8,7 +8,7 @@ import Formulaire from "@commonFunctions/formulaire";
 
 import { ButtonIcon } from "@commonComponents/Elements/Button";
 
-const URL_FAVORITE_ELEMENT = 'api_help_favorites_favorite';
+const URL_FAVORITE_ELEMENT = 'intern_api_help_favorites_favorite';
 
 export function Favorite ({ context, type, id, isFav })
 {

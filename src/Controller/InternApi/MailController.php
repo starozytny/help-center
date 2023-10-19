@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Api;
+namespace App\Controller\InternApi;
 
 use App\Service\ApiResponse;
 use App\Service\FileUploader;
@@ -11,11 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/mails', name: 'api_mails_')]
+#[Route('/intern/api/mails', name: 'intern_api_mails_')]
 class MailController extends AbstractController
 {
     #[Route('/mail/send', name: 'send', options: ['expose' => true], methods: 'post')]
-    public function forget(Request $request, ApiResponse $apiResponse,
+    public function send(Request $request, ApiResponse $apiResponse,
                            SanitizeData $sanitizeData, MailerService $mailerService, FileUploader $fileUploader): Response
     {
         $data = json_decode($request->get('data'));

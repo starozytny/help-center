@@ -16,8 +16,8 @@ import Inputs               from "@commonFunctions/inputs";
 
 const URL_INDEX_PAGE        = "user_help_documentation_read";
 const URL_UPDATE_PAGE       = "user_help_documentation_update";
-const URL_CREATE_ELEMENT    = "api_help_documentations_create";
-const URL_UPDATE_ELEMENT    = "api_help_documentations_update";
+const URL_CREATE_ELEMENT    = "intern_api_help_documentations_create";
+const URL_UPDATE_ELEMENT    = "intern_api_help_documentations_update";
 const TEXT_CREATE           = "Ajouter la documentation";
 const TEXT_UPDATE           = "Enregistrer les modifications";
 

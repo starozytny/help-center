@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Api\Help;
+namespace App\Controller\InternApi\Help;
 
 use App\Entity\Enum\Help\HelpFavorite;
 use App\Entity\Main\Help\HeFavorite;
@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/help/products', name: 'api_help_products_')]
+#[Route('/intern/api/help/products', name: 'intern_api_help_products_')]
 class ProductController extends AbstractController
 {
     public function submitForm($type, HeProductRepository $repository, HeProduct $obj,

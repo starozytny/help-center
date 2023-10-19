@@ -6,7 +6,7 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 import { Structure } from "@commonComponents/Elements/Fields";
 import { Editor } from "@tinymce/tinymce-react";
 
-const URL_UPLOAD_IMAGE = 'api_images_upload';
+const URL_UPLOAD_IMAGE = 'intern_api_images_upload';
 
 export function TinyMCE (props){
     const { identifiant, valeur, type, onUpdateData, children } = props;

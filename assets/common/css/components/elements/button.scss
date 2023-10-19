@@ -23,10 +23,6 @@
 
 .btn-icon, .btn{
   transition: opacity 0.2s ease-in-out;
-
-  &:hover{
-    opacity: 1;
-  }
 }
 
 .btn-icon{
@@ -36,6 +32,10 @@
   span:not(.tooltip, [class^="icon-"]){
     font-size: 14px;
     transform: translateY(1px);
+  }
+
+  &:hover{
+    opacity: 1;
   }
 }
 

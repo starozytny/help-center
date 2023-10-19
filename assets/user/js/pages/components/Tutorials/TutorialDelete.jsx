@@ -10,7 +10,7 @@ import { Button, ButtonIcon } from "@commonComponents/Elements/Button";
 import { Modal } from "@commonComponents/Elements/Modal";
 
 const URL_INDEX_ELEMENTS = 'user_help_product_read';
-const URL_DELETE_ELEMENT = 'api_help_tutorials_delete';
+const URL_DELETE_ELEMENT = 'intern_api_help_tutorials_delete';
 
 export function TutorialDelete ({ context, id, name, productSlug })
 {

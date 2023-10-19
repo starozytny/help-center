@@ -13,8 +13,9 @@ import Validateur from "@commonFunctions/validateur";
 import Inputs from "@commonFunctions/inputs";
 
 const URL_INDEX_ELEMENTS    = "user_help_product_read";
-const URL_CREATE_ELEMENT    = "api_help_faq_categories_create";
-const URL_UPDATE_GROUP      = "api_help_faq_categories_update";
+const URL_CREATE_ELEMENT    = "intern_api_help_faq_categories_create";
+const URL_UPDATE_GROUP      = "intern_api_help_faq_categories_update";
+
 const TEXT_CREATE           = "Ajouter la catégorie";
 const TEXT_UPDATE           = "Enregistrer les modifications";
 

@@ -12,8 +12,8 @@ import Formulaire           from "@commonFunctions/formulaire";
 import Validateur           from "@commonFunctions/validateur";
 
 const URL_INDEX_ELEMENTS    = "user_help_product_read";
-const URL_CREATE_ELEMENT    = "api_help_products_create";
-const URL_UPDATE_GROUP      = "api_help_products_update";
+const URL_CREATE_ELEMENT    = "intern_api_help_products_create";
+const URL_UPDATE_ELEMENT    = "intern_api_help_products_update";
 const TEXT_CREATE           = "Ajouter le produit";
 const TEXT_UPDATE           = "Enregistrer les modifications";
 
@@ -22,7 +22,7 @@ export function ProductFormulaire ({ context, element })
     let url = Routing.generate(URL_CREATE_ELEMENT);
 
     if(context === "update"){
-        url = Routing.generate(URL_UPDATE_GROUP, {'id': element.id});
+        url = Routing.generate(URL_UPDATE_ELEMENT, {'id': element.id});
     }
 
     let form = <Form

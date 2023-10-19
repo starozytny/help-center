@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Api\Help;
+namespace App\Controller\InternApi\Help;
 
 use App\Entity\Enum\Help\HelpFavorite;
 use App\Entity\Main\Help\HeDocumentation;
@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/help/likes', name: 'api_help_likes_')]
+#[Route('/intern/api/help/likes', name: 'intern_api_help_likes_')]
 class LikeController extends AbstractController
 {
     #[Route('/{type}/{id}/{answer}', name: 'like', options: ['expose' => true], methods: 'POST')]

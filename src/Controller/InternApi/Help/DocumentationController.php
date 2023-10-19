@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Api\Help;
+namespace App\Controller\InternApi\Help;
 
 use App\Entity\Enum\Help\HelpFavorite;
 use App\Entity\Main\Help\HeDocumentation;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/help/documentations', name: 'api_help_documentations_')]
+#[Route('/intern/api/help/documentations', name: 'intern_api_help_documentations_')]
 class DocumentationController extends AbstractController
 {
     public function submitForm($type, HeDocumentationRepository $repository, HeDocumentation $obj,

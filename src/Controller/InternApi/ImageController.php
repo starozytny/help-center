@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Api;
+namespace App\Controller\InternApi;
 
 use App\Repository\Main\ImageRepository;
 use App\Service\ApiResponse;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/images', name: 'api_images_')]
+#[Route('/intern/api/images', name: 'intern_api_images_')]
 class ImageController extends AbstractController
 {
     #[Route('/{type}/images', name: 'upload', options: ['expose' => true], methods: 'POST')]
