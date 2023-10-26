@@ -1,6 +1,6 @@
 {% extends 'user/pages/products/template.html.twig' %}
 
-{% set typeString = elem.webservice ? "produit" : "logiciel" %}
+{% set typeString = elem.webservice ? "logiciel en ligne" : "logiciel" %}
 
 {% set page_title %}{{ elem.name }}{% endset %}
 {% set page_subtitle %}Centre d'aide pour le {{ typeString }} {{ elem.name }}{% endset %}
