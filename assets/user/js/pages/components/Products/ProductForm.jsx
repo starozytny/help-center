@@ -33,6 +33,7 @@ export function ProductFormulaire ({ context, element })
         website={element ? Formulaire.setValue(element.url) : ""}
         description={element ? Formulaire.setValue(element.description) : ""}
         logoFile={element ? Formulaire.setValue(element.logoFile) : ""}
+        starter={element ? Formulaire.setValue(element.starter) : ""}
     />
 
     return <div className="formulaire">{form}</div>;
@@ -53,6 +54,7 @@ class Form extends Component {
             type: props.type,
             name: props.name,
             website: props.website,
+            starter: props.starter,
             description: { value: description, html: description },
             errors: [],
         }
@@ -110,7 +112,7 @@ class Form extends Component {
 
     render () {
         const { context, logoFile } = this.props;
-        const { errors, name, type, website, description } = this.state;
+        const { errors, name, type, website, starter, description } = this.state;
 
         let params  = { errors: errors, onChange: this.handleChange };
 
@@ -151,6 +153,9 @@ class Form extends Component {
                                          errors={errors} onUpdateData={this.handleChangeTinyMCE}>
                                     Courte description *
                                 </TinyMCE>
+                            </div>
+                            <div className="line">
+                                <Input identifiant="starter" valeur={starter} {...params} placeholder="https://pitch.com">Guide de démarrage</Input>
                             </div>
                             <div className="line">
                                 <InputFile ref={this.file} type="simple" identifiant="logo" valeur={logoFile}

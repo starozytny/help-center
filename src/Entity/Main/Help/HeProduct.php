@@ -39,6 +39,10 @@ class HeProduct extends DataEntity
     #[Groups(['product_form'])]
     private ?string $url = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['product_form'])]
+    private ?string $starter = null;
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['product_form'])]
     private ?string $description = null;
@@ -103,6 +107,18 @@ class HeProduct extends DataEntity
     public function setUrl(?string $url): self
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    public function getStarter(): ?string
+    {
+        return $this->starter;
+    }
+
+    public function setStarter(?string $starter): self
+    {
+        $this->starter = $starter;
 
         return $this;
     }

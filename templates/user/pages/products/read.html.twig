@@ -1,6 +1,6 @@
 {% extends 'user/pages/products/template.html.twig' %}
 
-{% set typeString = elem.webservice ? "webservice" : "logiciel" %}
+{% set typeString = elem.webservice ? "produit" : "logiciel" %}
 
 {% set page_title %}{{ elem.name }}{% endset %}
 {% set page_subtitle %}Centre d'aide pour le {{ typeString }} {{ elem.name }}{% endset %}
@@ -33,20 +33,34 @@
             {% if canRead %}
                 <div class="product-line-0">
                     <div class="guide-start">
-                        <div class="col-1">
-                            <h2>Guide de <br>Démarrage</h2>
-                            <div class="subtitle">Apprenez rapidement à prendre en main ce {{ typeString }} !</div>
-                        </div>
-
-                        <div class="col-2">
-                            <img src="{{ asset(elem.logoFile) }}" alt="logo {{ elem.name }}">
-                            <div class="cta">
-{#                                <a href="https://pitch.com/public/b49ac20a-d322-4a29-b8a4-2d9db07766fb" target="_blank" class="btn btn-primary">#}
-{#                                    <span>Démarrer</span>#}
-{#                                    <span class="icon-right-arrow"></span>#}
-{#                                </a>#}
+                        {% if elem.starter %}
+                            <div class="col-1">
+                                <h2>Guide de <br>Démarrage</h2>
+                                <div class="subtitle">Apprenez rapidement à prendre en main ce {{ typeString }} !</div>
                             </div>
-                        </div>
+
+                            <div class="col-2">
+                                <img src="{{ asset(elem.logoFile) }}" alt="logo {{ elem.name }}">
+                                <div class="cta">
+                                    <a href="{{ elem.starter }}" target="_blank" class="btn btn-primary">
+                                        <span>Démarrer</span>
+                                        <span class="icon-right-arrow"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="col-1">
+                                <h2>{{ elem.name }}</h2>
+                                <div class="subtitle" style="max-width: 414px">
+                                    Apprenez rapidement à prendre en main ce {{ typeString }} à travers
+                                    nos tutoriels, documentation et foire aux questions !
+                                </div>
+                            </div>
+
+                            <div class="col-2">
+                                <img src="{{ asset(elem.logoFile) }}" alt="logo {{ elem.name }}">
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="cta-faq">
                         <h2><span class="icon-question-1"></span> F.A.Q.</h2>
