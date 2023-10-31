@@ -24,13 +24,11 @@
 @import "components/form";
 @import "components/modal";
 @import "components/mail";
-
-html{
-  background-color: var(--color1);
-}
+@import "components/mails";
 
 body {
   color: var(--alpha);
+  background-color: var(--color1);
   @include fontRegular();
 }
 

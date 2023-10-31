@@ -1,4 +1,3 @@
-$bg: #171f30;
 $c-01: #5389a6;
 $c-02: #a6dcee;
 
@@ -18,7 +17,7 @@ $c-02: #a6dcee;
 
 .loader-content{
   width: 100%;
-  background-color: $bg;
+  background-color: var(--color0);
   @include flex(row, flex-start, flex-start);
 }
 
@@ -57,7 +56,7 @@ $c-02: #a6dcee;
   top: 0; left: 0;
   width: 100%; height: 100%;
   background-color: var(--overlay);
-  z-index: 10000;
+  z-index: 100000;
   @include flex(column, center, center);
   display: none;
 

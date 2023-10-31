@@ -38,7 +38,7 @@
                         </div>
                         <div class="nav-header-actions">
                             <div id="notifs_list">
-                                {% include "layout/components/admin/loaders/btn-icon.html.twig" %}
+                                {% include "layout/components/admin/loaders/btn-icon.html.twig" with { type: 'outline-default' } %}
                             </div>
                             <a href="{{ path('admin_settings_update') }}"
                                class="btn-icon {{- app.request.get('_route') == "admin_settings_update"
@@ -48,6 +48,9 @@
                                 <span class="icon-settings"></span>
                                 <span class="tooltip">Paramètres</span>
                             </a>
+                            <div id="theme_switcher">
+                                {% include "layout/components/admin/loaders/btn-icon.html.twig" with { type: 'outline-default' } %}
+                            </div>
                             <a href="{{ path('app_logout') }}" class="btn-icon btn-icon-outline-default">
                                 <span class="icon-logout"></span>
                                 <span class="tooltip" style="width: 108px;">Se déconnecter</span>
