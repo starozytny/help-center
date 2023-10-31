@@ -24,12 +24,9 @@
 @import "components/modal";
 @import "components/form";
 
-html{
-  background-color: var(--color1);
-}
-
 body {
   color: var(--alpha);
+  background-color: var(--color1);
   @include fontRegular();
 }
 

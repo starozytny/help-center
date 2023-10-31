@@ -40,7 +40,7 @@
                             <div id="notifs_list">
                                 {% include "layout/components/admin/loaders/btn-icon.html.twig" %}
                             </div>
-                            <div id="theme_switcher">
+                            <div id="theme_switcher" data-consent="logilink.help.user.theme" data-init-theme="light-mode">
                                 {% include "layout/components/admin/loaders/btn-icon.html.twig" with { type: 'outline-default' } %}
                             </div>
                             <a href="{{ path('app_logout') }}" class="btn-icon btn-icon-outline-default">

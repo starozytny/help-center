@@ -67,9 +67,15 @@
 
 
 .light-mode{
+  --primary: #5b3cc4;
+
   --grey2: #939393;
 
+  --primaryOpacity1: rgba(91, 60, 196, 0.1);
+
   --grey2Opacity1: rgba(147, 147, 147, 0.1);
+
+  --primaryOpacity4: rgba(31, 60, 196, 0.4);
 
   --grey2Opacity4: rgba(147, 147, 147, 0.4);
 
@@ -185,5 +191,35 @@
   [class*="btn-outline-"],
   [class*="btn-icon-outline-"]{
     background-color: var(--color0);
+  }
+
+
+  // ------------------------- CUSTOM
+  .products .card .card-header,
+  .products .card .card-body,
+  .products .card .card-footer-admin,
+  .tutorials .card .card-header,
+  .tutorials .card .card-body,
+  .tutorials .card .card-footer-admin{
+    border-color: var(--color4);
+  }
+
+  .products .card .card-footer-admin > *:not(:last-child):after,
+  .tutorials .card .card-footer > *:not(:last-child):after,
+  .products .card .card-header .logo{
+    background-color: var(--color4);
+  }
+
+  .cta-faq,
+  .cta-faq .txt-button, .cta-faq .txt-button-default:hover{
+    color: var(--txt);
+  }
+
+  .tutorials .card{
+    background-color: var(--txt);
+  }
+
+  .faqs .help-categories > .item:not(.active){
+    background-color: var(--color2);
   }
 }
