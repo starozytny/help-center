@@ -6,20 +6,20 @@ import toastr  from 'toastr';
 import { uid } from 'uid'
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import { Input, InputFile, SelectMultipleCustom } from "@commonComponents/Elements/Fields";
 
-import { TinyMCE }          from "@commonComponents/Elements/TinyMCE";
+import { Input, InputFile, InputView, SelectMultipleCustom } from "@commonComponents/Elements/Fields";
 import { Button }           from "@commonComponents/Elements/Button";
 import { Alert }            from "@commonComponents/Elements/Alert";
+import { TinyMCE }          from "@commonComponents/Elements/TinyMCE";
 
 import Formulaire from "@commonFunctions/formulaire";
 import Inputs     from "@commonFunctions/inputs";
 import Validateur from "@commonFunctions/validateur";
 
-const URL_CREATE_ELEMENT    = "intern_api_mails_send";
+const URL_CREATE_ELEMENT    = "intern_api_mails_mail_send";
 const TEXT_CREATE           = "Envoyer le message";
 
-export function MailFormulaire ({ identifiant, element, tos })
+export function MailFormulaire ({ identifiant, element, tos, from, fromName, onUpdateList=null })
 {
     let nTos = [];
     if(tos){
@@ -28,11 +28,16 @@ export function MailFormulaire ({ identifiant, element, tos })
             if(val) nTos.push({ value: val, label: val, inputName: val, identifiant: "to-mail-" + index });
         })
     }
+
     return <Form
         identifiant={identifiant}
         url={Routing.generate(URL_CREATE_ELEMENT)}
         tos={nTos}
         to={element ? [{uid: uid(), value: element.email}] : []}
+        from={from}
+        fromName={fromName}
+
+        onUpdateList={onUpdateList}
 
         initListener={!!element}
         key={element ? element.id : 0}
@@ -50,16 +55,20 @@ class Form extends Component {
         super(props);
 
         this.state = {
+            from: props.from,
+            fromName: props.fromName,
             to: props.to,
             cc: [],
-            cci: [],
-            name: "",
+            bcc: [],
+            subject: "",
             message: {value: "", html: ""},
+            theme: 0,
             errors: [],
             success: null,
             openCc: false,
-            openCci: false,
+            openBcc: false,
             loadSendData: false,
+            resetTextArea: false
         }
 
         this.select0 = React.createRef();
@@ -84,6 +93,15 @@ class Form extends Component {
         }
     }
 
+    handleCloseModal = () => {
+        let body = document.querySelector("body");
+        let modal = document.getElementById(this.props.identifiant);
+
+        body.style.overflow = "auto";
+        modal.style.display = "none";
+    }
+
+
     handleChange = (e) => { this.setState({[e.currentTarget.name]: e.currentTarget.value}) }
 
     handleChangeTinyMCE = (name, html) => {
@@ -104,7 +122,7 @@ class Form extends Component {
         let ref;
         if(name === "to") ref = this.select0;
         else if(name === "cc") ref = this.select1;
-        else if(name === "cci") ref = this.select2;
+        else if(name === "bcc") ref = this.select2;
         ref.current.handleClose(null, "");
     }
 
@@ -121,13 +139,13 @@ class Form extends Component {
         e.preventDefault();
 
         const { url } = this.props;
-        const { loadSendData, to, name, message } = this.state;
+        const { loadSendData, to, subject, message } = this.state;
 
         this.setState({ errors: [], success: null });
 
         let paramsToValidate = [
             {type: "array",  id: 'to',      value: to},
-            {type: "text",   id: 'name',    value: name},
+            {type: "text",   id: 'subject', value: subject},
             {type: "text",   id: 'message', value: message.html},
         ];
 
@@ -154,9 +172,18 @@ class Form extends Component {
                 axios({ method: "POST", url: url, data: formData, headers: {'Content-Type': 'multipart/form-data'} })
                     .then(function (response) {
                         toastr.info("Message envoyé.");
-                        self.setState({ success: "Message envoyé.", name: "", message: {value: "", html: ""} });
+                        self.setState({
+                            success: "Message envoyé.",
+                            subject: "",
+                            message: {value: "", html: ""},
+                            resetTextArea: true
+                        });
+
+                        if(self.props.onUpdateList){
+                            self.props.onUpdateList(response.data, 'create')
+                        }
                     })
-                    .catch(function (error) { Formulaire.displayErrors(self, error);  })
+                    .catch(function (error) { console.log(error); Formulaire.displayErrors(self, error);  })
                     .then(function () { Formulaire.loader(false); self.setState({ loadSendData: false })  })
                 ;
             }
@@ -166,7 +193,7 @@ class Form extends Component {
 
     render () {
         const { tos } = this.props;
-        const { errors, success, loadSendData, to, cc, cci, name, message, openCc, openCci, files } = this.state;
+        const { errors, success, loadSendData, from, fromName, to, cc, bcc, subject, message, resetTextArea, openCc, openBcc, files } = this.state;
 
         let params = { errors: errors, onChange: this.handleChange }
         let params1 = { errors: errors, onClick: this.handleSelect, onDeClick: this.handleDeselect }
@@ -174,30 +201,33 @@ class Form extends Component {
         return <>
             <div className="modal-body">
                 <form onSubmit={this.handleSubmit}>
+                    <div className="line">
+                        <InputView valeur={(fromName + ' <' + from + '>').trim()} errors={errors}>De</InputView>
+                    </div>
                     <div className="line line-send-mail-ccs">
                         <SelectMultipleCustom ref={this.select0} identifiant="to" inputValue="" inputValues={to}
                                               items={tos} {...params1}>À</SelectMultipleCustom>
-                        {(!openCc || ! openCci) && <div className="ccs">
+                        {(!openCc || ! openBcc) && <div className="ccs">
                             {!openCc && <div onClick={() => this.setState({ openCc: true })}>Cc</div>}
-                            {!openCci && <div onClick={() => this.setState({ openCci: true })}>Cci</div>}
+                            {!openBcc && <div onClick={() => this.setState({ openBcc: true })}>Cci</div>}
                         </div>}
                     </div>
                     {openCc && <div className="line">
                         <SelectMultipleCustom ref={this.select1} identifiant="cc" inputValue="" inputValues={cc}
                                               items={tos} {...params1}>Cc</SelectMultipleCustom>
                     </div>}
-                    {openCci && <div className="line">
-                        <SelectMultipleCustom ref={this.select2} identifiant="cci" inputValue="" inputValues={cci}
+                    {openBcc && <div className="line">
+                        <SelectMultipleCustom ref={this.select2} identifiant="bcc" inputValue="" inputValues={bcc}
                                               items={tos} {...params1}>Cci</SelectMultipleCustom>
                     </div>}
 
                     <div className="line">
-                        <Input identifiant="name" valeur={name} {...params}>Objet</Input>
+                        <Input identifiant="subject" valeur={subject} {...params}>Objet</Input>
                     </div>
 
                     <div className="line">
                         <TinyMCE type={2} identifiant='message' valeur={message.value}
-                                 errors={errors} onUpdateData={this.handleChangeTinyMCE}>
+                                 errors={errors} onUpdateData={this.handleChangeTinyMCE} key={resetTextArea}>
                             Message *
                         </TinyMCE>
                     </div>
@@ -216,7 +246,7 @@ class Form extends Component {
                     ? <Button onClick={this.handleSubmit} type="primary">{TEXT_CREATE}</Button>
                     : <Button onClick={this.handleSubmit} type="primary" icon="chart-3" isLoader={true}>{TEXT_CREATE}</Button>
                 }
-                <div className="close-modal"><Button type="reverse">Annuler</Button></div>
+                <div className="close-modal"><Button type="reverse" onClick={this.handleCloseModal}>Annuler</Button></div>
             </div>
         </>
     }

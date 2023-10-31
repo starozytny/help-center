@@ -10,16 +10,20 @@
     }
 
     .card-header{
-      @include flex(row, center, flex-start, 24px);
+      @include flex(row, center, flex-start, 18px);
       border-bottom: 1px solid var(--color3);
 
       .logo{
         @include flex();
-        width: 64px;
-        height: 64px;
+        width: 76px;
+        height: 76px;
+        background-color: var(--color0);
+        padding: 12px;
+        border-radius: var(--radius);
       }
 
       .name{
+        width: calc(100% - 76px - 18px);
         & > span:first-child{
           @include fontSemibold();
           font-size: 20px;

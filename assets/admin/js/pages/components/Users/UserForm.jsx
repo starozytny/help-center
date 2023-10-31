@@ -16,7 +16,7 @@ import Sort       from "@commonFunctions/sort";
 const URL_SELECT_SOCIETIES  = "intern_api_selection_societies";
 const URL_INDEX_ELEMENTS    = "admin_users_index";
 const URL_CREATE_ELEMENT    = "intern_api_users_create";
-const URL_UPDATE_GROUP      = "intern_api_users_update";
+const URL_UPDATE_ELEMENT    = "intern_api_users_update";
 const TEXT_CREATE           = "Ajouter l'utilisateur";
 const TEXT_UPDATE           = "Enregistrer les modifications";
 
@@ -27,7 +27,7 @@ export function UserFormulaire ({ context, element, products })
     let url = Routing.generate(URL_CREATE_ELEMENT);
 
     if(context === "update"){
-        url = Routing.generate(URL_UPDATE_GROUP, {'id': element.id});
+        url = Routing.generate(URL_UPDATE_ELEMENT, {'id': element.id});
     }
 
     let form = <Form
@@ -163,7 +163,7 @@ class Form extends Component {
 
     render () {
         const { context, avatarFile, products } = this.props;
-        const { errors, username, firstname, lastname, email, password, password2, roles, access, societyName, loadData } = this.state;
+        const { errors, loadData, username, firstname, lastname, email, password, password2, roles, access, societyName } = this.state;
 
         let rolesItems = [
             { value: 'ROLE_ADMIN',      label: 'Admin',          identifiant: 'admin' },

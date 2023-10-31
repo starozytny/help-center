@@ -2,7 +2,7 @@ import '../../css/pages/documentations.scss';
 
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { DocumentationFormulaire } from "./components/Documentations/DocumentationForm";
+import { DocumentationFormulaire } from "@userPages/Documentations/DocumentationForm";
 import { DocumentationDelete } from "@userPages/Documentations/DocumentationDelete";
 import { Likes } from "@userPages/Likes/Likes";
 

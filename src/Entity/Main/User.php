@@ -112,6 +112,9 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: HeLike::class)]
     private Collection $heLikes;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Mail::class)]
+    private Collection $mails;
+
     /**
      * @throws Exception
      */
@@ -123,6 +126,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
         $this->tutorials = new ArrayCollection();
         $this->heFavorites = new ArrayCollection();
         $this->heLikes = new ArrayCollection();
+        $this->mails = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -536,5 +540,33 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
         return $this;
     }
 
+    /**
+     * @return Collection<int, Mail>
+     */
+    public function getMails(): Collection
+    {
+        return $this->mails;
+    }
 
+    public function addMail(Mail $mail): static
+    {
+        if (!$this->mails->contains($mail)) {
+            $this->mails->add($mail);
+            $mail->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMail(Mail $mail): static
+    {
+        if ($this->mails->removeElement($mail)) {
+            // set the owning side to null (unless already changed)
+            if ($mail->getUser() === $this) {
+                $mail->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 }

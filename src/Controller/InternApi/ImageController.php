@@ -50,7 +50,7 @@ class ImageController extends AbstractController
                 return $apiResponse->apiJsonResponseBadRequest("[3] Erreur");
             }
 
-            return $fileUploader->uploadTinyMCE($request, $repository, (int) $type);
+            return $fileUploader->uploadTinyMCE($request, $repository, (int) $type, $request->query->get('id'));
         }
 
         return $apiResponse->apiJsonResponseBadRequest("[4] Erreur");

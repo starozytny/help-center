@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Entity\Enum\Image\ImageType;
 use App\Entity\Main\Agenda\AgEvent;
 use App\Entity\Main\Changelog;
+
 use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
@@ -134,6 +135,6 @@ class FileUploader
             ]);
         }
 
-        return new JsonResponse(['success' => false,]);
+        return new JsonResponse(['success' => false]);
     }
 }
