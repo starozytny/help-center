@@ -79,7 +79,7 @@ class HeDocumentation extends DataEntity
 
     public function __construct()
     {
-        $this->createdAt = $this->initNewDateImmutable();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int

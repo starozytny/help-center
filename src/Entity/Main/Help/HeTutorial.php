@@ -76,7 +76,7 @@ class HeTutorial extends DataEntity
 
     public function __construct()
     {
-        $this->createdAt = $this->initNewDateImmutable();
+        $this->createdAt = new \DateTime();
         $this->steps = new ArrayCollection();
     }
 
