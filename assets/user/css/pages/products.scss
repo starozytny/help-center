@@ -182,6 +182,11 @@
   .question.active{
     .question-header, .question-body{
       background-color: var(--color0);
+
+      img{
+        height: 100%;
+        object-fit: contain;
+      }
     }
   }
 }
