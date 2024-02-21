@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -69,14 +69,6 @@ class UserController extends AbstractController
             if($type == "create" || ($type == "update" && $existe->getId() != $obj->getId())){
                 return $apiResponse->apiJsonResponseValidationFailed([
                     ["name" => "username", "message" => "Ce nom d'utilisateur existe déjà."]
-                ]);
-            }
-        }
-
-        if($existe = $em->getRepository(User::class)->findOneBy(['email' => $obj->getEmail()])){
-            if($type == "create" || ($type == "update" && $existe->getId() != $obj->getId())){
-                return $apiResponse->apiJsonResponseValidationFailed([
-                    ["name" => "email", "message" => "Cette addresse e-mail existe déjà."]
                 ]);
             }
         }
@@ -148,7 +140,7 @@ class UserController extends AbstractController
 
         $code = uniqid($user->getId());
 
-        $user->setLostAt(new \DateTime()); // no set timezone to compare expired
+        $user->setLostAt(new \DateTime());
         $user->setLostCode($code);
         $url = $this->generateUrl(
             'app_password_reinit',

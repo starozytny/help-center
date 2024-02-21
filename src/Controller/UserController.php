@@ -8,7 +8,7 @@ use App\Repository\Main\Help\HeProductRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/espace-membre', name: 'user_')]
 class UserController extends AbstractController

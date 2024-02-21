@@ -120,7 +120,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
      */
     public function __construct()
     {
-        $this->createdAt = $this->initNewDateImmutable();
+        $this->createdAt = new \DateTimeImmutable();
         $this->token = $this->initToken();
         $this->documentations = new ArrayCollection();
         $this->tutorials = new ArrayCollection();
@@ -237,7 +237,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
@@ -311,7 +311,6 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
 
     public function setUpdatedAt(?\DateTime $updatedAt): self
     {
-        $updatedAt->setTimezone(new \DateTimeZone("Europe/Paris"));
         $this->updatedAt = $updatedAt;
 
         return $this;
@@ -324,7 +323,6 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
 
     public function setLastLoginAt(?\DateTime $lastLoginAt): self
     {
-        $lastLoginAt->setTimezone(new \DateTimeZone("Europe/Paris"));
         $this->lastLoginAt = $lastLoginAt;
 
         return $this;
