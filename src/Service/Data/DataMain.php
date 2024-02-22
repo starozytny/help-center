@@ -7,6 +7,7 @@ use App\Entity\Main\Changelog;
 use App\Entity\Main\Contact;
 
 use App\Entity\Main\Help\HeCategory;
+use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
 use App\Entity\Main\Mail;
 use App\Entity\Main\Notification;
@@ -33,6 +34,26 @@ class DataMain
             ->setUsername($this->sanitizeData->fullSanitize($data->username))
             ->setFirstname($this->sanitizeData->sanitizeString($data->firstname))
             ->setLastname($this->sanitizeData->sanitizeString($data->lastname))
+            ->setEmail($data->email)
+        ;
+    }
+
+    public function setDataUserFromAPI(User $obj, $data): User
+    {
+        $em = $this->registry->getManager();
+        $products = $em->getRepository(HeProduct::class)->findBy(['name' => $data->access]);
+
+        $access = [];
+        foreach($products as $product){
+            $access[] = $product->getId();
+        }
+
+        return ($obj)
+            ->setUsername($this->sanitizeData->fullSanitize($data->username))
+            ->setFirstname($this->sanitizeData->sanitizeString($data->firstname))
+            ->setLastname($this->sanitizeData->sanitizeString($data->lastname))
+            ->setRoles(['ROLE_USER'])
+            ->setAccess($access)
             ->setEmail($data->email)
         ;
     }
