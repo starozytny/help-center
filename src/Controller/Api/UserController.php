@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Society;
 use App\Entity\Main\User;
 use App\Repository\Main\UserRepository;
@@ -68,5 +69,37 @@ class UserController extends AbstractController
 
         $repository->save($obj, true);
         return $apiResponse->apiJsonResponseCustom(['token' => $obj->getToken()]);
+    }
+
+    #[Route('/access/add/{token}', name: 'access_add', methods: 'PUT')]
+    public function addAccess(Request $request, User $obj, ManagerRegistry $doctrine,
+                              UserRepository $repository, ApiResponse $apiResponse,
+                              ValidatorService $validator): NotFoundHttpException|JsonResponse
+    {
+        $em = $doctrine->getManager();
+        $data = json_decode($request->getContent());
+
+        if ($data === null) {
+            return $apiResponse->apiJsonResponseBadRequest('Les données sont vides.');
+        }
+
+        $products = $em->getRepository(HeProduct::class)->findBy(['name' => $data->access]);
+
+        $access = [];
+        foreach($products as $product){
+            $access[] = $product->getId();
+        }
+
+        $access = array_merge($obj->getAccess(), $access);
+        $access = array_unique($access);
+        $obj->setAccess($access);
+
+        $noErrors = $validator->validate($obj);
+        if ($noErrors !== true) {
+            return $apiResponse->apiJsonResponseValidationFailed($noErrors);
+        }
+
+        $repository->save($obj, true);
+        return $apiResponse->apiJsonResponseSuccessful("ok");
     }
 }
