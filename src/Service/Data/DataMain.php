@@ -16,7 +16,6 @@ use App\Entity\Main\Society;
 use App\Entity\Main\User;
 use App\Service\SanitizeData;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class DataMain
 {
