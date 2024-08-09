@@ -1,12 +1,7 @@
-{% extends 'user/layout/layout.html.twig' %}
+{% extends 'user/pages/products/template.html.twig' %}
 
 {% set page_title %}Produits{% endset %}
 {% set page_subtitle %}Liste de nos produits avec un centre d'aide{% endset %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('user_homepage') }}
-{% endblock %}
 
 {% set page_actions %}
     {% if app.user.admin %}
