@@ -3,17 +3,16 @@
 {% set page_title %}Modifier : {{ elem.name }}{% endset %}
 {% set page_subtitle %}Modifiez les informations de la FAQ de {{ product.name }} : {{ elem.name}}{% endset %}
 
-{% block breadcrumb %}
-    {% set breadcrumbs = breadcrumbs | merge([
-        { text: product.name, url: path('user_help_product_read', {'slug': product.name})  },
-        { text: page_title }
-    ]) %}
-    {{ parent() }}
-{% endblock %}
+{% set page_actions %}
+    {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+        btn_link: path('user_help_product_read', {slug: product.slug, cat: category.id}),
+        btn_type: 'default',
+        btn_icon: 'left-arrow',
+        btn_text: 'Retourner à la page'
+    } %}
+{% endset %}
 
 {% block main_content %}
-    {% include "layout/components/admin/page_toolbar.html.twig" with { page_back: path('user_help_product_read', {'slug': product.slug, 'cat': category.id}) } %}
-
     <div id="help_faq_question_update"
          data-obj="{{ obj }}"
          data-category="{{ cat }}"

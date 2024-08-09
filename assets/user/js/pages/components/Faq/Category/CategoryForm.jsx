@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import { Input, InputIcon, Radiobox } from "@tailwindComponents/Elements/Fields";
-import { Button } from "@tailwindComponents/Elements/Button";
-import { LoaderElements } from "@tailwindComponents/Elements/Loader";
-
 import Inputs from "@commonFunctions/inputs";
 import Formulaire from "@commonFunctions/formulaire";
 import Validateur from "@commonFunctions/validateur";
+
+import { Input, InputIcon, Radiobox } from "@tailwindComponents/Elements/Fields";
+import { Button } from "@tailwindComponents/Elements/Button";
+import { LoaderElements } from "@tailwindComponents/Elements/Loader";
 
 const URL_INDEX_ELEMENTS = "user_help_product_read";
 const URL_CREATE_ELEMENT = "intern_api_help_faq_categories_create";
