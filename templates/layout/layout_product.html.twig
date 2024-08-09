@@ -26,15 +26,6 @@
                             </a>
                         </div>
                         <div class="relative flex flex-col items-center gap-4 rounded-full text-sm">
-                            {% if app.user.avatarFile %}
-                                <img class="h-8 w-8 rounded-full" src="{{ app.user.avatarFile }}" alt="Avatar utilisateur">
-                            {% else %}
-                                <div class="h-8 w-8 rounded-full bg-gray-500 flex items-center justify-center font-semibold">
-                                    <div>
-                                        {{ app.user.lastname | slice(0, 1) }}{{ app.user.firstname | slice(0,1) }}
-                                    </div>
-                                </div>
-                            {% endif %}
                             <div class="hidden text-center text-slate-50 lg:block">
                                 <div>{{ app.user.userIdentifier }}</div>
                                 <div>{{ app.user.email }}</div>
@@ -59,8 +50,12 @@
                            class="{{- app.request.get('_route') in item.matchRoute ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white" }} rounded-md px-3 py-2 font-medium"
                            aria-current="page"
                         >
-                            <span class="icon-{{ item.icon }} inline-block translate-y-0.5"></span>
-                            <span class="ml-1">{{ item.name }}</span>
+                            {% if item.icon is defined %}
+                                <span class="icon-{{ item.icon }} inline-block translate-y-0.5"></span>
+                                <span class="ml-1">{{ item.name }}</span>
+                            {% else %}
+                                {{ item.name }}
+                            {% endif %}
                         </a>
                     {% endfor %}
                 </div>
@@ -95,7 +90,7 @@
                 </div>
             </div>
 
-            {% include "layout/components/user/page_title.html.twig" %}
+            {% include "layout/components/product/page_title.html.twig" %}
 
             <div class="mx-auto max-w-screen-qhd px-4 py-8 min-h-screen sm:px-6 lg:px-8">
                 {% block main_content %}{% endblock %}

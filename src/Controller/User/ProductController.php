@@ -50,6 +50,7 @@ class ProductController extends AbstractController
         }
 
         return $this->render('user/pages/products/read.html.twig', [
+            'product' => $obj,
             'elem' => $obj,
             'docs' => $documentations,
             'tutorials' => $tutorials,

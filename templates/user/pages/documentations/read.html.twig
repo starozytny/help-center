@@ -7,14 +7,6 @@
 {% set page_title_alone %}{{ elem.name }} {{ elem.status == 0 ? "<span class='txt-danger'>[HORS LIGNE]</span>" : "" }}{% endset %}
 {% set page_subtitle %}Documentation {{ product.name }}{% endset %}
 
-{% block breadcrumb %}
-    {% set breadcrumbs = breadcrumbs | merge([
-        { text: product.name, url: path('user_help_product_read', {'slug': product.name})  },
-        { text: page_title_alone, icon: elem.icon }
-    ]) %}
-    {{ parent() }}
-{% endblock %}
-
 {% block main_content %}
     <div class="page-actions">
         <div class="col-1">
