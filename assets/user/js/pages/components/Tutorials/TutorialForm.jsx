@@ -6,10 +6,10 @@ import toastr from "toastr";
 import { uid } from "uid";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import { Button }    from "@commonComponents/Elements/Button";
-import { LoaderTxt } from "@commonComponents/Elements/Loader";
-import { TinyMCE } from "@commonComponents/Elements/TinyMCE";
-import { Input, Radiobox } from "@commonComponents/Elements/Fields";
+import { Button }    from "@tailwindComponents/Elements/Button";
+import { LoaderElements } from "@tailwindComponents/Elements/Loader";
+import { TinyMCE } from "@tailwindComponents/Elements/TinyMCE";
+import { Input, Radiobox } from "@tailwindComponents/Elements/Fields";
 
 import Formulaire   from "@commonFunctions/formulaire";
 import Validateur   from "@commonFunctions/validateur";
@@ -238,7 +238,7 @@ class Form extends Component {
                         </div>
                         <div className="line-col-2">
                             {loadStep
-                                ? <LoaderTxt />
+                                ? <LoaderElements />
                                 : <>
                                     {steps}
                                     <div className="line">

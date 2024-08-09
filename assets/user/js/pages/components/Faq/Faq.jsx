@@ -5,7 +5,7 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import Formulaire from "@commonFunctions/formulaire";
 
-import { LoaderElements } from "@commonComponents/Elements/Loader";
+import { LoaderElements } from "@tailwindComponents/Elements/Loader";
 
 import { FaqList } from "@commonComponents/Modules/Help/FaqList";
 

@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-import { Alert } from "@commonComponents/Elements/Alert";
+import { Alert } from "@tailwindComponents/Elements/Alert";
 
 import { SocietiesItem } from "@adminPages/Societies/SocietiesItem";
 
 export function SocietiesList ({ data, highlight, settings, onModal }) {
-    return <div className="list">
-        <div className="list-table">
+    return <div className="list my-4">
+        <div className="list-table bg-white rounded-md shadow">
             <div className="items items-societies">
-                <div className="item item-header">
+                <div className="item item-header uppercase text-sm text-gray-600">
                     <div className="item-content">
                         <div className="item-infos">
                             <div className="col-1">Société</div>
@@ -24,7 +24,9 @@ export function SocietiesList ({ data, highlight, settings, onModal }) {
                     ? data.map((elem) => {
                         return <SocietiesItem key={elem.id} elem={elem} highlight={highlight} settings={settings} onModal={onModal} />;
                     })
-                    : <Alert>Aucune donnée enregistrée.</Alert>
+                    : <div className="item border-t">
+                        <Alert type="gray">Aucun résultat.</Alert>
+                    </div>
                 }
             </div>
         </div>

@@ -172,6 +172,37 @@ function updateDataMuta (element, context, data, sorter, nameProperty = "id") {
     return nData;
 }
 
+function update (context, data, element, nameProperty = "id") {
+    let newData = [];
+
+    switch (context) {
+        case "delete_group":
+            data.forEach(el => {
+                if (!element.includes(el[nameProperty])) {
+                    newData.push(el);
+                }
+            })
+            break;
+        case "delete":
+            newData = data.filter(el => el[nameProperty] !== element[nameProperty]);
+            break;
+        case "update":
+            data.forEach(el => {
+                if (el[nameProperty] === element[nameProperty]) {
+                    el = element;
+                }
+                newData.push(el);
+            })
+            break;
+        default:
+            newData = data ? data : [];
+            newData.push(element);
+            break;
+    }
+
+    return newData;
+}
+
 function updateData (element, context, data, sorter) {
     let newData = update(context, data, element);
     if(sorter){
@@ -214,6 +245,26 @@ function updatePerPage (self, data, perPage, sorter) {
     })
 }
 
+function getSessionSorter (sessionName, sorter, sortersFunction, nb = 0) {
+    let saveNbSorter = sessionStorage.getItem(sessionName);
+    let nbSorter = saveNbSorter !== null ? parseInt(saveNbSorter) : nb;
+    if(nbSorter){
+        sorter = sortersFunction[nbSorter];
+    }
+
+    return [sorter, nbSorter];
+}
+
+function getSessionPerpage (sessionName, perPage) {
+    let saveNbPerPage = sessionStorage.getItem(sessionName);
+    return saveNbPerPage !== null ? parseInt(saveNbPerPage) : perPage;
+}
+
+function getSessionFilters (sessionName, filters, highlight) {
+    let saveFilters = highlight ? sessionStorage.getItem(sessionName) : null;
+    return saveFilters !== null ? JSON.parse(saveFilters) : filters;
+}
+
 module.exports = {
     getData,
     search,
@@ -221,9 +272,13 @@ module.exports = {
     filterCustom,
     changePerPage,
     changeSorter,
+    update,
     updateDataMuta,
     updateData,
     updateListPagination,
     updatePerPage,
     setCurrentPage,
+    getSessionSorter,
+    getSessionPerpage,
+    getSessionFilters,
 }

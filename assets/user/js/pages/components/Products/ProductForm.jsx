@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import axios from "axios";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import { Input, InputFile, Radiobox } from "@commonComponents/Elements/Fields";
-import { TinyMCE }          from "@commonComponents/Elements/TinyMCE";
-import { Button }           from "@commonComponents/Elements/Button";
+import { Input, InputFile, Radiobox } from "@tailwindComponents/Elements/Fields";
+import { TinyMCE }          from "@tailwindComponents/Elements/TinyMCE";
+import { Button }           from "@tailwindComponents/Elements/Button";
 
 import Formulaire           from "@commonFunctions/formulaire";
 import Validateur           from "@commonFunctions/validateur";

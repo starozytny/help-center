@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { TinyMCE }    from "@commonComponents/Elements/TinyMCE";
-import { LoaderTxt }  from "@commonComponents/Elements/Loader";
-import { ButtonIcon } from "@commonComponents/Elements/Button";
+import { TinyMCE }    from "@tailwindComponents/Elements/TinyMCE";
+import { ButtonIcon } from "@tailwindComponents/Elements/Button";
+import { LoaderElements } from "@tailwindComponents/Elements/Loader";
 
 import Formulaire   from "@commonFunctions/formulaire";
 
@@ -57,7 +57,7 @@ class Form extends Component {
 
         return <div className="line line-tuto-step">
             {loadData
-                ? <LoaderTxt />
+                ? <LoaderElements />
                 :
                 <TinyMCE type={3} identifiant={`content-${step}`} valeur={this.state['content-' + step].value}
                          errors={errors} onUpdateData={this.handleChangeTinyMCE}>

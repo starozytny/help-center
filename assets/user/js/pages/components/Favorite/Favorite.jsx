@@ -6,7 +6,7 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import Formulaire from "@commonFunctions/formulaire";
 
-import { ButtonIcon } from "@commonComponents/Elements/Button";
+import { ButtonIcon } from "@tailwindComponents/Elements/Button";
 
 const URL_FAVORITE_ELEMENT = 'intern_api_help_favorites_favorite';
 

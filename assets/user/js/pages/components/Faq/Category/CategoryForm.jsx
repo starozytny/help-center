@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import axios   from 'axios';
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import { Input, Radiobox }  from "@commonComponents/Elements/Fields";
-import { Button }           from "@commonComponents/Elements/Button";
-import { LoaderTxt }        from "@commonComponents/Elements/Loader";
+import { Input, Radiobox }  from "@tailwindComponents/Elements/Fields";
+import { Button }           from "@tailwindComponents/Elements/Button";
+import { LoaderElements }        from "@tailwindComponents/Elements/Loader";
 
 import Formulaire from "@commonFunctions/formulaire";
 import Validateur from "@commonFunctions/validateur";
@@ -146,7 +146,7 @@ class Form extends Component {
                                 <Input identifiant="subtitle" valeur={subtitle} {...params}>Sous titre *</Input>
                             </div>
                             {loadIcons
-                                ? <LoaderTxt text="Chargement des icônes" />
+                                ? <LoaderElements />
                                 : <div className="line line-icons">
                                     <div className={'form-group' + (error ? " form-group-error" : "")}>
                                         <label htmlFor="icon">Icône *</label>

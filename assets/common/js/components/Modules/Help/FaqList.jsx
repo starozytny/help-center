@@ -7,9 +7,9 @@ import Formulaire from "@commonFunctions/formulaire";
 
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import { Button, ButtonIcon } from "@commonComponents/Elements/Button";
-import { Modal } from "@commonComponents/Elements/Modal";
-import {Alert} from "@commonComponents/Elements/Alert";
+import { Button, ButtonIcon } from "@tailwindComponents/Elements/Button";
+import { Modal } from "@tailwindComponents/Elements/Modal";
+import {Alert} from "@tailwindComponents/Elements/Alert";
 
 const URL_INDEX_ELEMENTS  = "user_help_product_read";
 

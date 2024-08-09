@@ -5,7 +5,6 @@ namespace App\Service\Data;
 use App\Entity\Main\Agenda\AgEvent;
 use App\Entity\Main\Changelog;
 use App\Entity\Main\Contact;
-
 use App\Entity\Main\Help\HeCategory;
 use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
@@ -118,25 +117,6 @@ class DataMain
             ->setContent($this->sanitizeData->trimData($data->content->html))
             ->setLocalisation($this->sanitizeData->trimData($data->localisation))
             ->setAllDay($data->allDay[0])
-        ;
-    }
-
-    public function setDataHeCategory(HeCategory $obj, $data): HeCategory
-    {
-        return ($obj)
-            ->setRank((int) $data->rank)
-            ->setName($this->sanitizeData->trimData($data->name))
-            ->setIcon($this->sanitizeData->trimData($data->icon))
-            ->setSubtitle($this->sanitizeData->trimData($data->subtitle))
-            ->setVisibility((int) $data->visibility)
-        ;
-    }
-
-    public function setDataHeQuestion(HeQuestion $obj, $data): HeQuestion
-    {
-        return ($obj)
-            ->setName($this->sanitizeData->trimData($data->name))
-            ->setContent($this->sanitizeData->trimData($data->content->html))
         ;
     }
 

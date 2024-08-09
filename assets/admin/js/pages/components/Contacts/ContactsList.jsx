@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-import { Alert } from "@commonComponents/Elements/Alert";
+import { Alert } from "@tailwindComponents/Elements/Alert";
 
 import { ContactsItem } from "@adminPages/Contacts/ContactsItem";
 
 export function ContactsList ({ data, onDelete }) {
-    return <div className="list">
-        <div className="list-table">
-            <div className="items items-contact">
-                <div className="item item-header">
+    return <div className="list my-4">
+        <div className="list-table bg-white rounded-md shadow">
+            <div className="items items-contacts">
+                <div className="item item-header uppercase text-sm text-gray-600">
                     <div className="item-content">
                         <div className="item-infos">
                             <div className="col-1">Nom/Prénom</div>
@@ -24,7 +24,9 @@ export function ContactsList ({ data, onDelete }) {
                     ? data.map((elem) => {
                         return <ContactsItem key={elem.id} elem={elem} onDelete={onDelete} />;
                     })
-                    : <Alert>Aucune donnée enregistrée.</Alert>
+                    : <div className="item border-t">
+                        <Alert type="gray">Aucun résultat.</Alert>
+                    </div>
                 }
             </div>
         </div>

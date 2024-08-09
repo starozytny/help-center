@@ -5,10 +5,10 @@ import axios  from "axios";
 import toastr from "toastr";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import { Input, InputIcon, Radiobox } from "@commonComponents/Elements/Fields";
-import { TinyMCE }          from "@commonComponents/Elements/TinyMCE";
-import { Button }           from "@commonComponents/Elements/Button";
-import { LoaderTxt }        from "@commonComponents/Elements/Loader";
+import { Input, InputIcon, Radiobox } from "@tailwindComponents/Elements/Fields";
+import { TinyMCE }          from "@tailwindComponents/Elements/TinyMCE";
+import { Button }           from "@tailwindComponents/Elements/Button";
+import { LoaderElements }        from "@tailwindComponents/Elements/Loader";
 
 import Formulaire           from "@commonFunctions/formulaire";
 import Validateur           from "@commonFunctions/validateur";
@@ -180,7 +180,7 @@ class Form extends Component {
                                 <Input identifiant="name" valeur={name} {...params}>Intitulé *</Input>
                             </div>
                             {loadIcons
-                                ? <LoaderTxt text="Chargement des icônes" />
+                                ? <LoaderElements />
                                 : <div className="line line-icons">
                                     <InputIcon identifiant="icon" valeur={icon} icons={icons} {...params1}>Icône</InputIcon>
                                 </div>
