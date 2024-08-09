@@ -4,11 +4,11 @@
 
 {% set menu = [
     {
-        name: "Produits",    icon: "book",
+        name: "Produits", icon: "book",
         path: path('user_help_products_index'), matchRoute: ['user_help_products_index']
     },
     {
-        name: product.name,    icon: "book-1",
+        name: product.name, icon: "book-1",
         path: path('user_help_products_index'), matchRoute: [
             'user_help_product_read', 'user_help_documentation_read', 'user_help_tutorial_read',
             'user_help_product_create', 'user_help_documentation_create', 'user_help_tutorial_create',
@@ -18,8 +18,20 @@
         ]
     },
     {
-        name: "Documentation",
-        path: path('user_help_products_index'), matchRoute: []
+        name: "Documentation", dropdown: true,
+        matchRoute: [],
+        items : [
+            {
+                name: "Publications des annonces",
+                path: path('user_help_products_index'),
+                matchRoute: ['user_publications_index']
+            },
+            {
+                name: "Historique des annonces",
+                path: path('user_help_products_index'),
+                matchRoute: ['user_publications_histories']
+            },
+        ]
     }
 ] %}
 

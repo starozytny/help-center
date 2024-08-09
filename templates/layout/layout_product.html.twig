@@ -38,17 +38,36 @@
             <div id="nav-content" class="hidden flex-col justify-between pb-4 h-screen max-h-[88vh] sm:flex-row lg:flex lg:flex-col lg:max-h-full lg:pb-0 lg:h-[70vh]">
                 <div class="bg-gray-800 flex flex-col gap-1 w-full px-4 pt-4">
                     {% for item in menu %}
-                        <a href="{{ item.path }}"
-                           class="{{- app.request.get('_route') in item.matchRoute ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white" }} rounded-md px-3 py-2 font-medium"
-                           aria-current="page"
-                        >
-                            {% if item.icon is defined %}
-                                <span class="icon-{{ item.icon }} inline-block translate-y-0.5"></span>
-                                <span class="ml-1">{{ item.name }}</span>
-                            {% else %}
-                                {{ item.name }}
-                            {% endif %}
-                        </a>
+                        {% if item.dropdown is defined %}
+                            <div class="relative">
+                                <div class="bg-gray-700 w-0.5 h-[calc(100%-2.5rem)] absolute top-10 left-4"></div>
+                                <div class="{{- app.request.get('_route') in item.matchRoute ? "bg-gray-900 text-white" : "text-gray-300" }} rounded-md px-3 py-2 font-semibold">
+                                    {{ item.name }}
+                                </div>
+                                <div class="flex flex-col gap-1">
+                                    {% for it in item.items %}
+                                        <a href="{{ it.path }}"
+                                           class="{{- app.request.get('_route') in it.matchRoute ? "bg-gray-900 text-white" : "text-gray-300 hover:text-white" }} rounded-md pr-3 pl-8 py-2 font-medium"
+                                           aria-current="page"
+                                        >
+                                            {{ it.name }}
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% else %}
+                            <a href="{{ item.path }}"
+                               class="{{- app.request.get('_route') in item.matchRoute ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white" }} rounded-md px-3 py-2 font-medium"
+                               aria-current="page"
+                            >
+                                {% if item.icon is defined %}
+                                    <span class="icon-{{ item.icon }} inline-block translate-y-0.5"></span>
+                                    <span class="ml-1">{{ item.name }}</span>
+                                {% else %}
+                                    {{ item.name }}
+                                {% endif %}
+                            </a>
+                        {% endif %}
                     {% endfor %}
                 </div>
                 <div class="bg-gray-800 flex flex-col gap-1 w-full px-4 pt-4">
