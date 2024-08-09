@@ -21,10 +21,10 @@ export function TutorialDelete ({ context, id, name, productSlug })
     const handleDelete = () => {
         let self = this;
 
-        modalRef.current.handleUpdateFooter(<Button isLoader={true} type="danger">Confirmer la suppression</Button>);
-        axios({ method: "DELETE", url: Routing.generate(URL_DELETE_ELEMENT, {'id': id}), data: {} })
+        modalRef.current.handleUpdateFooter(<Button isLoader={true} type="red">Confirmer la suppression</Button>);
+        axios({ method: "DELETE", url: Routing.generate(URL_DELETE_ELEMENT, {id: id}), data: {} })
             .then(function (response) {
-                location.href = Routing.generate(URL_INDEX_ELEMENTS, {'slug': productSlug});
+                location.href = Routing.generate(URL_INDEX_ELEMENTS, {slug: productSlug});
             })
             .catch(function (error) { Formulaire.displayErrors(self, error); Formulaire.loader(false); })
         ;
@@ -32,12 +32,12 @@ export function TutorialDelete ({ context, id, name, productSlug })
 
     return <>
         {context === "read"
-            ? <Button icon="trash" type="danger" onClick={handleClick}>Supprimer</Button>
-            : <ButtonIcon icon="trash" type="none" onClick={handleClick}>Supprimer</ButtonIcon>
+            ? <Button icon="trash" type="red" onClick={handleClick}>Supprimer</Button>
+            : <div className="text-sm underline cursor-pointer hover:text-gray-700" onClick={handleClick}>Supprimer</div>
         }
         <Modal ref={modalRef} identifiant={`delete-tuto-${id}`} maxWidth={414} title="Supprimer le tutoriel"
-               content={<p>Etes-vous sûr de vouloir supprimer le tutoriel : <b>{name}</b> ?</p>}
-               footer={<Button type="danger" onClick={handleDelete}>Confirmer la suppression</Button>} closeTxt="Annuler" />
+               content={<p>Êtes-vous sûr de vouloir supprimer le tutoriel : <b>{name}</b> ?</p>}
+               footer={<Button type="red" onClick={handleDelete}>Confirmer la suppression</Button>} closeTxt="Annuler" />
     </>
 }
 

@@ -9,9 +9,9 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import { Button, ButtonIcon } from "@tailwindComponents/Elements/Button";
 import { Modal } from "@tailwindComponents/Elements/Modal";
-import {Alert} from "@tailwindComponents/Elements/Alert";
+import { Alert } from "@tailwindComponents/Elements/Alert";
 
-const URL_INDEX_ELEMENTS  = "user_help_product_read";
+const URL_INDEX_ELEMENTS = "user_help_product_read";
 
 const URL_CREATE_CATEGORY = "user_help_category_create";
 const URL_UPDATE_CATEGORY = "user_help_category_update";
@@ -21,149 +21,167 @@ const URL_CREATE_QUESTION = "user_help_question_create";
 const URL_UPDATE_QUESTION = "user_help_question_update";
 const URL_DELETE_QUESTION = "intern_api_help_faq_questions_delete";
 
-export function FaqList ({ role, productSlug, categories, questions, defaultCategory })
-{
-    const [category, setCategory] = useState(defaultCategory);
-    const [question, setQuestion] = useState(null);
+export function FaqList ({ role, productSlug, categories, questions, defaultCategory }) {
+	const [category, setCategory] = useState(defaultCategory);
+	const [question, setQuestion] = useState(null);
 
-    const refDeleteCategory = useRef(null);
-    const refDeleteQuestion = useRef(null);
+	const refDeleteCategory = useRef(null);
+	const refDeleteQuestion = useRef(null);
 
-    let handleModal = (identifiant, id, idCategory) => {
-        switch (identifiant){
-            case "delete-category":
-                refDeleteCategory.current.handleClick();
-                refDeleteCategory.current.handleUpdateFooter(<Button type="danger"
-                    onClick={() => handleDelete(refDeleteCategory, Routing.generate(URL_DELETE_CATEGORY, {'id': id}))} >
-                        Confirmer la suppression
-                    </Button>);
-                break;
-            case "delete-question":
-                refDeleteQuestion.current.handleClick();
-                refDeleteQuestion.current.handleUpdateFooter(<Button type="danger"
-                    onClick={() => handleDelete(refDeleteQuestion, Routing.generate(URL_DELETE_QUESTION, {'category': idCategory, 'id': id}))} >
-                        Confirmer la suppression
-                    </Button>);
-                break;
-            default:break;
-        }
-    }
+	let handleModal = (identifiant, id, idCategory) => {
+		switch (identifiant) {
+			case "delete-category":
+				refDeleteCategory.current.handleClick();
+				refDeleteCategory.current.handleUpdateFooter(<Button type="danger"
+																	 onClick={() => handleDelete(refDeleteCategory, Routing.generate(URL_DELETE_CATEGORY, { 'id': id }))}>
+					Confirmer la suppression
+				</Button>);
+				break;
+			case "delete-question":
+				refDeleteQuestion.current.handleClick();
+				refDeleteQuestion.current.handleUpdateFooter(<Button type="danger"
+																	 onClick={() => handleDelete(refDeleteQuestion, Routing.generate(URL_DELETE_QUESTION, { 'category': idCategory, 'id': id }))}>
+					Confirmer la suppression
+				</Button>);
+				break;
+			default:
+				break;
+		}
+	}
 
-    let handleDelete = (ref, url) => {
-        let self = this;
-        let instance = axios.create();
-        instance.interceptors.request.use((config) => {
-            ref.current.handleUpdateFooter(<Button type="danger" icon="chart-3" isLoader={true}>Confirmer la suppression</Button>);return config;
-        }, function(error) { return Promise.reject(error); });
-        instance({ method: "DELETE", url: url, data: {} })
-            .then(function (response) {
-                let params = response.data.message ? {'slug': productSlug} : {'slug': productSlug, 'cat': response.data.id};
-                location.href = Routing.generate(URL_INDEX_ELEMENTS, params);
-            })
-            .catch(function (error) { Formulaire.displayErrors(self, error); })
-        ;
-    }
+	let handleDelete = (ref, url) => {
+		let self = this;
+		let instance = axios.create();
+		instance.interceptors.request.use((config) => {
+			ref.current.handleUpdateFooter(<Button type="danger" icon="chart-3" isLoader={true}>Confirmer la suppression</Button>);
+			return config;
+		}, function (error) {
+			return Promise.reject(error);
+		});
+		instance({ method: "DELETE", url: url, data: {} })
+			.then(function (response) {
+				let params = response.data.message ? { 'slug': productSlug } : { 'slug': productSlug, 'cat': response.data.id };
+				location.href = Routing.generate(URL_INDEX_ELEMENTS, params);
+			})
+			.catch(function (error) {
+				Formulaire.displayErrors(self, error);
+			})
+		;
+	}
 
-    return <div className="help-content">
-        <div className="help-line-1">
-            <div className="col-1">
-                <div className="help-categories">
-                    {role === "admin" && <Button icon="add" type="danger" element="a"
-                                                 onClick={Routing.generate(URL_CREATE_CATEGORY, {'slug': productSlug})}>
-                        Ajouter une catégorie
-                    </Button>}
-                    {categories.length !== 0
-                        ? (categories.map((elem, index) => {
-                            return <div className={"item" + (elem.id === category ? " active" : "")} key={index}
-                                        onClick={() => setCategory(elem.id)} >
+	return <div>
+		<div className="flex flex-col gap-4 md:flex-row">
+			<div className="min-w-80">
+                {role === "admin"
+                    ? <div className="mb-4">
+                        <Button iconLeft="add" type="blue" element="a"
+                                onClick={Routing.generate(URL_CREATE_CATEGORY, { slug: productSlug })}>
+                            Ajouter une catégorie
+                        </Button>
+                    </div>
+                    : null
+                }
+                {categories.length !== 0
+                    ? <div className="flex flex-col gap-2">
+                        {categories.map((elem, index) => {
+                            return <div className={`flex gap-2 items-center p-2 rounded transition-colors cursor-pointer ${elem.id === category ? "bg-white" : "bg-gray-200 hover:bg-gray-50"}`} key={index}
+                                        onClick={() => setCategory(elem.id)}>
                                 <span className={"icon-" + elem.icon} />
                                 <span>{elem.name}</span>
                             </div>
-                        })) : <Alert type="primary" withIcon={false}>Aucun question-réponse pour le moment.</Alert>
-                    }
-                </div>
-            </div>
-            <div className="col-2">
-                <div className="questions">
-                    {category
-                        ? (categories.map((elem, index) => {
-                            if(elem.id === category){
-                                return <div className="questions-header" key={index}>
-                                    <div className="icon">
-                                        <span className={"icon-" + elem.icon} />
-                                    </div>
-                                    <div className="title">
-                                        <div className="name">{elem.name}</div>
-                                        <div className="sub">{elem.subtitle}</div>
-                                    </div>
-                                    {role === "admin" && <div className="actions">
-                                        <ButtonIcon icon="pencil" element="a" type="warning"
-                                                    onClick={Routing.generate(URL_UPDATE_CATEGORY, {'slug': productSlug, 'id': elem.id})}>
-                                            Modifier
-                                        </ButtonIcon>
-                                        <ButtonIcon icon="trash" type="danger"
-                                                    onClick={() => handleModal('delete-category', elem.id)}>
-                                            Supprimer
-                                        </ButtonIcon>
-                                    </div>}
-                                </div>
-                            }
-                        }))
-                        : (categories.length !== 0
-                            ? <div className="questions-header">
-                                <div className="icon">
-                                    <span className="icon-question" />
-                                </div>
-                                <div className="title">
-                                    <div className="name">Sélectionnez une catégorie</div>
-                                    <div className="sub">Cliquez sur la catégorie souhaitée.</div>
-                                </div>
-                            </div> : null)
-                    }
-
-                    <div className="questions-body">
-                        {(role === "admin" && category) && <Button icon="add" type="danger" element="a"
-                                                     onClick={Routing.generate(URL_CREATE_QUESTION, {'slug': productSlug, 'category': category})}>
-                            Ajouter une question-réponse
-                        </Button>}
-                        {questions.map((elem, index) => {
-                            if(elem.category.id === category){
-                                return <div className={"question" + (elem.id === question ? " active" : "")} key={index}>
-                                    <div className="question-header" onClick={() => setQuestion(elem.id === question ? null : elem.id)}>
-                                        <div className="name">{elem.name}</div>
-                                        <div className="chevron"><span className="icon-down-chevron"></span></div>
-                                    </div>
-                                    <div className="question-body">
-                                        {role === "admin" && <div className="actions">
-                                            <ButtonIcon icon="pencil" element="a" type="warning"
-                                                        onClick={Routing.generate(URL_UPDATE_QUESTION, {'slug': productSlug, 'category': elem.category.id, 'id': elem.id})}>
-                                                Modifier
-                                            </ButtonIcon>
-                                            <ButtonIcon icon="trash" type="danger"
-                                                        onClick={() => handleModal('delete-question', elem.id, elem.category.id)}>
-                                                Supprimer
-                                            </ButtonIcon>
-                                        </div>}
-                                        <div dangerouslySetInnerHTML={{ __html: elem.content }} />
-                                    </div>
-                                </div>
-                            }
                         })}
                     </div>
-                </div>
+                    : <Alert type="blue" withIcon={false}>Aucun question-réponse pour le moment.</Alert>
+                }
             </div>
-        </div>
+			<div className="w-full">
+				{category
+					? (categories.map((elem, index) => {
+						if (elem.id === category) {
+							return <div className="flex gap-2 justify-between" key={index}>
+								<div className="flex gap-2">
+									<div className="w-12 h-12 bg-white rounded-md p-2 flex justify-center items-center">
+										<span className={"icon-" + elem.icon + " !text-lg"} />
+									</div>
+									<div>
+										<div className="font-medium">{elem.name}</div>
+										<div className="text-gray-600">{elem.subtitle}</div>
+									</div>
+								</div>
+								{role === "admin" && <div>
+									<div className="flex gap-2">
+										<ButtonIcon icon="pencil" element="a" type="default"
+													onClick={Routing.generate(URL_UPDATE_CATEGORY, { slug: productSlug, id: elem.id })}>
+											Modifier
+										</ButtonIcon>
+										<ButtonIcon icon="trash" type="default"
+													onClick={() => handleModal('delete-category', elem.id)}>
+											Supprimer
+										</ButtonIcon>
+									</div>
+								</div>}
+							</div>
+						}
+					}))
+					: (categories.length !== 0
+						? <div className="flex gap-2">
+							<div className="w-12 h-12 bg-white rounded-md p-2 flex justify-center items-center">
+								<span className="icon-question !text-lg" />
+							</div>
+							<div>
+								<div className="font-medium">Sélectionnez une catégorie</div>
+								<div className="text-gray-600">Cliquez sur la catégorie souhaitée.</div>
+							</div>
+						</div> : null)
+				}
 
-        <Modal ref={refDeleteCategory} identifiant="delete-category" maxWidth={414} title="Supprimer la catégorie"
-               content={<p>Les questions seront aussi supprimées.</p>} footer={null} />
-        <Modal ref={refDeleteQuestion} identifiant="delete-question" maxWidth={414} title="Supprimer la question"
-               content={<p>Le contenu sera définitivement supprimé.</p>} footer={null} />
-    </div>
+				<div className="mt-4 flex flex-col gap-2">
+					{(role === "admin" && category)
+						? <div className="mb-4">
+							<Button iconLeft="add" type="blue" element="a"
+									onClick={Routing.generate(URL_CREATE_QUESTION, { slug: productSlug, category: category })}>
+								Ajouter une question-réponse
+							</Button>
+						</div>
+						:null
+					}
+					{questions.map((elem, index) => {
+						if (elem.category.id === category) {
+							return <div className={`w-full flex flex-col rounded cursor-pointer bg-white ${elem.id === question ? "mb-8" : ""}`} key={index}>
+								<div className="w-full flex items-center justify-between gap-2 p-4" onClick={() => setQuestion(elem.id === question ? null : elem.id)}>
+									<div className="font-medium">{elem.name}</div>
+									<div><span className="icon-down-chevron"></span></div>
+								</div>
+								<div className={`border-t p-4 ${elem.id === question ? "block" : "hidden"}`}>
+									{role === "admin" && <div className="flex gap-2 mb-4">
+										<ButtonIcon icon="pencil" element="a" type="default"
+													onClick={Routing.generate(URL_UPDATE_QUESTION, { 'slug': productSlug, 'category': elem.category.id, 'id': elem.id })}>
+											Modifier
+										</ButtonIcon>
+										<ButtonIcon icon="trash" type="default"
+													onClick={() => handleModal('delete-question', elem.id, elem.category.id)}>
+											Supprimer
+										</ButtonIcon>
+									</div>}
+									<div dangerouslySetInnerHTML={{ __html: elem.content }} />
+								</div>
+							</div>
+						}
+					})}
+				</div>
+			</div>
+		</div>
+
+		<Modal ref={refDeleteCategory} identifiant="delete-category" maxWidth={414} title="Supprimer la catégorie"
+			   content={<p>Les questions seront aussi supprimées.</p>} footer={null} />
+		<Modal ref={refDeleteQuestion} identifiant="delete-question" maxWidth={414} title="Supprimer la question"
+			   content={<p>Le contenu sera définitivement supprimé.</p>} footer={null} />
+	</div>
 }
 
 FaqList.propTypes = {
-    role: PropTypes.string.isRequired,
-    categories: PropTypes.array.isRequired,
-    questions: PropTypes.array.isRequired,
-    defaultCategory: PropTypes.number,
+	role: PropTypes.string.isRequired,
+	categories: PropTypes.array.isRequired,
+	questions: PropTypes.array.isRequired,
+	defaultCategory: PropTypes.number,
 }

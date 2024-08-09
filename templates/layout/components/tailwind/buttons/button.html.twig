@@ -9,7 +9,10 @@
    class="inline-flex {{ btn_width is defined ? btn_width : "" }} justify-center text-center rounded-md py-2 px-4 text-sm font-semibold shadow-sm {{ typeVariants[btn_type] }}"
 >
     {% if btn_icon is defined %}
-        <span class="icon-{{ btn_icon}} inline-block translate-y-0.5"></span>
+        <span class="icon-{{ btn_icon }} inline-block translate-y-0.5"></span>
     {% endif %}
-    <span class="{{ btn_icon is defined ? "ml-1" : "" }}">{{ btn_text }}</span>
+    <span class="{{ btn_icon is defined ? "ml-2" : (btn_icon_right is defined ? "mr-2" : "") }}">{{ btn_text }}</span>
+    {% if btn_icon_right is defined %}
+        <span class="icon-{{ btn_icon_right }} inline-block translate-y-0.5"></span>
+    {% endif %}
 </a>

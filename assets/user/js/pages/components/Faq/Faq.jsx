@@ -12,38 +12,40 @@ import { FaqList } from "@commonComponents/Modules/Help/FaqList";
 const URL_GET_DATA = "intern_api_help_faq_list";
 
 export class Faq extends Component {
-    constructor(props) {
-        super(props);
+	constructor (props) {
+		super(props);
 
-        this.state = {
-            loadingData: true,
-        }
-    }
+		this.state = {
+			loadingData: true,
+		}
+	}
 
-    componentDidMount = () => {
-        const { productId } = this.props;
+	componentDidMount = () => {
+		const { productId } = this.props;
 
-        let self = this;
-        axios({ method: "GET", url: Routing.generate(URL_GET_DATA, {'id': productId}), data: {} })
-            .then(function (response) {
-                let data = response.data;
+		let self = this;
+		axios({ method: "GET", url: Routing.generate(URL_GET_DATA, { id: productId }), data: {} })
+			.then(function (response) {
+				let data = response.data;
 
-                let categories = JSON.parse(data.categories);
-                let questions = JSON.parse(data.questions);
+				let categories = JSON.parse(data.categories);
+				let questions = JSON.parse(data.questions);
 
-                self.setState({ categories: categories, questions: questions, loadingData: false })
-            })
-            .catch(function (error) { Formulaire.displayErrors(self, error); })
-        ;
-    }
+				self.setState({ categories: categories, questions: questions, loadingData: false })
+			})
+			.catch(function (error) {
+				Formulaire.displayErrors(self, error);
+			})
+		;
+	}
 
-    render () {
-        const { role, category, productSlug } = this.props;
-        const { loadingData, categories, questions } = this.state;
+	render () {
+		const { role, category, productSlug } = this.props;
+		const { loadingData, categories, questions } = this.state;
 
-        return loadingData
-            ? <LoaderElements />
-            : <FaqList role={role} productSlug={productSlug} categories={categories} questions={questions}
-                       defaultCategory={category ? parseInt(category): null} />
-    }
+		return loadingData
+			? <LoaderElements />
+			: <FaqList role={role} productSlug={productSlug} categories={categories} questions={questions}
+					   defaultCategory={category ? parseInt(category) : null} />
+	}
 }
