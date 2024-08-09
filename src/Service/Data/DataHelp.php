@@ -45,7 +45,6 @@ class DataHelp
         $duration = str_replace('h', ':', $data->duration);
 
         return ($obj)
-            ->setIcon($this->sanitizeData->trimData($data->icon))
             ->setName($this->sanitizeData->trimData($data->name))
             ->setSlug($this->sanitizeData->slugString($data->name))
             ->setDuration($this->sanitizeData->createTimePicker($duration))

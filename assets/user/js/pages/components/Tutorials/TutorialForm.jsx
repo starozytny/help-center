@@ -201,7 +201,7 @@ class Form extends Component {
                     <div>
                         <div className="font-medium text-lg">Informations générales</div>
                         <div className="text-gray-600 text-sm">
-                            La description doit être très courte pour décrire rapidement à quoi sert ce guide
+                            La description doit être très courte pour décrire rapidement à quoi sert ce guide.
                         </div>
                     </div>
                     <div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
