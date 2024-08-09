@@ -12,6 +12,8 @@ function menuClose (body) {
 	let content = document.querySelector('#nav-content');
 	let svgs = document.querySelectorAll('#nav-mobile-main-btn > svg');
 
+	console.log("in")
+
 	svgs.forEach(svg => {
 		if(svg.classList.contains('hidden')){
 			svg.classList.remove('hidden');
