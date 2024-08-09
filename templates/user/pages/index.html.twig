@@ -9,44 +9,37 @@
 {% endblock %}
 
 {% block main_content %}
-    <div class="page-default">
-        <div class="products">
-            {% for elem in products %}
-                <div class="card">
-                    <div class="card-header">
-                        <div class="logo">
-                            <img src="{{ asset(elem.logoFile) }}" alt="Logo {{ elem.name }}">
-                        </div>
-                        <div class="name">
-                            <div>{{ elem.name }}</div>
-                            <div class="linkTo">
-                                {% if elem.webservice %}
-                                    <a href="https://{{ elem.url }}" title="{{ elem.url }}">
-                                        <span>{{ elem.url }}</span>
-                                        <span class="icon-link-2"></span>
-                                    </a>
-                                {% else %}
-                                    <span>Logiciel windev</span>
-                                {% endif %}
-                            </div>
-                        </div>
+    <div class="flex flex-col gap-4 md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+        {% for elem in products %}
+            <div class="bg-white border rounded-md p-4">
+                <div class="flex gap-4 items-center">
+                    <div class="w-16 h-16 bg-gray-700 rounded-md p-2 flex justify-center items-center">
+                        <img src="{{ asset(elem.logoFile) }}" alt="Logo {{ elem.name }}">
                     </div>
-                    <div class="card-body">
-                        <div class="content">
-                            {{ elem.description | raw }}
+                    <div>
+                        <div class="font-semibold text-lg">{{ elem.name }}</div>
+                        <div>
+                            <a href="https://{{ elem.url }}" title="{{ elem.url }}" target="_blank" class="text-blue-500 hover:underline">
+                                <span class="pr-1">{{ elem.url }}</span>
+                                <span class="icon-link-2 !text-sm"></span>
+                            </a>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <a
-                                href="{{ path('user_help_product_read', {'slug': elem.slug}) }}"
-                                class="txt-button txt-button-primary"
-                        >
-                            <span>Découvrir {{ elem.name }}</span>
-                            <span class="icon-right-arrow"></span>
-                        </a>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
+                <div class="mt-4 pt-4 border-t min-h-28">
+                    <div class="text-gray-600">
+                        {{ elem.description | raw }}
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t flex justify-end">
+                    <a href="{{ path('user_help_product_read', {'slug': elem.slug}) }}"
+                       class="flex items-center gap-2 py-1.5 px-2.5 rounded transition-colors hover:bg-blue-100 hover:text-blue-500"
+                    >
+                        <span>Découvrir {{ elem.name }}</span>
+                        <span class="icon-right-arrow"></span>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}
