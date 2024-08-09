@@ -7,7 +7,7 @@ import Formulaire from "@commonFunctions/formulaire";
 
 import { LoaderElements } from "@tailwindComponents/Elements/Loader";
 
-import { FaqList } from "@commonComponents/Modules/Help/FaqList";
+import { FaqList } from "@userPages/Faq/FaqList";
 
 const URL_GET_DATA = "intern_api_help_faq_list";
 

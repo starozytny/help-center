@@ -258,20 +258,26 @@ InputCity.propTypes = {
  ***************************************/
 export function InputIcon (props)
 {
-	const { icons, valeur, onChange, children } = props;
+	const { icons, identifiant, valeur, errors, onChange, children } = props;
 
-	let content = <>
-		<div className="icons-choice">
-			{icons.map((choice, index) => {
-				return <div className={"icon-choice" + (choice === valeur ? " active" : "")} key={index}
-							onClick={() => onChange(choice)}>
-					<span className={"icon-" + choice}></span>
-				</div>
-			})}
+	let error = getError(errors, identifiant);
+
+	return <>
+		<label htmlFor={identifiant} className="block text-sm font-medium leading-6 text-gray-800">
+			{children}
+		</label>
+		<div className="relative rounded-md">
+			<div className="flex flex-wrap gap-2">
+				{icons.map((choice, index) => {
+					return <div className={`cursor-pointer w-7 h-7 rounded-md flex justify-center items-center ${choice === valeur ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-blue-50"}`} key={index}
+								onClick={() => onChange(choice)}>
+						<span className={"icon-" + choice}></span>
+					</div>
+				})}
+			</div>
 		</div>
+		<ErrorContent error={error} />
 	</>
-
-	return <Structure {...props} content={content} label={children} />
 }
 
 InputIcon.propTypes = {
