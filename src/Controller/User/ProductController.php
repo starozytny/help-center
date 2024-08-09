@@ -7,12 +7,9 @@ use App\Entity\Main\Help\HeCategory;
 use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
-use App\Entity\Main\Help\HeStep;
-use App\Entity\Main\Help\HeTutorial;
 use App\Entity\Main\User;
 use App\Repository\Main\Help\HeDocumentationRepository;
 use App\Repository\Main\Help\HeProductRepository;
-use App\Repository\Main\Help\HeStepRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,50 +55,6 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/{p_slug}/documentation/{slug}', name: 'documentation_read', options: ['expose' => true])]
-    public function documentationRead($p_slug, $slug, HeProductRepository $productRepository, HeDocumentationRepository $documentationRepository): Response
-    {
-        $product = $productRepository->findOneBy(['slug' => $p_slug]);
-
-        if (!in_array($product->getId(), $this->getUser()->getAccess())) {
-            throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
-        }
-
-        $obj = $documentationRepository->findOneBy(['product' => $product, 'slug' => $slug]);
-
-        if ($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException("Cette page n'existe pas.");
-        }
-
-        return $this->render('user/pages/documentations/read.html.twig', [
-            'elem' => $obj,
-        ]);
-    }
-
-    #[Route('/produit/{p_slug}/tutoriel/{slug}', name: 'tutorial_read', options: ['expose' => true])]
-    public function tutorialRead($p_slug, $slug, HeProductRepository $productRepository,
-                                 HeTutorialRepository $tutorialRepository, HeStepRepository $stepRepository): Response
-    {
-        $product = $productRepository->findOneBy(['slug' => $p_slug]);
-
-        if (!in_array($product->getId(), $this->getUser()->getAccess())) {
-            throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
-        }
-
-        $obj = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);
-
-        if (!$obj || $obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException("Cette page n'existe pas.");
-        }
-
-        $steps = $stepRepository->findBy(['tutorial' => $obj]);
-
-        return $this->render('user/pages/tutorials/read.html.twig', [
-            'elem' => $obj,
-            'steps' => $steps,
-        ]);
-    }
-
     #[Route('/produits/ajouter', name: 'product_create')]
     #[IsGranted('ROLE_ADMIN')]
     public function productCreate(): Response
@@ -123,35 +76,24 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/{slug}/tutoriels/ajouter', name: 'tutorial_create')]
-    #[IsGranted('ROLE_ADMIN')]
-    public function tutorialCreate($slug, HeProductRepository $productRepository): Response
-    {
-        $product = $productRepository->findOneBy(['slug' => $slug]);
-
-        return $this->render('user/pages/tutorials/create.html.twig', [
-            'product' => $product,
-        ]);
-    }
-
-    #[Route('/produit/{p_slug}/tutoriels/modifier/{slug}', name: 'tutorial_update', options: ['expose' => true])]
-    #[IsGranted('ROLE_ADMIN')]
-    public function tutorialUpdate($p_slug, $slug, HeTutorialRepository $tutorialRepository,
-                                   HeProductRepository $productRepository, HeStepRepository $stepRepository,
-                                   SerializerInterface $serializer): Response
+    #[Route('/produit/{p_slug}/documentations/documentation/{slug}', name: 'documentation_read', options: ['expose' => true])]
+    public function documentationRead($p_slug, $slug, HeProductRepository $productRepository, HeDocumentationRepository $documentationRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
-        $obj = $tutorialRepository->findOneBy(['slug' => $slug]);
-        $steps = $stepRepository->findBy(['tutorial' => $obj]);
 
-        $element = $serializer->serialize($obj, 'json', ['groups' => HeTutorial::FORM]);
-        $steps = $serializer->serialize($steps, 'json', ['groups' => HeStep::FORM]);
+        if (!in_array($product->getId(), $this->getUser()->getAccess())) {
+            throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
+        }
 
-        return $this->render('user/pages/tutorials/update.html.twig', [
+        $obj = $documentationRepository->findOneBy(['product' => $product, 'slug' => $slug]);
+
+        if ($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException("Cette page n'existe pas.");
+        }
+
+        return $this->render('user/pages/documentations/read.html.twig', [
             'product' => $product,
             'elem' => $obj,
-            'element' => $element,
-            'steps' => $steps,
         ]);
     }
 

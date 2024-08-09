@@ -106,59 +106,11 @@
                 <div class="text-gray-800">Prenez en main facilement le {{ typeString }} avec nos guides.</div>
 
                 <div class="mt-4">
-                    {% if app.user.admin and force_user == null %}
-                        <div class="mb-4">
-                            {% include 'layout/components/tailwind/buttons/button.html.twig' with {
-                                btn_link: path('user_help_tutorial_create', {slug: elem.slug}),
-                                btn_type: 'blue',
-                                btn_icon: 'add',
-                                btn_text: 'Ajouter un tutoriel'
-                            } %}
-                        </div>
-                    {% endif %}
-                    <div class="flex flex-col gap-4 md:grid md:grid-cols-3 2xl:grid-cols-4 qhd:grid-cols-5">
-                        {% if tutorials | length == 0 %}
-                            {% include "layout/components/tailwind/alerts/alert.html.twig" with {
-                                alert_type: 'blue',
-                                alert_icon: 'question',
-                                alert_text: 'Aucun guide rédigé pour le moment.'
-                            } %}
-                        {% else %}
-                            {% for el in tutorials %}
-                                {% if (el.visibility == 1 and app.user.highRoleCode != 0) or el.visibility == 0 %}
-                                    <div class="flex flex-col">
-                                        <a href="{{ path('user_help_tutorial_read', {p_slug: elem.slug, slug: el.slug}) }}"
-                                           class="group block md:max-w-72 bg-white p-4 border rounded-md">
-                                            <div class="font-semibold group-hover:text-blue-500">{{ el.name }} {{ el.status == 0 ? "<span class='text-red-500'>[HORS LIGNE]</span>" : "" }}</div>
-                                            <div class="mt-1 text-sm min-h-24">
-                                                {% if el.visibility == 1 %}
-                                                    <div class="text-red-500">[Administration]</div>
-                                                {% endif %}
-                                                <div class="text-gray-800">
-                                                    {{ el.description | raw }}
-                                                </div>
-                                            </div>
-                                        </a>
-                                        {% if app.user.admin and force_user == null %}
-                                            <div class="mt-2 flex gap-2 justify-end pr-2">
-                                                <a href="{{ path('user_help_tutorial_update', {p_slug: elem.slug, slug: el.slug}) }}"
-                                                   class="text-sm underline cursor-pointer hover:text-gray-700">
-                                                    Modifier
-                                                </a>
-                                                <div class="delete-tuto"
-                                                     data-id="{{ el.id }}"
-                                                     data-name="{{ el.name }}"
-                                                     data-product-slug="{{ elem.slug }}"
-                                                >
-                                                    <div class="text-sm underline cursor-not-allowed hover:text-gray-700">Supprimer</div>
-                                                </div>
-                                            </div>
-                                        {% endif %}
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    </div>
+                    <a href="{{ path('user_help_tutorial_index', {p_slug: elem.slug}) }}"
+                       class="group font-medium flex items-center gap-2 text-blue-500">
+                        <span class="group-hover:underline">En savoir plus</span>
+                        <span class="icon-right-arrow"></span>
+                    </a>
                 </div>
             </div>
 

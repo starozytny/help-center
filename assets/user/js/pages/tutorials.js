@@ -19,6 +19,6 @@ if(el){
 let deletesTuto = document.querySelectorAll('.delete-tuto');
 if(deletesTuto){
     deletesTuto.forEach(elem => {
-        createRoot(elem).render(<TutorialDelete context="read" {...elem.dataset}/>)
+        createRoot(elem).render(<TutorialDelete {...elem.dataset}/>)
     })
 }

@@ -6,13 +6,13 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import Formulaire from "@commonFunctions/formulaire";
 
-import { Button, ButtonIcon } from "@tailwindComponents/Elements/Button";
+import { Button } from "@tailwindComponents/Elements/Button";
 import { Modal } from "@tailwindComponents/Elements/Modal";
 
 const URL_INDEX_ELEMENTS = 'user_help_product_read';
 const URL_DELETE_ELEMENT = 'intern_api_help_tutorials_delete';
 
-export function TutorialDelete ({ context, id, name, productSlug })
+export function TutorialDelete ({ id, name, productSlug })
 {
     let modalRef = useRef(null);
 
@@ -31,10 +31,7 @@ export function TutorialDelete ({ context, id, name, productSlug })
     }
 
     return <>
-        {context === "read"
-            ? <Button icon="trash" type="red" onClick={handleClick}>Supprimer</Button>
-            : <div className="text-sm underline cursor-pointer hover:text-gray-700" onClick={handleClick}>Supprimer</div>
-        }
+        <div className="text-sm underline cursor-pointer hover:text-gray-700" onClick={handleClick}>Supprimer</div>
         <Modal ref={modalRef} identifiant={`delete-tuto-${id}`} maxWidth={414} title="Supprimer le tutoriel"
                content={<p>Êtes-vous sûr de vouloir supprimer le tutoriel : <b>{name}</b> ?</p>}
                footer={<Button type="red" onClick={handleDelete}>Confirmer la suppression</Button>} closeTxt="Annuler" />

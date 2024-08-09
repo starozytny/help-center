@@ -5,10 +5,10 @@
 
 {% set page_actions %}
     {% include 'layout/components/tailwind/buttons/button.html.twig' with {
-        btn_link: path('user_help_product_read', {slug: product.slug}),
+        btn_link: path('user_help_tutorial_index', {p_slug: product.slug}),
         btn_type: 'default',
         btn_icon: 'left-arrow',
-        btn_text: 'Retourner à la page'
+        btn_text: 'Retourner aux guides'
     } %}
 {% endset %}
 

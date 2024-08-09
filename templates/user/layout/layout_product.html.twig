@@ -38,6 +38,7 @@
     {
         name: product.name, icon: "book-1",
         path: path('user_help_product_read', {slug: product.slug}), matchRoute: [
+            'user_help_products_index', 'user_help_documentation_index', 'user_help_tutorial_index',
             'user_help_product_read', 'user_help_documentation_read', 'user_help_tutorial_read',
             'user_help_product_create', 'user_help_documentation_create', 'user_help_tutorial_create',
             'user_help_product_update', 'user_help_documentation_update', 'user_help_tutorial_update',
@@ -47,12 +48,12 @@
     },
     {
         name: "Documentation", dropdown: true,
-        matchRoute: ['user_help_documentation_read'],
+        matchRoute: ['user_help_documentation_read', 'user_help_documentation_index', 'user_help_documentation_create', 'user_help_documentation_update'],
         items : documentations
     },
     {
         name: "Guides", dropdown: true,
-        matchRoute: ['user_help_tutorial_read'],
+        matchRoute: ['user_help_tutorial_read', 'user_help_tutorial_index', 'user_help_tutorial_create', 'user_help_tutorial_update'],
         items : guides
     },
 ] %}
