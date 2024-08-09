@@ -35,7 +35,6 @@ export function TutorialFormulaire ({ context, productSlug, element, steps }) {
         url={url}
         steps={steps}
         name={element ? Formulaire.setValue(element.name) : ""}
-        duration={element ? Formulaire.setValueTime(element.duration) : ""}
         status={element ? Formulaire.setValue(element.status) : 0}
         description={element ? Formulaire.setValue(element.description) : ""}
         visibility={element ? Formulaire.setValue(element.visibility) : 0}
@@ -58,7 +57,6 @@ class Form extends Component {
 		this.state = {
 			productSlug: props.productSlug,
 			name: props.name,
-			duration: props.duration,
 			status: props.status,
 			description: { value: description, html: description },
 			visibility: props.visibility,
@@ -84,16 +82,7 @@ class Form extends Component {
 		this.setState({ nbSteps: nbSteps, loadStep: false })
 	}
 
-	handleChange = (e) => {
-		let name = e.currentTarget.name;
-		let value = e.currentTarget.value;
-
-		if (name === "duration") {
-			value = Inputs.timeInput(e, this.state[name]);
-		}
-
-		this.setState({ [name]: value })
-	}
+	handleChange = (e) => { this.setState({ [e.currentTarget.name]: e.currentTarget.value }) }
 
 	handleChangeTinyMCE = (name, html) => {
 		this.setState({ [name]: { value: this.state[name].value, html: html } })
@@ -129,7 +118,7 @@ class Form extends Component {
 		e.preventDefault();
 
 		const { context, url, productSlug } = this.props;
-		const { name, status, duration, description } = this.state;
+		const { name, status, description } = this.state;
 
 		this.setState({ errors: [] });
 
@@ -138,10 +127,6 @@ class Form extends Component {
 			{ type: "text", id: 'status', value: status },
 			{ type: "text", id: 'description', value: description.html },
 		];
-
-		if (duration !== "") {
-			paramsToValidate = [...paramsToValidate, ...[{ type: "time", id: 'duration', value: duration }]];
-		}
 
 		let validate = Validateur.validateur(paramsToValidate)
 		if (!validate.code) {
@@ -261,7 +246,6 @@ Form.propTypes = {
 	context: PropTypes.string.isRequired,
 	url: PropTypes.node.isRequired,
 	name: PropTypes.string.isRequired,
-	duration: PropTypes.string.isRequired,
 	description: PropTypes.string.isRequired,
 	status: PropTypes.number.isRequired,
 }

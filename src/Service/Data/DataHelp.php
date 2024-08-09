@@ -29,12 +29,9 @@ class DataHelp
 
     public function setDataTutorial(HeTutorial $obj, $data): HeTutorial
     {
-        $duration = str_replace('h', ':', $data->duration);
-
         return ($obj)
             ->setName($this->sanitizeData->trimData($data->name))
             ->setSlug($this->sanitizeData->slugString($data->name))
-            ->setDuration($this->sanitizeData->createTimePicker($duration))
             ->setDescription($this->sanitizeData->trimData($data->description->html))
             ->setVisibility((int) $data->visibility)
         ;
@@ -42,12 +39,9 @@ class DataHelp
 
     public function setDataDocumentation(HeDocumentation $obj, $data): HeDocumentation
     {
-        $duration = str_replace('h', ':', $data->duration);
-
         return ($obj)
             ->setName($this->sanitizeData->trimData($data->name))
             ->setSlug($this->sanitizeData->slugString($data->name))
-            ->setDuration($this->sanitizeData->createTimePicker($duration))
             ->setDescription($this->sanitizeData->trimData($data->description->html))
             ->setContent($this->sanitizeData->trimData($data->content->html))
             ->setVisibility((int) $data->visibility)

@@ -41,16 +41,6 @@ class HeDocumentation extends DataEntity
     #[Groups(['doc_form'])]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
-    #[Groups(['doc_form'])]
-    private ?\DateTimeInterface $duration = null;
-
-    #[ORM\Column]
-    private ?int $nbLike = 0;
-
-    #[ORM\Column]
-    private ?int $nbDislike = 0;
-
     #[ORM\Column]
     #[Groups(['doc_form'])]
     private ?int $status = HelpStatut::Draft;
@@ -131,42 +121,6 @@ class HeDocumentation extends DataEntity
     public function setContent(string $content): self
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getDuration(): ?\DateTimeInterface
-    {
-        return $this->duration;
-    }
-
-    public function setDuration(?\DateTimeInterface $duration): self
-    {
-        $this->duration = $duration;
-
-        return $this;
-    }
-
-    public function getNbLike(): ?int
-    {
-        return $this->nbLike;
-    }
-
-    public function setNbLike(int $nbLike): self
-    {
-        $this->nbLike = $nbLike;
-
-        return $this;
-    }
-
-    public function getNbDislike(): ?int
-    {
-        return $this->nbDislike;
-    }
-
-    public function setNbDislike(int $nbDislike): self
-    {
-        $this->nbDislike = $nbDislike;
 
         return $this;
     }
