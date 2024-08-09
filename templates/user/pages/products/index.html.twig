@@ -22,27 +22,27 @@
 {% block main_content %}
     <div class="flex flex-col gap-4 md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {% for elem in products %}
-            <div class="bg-white border rounded-md p-4">
-                <div class="flex gap-4 items-center">
+            <div class="bg-white border rounded-md">
+                <div class="flex gap-4 items-center p-4">
                     <div class="w-16 h-16 bg-gray-700 rounded-md p-2 flex justify-center items-center">
                         <img src="{{ asset(elem.logoFile) }}" alt="Logo {{ elem.name }}">
                     </div>
                     <div>
                         <div class="font-semibold text-lg">{{ elem.name }}</div>
                         <div>
-                            <a href="https://{{ elem.url }}" title="{{ elem.url }}" target="_blank" class="text-blue-500 hover:underline">
+                            <a href="https://{{ elem.url }}" title="{{ elem.url }}" target="_blank" class="text-sm text-blue-500 hover:underline">
                                 <span class="pr-1">{{ elem.url }}</span>
                                 <span class="icon-link-2 !text-sm"></span>
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="mt-4 pt-4 border-t min-h-28">
+                <div class="p-4 border-t min-h-32">
                     <div class="text-gray-600">
                         {{ elem.description | raw }}
                     </div>
                 </div>
-                <div class="mt-4 pt-4 border-t flex justify-end">
+                <div class="p-4 border-t flex justify-end">
                     <a href="{{ path('user_help_product_read', {'slug': elem.slug}) }}"
                        class="flex items-center gap-2 py-1.5 px-2.5 rounded transition-colors hover:bg-blue-100 hover:text-blue-500"
                     >
@@ -51,19 +51,16 @@
                     </a>
                 </div>
                 {% if app.user.admin %}
-                    <div class="mt-4 pt-4 border-t grid grid-cols-2">
-                        <a
-                                href="{{ path('user_help_product_update', {'slug': elem.slug}) }}"
-                                class="btn-icon"
-                        >
-                            <span class="icon-pencil"></span>
-                            <span class="tooltip">Modifier</span>
+                    <div class="p-2 border-t grid grid-cols-2 text-center divide-x">
+                        <a href="{{ path('user_help_product_update', {'slug': elem.slug}) }}"
+                           class="text-sm underline cursor-pointer hover:text-gray-700">
+                            Modifier
                         </a>
                         <div class="delete-product"
                              data-id="{{ elem.id }}"
                              data-name="{{ elem.name }}"
                         >
-                            <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
+                            <div class="text-sm underline cursor-not-allowed hover:text-gray-700">Supprimer</div>
                         </div>
                     </div>
                 {% endif %}
