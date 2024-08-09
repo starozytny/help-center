@@ -90,7 +90,7 @@ class ProductController extends AbstractController
 
         $obj = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);
 
-        if ($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')) {
+        if (!$obj || $obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException("Cette page n'existe pas.");
         }
 

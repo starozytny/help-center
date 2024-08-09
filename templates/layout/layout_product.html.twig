@@ -41,16 +41,41 @@
                         {% if item.dropdown is defined %}
                             <div class="relative">
                                 <div class="bg-gray-700 w-0.5 h-[calc(100%-2.5rem)] absolute top-10 left-4"></div>
-                                <div class="{{- app.request.get('_route') in item.matchRoute ? "bg-gray-900 text-white" : "text-gray-300" }} rounded-md px-3 py-2 font-semibold">
+                                <div class="{{- app.request.get('_route') in item.matchRoute ? "text-white" : "text-gray-300" }} rounded-md px-3 py-2 font-semibold">
                                     {{ item.name }}
                                 </div>
-                                <div class="flex flex-col gap-1">
+                                <div class="flex flex-col">
                                     {% for it in item.items %}
+                                        {% set itClass = "text-gray-300 hover:text-white" %}
+                                        {% set itClassBorder = "bg-transparent" %}
+                                        {% if app.request.get('_route') in it.matchRoute %}
+
+                                            {% if it.matchParams is defined %}
+                                                {% set findParams = false %}
+                                                {% for p in app.request.get('_route_params') %}
+                                                    {% if p in it.matchParams %}
+                                                        {% set findParams = true %}
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                {% if findParams %}
+                                                    {% set itClass = "text-white" %}
+                                                    {% set itClassBorder = "bg-blue-700" %}
+                                                {% endif %}
+                                            {% else %}
+                                                {% set itClass = "text-white" %}
+                                                {% set itClassBorder = "bg-blue-700" %}
+                                            {% endif %}
+
+                                        {% endif %}
+
                                         <a href="{{ it.path }}"
-                                           class="{{- app.request.get('_route') in it.matchRoute ? "bg-gray-900 text-white" : "text-gray-300 hover:text-white" }} rounded-md pr-3 pl-8 py-2 font-medium"
+                                           class="{{ itClass }} relative rounded-md pr-2 pl-8 py-1 text-sm font-medium"
                                            aria-current="page"
                                         >
-                                            {{ it.name }}
+                                            <div class="{{ itClassBorder }} w-0.5 h-full absolute top-0 left-4"></div>
+                                            {% if it.isAdmin %}<span class="text-red-500 pr-1">[A]</span>{% endif %}
+                                            <span>{{ it.name }}</span>
                                         </a>
                                     {% endfor %}
                                 </div>
