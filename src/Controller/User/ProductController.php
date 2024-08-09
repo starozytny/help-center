@@ -4,7 +4,6 @@ namespace App\Controller\User;
 
 use App\Entity\Enum\Help\HelpStatut;
 use App\Entity\Main\Help\HeCategory;
-use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
 use App\Entity\Main\User;
@@ -71,55 +70,6 @@ class ProductController extends AbstractController
         $element = $serializer->serialize($obj, 'json', ['groups' => HeProduct::FORM]);
 
         return $this->render('user/pages/products/update.html.twig', [
-            'elem' => $obj,
-            'element' => $element,
-        ]);
-    }
-
-    #[Route('/produit/{p_slug}/documentations/documentation/{slug}', name: 'documentation_read', options: ['expose' => true])]
-    public function documentationRead($p_slug, $slug, HeProductRepository $productRepository, HeDocumentationRepository $documentationRepository): Response
-    {
-        $product = $productRepository->findOneBy(['slug' => $p_slug]);
-
-        if (!in_array($product->getId(), $this->getUser()->getAccess())) {
-            throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
-        }
-
-        $obj = $documentationRepository->findOneBy(['product' => $product, 'slug' => $slug]);
-
-        if ($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException("Cette page n'existe pas.");
-        }
-
-        return $this->render('user/pages/documentations/read.html.twig', [
-            'product' => $product,
-            'elem' => $obj,
-        ]);
-    }
-
-    #[Route('/produit/{slug}/documentations/ajouter', name: 'documentation_create')]
-    #[IsGranted('ROLE_ADMIN')]
-    public function documentationCreate($slug, HeProductRepository $productRepository): Response
-    {
-        $product = $productRepository->findOneBy(['slug' => $slug]);
-
-        return $this->render('user/pages/documentations/create.html.twig', [
-            'product' => $product,
-        ]);
-    }
-
-    #[Route('/produit/{p_slug}/documentations/modifier/{slug}', name: 'documentation_update', options: ['expose' => true])]
-    #[IsGranted('ROLE_ADMIN')]
-    public function documentationUpdate($p_slug, $slug, HeDocumentationRepository $documentationRepository,
-                                        HeProductRepository $productRepository, SerializerInterface $serializer): Response
-    {
-        $product = $productRepository->findOneBy(['slug' => $p_slug]);
-        $obj = $documentationRepository->findOneBy(['slug' => $slug]);
-
-        $element = $serializer->serialize($obj, 'json', ['groups' => HeDocumentation::FORM]);
-
-        return $this->render('user/pages/documentations/update.html.twig', [
-            'product' => $product,
             'elem' => $obj,
             'element' => $element,
         ]);

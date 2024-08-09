@@ -1,4 +1,4 @@
-{% extends 'user/pages/tutorials/template.html.twig' %}
+{% extends 'user/pages/documentations/template.html.twig' %}
 
 {% set typeString = product.webservice ? "logiciel en ligne" : "logiciel" %}
 
@@ -8,10 +8,10 @@
 {% set page_actions %}
     {% if app.user.admin %}
         {% include 'layout/components/tailwind/buttons/button.html.twig' with {
-            btn_link: path('user_help_tutorial_create', {p_slug: product.slug}),
+            btn_link: path('user_help_documentation_create', {p_slug: product.slug}),
             btn_type: 'blue',
             btn_icon: 'add',
-            btn_text: 'Ajouter un guide'
+            btn_text: 'Ajouter une documentation'
         } %}
     {% endif %}
 {% endset %}
@@ -26,22 +26,22 @@
         } %}
     </div>
     <div>
-        <h2 class="font-bold text-2xl">Guides</h2>
-        <div class="text-gray-800">Prenez en main facilement le {{ typeString }} avec nos guides.</div>
+        <h2 class="font-bold text-2xl">Documentations</h2>
+        <div class="text-gray-800">Le meilleur moyen de maitriser l'utilisation du {{ typeString }}.</div>
 
         <div class="mt-4">
             <div class="flex flex-col gap-4 md:grid md:grid-cols-3 2xl:grid-cols-4 qhd:grid-cols-5">
-                {% if tutorials | length == 0 %}
+                {% if documentations | length == 0 %}
                     {% include "layout/components/tailwind/alerts/alert.html.twig" with {
                         alert_type: 'blue',
                         alert_icon: 'question',
-                        alert_text: 'Aucun guide rédigé pour le moment.'
+                        alert_text: 'Aucune documenation rédigée pour le moment.'
                     } %}
                 {% else %}
-                    {% for el in tutorials %}
+                    {% for el in documentations %}
                         {% if (el.visibility == 1 and app.user.highRoleCode != 0) or el.visibility == 0 %}
                             <div class="flex flex-col">
-                                <a href="{{ path('user_help_tutorial_read', {p_slug: product.slug, slug: el.slug}) }}"
+                                <a href="{{ path('user_help_documentation_read', {p_slug: product.slug, slug: el.slug}) }}"
                                    class="group block md:max-w-72 bg-white p-4 border rounded-md">
                                     <div class="font-semibold group-hover:text-blue-500 min-h-12">
                                         {{ el.name }} {{ el.status == 0 ? "<span class='text-red-500'>[HORS LIGNE]</span>" : "" }}
@@ -57,11 +57,11 @@
                                 </a>
                                 {% if app.user.admin %}
                                     <div class="mt-2 flex gap-2 justify-end pr-2">
-                                        <a href="{{ path('user_help_tutorial_update', {p_slug: product.slug, slug: el.slug}) }}"
+                                        <a href="{{ path('user_help_documentation_update', {p_slug: product.slug, slug: el.slug}) }}"
                                            class="text-sm underline cursor-pointer hover:text-gray-700">
                                             Modifier
                                         </a>
-                                        <div class="delete-tuto"
+                                        <div class="delete-doc"
                                              data-id="{{ el.id }}"
                                              data-name="{{ el.name }}"
                                              data-product-slug="{{ product.slug }}"

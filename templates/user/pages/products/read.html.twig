@@ -77,7 +77,7 @@
                 <div class="text-gray-800">Le meilleur moyen de maitriser l'utilisation du {{ typeString }}.</div>
 
                 <div class="mt-4">
-                    <a href="#"
+                    <a href="{{ path('user_help_documentation_index', {p_slug: elem.slug}) }}"
                        class="group font-medium flex items-center gap-2 text-blue-500">
                         <span class="group-hover:underline">En savoir plus</span>
                         <span class="icon-right-arrow"></span>
@@ -123,77 +123,3 @@
         </div>
     {% endif %}
 {% endblock %}
-
-
-{#<div class="product-line-2">#}
-{#    {% if app.user.admin and force_user == null %}#}
-{#        <div class="btn-add">#}
-{#            <a href="{{ path('user_help_documentation_create', {'slug': elem.slug}) }}" class="btn btn-danger">#}
-{#                <span class="icon-add"></span>#}
-{#                <span>Ajouter une documentation</span>#}
-{#            </a>#}
-{#        </div>#}
-{#    {% endif %}#}
-{#    <div class="tutorials documentations">#}
-{#        {% if docs | length == 0 %}#}
-{#            <div class="alert alert-primary">#}
-{#                <div class="alert-container">#}
-{#                    <p>Aucune documentation pour {{ elem.name }}.</p>#}
-{#                </div>#}
-{#            </div>#}
-{#        {% else %}#}
-{#            {% for el in docs %}#}
-{#                {% if (el.visibility == 1 and app.user.highRoleCode != 0) or el.visibility == 0 %}#}
-{#                    <div class="card">#}
-{#                        <div class="card-header">#}
-{#                            <div class="icon">#}
-{#                                <span class="icon-{{ el.icon }}"></span>#}
-{#                            </div>#}
-{#                            <div class="name">{{ el.name }} {{ el.status == 0 ? "<span class='txt-danger'>[HORS LIGNE]</span>" : "" }}</div>#}
-{#                        </div>#}
-{#                        <div class="card-body">#}
-{#                            {% if el.visibility == 1 %}#}
-{#                                <div class="txt-danger">[Administration]</div>#}
-{#                            {% endif %}#}
-{#                            <div class="content">#}
-{#                                {{ el.description | raw }}#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <div class="card-footer">#}
-{#                            {% if app.user.admin and force_user == null %}#}
-{#                                <a#}
-{#                                        href="{{ path('user_help_documentation_update', {'p_slug': elem.slug, 'slug': el.slug}) }}"#}
-{#                                        class="btn-icon"#}
-{#                                >#}
-{#                                    <span class="icon-pencil"></span>#}
-{#                                    <span class="tooltip">Modifier</span>#}
-{#                                </a>#}
-{#                                <div class="delete-doc"#}
-{#                                     data-id="{{ el.id }}"#}
-{#                                     data-name="{{ el.name }}"#}
-{#                                     data-product-slug="{{ elem.slug }}"#}
-{#                                >#}
-{#                                    <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>#}
-{#                                </div>#}
-{#                                <a#}
-{#                                        href="{{ path('user_help_documentation_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"#}
-{#                                        class="btn-icon"#}
-{#                                >#}
-{#                                    <span class="icon-vision"></span>#}
-{#                                    <span class="tooltip" style="width: 96px">En savoir plus</span>#}
-{#                                </a>#}
-{#                            {% else %}#}
-{#                                <a#}
-{#                                        href="{{ path('user_help_documentation_read', {'p_slug': elem.slug, 'slug': el.slug}) }}"#}
-{#                                        class="txt-button txt-button-primary"#}
-{#                                >#}
-{#                                    <span>En savoir plus</span>#}
-{#                                </a>#}
-{#                            {% endif %}#}
-{#                        </div>#}
-{#                    </div>#}
-{#                {% endif %}#}
-{#            {% endfor %}#}
-{#        {% endif %}#}
-{#    </div>#}
-{#</div>#}
