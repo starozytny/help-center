@@ -219,8 +219,7 @@ class Form extends Component {
 								<Input identifiant="lastname" valeur={lastname} {...params0}>Nom</Input>
 							</div>
 						</div>
-                    </div>
-					<div>
+
 						<div>
 							<Checkbox identifiant="roles" valeur={roles} items={rolesItems} {...params0} classItems="flex gap-4">
 								Rôles
@@ -247,7 +246,7 @@ class Form extends Component {
 						</div>
 
 						<div>
-							<Checkbox items={accessItems} identifiant="access" valeur={access} {...params0} style="fat" classItems="flex gap-2">
+							<Checkbox items={accessItems} identifiant="access" valeur={access} {...params0} styleType="fat" classItems="flex gap-2">
 								Accès aux logiciels
 							</Checkbox>
 						</div>
