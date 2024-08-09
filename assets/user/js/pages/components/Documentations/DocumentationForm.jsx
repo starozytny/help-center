@@ -5,7 +5,6 @@ import axios from "axios";
 import toastr from "toastr";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import Inputs from "@commonFunctions/inputs";
 import Formulaire from "@commonFunctions/formulaire";
 import Validateur from "@commonFunctions/validateur";
 
