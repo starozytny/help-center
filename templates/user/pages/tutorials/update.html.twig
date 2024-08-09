@@ -3,31 +3,24 @@
 {% set page_title %}Modifier : {{ elem.name }}{% endset %}
 {% set page_subtitle %}Modifiez les informations du tutoriel de {{ product.name }} : {{ elem.name }}.{% endset %}
 
-{% block breadcrumb %}
-    {% set breadcrumbs = breadcrumbs | merge([
-        { text: product.name, url: path('user_help_product_read', {'slug': product.name})  },
-        { text: page_title }
-    ]) %}
-    {{ parent() }}
-{% endblock %}
-
-{% set full_width = true %}
+{% set page_actions %}
+    <div class="flex gap-2">
+        {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+            btn_link: path('user_help_product_read', {slug: product.slug}),
+            btn_type: 'default',
+            btn_icon: 'left-arrow',
+            btn_text: 'Retourner à la page'
+        } %}
+        {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+            btn_link: path('user_help_tutorial_read', {p_slug: product.slug, slug: elem.slug}),
+            btn_type: 'default',
+            btn_icon: 'left-arrow',
+            btn_text: 'Retourner à la page'
+        } %}
+    </div>
+{% endset %}
 
 {% block main_content %}
-    <div class="page-actions">
-        <div class="col-1">
-            <a href="{{ path('user_help_product_read', {'slug': product.slug}) }}" class="btn btn-outline-default">
-                <span class="icon-left-arrow"></span>
-                <span>Retourner à liste</span>
-            </a>
-            <a href="{{ path('user_help_tutorial_read', {'p_slug': product.slug, 'slug': elem.slug}) }}" class="btn btn-outline-default">
-                <span class="icon-left-arrow"></span>
-                <span>Retourner au tutoriel</span>
-            </a>
-        </div>
-        <div class="col-2"></div>
-    </div>
-
     <div id="tutorials_update"
          data-product-slug="{{ product.slug }}"
          data-element="{{ element }}"
