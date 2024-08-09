@@ -3,11 +3,6 @@
 {% set page_title %}Dashboard{% endset %}
 {% set page_subtitle %}Documentation, F.A.Q et tutoriels intégral !{% endset %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('user_homepage') }}
-{% endblock %}
-
 {% block main_content %}
     <div class="flex flex-col gap-4 md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {% include "user/pages/products/components/products.html.twig" %}

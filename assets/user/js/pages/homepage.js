@@ -1,5 +1,3 @@
-import '../../css/pages/homepage.scss';
-
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { ProductDelete } from "@userPages/Products/ProductDelete";

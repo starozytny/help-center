@@ -1,5 +1,3 @@
-import '../../css/pages/documentations.scss';
-
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { DocumentationFormulaire } from "@userPages/Documentations/DocumentationForm";
