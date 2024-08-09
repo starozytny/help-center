@@ -9,74 +9,60 @@
         <div class="mx-auto max-w-2xl py-32 sm:py-48">
             <div class="hidden sm:mb-8 sm:flex sm:justify-center">
                 <div class="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                    Announcing our next round of funding. <a href="#" class="font-semibold text-indigo-600"><span class="absolute inset-0" aria-hidden="true"></span>Read more <span aria-hidden="true">&rarr;</span></a>
+                    Centre d'aide en ligne de Logilink
                 </div>
             </div>
             <div class="text-center">
-                <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Data to enrich your online business</h1>
-                <p class="mt-6 text-lg leading-8 text-gray-600">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.</p>
+                <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Comment puis-je vous aider ? 👋</h1>
+                <p class="mt-6 text-lg leading-8 text-gray-600">Accéder aux documentations, F.A.Q et tutoriels pour mieux comprendre comment fonctionne nos logiciels !</p>
                 <div class="mt-10 flex items-center justify-center gap-x-6">
-                    <a href="#" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get started</a>
-                    <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Learn more <span aria-hidden="true">→</span></a>
+                    <a href="{{ path('app_login') }}" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        Accéder à mon espace
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="homepage-header">
-        <div class="homepage-header-content">
-            <h1>Comment puis-je vous aider ? 👋</h1>
-            <div class="subtitle">
-                Accéder aux documentations, F.A.Q et tutoriels pour
-                mieux comprendre comment fonctionne nos logiciels !
-            </div>
-
-            <div class="cta">
-                <a class="btn btn-primary" href="{{ path('app_login') }}">Accéder à mon espace</a>
+    <div class="px-6 lg:px-8 bg-gray-800 py-24">
+        <div class="flex flex-col justify-center items-center">
+            <h2 class="text-4xl font-bold text-white">Produits ⚒️</h2>
+            <div class="text-gray-300">
+                Parcourez la documentation et les questions fréquentes de nos logiciels et webservices !
             </div>
         </div>
-    </div>
-    <div class="homepage-section homepage-section-0">
-        {% include 'app/layout/components/deco-0.html.twig' %}
-        {% include 'app/layout/components/deco-1.html.twig' %}
-        <div class="homepage-section-container">
-            <div class="homepage-section-title">
-                <h2>Produits ⚒️</h2>
-                <div class="subtitle">Parcourez la documentation et les questions fréquentes de nos logiciels et webservices !</div>
-            </div>
-            <div class="products">
-                {% for elem in products %}
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="logo">
-                                <img src="{{ asset(elem.logoFile) }}" alt="Logo {{ elem.name }}">
-                            </div>
-                            <div class="name">
-                                <div>{{ elem.name }}</div>
-                                <div class="linkTo">
-                                    <a href="https://{{ elem.url }}" title="{{ elem.url }}" target="_blank">
-                                        <span>{{ elem.url }}</span>
-                                        <span class="icon-link-2"></span>
-                                    </a>
-                                </div>
-                            </div>
+        <div class="flex flex-col gap-4 mt-10 md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+            {% for elem in products %}
+                <div class="bg-white border rounded-md p-4">
+                    <div class="flex gap-4 items-center">
+                        <div class="w-16 h-16 bg-gray-700 rounded-md p-2 flex justify-center items-center">
+                            <img src="{{ asset(elem.logoFile) }}" alt="Logo {{ elem.name }}">
                         </div>
-                        <div class="card-body">
-                            <div class="content">
-                                {{ elem.description | raw }}
+                        <div>
+                            <div class="font-semibold text-lg">{{ elem.name }}</div>
+                            <div>
+                                <a href="https://{{ elem.url }}" title="{{ elem.url }}" target="_blank" class="text-blue-500 hover:underline">
+                                    <span class="pr-1">{{ elem.url }}</span>
+                                    <span class="icon-link-2 !text-sm"></span>
+                                </a>
                             </div>
-                        </div>
-                        <div class="card-footer">
-                            <a href="{{ path('user_help_product_read', {'slug': elem.slug}) }}"
-                               class="txt-button txt-button-primary"
-                            >
-                                <span>Découvrir {{ elem.name }}</span>
-                                <span class="icon-right-arrow"></span>
-                            </a>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
+                    <div class="mt-4 pt-4 border-t min-h-28">
+                        <div class="text-gray-600">
+                            {{ elem.description | raw }}
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t flex justify-end">
+                        <a href="{{ path('user_help_product_read', {'slug': elem.slug}) }}"
+                           class="flex items-center gap-2 py-1.5 px-2.5 rounded transition-colors hover:bg-blue-100 hover:text-blue-500"
+                        >
+                            <span>Découvrir {{ elem.name }}</span>
+                            <span class="icon-right-arrow"></span>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

@@ -17,11 +17,11 @@ class AppController extends AbstractController
         ]);
     }
 
-    #[Route('/contact', name: 'app_contact')]
-    public function contact(): Response
-    {
-        return $this->render('app/pages/contact/create.html.twig');
-    }
+//    #[Route('/contact', name: 'app_contact')]
+//    public function contact(): Response
+//    {
+//        return $this->render('app/pages/contact/create.html.twig');
+//    }
 
     #[Route('/legales/mentions-legales', name: 'app_mentions')]
     public function mentions(): Response
