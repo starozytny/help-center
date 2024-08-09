@@ -15,22 +15,14 @@
             <div>
                 <div class="relative flex flex-row items-center justify-between gap-4 p-4 lg:flex-col lg:gap-6">
                     <a href="{{ path('user_homepage') }}" class="flex flex-shrink-0 items-center">
-                        <img class="h-8 w-auto" src="{{ asset('build/admin/images/logo.png') }}" alt="Logilink">
+                        <img class="h-12 w-auto" src="{{ asset(product.logoFile) }}" alt="Logilink">
                     </a>
+                    <div class="relative flex flex-col items-center gap-4 rounded-full text-sm">
+                        <div class="text-center font-medium text-slate-50">
+                            <div>Centre d'aide en ligne de {{ product.name }}</div>
+                        </div>
+                    </div>
                     <div class="flex flex-row items-center gap-4 lg:flex-col-reverse">
-                        <div class="flex gap-2">
-                            <a href="{{ path('app_logout') }}"
-                               class="relative inline-flex justify-center rounded-md text-sm px-4 py-1.5 shadow-sm bg-gray-900 text-slate-50 hover:bg-gray-700 ring-1 ring-inset ring-gray-700"
-                            >
-                                Se déconnecter
-                            </a>
-                        </div>
-                        <div class="relative flex flex-col items-center gap-4 rounded-full text-sm">
-                            <div class="hidden text-center text-slate-50 lg:block">
-                                <div>{{ app.user.userIdentifier }}</div>
-                                <div>{{ app.user.email }}</div>
-                            </div>
-                        </div>
                         <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 lg:hidden hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                                 id="nav-mobile" aria-controls="mobile-menu" aria-expanded="false">
                             <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">

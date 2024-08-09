@@ -25,7 +25,7 @@
                                 Se déconnecter
                             </a>
                         </div>
-                        <div class="relative flex flex-col items-center gap-4 rounded-full text-sm">
+                        <div class="hidden relative lg:flex flex-col items-center gap-4 rounded-full text-sm">
                             {% if app.user.avatarFile %}
                                 <img class="h-8 w-8 rounded-full" src="{{ app.user.avatarFile }}" alt="Avatar utilisateur">
                             {% else %}
@@ -35,7 +35,7 @@
                                     </div>
                                 </div>
                             {% endif %}
-                            <div class="hidden text-center text-slate-50 lg:block">
+                            <div class="text-center text-slate-50">
                                 <div>{{ app.user.userIdentifier }}</div>
                                 <div>{{ app.user.email }}</div>
                             </div>
