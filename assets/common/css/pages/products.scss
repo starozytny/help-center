@@ -25,7 +25,7 @@
       .name{
         width: calc(100% - 76px - 18px);
         & > span:first-child{
-          @include fontSemibold();
+          font-weight: 600;
           font-size: 20px;
         }
         .linkTo{

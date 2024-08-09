@@ -1,7 +1,5 @@
 @import "../vars/vars";
 
-@import "./components/form";
-
 .line-tuto-step{
   label{
     @include flex(row, center, space-between, var(--espaceEls));
@@ -88,7 +86,7 @@
       border-radius: var(--radius);
       background-color: var(--color0);
       width: 32px; height: 32px;
-      @include fontSemibold();
+      font-weight: 600;
     }
 
     .content{

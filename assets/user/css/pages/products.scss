@@ -1,6 +1,5 @@
 @import "../vars/vars";
 
-@import "./components/form";
 @import "../components/help";
 
 .delete-doc, .delete-tuto, .favorite-tuto{
@@ -88,7 +87,7 @@
       border-bottom: 1px solid var(--color3);
 
       .name{
-        @include fontSemibold();
+        font-weight: 600;
         font-size: 17px;
       }
     }
