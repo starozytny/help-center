@@ -2,7 +2,6 @@
 
 namespace App\Controller\User;
 
-use App\Entity\Enum\Help\HelpFavorite;
 use App\Entity\Enum\Help\HelpStatut;
 use App\Entity\Main\Help\HeCategory;
 use App\Entity\Main\Help\HeDocumentation;
@@ -12,8 +11,6 @@ use App\Entity\Main\Help\HeStep;
 use App\Entity\Main\Help\HeTutorial;
 use App\Entity\Main\User;
 use App\Repository\Main\Help\HeDocumentationRepository;
-use App\Repository\Main\Help\HeFavoriteRepository;
-use App\Repository\Main\Help\HeLikeRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Repository\Main\Help\HeStepRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
@@ -37,93 +34,70 @@ class ProductController extends AbstractController
     #[Route('/produit/{slug}', name: 'product_read', options: ['expose' => true])]
     public function productRead($slug, HeProductRepository $productRepository,
                                 HeDocumentationRepository $documentationRepository,
-                                HeTutorialRepository $tutorialRepository,
-                                HeFavoriteRepository $favoriteRepository): Response
+                                HeTutorialRepository $tutorialRepository): Response
     {
         /** @var User $user */
         $user = $this->getUser();
 
         $obj = $productRepository->findOneBy(['slug' => $slug]);
 
-        if($user->getHighRoleCode() == User::CODE_ROLE_USER){
+        if ($user->getHighRoleCode() == User::CODE_ROLE_USER) {
             $documentations = $documentationRepository->findBy(['product' => $obj, 'status' => HelpStatut::Active]);
             $tutorials = $tutorialRepository->findBy(['product' => $obj, 'status' => HelpStatut::Active]);
-        }else{
+        } else {
             $documentations = $documentationRepository->findBy(['product' => $obj]);
             $tutorials = $tutorialRepository->findBy(['product' => $obj]);
         }
-
-        $favoritesTuto  = $favoriteRepository->findBy(['user' => $user, 'type' => HelpFavorite::Tutorial]);
 
         return $this->render('user/pages/products/read.html.twig', [
             'elem' => $obj,
             'docs' => $documentations,
             'tutorials' => $tutorials,
-            'favoritesTuto' => $favoritesTuto,
             'canRead' => in_array($obj->getId(), $user->getAccess())
         ]);
     }
 
     #[Route('/produit/{p_slug}/documentation/{slug}', name: 'documentation_read', options: ['expose' => true])]
-    public function documentationRead($p_slug, $slug, HeProductRepository $productRepository,
-                                      HeDocumentationRepository $documentationRepository, HeLikeRepository $likeRepository): Response
+    public function documentationRead($p_slug, $slug, HeProductRepository $productRepository, HeDocumentationRepository $documentationRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
 
-        if(!in_array($product->getId(), $this->getUser()->getAccess())){
+        if (!in_array($product->getId(), $this->getUser()->getAccess())) {
             throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
         }
 
-        $obj     = $documentationRepository->findOneBy(['product' => $product, 'slug' => $slug]);
+        $obj = $documentationRepository->findOneBy(['product' => $product, 'slug' => $slug]);
 
-        if($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')){
+        if ($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException("Cette page n'existe pas.");
         }
 
-        $answer  = $likeRepository->findOneBy([
-            'user' => $this->getUser(), 'type' => HelpFavorite::Documentation, 'identifiant' => $obj->getId()
-        ]);
-
         return $this->render('user/pages/documentations/read.html.twig', [
             'elem' => $obj,
-            'answer' => $answer ? $answer->getAnswer() : 2,
-            'haveAnswer' => (bool)$answer,
-            'type' => HelpFavorite::Documentation
         ]);
     }
 
     #[Route('/produit/{p_slug}/tutoriel/{slug}', name: 'tutorial_read', options: ['expose' => true])]
     public function tutorialRead($p_slug, $slug, HeProductRepository $productRepository,
-                                 HeTutorialRepository $tutorialRepository, HeStepRepository $stepRepository,
-                                 HeFavoriteRepository $favoriteRepository, HeLikeRepository $likeRepository): Response
+                                 HeTutorialRepository $tutorialRepository, HeStepRepository $stepRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
 
-        if(!in_array($product->getId(), $this->getUser()->getAccess())){
+        if (!in_array($product->getId(), $this->getUser()->getAccess())) {
             throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
         }
 
         $obj = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);
 
-        if($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')){
+        if ($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException("Cette page n'existe pas.");
         }
 
-        $steps   = $stepRepository->findBy(['tutorial' => $obj]);
-        $fav     = $favoriteRepository->findOneBy([
-            'user' => $this->getUser(), 'type' => HelpFavorite::Tutorial, 'identifiant' => $obj->getId()
-        ]);
-        $answer  = $likeRepository->findOneBy([
-            'user' => $this->getUser(), 'type' => HelpFavorite::Tutorial, 'identifiant' => $obj->getId()
-        ]);
+        $steps = $stepRepository->findBy(['tutorial' => $obj]);
 
         return $this->render('user/pages/tutorials/read.html.twig', [
             'elem' => $obj,
             'steps' => $steps,
-            'isFav' => (bool)$fav,
-            'answer' => $answer ? $answer->getAnswer() : 2,
-            'haveAnswer' => (bool)$answer,
-            'type' => HelpFavorite::Tutorial
         ]);
     }
 
@@ -140,7 +114,7 @@ class ProductController extends AbstractController
     {
         $obj = $productRepository->findOneBy(['slug' => $slug]);
 
-        $element = $serializer->serialize($obj,'json', ['groups' => HeProduct::FORM]);
+        $element = $serializer->serialize($obj, 'json', ['groups' => HeProduct::FORM]);
 
         return $this->render('user/pages/products/update.html.twig', [
             'elem' => $obj,
@@ -166,11 +140,11 @@ class ProductController extends AbstractController
                                    SerializerInterface $serializer): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
-        $obj     = $tutorialRepository->findOneBy(['slug' => $slug]);
-        $steps   = $stepRepository->findBy(['tutorial' => $obj]);
+        $obj = $tutorialRepository->findOneBy(['slug' => $slug]);
+        $steps = $stepRepository->findBy(['tutorial' => $obj]);
 
-        $element = $serializer->serialize($obj,   'json', ['groups' => HeTutorial::FORM]);
-        $steps   = $serializer->serialize($steps, 'json', ['groups' => HeStep::FORM]);
+        $element = $serializer->serialize($obj, 'json', ['groups' => HeTutorial::FORM]);
+        $steps = $serializer->serialize($steps, 'json', ['groups' => HeStep::FORM]);
 
         return $this->render('user/pages/tutorials/update.html.twig', [
             'product' => $product,
@@ -197,7 +171,7 @@ class ProductController extends AbstractController
                                         HeProductRepository $productRepository, SerializerInterface $serializer): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
-        $obj     = $documentationRepository->findOneBy(['slug' => $slug]);
+        $obj = $documentationRepository->findOneBy(['slug' => $slug]);
 
         $element = $serializer->serialize($obj, 'json', ['groups' => HeDocumentation::FORM]);
 
@@ -225,7 +199,7 @@ class ProductController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
 
-        $obj  = $serializer->serialize($elem, 'json', ['groups' => HeCategory::FORM]);
+        $obj = $serializer->serialize($elem, 'json', ['groups' => HeCategory::FORM]);
         return $this->render('user/pages/faq/category/update.html.twig', ['product' => $product, 'elem' => $elem, 'obj' => $obj]);
     }
 
@@ -236,7 +210,7 @@ class ProductController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
 
-        $cat  = $serializer->serialize($category, 'json', ['groups' => HeCategory::LIST]);
+        $cat = $serializer->serialize($category, 'json', ['groups' => HeCategory::LIST]);
         return $this->render('user/pages/faq/question/create.html.twig', ['product' => $product, 'category' => $category, 'cat' => $cat]);
     }
 
@@ -246,8 +220,8 @@ class ProductController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $slug]);
 
-        $obj  = $serializer->serialize($elem, 'json', ['groups' => HeQuestion::FORM]);
-        $cat  = $serializer->serialize($category, 'json', ['groups' => HeCategory::LIST]);
+        $obj = $serializer->serialize($elem, 'json', ['groups' => HeQuestion::FORM]);
+        $cat = $serializer->serialize($category, 'json', ['groups' => HeCategory::LIST]);
         return $this->render('user/pages/faq/question/update.html.twig', ['product' => $product, 'category' => $category, 'cat' => $cat, 'elem' => $elem, 'obj' => $obj]);
     }
 }
