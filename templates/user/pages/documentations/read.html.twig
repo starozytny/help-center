@@ -22,8 +22,9 @@
                 btn_text: 'Retourner à ' ~ product.name
             } %}
         </div>
-        <div>
+        <div class="my-12 border-y border-gray-500 py-12">
             <h2 class="text-4xl font-bold">{{ elem.name }}</h2>
+            <div class="text-gray-600 text-sm">{{ elem.description | raw }}</div>
         </div>
         <div>
             {{ elem.content | raw }}
