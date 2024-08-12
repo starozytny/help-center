@@ -13,7 +13,7 @@ class AppController extends AbstractController
     public function index(HeProductRepository $productRepository): Response
     {
         return $this->render('app/pages/index.html.twig', [
-            'products' => $productRepository->findAll()
+            'products' => $productRepository->findBy(['isIntern' => false])
         ]);
     }
 

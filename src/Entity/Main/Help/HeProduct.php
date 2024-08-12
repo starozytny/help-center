@@ -63,6 +63,9 @@ class HeProduct extends DataEntity
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: HeCategory::class)]
     private Collection $categories;
 
+    #[ORM\Column]
+    private ?bool $isIntern = null;
+
     public function __construct()
     {
         $this->documentations = new ArrayCollection();
@@ -256,6 +259,18 @@ class HeProduct extends DataEntity
                 $category->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIntern(): ?bool
+    {
+        return $this->isIntern;
+    }
+
+    public function setIntern(bool $isIntern): static
+    {
+        $this->isIntern = $isIntern;
 
         return $this;
     }

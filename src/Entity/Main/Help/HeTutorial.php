@@ -64,6 +64,9 @@ class HeTutorial extends DataEntity
     #[ORM\OneToMany(mappedBy: 'tutorial', targetEntity: HeStep::class)]
     private Collection $steps;
 
+    #[ORM\Column]
+    private ?bool $isTwig = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -210,6 +213,18 @@ class HeTutorial extends DataEntity
                 $step->setTutorial(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isTwig(): ?bool
+    {
+        return $this->isTwig;
+    }
+
+    public function setTwig(bool $isTwig): static
+    {
+        $this->isTwig = $isTwig;
 
         return $this;
     }
