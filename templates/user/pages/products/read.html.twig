@@ -5,27 +5,7 @@
 {% set page_title %}{{ elem.name }}{% endset %}
 {% set page_subtitle %}Centre d'aide pour le {{ typeString }} {{ elem.name }}{% endset %}
 
-{% set force_user = app.request.get('force_user') %}
-
 {% set page_actions %}
-    {% if app.user.admin %}
-        <div class="flex flex-col items-center gap-2">
-            {% if force_user == null %}
-                {% set url = path('user_help_product_read', {slug: elem.slug, force_user: true}) %}
-            {% else %}
-                {% set url = path('user_help_product_read', {slug: elem.slug}) %}
-            {% endif %}
-
-            <div>Vue actuel : <span class="text-red-500">{{ force_user == null ? "Administrateur" : "Utilisateur" }}</span></div>
-
-            {% include 'layout/components/tailwind/buttons/button.html.twig' with {
-                btn_link: url,
-                btn_type: 'default',
-                btn_icon: 'vision',
-                btn_text: 'Activer le vue ' ~ (force_user == null ? "utilisateur" : "administrateur")
-            } %}
-        </div>
-    {% endif %}
 {% endset %}
 
 {% block main_content %}
@@ -103,7 +83,7 @@
                 <div class="text-gray-800">Retrouvez les réponses aux questions les plus demandées sur le {{ typeString }}.</div>
                 <div class="mt-4">
                     <div id="help_faq_list"
-                         data-role="{{ app.user.admin and force_user == null ? "admin" : "user" }}"
+                         data-role="{{ app.user.admin ? "admin" : "user" }}"
                          data-category="{{ app.request.get('cat') }}"
                          data-product-id="{{ elem.id }}"
                          data-product-slug="{{ elem.slug }}"
