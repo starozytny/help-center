@@ -65,7 +65,7 @@ class DocumentationController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
 
-        if (!in_array($product->getId(), $this->getUser()->getAccess())) {
+        if (!in_array($product->getId(), $this->getUser()->getAccess()) || (!$this->isGranted('ROLE_ADMIN') && $product->isIntern())) {
             throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
         }
 

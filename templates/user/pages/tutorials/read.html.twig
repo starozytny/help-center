@@ -1,10 +1,18 @@
 {% extends 'user/pages/tutorials/template.html.twig' %}
 
-{% set product = elem.product %}
-{% set author = elem.author %}
+{% set page_title %}Guide : {{ elem.name }}{% endset %}
+{% set page_subtitle %}{{ elem.status == 0 ? "<span class='txt-danger'>[HORS LIGNE]</span>" : "" }}{% endset %}
 
-{% set page_title %}{{ product.name }}{% endset %}
-{% set page_subtitle %}Guide {{ elem.name }} {{ elem.status == 0 ? "<span class='txt-danger'>[HORS LIGNE]</span>" : "" }}{% endset %}
+{% set page_actions %}
+    {% if is_granted('ROLE_ADMIN') %}
+        {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+            btn_link: path('user_help_tutorial_update', {p_slug: product.slug, slug: elem.slug}),
+            btn_type: 'default',
+            btn_icon: 'pencil',
+            btn_text: 'Modifier'
+        } %}
+    {% endif %}
+{% endset %}
 
 {% block main_content %}
     <div class="max-w-screen-lg mx-auto">

@@ -10,7 +10,7 @@ import Validateur from "@commonFunctions/validateur";
 
 import { Button } from "@tailwindComponents/Elements/Button";
 import { TinyMCE } from "@tailwindComponents/Elements/TinyMCE";
-import { Input, Radiobox } from "@tailwindComponents/Elements/Fields";
+import { Input, Radiobox, Switcher } from "@tailwindComponents/Elements/Fields";
 
 const URL_INDEX_PAGE = "user_help_documentation_read";
 const URL_UPDATE_PAGE = "user_help_documentation_update";
@@ -33,6 +33,8 @@ export function DocumentationFormulaire ({ context, element, productSlug }) {
         description={element ? Formulaire.setValue(element.description) : ""}
         content={element ? Formulaire.setValue(element.content) : ""}
         visibility={element ? Formulaire.setValue(element.visibility) : 0}
+        isTwig={element ? Formulaire.setValue(element.isTwig ? 1 : 0) : 0}
+		twigName={element ? Formulaire.setValue(element.twigName) : ""}
     />
 }
 
@@ -56,11 +58,22 @@ class Form extends Component {
 			description: { value: description, html: description },
 			content: { value: content, html: content },
 			visibility: props.visibility,
+			isTwig: [props.isTwig],
+			twigName: props.twigName,
 			errors: [],
 		}
 	}
 
-	handleChange = (e) => { this.setState({ [e.currentTarget.name]: e.currentTarget.value }) }
+	handleChange = (e) => {
+		let name = e.currentTarget.name;
+		let value = e.currentTarget.value;
+
+		if (name === "isTwig") {
+			value = e.currentTarget.checked ? [parseInt(value)] : [0];
+		}
+
+		this.setState({ [name]: value })
+	}
 
 	handleChangeTinyMCE = (name, html) => {
 		this.setState({ [name]: { value: this.state[name].value, html: html } })
@@ -70,7 +83,7 @@ class Form extends Component {
 		e.preventDefault();
 
 		const { context, url, productSlug } = this.props;
-		const { name, status, description, content } = this.state;
+		const { name, status, description, content, isTwig, twigName } = this.state;
 
 		this.setState({ errors: [] });
 
@@ -80,6 +93,10 @@ class Form extends Component {
 			{ type: "text", id: 'description', value: description.html },
 			{ type: "text", id: 'content', value: content.html },
 		];
+
+		if (isTwig[0] === 1) {
+			paramsToValidate = [...paramsToValidate, ...[{ type: "text", id: 'twigName', value: twigName }]];
+		}
 
 		let validate = Validateur.validateur(paramsToValidate)
 		if (!validate.code) {
@@ -110,10 +127,10 @@ class Form extends Component {
 	}
 
 	render () {
-		const { context } = this.props;
-		const { errors, name, status, description, content, visibility } = this.state;
+		const { context, productSlug } = this.props;
+		const { errors, name, status, description, content, visibility, isTwig, twigName } = this.state;
 
-		let params = { errors: errors, onChange: this.handleChange }
+		let params0 = { errors: errors, onChange: this.handleChange }
 
 		let statusItems = [
 			{ value: 0, label: 'Hors ligne', identifiant: 'type-0' },
@@ -125,7 +142,9 @@ class Form extends Component {
 			{ value: 1, label: 'Pour administration', identifiant: 'visi-1' },
 		]
 
-        return <form onSubmit={this.handleSubmit}>
+		let twigItems = [{ value: 1, label: "Oui", identifiant: "oui" }];
+
+		return <form onSubmit={this.handleSubmit}>
             <div className="flex flex-col gap-4 xl:gap-6">
                 <div className="grid gap-2 xl:grid-cols-3 xl:gap-6">
                     <div>
@@ -137,18 +156,18 @@ class Form extends Component {
                     <div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
                         <div className="flex gap-4">
                             <div className="w-full">
-                                <Radiobox items={statusItems} identifiant="status" valeur={status} {...params}>
+                                <Radiobox items={statusItems} identifiant="status" valeur={status} {...params0}>
                                     Statut *
                                 </Radiobox>
                             </div>
                             <div class="w-full">
-                                <Radiobox items={visibilityItems} identifiant="visibility" valeur={visibility} {...params}>
+                                <Radiobox items={visibilityItems} identifiant="visibility" valeur={visibility} {...params0}>
                                     Visibilité *
                                 </Radiobox>
                             </div>
                         </div>
                         <div>
-                            <Input identifiant="name" valeur={name} {...params}>Intitulé *</Input>
+                            <Input identifiant="name" valeur={name} {...params0}>Intitulé *</Input>
                         </div>
                         <div>
                             <TinyMCE type={3} identifiant='description' valeur={description.value}
@@ -162,19 +181,34 @@ class Form extends Component {
                     <div>
                         <div className="font-medium text-lg">Contenu</div>
                         <div className="text-gray-600 text-sm">
-                            Documentation complète de la fonctionnalité ou caractéristique de votre solution
+                            <span className="font-semibold">Contenu physique</span> correspond au fichier twig en
+								physique alors que l'inverse permet d'écrire le contenu directement via le site mais la
+								mise en page n'est pas forcément raccord.
+							<br/><br/>
+                            <span className="font-semibold">Nom du fichier twig</span> correspond nom du fichier
+							dans /template/user/pages/documentations/products/{productSlug.toLowerCase()}/xxxxxx
                         </div>
                     </div>
                     <div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
-                        <TinyMCE type={4} identifiant='content' valeur={content.value}
-                                 errors={errors} onUpdateData={this.handleChangeTinyMCE}>
-                            Description *
-                        </TinyMCE>
-                    </div>
-                </div>
-            </div>
-            <div className="mt-4 flex justify-end gap-2">
-                <Button isSubmit={true} type="blue"> {context === "create" ? "Enregistrer" : "Enregistrer les modifications"}</Button>
+						<div>
+							<Switcher items={twigItems} identifiant="isTwig" valeur={isTwig} {...params0}>
+								Contenu physique
+							</Switcher>
+						</div>
+						<div>
+							{isTwig[0] === 1
+								? <Input identifiant="twigName" valeur={twigName} {...params0} placeholder="xxxx.html.twig">Nom du fichier</Input>
+								: <TinyMCE type={4} identifiant='content' valeur={content.value}
+										   errors={errors} onUpdateData={this.handleChangeTinyMCE}>
+									Description *
+								</TinyMCE>
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div className="mt-4 flex justify-end gap-2">
+				<Button isSubmit={true} type="blue"> {context === "create" ? "Enregistrer" : "Enregistrer les modifications"}</Button>
                 <Button isSubmit={true} type="default" onClick={(e) => this.handleSubmit(e, true)}>Enregistrer et rester sur la page</Button>
             </div>
         </form>

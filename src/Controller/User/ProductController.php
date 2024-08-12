@@ -22,8 +22,14 @@ class ProductController extends AbstractController
     #[Route('/', name: 'products_index', options: ['expose' => true])]
     public function index(HeProductRepository $productRepository): Response
     {
+        if($this->isGranted('ROLE_ADMIN')){
+            $products = $productRepository->findAll();
+        }else{
+            $products = $productRepository->findBy(['isIntern' => false]);
+        }
+
         return $this->render('user/pages/products/index.html.twig', [
-            'products' => $productRepository->findAll()
+            'products' => $products
         ]);
     }
 
@@ -50,7 +56,7 @@ class ProductController extends AbstractController
             'elem' => $obj,
             'docs' => $documentations,
             'tutorials' => $tutorials,
-            'canRead' => in_array($obj->getId(), $user->getAccess())
+            'canRead' => in_array($obj->getId(), $user->getAccess()) || (!$this->isGranted('ROLE_ADMIN') && $obj->isIntern())
         ]);
     }
 

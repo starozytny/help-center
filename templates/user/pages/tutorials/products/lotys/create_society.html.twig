@@ -1,0 +1,96 @@
+{% extends 'user/pages/tutorials/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Initialiser la base de donnée</h3>
+        <div class="mt-4">
+            Depuis le CPanel lotys, allez sur la page MySQL® Databases.
+            <br> Ajoutez une nouvelle base de donnée au format suivant : <span class="font-semibold">transacXXX</span> <span class="text-sm italic">(où XXX représente le numéro de société à 3 caractères)</span>.
+            <br><br> Associons deux utilisateurs à cette nouvelle base de donnée.
+            <ul>
+                <li><span class="font-semibold">lotys_user</span> : avec tous les droits</li>
+                <li><span class="font-semibold">lotys_save</span> : avec <i>LOCK TABLES</i> et <i>SELECT</i></li>
+            </ul>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Créer la société dans Lotys</h3>
+        <div class="mt-4">
+            Depuis l'espace administrateur de Lotys, allez sur la page Sociétés > Ajouter une société.
+            <br>Suivre les étapes de création puis cliquez sur le bouton Enregistrer.
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Vider le cache</h3>
+        <div class="mt-4">
+            Depuis le CPanel lotys, allez sur la page Terminal.
+            <br>Renseignez les lignes de commandes suivantes :
+
+            <div class="my-4 bg-gray-900 rounded-md">
+                <div class="py-2.5 px-4 font-medium bg-gray-800 rounded-t-md text-slate-50">Terminal</div>
+                <div class="p-4 border-t border-gray-700">
+                    <div>
+                        <span class="text-blue-400">cd</span>
+                        <span class="text-slate-50">public_html</span>
+                    </div>
+                    <div>
+                        <span class="text-blue-400">php bin/console</span>
+                        <span class="text-slate-50">ca:cl</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Activer la société dans Lotys</h3>
+        <div class="mt-4">
+            Depuis l'espace administrateur de Lotys, allez sur la page Sociétés.
+            <br>Cliquez sur l'icône en forme d'alarme, Activer.
+            <br><br>
+            <div class="italic">Cette action va créer toutes les tables de la base donnée nécessaire à l'utilisation de Lotys.</div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Paramétrer l'espace utilisateur dans Lotys</h3>
+        <div class="mt-4">
+            Depuis l'espace utilisateur de Lotys, sélectionnez la société en survolant le carré arrondi bleu sur la gauche de votre écran.
+            <br> Valider la sélection pour accéder à l'espace dédié à cette société.
+            <br><br>
+            - Rendez-vous dans Paramètres > Paramètres généraux.
+            <div class="font-semibold mt-2">Paramètres obligatoires à changer : </div>
+            <ul>
+                <li>Sélectionnez un négociateur par défaut</li>
+                <li>Changer la taille du text de la partie Bandeau en 16</li>
+            </ul>
+            <div class="mt-2">Les autres paramètres sont à modifier par l'utilisateur ou préconfiguré par vous-même.</div>
+            <br>
+            - Rendez-vous dans Paramètres > Agence > Modifier les informations.
+            <br> Vérifiez que le nom du dossier et identifiant ne comporte pas d'espace ni de caractères spéciaux. Modifier si ce n'est pas le cas.
+            <br> Remplissez le plus d'informations possibles et faites vérifier cette page par le client.
+            <br><br>
+            - Rendez-vous dans Paramètres > Supports.
+            <br>Activez et modifiez les supports utilisés par le client.
+            <br><i>Il n'y a pas de bouton pour ajouter un support inexistant pour le moment.
+                   Si vous souhaitez le faire, prenez la place d'un support quelconque et Chanbora
+                   se chargera de l'ajout plus proprement plus tard.</i>
+            <br><br>
+            - Rendez-vous dans Publications > Publications.
+            <br>Dans le cadre Ne pas publier les biens, sélectionnez les options relatives au client ou laisse le s'en occuper.
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">(facultatif) Importer des données</h3>
+        <div class="mt-4">
+            <b>Fonctionne uniquement avec une archive au format SeLoger.</b>
+            <br><br>
+            Assurez-vous que le nom de l'archive correspond au nom du fichier renseigné dans les informations de L'agence.
+            <br><br>
+            - Rendez-vous dans Paramètres > Transfert - Transac
+            <br>Sélectionnez les options qui vous conviennent.
+            <br>Déposez l'archive. S'il est trop lourd, vous devez le déposer
+            par le <i>Cpanel > File Manager > public_html > documents > import > transac > depot</i>
+            <br><br>
+            Rafraichissez la page Transfert - Transac et lancer la procédure.
+        </div>
+    </div>
+{% endblock %}

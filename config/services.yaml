@@ -6,6 +6,7 @@
 parameters:
     public_directory: '%kernel.project_dir%/public/'
     private_directory: '%kernel.project_dir%/documents/'
+    templates_directory: '%kernel.project_dir%/templates/'
     config_directory: '%kernel.project_dir%/config/'
     env_file: '%kernel.project_dir%/.env.local'
 

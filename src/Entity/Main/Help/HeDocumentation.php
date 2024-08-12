@@ -67,6 +67,14 @@ class HeDocumentation extends DataEntity
     #[Groups(['doc_form'])]
     private ?string $icon = null;
 
+    #[ORM\Column]
+    #[Groups(['doc_form'])]
+    private ?bool $isTwig = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['doc_form'])]
+    private ?string $twigName = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -209,6 +217,30 @@ class HeDocumentation extends DataEntity
     public function setIcon(?string $icon): self
     {
         $this->icon = $icon;
+
+        return $this;
+    }
+
+    public function isTwig(): ?bool
+    {
+        return $this->isTwig;
+    }
+
+    public function setTwig(bool $isTwig): static
+    {
+        $this->isTwig = $isTwig;
+
+        return $this;
+    }
+
+    public function getTwigName(): ?string
+    {
+        return $this->twigName;
+    }
+
+    public function setTwigName(?string $twigName): static
+    {
+        $this->twigName = $twigName;
 
         return $this;
     }

@@ -1,12 +1,12 @@
-{% extends 'user/pages/documentations/template.html.twig' %}
+{% extends 'user/pages/tutorials/template.html.twig' %}
 
-{% set page_title %}Documentation : {{ elem.name }}{% endset %}
+{% set page_title %}Guide : {{ elem.name }}{% endset %}
 {% set page_subtitle %}{{ elem.status == 0 ? "<span class='txt-danger'>[HORS LIGNE]</span>" : "" }}{% endset %}
 
 {% set page_actions %}
     {% if is_granted('ROLE_ADMIN') %}
         {% include 'layout/components/tailwind/buttons/button.html.twig' with {
-            btn_link: path('user_help_documentation_update', {p_slug: product.slug, slug: elem.slug}),
+            btn_link: path('user_help_tutorial_update', {p_slug: product.slug, slug: elem.slug}),
             btn_type: 'default',
             btn_icon: 'pencil',
             btn_text: 'Modifier'
@@ -18,10 +18,10 @@
     <div class="max-w-screen-lg mx-auto">
         <div class="mb-4 flex gap-2">
             {% include 'layout/components/tailwind/buttons/button.html.twig' with {
-                btn_link: path('user_help_documentation_index', {p_slug: product.slug}),
+                btn_link: path('user_help_tutorial_index', {p_slug: product.slug}),
                 btn_type: 'default',
                 btn_icon: 'left-arrow',
-                btn_text: 'Retourner aux documentations'
+                btn_text: 'Retourner aux guides'
             } %}
             {% include 'layout/components/tailwind/buttons/button.html.twig' with {
                 btn_link: path('user_help_product_read', {slug: product.slug}),
@@ -30,12 +30,12 @@
                 btn_text: 'Retourner à ' ~ product.name
             } %}
         </div>
-        <div class="my-12 border-y border-gray-500 py-12">
+        <div class="mt-12 pb-12 ">
             <h2 class="text-4xl font-bold">{{ elem.name }}</h2>
             <div class="text-gray-600 text-sm">{{ elem.description | raw }}</div>
         </div>
-        <div>
-            {{ elem.content | raw }}
+        <div class="flex flex-col divide-y">
+            {% block main_content_in %}{% endblock %}
         </div>
     </div>
 {% endblock %}
