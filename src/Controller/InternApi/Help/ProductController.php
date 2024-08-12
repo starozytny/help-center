@@ -2,9 +2,6 @@
 
 namespace App\Controller\InternApi\Help;
 
-use App\Entity\Enum\Help\HelpFavorite;
-use App\Entity\Main\Help\HeFavorite;
-use App\Entity\Main\Help\HeLike;
 use App\Entity\Main\Help\HeProduct;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Service\ApiResponse;
@@ -66,19 +63,15 @@ class ProductController extends AbstractController
     {
         $em = $registry->getManager();
 
-        $docsIds = [];
         foreach($obj->getDocumentations() as $doc){
-            $docsIds[] = $doc->getId();
             $em->remove($doc);
         }
 
-        $tutosIds = [];
         foreach($obj->getTutorials() as $tuto){
             foreach($tuto->getSteps() as $step){
                 $em->remove($step);
             }
 
-            $tutosIds[] = $tuto->getId();
             $em->remove($tuto);
         }
 
@@ -89,20 +82,6 @@ class ProductController extends AbstractController
 
             $em->remove($cat);
         }
-
-        $favorites = $em->getRepository(HeFavorite::class)->findBy([
-            'type' => HelpFavorite::Tutorial, 'identifiant' => $tutosIds
-        ]);
-        $tutoAnswers = $em->getRepository(HeLike::class)->findBy([
-            'type' => HelpFavorite::Tutorial, 'identifiant' => $tutosIds
-        ]);
-        $docAnswers = $em->getRepository(HeLike::class)->findBy([
-            'type' => HelpFavorite::Documentation, 'identifiant' => $docsIds
-        ]);
-
-        foreach($favorites as $item) $em->remove($item);
-        foreach($tutoAnswers as $item) $em->remove($item);
-        foreach($docAnswers as $item) $em->remove($item);
 
         $fileUploader->deleteFile($obj->getLogo(), HeProduct::FOLDER_LOGO);
 

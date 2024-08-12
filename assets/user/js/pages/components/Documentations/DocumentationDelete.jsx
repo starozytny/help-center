@@ -6,13 +6,13 @@ import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import Formulaire from "@commonFunctions/formulaire";
 
-import { Button, ButtonIcon } from "@commonComponents/Elements/Button";
-import { Modal } from "@commonComponents/Elements/Modal";
+import { Button } from "@tailwindComponents/Elements/Button";
+import { Modal } from "@tailwindComponents/Elements/Modal";
 
 const URL_INDEX_ELEMENTS = 'user_help_product_read';
 const URL_DELETE_ELEMENT = 'intern_api_help_documentations_delete';
 
-export function DocumentationDelete ({ context, id, name, productSlug })
+export function DocumentationDelete ({ id, name, productSlug })
 {
     let modalRef = useRef(null);
 
@@ -21,23 +21,20 @@ export function DocumentationDelete ({ context, id, name, productSlug })
     const handleDelete = () => {
         let self = this;
 
-        modalRef.current.handleUpdateFooter(<Button isLoader={true} type="danger">Confirmer la suppression</Button>);
-        axios({ method: "DELETE", url: Routing.generate(URL_DELETE_ELEMENT, {'id': id}), data: {} })
+        modalRef.current.handleUpdateFooter(<Button isLoader={true} type="red">Confirmer la suppression</Button>);
+        axios({ method: "DELETE", url: Routing.generate(URL_DELETE_ELEMENT, {id: id}), data: {} })
             .then(function (response) {
-                location.href = Routing.generate(URL_INDEX_ELEMENTS, {'slug': productSlug});
+                location.href = Routing.generate(URL_INDEX_ELEMENTS, {slug: productSlug});
             })
             .catch(function (error) { Formulaire.displayErrors(self, error); Formulaire.loader(false); })
         ;
     }
 
     return <>
-        {context === "read"
-            ? <Button icon="trash" type="danger" onClick={handleClick}>Supprimer</Button>
-            : <ButtonIcon icon="trash" type="none" onClick={handleClick}>Supprimer</ButtonIcon>
-        }
+        <div className="text-sm underline cursor-pointer hover:text-gray-700" onClick={handleClick}>Supprimer</div>
         <Modal ref={modalRef} identifiant={`delete-doc-${id}`} maxWidth={414} title="Supprimer la documentation"
-               content={<p>Etes-vous sûr de vouloir supprimer la documentation : <b>{name}</b> ?</p>}
-               footer={<Button type="danger" onClick={handleDelete}>Confirmer la suppression</Button>} closeTxt="Annuler" />
+               content={<p>Êtes-vous sûr de vouloir supprimer la documentation : <b>{name}</b> ?</p>}
+               footer={<Button type="red" onClick={handleDelete}>Confirmer la suppression</Button>} closeTxt="Annuler" />
     </>
 }
 

@@ -3,18 +3,16 @@
 {% set page_title %}Création d'une documentation pour {{ product.name }}{% endset %}
 {% set page_subtitle %}Décrivez une fonctionnalité ou caractéristique de votre solution.{% endset %}
 
-{% block breadcrumb %}
-    {% set breadcrumbs = breadcrumbs | merge([
-        { text: product.name, url: path('user_help_product_read', {'slug': product.name})  },
-        { text: page_title }
-    ]) %}
-    {{ parent() }}
-{% endblock %}
-
-{% set full_width = true %}
+{% set page_actions %}
+    {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+        btn_link: path('user_help_documentation_index', {p_slug: product.slug}),
+        btn_type: 'default',
+        btn_icon: 'left-arrow',
+        btn_text: 'Retourner aux documentations'
+    } %}
+{% endset %}
 
 {% block main_content %}
-    {% include "layout/components/admin/page_toolbar.html.twig" with { page_back: path('user_help_product_read', {'slug': product.slug}) } %}
 
     <div id="documentations_create" data-product-slug="{{ product.slug }}">
         {% include "layout/components/loader.html.twig" %}

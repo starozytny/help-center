@@ -2,11 +2,8 @@
 
 namespace App\Controller\InternApi\Help;
 
-use App\Entity\Enum\Help\HelpFavorite;
 use App\Entity\Main\Help\HeStep;
 use App\Entity\Main\Help\HeTutorial;
-use App\Repository\Main\Help\HeFavoriteRepository;
-use App\Repository\Main\Help\HeLikeRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Repository\Main\Help\HeStepRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
@@ -96,22 +93,12 @@ class TutorialController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'delete', options: ['expose' => true], methods: 'DELETE')]
-    public function delete(HeTutorial $obj, HeTutorialRepository $repository, HeLikeRepository $likeRepository,
-                           HeStepRepository $stepRepository, HeFavoriteRepository $favoriteRepository, ApiResponse $apiResponse): Response
+    public function delete(HeTutorial $obj, HeTutorialRepository $repository, HeStepRepository $stepRepository, ApiResponse $apiResponse): Response
     {
         foreach($obj->getSteps() as $step){
             $stepRepository->remove($step);
         }
 
-        $favorites = $favoriteRepository->findBy(['type' => HelpFavorite::Tutorial, 'identifiant' => $obj->getId()]);
-        foreach($favorites as $fav){
-            $favoriteRepository->remove($fav);
-        }
-
-        $likes = $likeRepository->findBy(['type' => HelpFavorite::Tutorial, 'identifiant' => $obj->getId()]);
-        foreach($likes as $like){
-            $likeRepository->remove($like);
-        }
 
         $repository->remove($obj, true);
         return $apiResponse->apiJsonResponseSuccessful("ok");

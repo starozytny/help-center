@@ -1,8 +1,0 @@
-@import "../vars/vars";
-
-@import "../../../common/css/pages/products";
-
-.products {
-  @include flex(row, center, center, var(--espaceDiv));
-  flex-wrap: wrap;
-}

@@ -73,7 +73,6 @@ class DonneesInitDocumentationsCommand extends Command
                         </span>
                     </div>'],
                 'content' => ['value' => '', 'html' => 'Les status'],
-                'duration' => null
             ],
         ];
 

@@ -4,13 +4,10 @@ namespace App\Service\Data;
 
 use App\Entity\Main\Help\HeCategory;
 use App\Entity\Main\Help\HeDocumentation;
-use App\Entity\Main\Help\HeLike;
 use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
 use App\Entity\Main\Help\HeTutorial;
-use App\Entity\Main\User;
 use App\Service\SanitizeData;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class DataHelp
 {
@@ -32,12 +29,9 @@ class DataHelp
 
     public function setDataTutorial(HeTutorial $obj, $data): HeTutorial
     {
-        $duration = str_replace('h', ':', $data->duration);
-
         return ($obj)
             ->setName($this->sanitizeData->trimData($data->name))
             ->setSlug($this->sanitizeData->slugString($data->name))
-            ->setDuration($this->sanitizeData->createTimePicker($duration))
             ->setDescription($this->sanitizeData->trimData($data->description->html))
             ->setVisibility((int) $data->visibility)
         ;
@@ -45,13 +39,9 @@ class DataHelp
 
     public function setDataDocumentation(HeDocumentation $obj, $data): HeDocumentation
     {
-        $duration = str_replace('h', ':', $data->duration);
-
         return ($obj)
-            ->setIcon($this->sanitizeData->trimData($data->icon))
             ->setName($this->sanitizeData->trimData($data->name))
             ->setSlug($this->sanitizeData->slugString($data->name))
-            ->setDuration($this->sanitizeData->createTimePicker($duration))
             ->setDescription($this->sanitizeData->trimData($data->description->html))
             ->setContent($this->sanitizeData->trimData($data->content->html))
             ->setVisibility((int) $data->visibility)
@@ -74,16 +64,6 @@ class DataHelp
         return ($obj)
             ->setName($this->sanitizeData->trimData($data->name))
             ->setContent($this->sanitizeData->trimData($data->content->html))
-        ;
-    }
-
-    public function setDataLike(HeLike $obj, User|UserInterface $user, int $identifiant, int $type, int $answer): HeLike
-    {
-        return ($obj)
-            ->setUser($user)
-            ->setIdentifiant($identifiant)
-            ->setType($type)
-            ->setAnswer($answer)
         ;
     }
 }

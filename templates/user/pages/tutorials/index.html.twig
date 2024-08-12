@@ -1,0 +1,80 @@
+{% extends 'user/pages/tutorials/template.html.twig' %}
+
+{% set typeString = product.webservice ? "logiciel en ligne" : "logiciel" %}
+
+{% set page_title %}{{ product.name }}{% endset %}
+{% set page_subtitle %}Liste des guides{% endset %}
+
+{% set page_actions %}
+    {% if app.user.admin %}
+        {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+            btn_link: path('user_help_tutorial_create', {p_slug: product.slug}),
+            btn_type: 'blue',
+            btn_icon: 'add',
+            btn_text: 'Ajouter un guide'
+        } %}
+    {% endif %}
+{% endset %}
+
+{% block main_content %}
+    <div class="mb-4">
+        {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+            btn_link: path('user_help_product_read', {slug: product.slug}),
+            btn_type: 'default',
+            btn_icon: 'left-arrow',
+            btn_text: 'Retourner à ' ~ product.name
+        } %}
+    </div>
+    <div>
+        <h2 class="font-bold text-2xl">Guides</h2>
+        <div class="text-gray-800">Prenez en main facilement le {{ typeString }} avec nos guides.</div>
+
+        <div class="mt-4">
+            <div class="flex flex-col gap-4 md:grid md:grid-cols-3 2xl:grid-cols-4 qhd:grid-cols-5">
+                {% if tutorials | length == 0 %}
+                    {% include "layout/components/tailwind/alerts/alert.html.twig" with {
+                        alert_type: 'blue',
+                        alert_icon: 'question',
+                        alert_text: 'Aucun guide rédigé pour le moment.'
+                    } %}
+                {% else %}
+                    {% for el in tutorials %}
+                        {% if (el.visibility == 1 and app.user.highRoleCode != 0) or el.visibility == 0 %}
+                            <div class="flex flex-col">
+                                <a href="{{ path('user_help_tutorial_read', {p_slug: product.slug, slug: el.slug}) }}"
+                                   class="group block md:max-w-72 bg-white p-4 border rounded-md">
+                                    <div class="font-semibold group-hover:text-blue-500 min-h-12">
+                                        {{ el.name }} {{ el.status == 0 ? "<span class='text-red-500'>[HORS LIGNE]</span>" : "" }}
+                                    </div>
+                                    <div class="mt-1 text-sm min-h-24">
+                                        {% if el.visibility == 1 %}
+                                            <div class="text-red-500">[Administration]</div>
+                                        {% endif %}
+                                        <div class="text-gray-800">
+                                            {{ el.description | raw }}
+                                        </div>
+                                    </div>
+                                </a>
+                                {% if app.user.admin %}
+                                    <div class="mt-2 flex gap-2 justify-end pr-2">
+                                        <a href="{{ path('user_help_tutorial_update', {p_slug: product.slug, slug: el.slug}) }}"
+                                           class="text-sm underline cursor-pointer hover:text-gray-700">
+                                            Modifier
+                                        </a>
+                                        <div class="delete-tuto"
+                                             data-id="{{ el.id }}"
+                                             data-name="{{ el.name }}"
+                                             data-product-slug="{{ product.slug }}"
+                                        >
+                                            <div class="text-sm underline cursor-not-allowed hover:text-gray-700">Supprimer</div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

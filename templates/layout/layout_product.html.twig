@@ -1,0 +1,143 @@
+{% extends 'base_tailwind.html.twig' %}
+
+{% block title %}{{ page_title }} | {{ page_prefix }} {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('user_app') }}
+{% endblock %}
+
+{% block body %}
+    {% include "layout/components/page-loader.html.twig" %}
+
+    <div class="grid lg:min-h-full lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+        <nav class="bg-gray-800 lg:min-h-full">
+            <div>
+                <div class="relative flex flex-row items-center justify-between gap-4 p-4 lg:flex-col lg:gap-6">
+                    <a href="{{ path('user_homepage') }}" class="flex flex-shrink-0 items-center bg-gray-50 p-2 rounded-md">
+                        <img class="h-12 w-auto" src="{{ asset(product.logoFile) }}" alt="Logilink">
+                    </a>
+                    <div class="relative flex flex-col items-center gap-4 rounded-full text-sm">
+                        <div class="text-center font-medium text-slate-50">
+                            <div>Centre d'aide en ligne de {{ product.name }}</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-row items-center gap-4 lg:hidden">
+                        <button type="button" class="nav-mobile relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 lg:hidden hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                id="nav-mobile-main-btn" aria-controls="mobile-menu" aria-expanded="false">
+                            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+                            </svg>
+                            <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="nav-content" class="hidden flex-col justify-between pb-4 h-screen max-h-[88vh] sm:flex-row lg:flex lg:flex-col lg:max-h-full lg:pb-0 lg:h-[70vh]">
+                <div class="bg-gray-800 flex flex-col gap-1 w-full px-4 pt-4">
+                    {% for item in menu %}
+                        {% if item.dropdown is defined %}
+                            <div class="relative">
+                                <div class="bg-gray-700 w-0.5 h-[calc(100%-2.5rem)] absolute top-10 left-4"></div>
+                                <a href="{{ item.path }}" class="{{- app.request.get('_route') in item.matchRoute ? "text-white" : "text-gray-300" }} block rounded-md px-3 py-2 font-semibold">
+                                    {{ item.name }}
+                                </a>
+                                <div class="flex flex-col">
+                                    {% for it in item.items %}
+                                        {% set itClass = "text-gray-300 hover:text-white" %}
+                                        {% set itClassBorder = "bg-transparent" %}
+                                        {% if app.request.get('_route') in it.matchRoute %}
+
+                                            {% if it.matchParams is defined %}
+                                                {% set findParams = false %}
+                                                {% for p in app.request.get('_route_params') %}
+                                                    {% if p in it.matchParams %}
+                                                        {% set findParams = true %}
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                {% if findParams %}
+                                                    {% set itClass = "text-white" %}
+                                                    {% set itClassBorder = "bg-blue-700" %}
+                                                {% endif %}
+                                            {% else %}
+                                                {% set itClass = "text-white" %}
+                                                {% set itClassBorder = "bg-blue-700" %}
+                                            {% endif %}
+
+                                        {% endif %}
+
+                                        <a href="{{ it.path }}"
+                                           class="{{ itClass }} relative rounded-md pr-2 pl-8 py-1 text-sm font-medium"
+                                           aria-current="page"
+                                        >
+                                            <div class="{{ itClassBorder }} w-0.5 h-full absolute top-0 left-4"></div>
+                                            {% if it.isAdmin %}<span class="text-red-500 pr-1">[A]</span>{% endif %}
+                                            <span>{{ it.name }}</span>
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% else %}
+                            <a href="{{ item.path }}"
+                               class="{{- app.request.get('_route') in item.matchRoute ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white" }} rounded-md px-3 py-2 font-medium"
+                               aria-current="page"
+                            >
+                                {% if item.icon is defined %}
+                                    <span class="icon-{{ item.icon }} inline-block translate-y-0.5"></span>
+                                    <span class="ml-1">{{ item.name }}</span>
+                                {% else %}
+                                    {{ item.name }}
+                                {% endif %}
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="bg-gray-800 flex flex-col gap-1 w-full px-4 pt-4">
+                    {% for item in menu_bottom %}
+                        <a href="{{ item.path }}"
+                           class="{{- app.request.get('_route') in item.matchRoute ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white" }} rounded-md px-3 py-2 font-medium"
+                           aria-current="page"
+                        >
+                            <span class="icon-{{ item.icon }} inline-block translate-y-0.5"></span>
+                            <span class="ml-1">{{ item.name }}</span>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </nav>
+
+        <main class="lg:col-span-3 xl:col-span-4 2xl:col-span-5">
+            <div class="relative isolate {{ maj_class}} items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
+                <div class="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl" aria-hidden="true">
+                    <div class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30"
+                         style="clip-path: polygon(74.8% 41.9%, 97.2% 73.2%, 100% 34.9%, 92.5% 0.4%, 87.5% 0%, 75% 28.6%, 58.5% 54.6%, 50.1% 56.8%, 46.9% 44%, 48.3% 17.4%, 24.7% 53.9%, 0% 27.9%, 11.9% 74.2%, 24.9% 54.1%, 68.6% 100%, 74.8% 41.9%)"></div>
+                </div>
+                <div class="absolute left-[max(45rem,calc(50%+8rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl" aria-hidden="true">
+                    <div class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30"
+                         style="clip-path: polygon(74.8% 41.9%, 97.2% 73.2%, 100% 34.9%, 92.5% 0.4%, 87.5% 0%, 75% 28.6%, 58.5% 54.6%, 50.1% 56.8%, 46.9% 44%, 48.3% 17.4%, 24.7% 53.9%, 0% 27.9%, 11.9% 74.2%, 24.9% 54.1%, 68.6% 100%, 74.8% 41.9%)"></div>
+                </div>
+                <div class="w-full flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+                    <p class="text-sm leading-6 text-gray-900">
+                        <span class="font-semibold">{{ maj_date }}</span> {{ maj_text }}
+                    </p>
+                </div>
+            </div>
+
+            {% include "layout/components/product/page_title.html.twig" %}
+
+            <div class="mx-auto max-w-screen-qhd px-4 py-8 min-h-screen sm:px-6 lg:px-8">
+                {% block main_content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+
+    {% block footer %}{% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('user_app') }}
+{% endblock %}

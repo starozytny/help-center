@@ -3,100 +3,35 @@
 {% set product = elem.product %}
 {% set author = elem.author %}
 
-{% block title %}{{ elem.name }} | {{ page_prefix }}{% endblock %}
-{% set page_title_alone %}{{ elem.name }} {{ elem.status == 0 ? "<span class='txt-danger'>[HORS LIGNE]</span>" : "" }}{% endset %}
-{% set page_subtitle %}Tutoriel {{ product.name }}{% endset %}
-
-{% block breadcrumb %}
-    {% set breadcrumbs = breadcrumbs | merge([
-        { text: product.name, url: path('user_help_product_read', {'slug': product.name})  },
-        { text: page_title_alone }
-    ]) %}
-    {{ parent() }}
-{% endblock %}
+{% set page_title %}{{ product.name }}{% endset %}
+{% set page_subtitle %}Guide {{ elem.name }} {{ elem.status == 0 ? "<span class='txt-danger'>[HORS LIGNE]</span>" : "" }}{% endset %}
 
 {% block main_content %}
-    <div class="page-actions">
-        <div class="col-1">
-            <a href="{{ path('user_help_product_read', {'slug': product.slug}) }}" class="btn btn-outline-default">
-                <span class="icon-left-arrow"></span>
-                <span>Retourner à {{ product.name }}</span>
-            </a>
+    <div class="max-w-screen-lg mx-auto">
+        <div class="mb-4 flex gap-2">
+            {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+                btn_link: path('user_help_tutorial_index', {p_slug: product.slug}),
+                btn_type: 'default',
+                btn_icon: 'left-arrow',
+                btn_text: 'Retourner aux guides'
+            } %}
+            {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+                btn_link: path('user_help_product_read', {slug: product.slug}),
+                btn_type: 'default',
+                btn_icon: 'left-arrow',
+                btn_text: 'Retourner à ' ~ product.name
+            } %}
         </div>
-        <div class="col-2">
-            {% if app.user.admin %}
-                <a href="{{ path('user_help_tutorial_update', {'p_slug': product.slug, 'slug': elem.slug}) }}" class="btn btn-warning">
-                    <span class="icon-pencil"></span>
-                    <span>Modifier</span>
-                </a>
-                <div class="delete-tuto"
-                     data-id="{{ elem.id }}"
-                     data-name="{{ elem.name }}"
-                     data-product-slug="{{ product.slug }}"
-                >
-                    <button class="btn btn-danger btn-loader-without-text">
-                        <span class="icon-chart-3"></span>
-                        <span>Supprimer</span>
-                    </button>
-                </div>
-            {% endif %}
-            <div class="favorite-tuto"
-                 data-id="{{ elem.id }}"
-                 data-type="0"
-                 data-is-fav="{{ isFav ? 1 : 0 }}"
-            >
-                <button class="btn-icon btn-loader-without-text"><span class="icon-chart-3"></span></button>
-            </div>
+        <div class="mt-12 py-12 border-y border-gray-500">
+            <h2 class="text-4xl font-bold">{{ elem.name }}</h2>
+            <div class="text-gray-600 text-sm">{{ elem.description | raw }}</div>
         </div>
-    </div>
-
-    <div class="page-default">
-        <div class="tutorial-read">
-            <div class="tutorial-meta">
-                <div class="features">
-                    <div class="product">
-                        <span class="icon-book-1"></span>
-                        <span>{{ product.name }}</span>
-                    </div>
-                    {% if elem.duration %}
-                        <div class="duration">
-                            <span class="icon-time"></span>
-                            <span>{{ elem.duration | date("H\\hi") | duration }} de temps de lecture</span>
-                        </div>
-                    {% endif %}
-                    <div id="likes" class="likes"
-                         data-id="{{ elem.id }}"
-                         data-type="{{ type }}"
-                         data-answer="{{ answer }}"
-                         data-have-answer="{{ haveAnswer }}"
-                         data-nb-likes="{{ elem.nbLike }}"
-                         data-nb-dislikes="{{ elem.nbDislike }}"
-                    >
-                        <div class="item"><span class="icon-chart-3"></span></div>
-                    </div>
+        <div class="flex flex-col divide-y">
+            {% for step in steps %}
+                <div class="py-12">
+                    {{ step.content | raw }}
                 </div>
-                <div class="author">
-                    <div class="user">
-                        <div class="name">{{ author.firstname }}</div>
-                        <div class="avatar">
-                            <div class="avatar-letter">{{ author.lastname | slice(0,1) }}{{ author.firstname | slice(0,1) }}</div>
-                        </div>
-                    </div>
-                    <div class="date">
-                        <div class="sub">{{ elem.createdAt | date('d/m/Y') }}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="tutorial-content">
-                <div class="steps">
-                    {% for step in steps %}
-                        <div class="step">
-                            <div class="number">{{ step.position }}</div>
-                            <div class="content">{{ step.content | raw }}</div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

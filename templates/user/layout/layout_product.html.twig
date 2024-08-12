@@ -1,0 +1,55 @@
+{% extends 'layout/layout_product.html.twig' %}
+
+{% set page_prefix = "Centre d'aide de Logilink" %}
+
+{% set menu = [
+    {
+        name: "Produits", icon: "book",
+        path: path('user_help_products_index'), matchRoute: ['user_help_products_index']
+    },
+    {
+        name: product.name, icon: "book-1",
+        path: path('user_help_product_read', {slug: product.slug}), matchRoute: [
+            'user_help_products_index', 'user_help_documentation_index', 'user_help_tutorial_index',
+            'user_help_product_read', 'user_help_documentation_read', 'user_help_tutorial_read',
+            'user_help_product_create', 'user_help_documentation_create', 'user_help_tutorial_create',
+            'user_help_product_update', 'user_help_documentation_update', 'user_help_tutorial_update',
+            'user_help_category_create', 'user_help_question_create',
+            'user_help_category_update', 'user_help_question_update'
+        ]
+    },
+    {
+        name: "Documentations",
+        path: path('user_help_documentation_index', {p_slug: product.slug}),
+        matchRoute: ['user_help_documentation_read', 'user_help_documentation_index', 'user_help_documentation_create', 'user_help_documentation_update'],
+    },
+    {
+        name: "Guides",
+        path: path('user_help_tutorial_index', {p_slug: product.slug}),
+        matchRoute: ['user_help_tutorial_read', 'user_help_tutorial_index', 'user_help_tutorial_create', 'user_help_tutorial_update']
+    },
+] %}
+
+{% set menu_bottom = [] %}
+{% if is_granted('ROLE_ADMIN') %}
+    {% set menu_bottom = [
+        { name: "Espace admin", icon: 'earth',
+            path: path('admin_homepage'), matchRoute: ['admin_homepage']
+        }
+    ] %}
+{% endif %}
+
+{% block footer %}
+    <div class="bg-black/90 px-4 py-8 text-sm sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-screen-2xl pt-4 flex flex-col text-center lg:flex-row lg:text-left gap-2 justify-center">
+            <p class="text-gray-300">&copy; 2024 - <a href="https://logilink.fr" class="text-blue-600">Logilink.fr</a></p>
+            <span class="text-gray-300">-</span>
+            <a class="text-gray-300 hover:text-white" href="{{ path('app_mentions') }}">Mentions légales</a>
+            <a class="text-gray-300 hover:text-white" href="{{ path('app_politique') }}">Politique de confidentialité</a>
+            <a class="text-gray-300 hover:text-white" href="{{ path('app_cookies') }}">Gestion des cookies</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="text-gray-300 hover:text-white" href="{{ path('admin_homepage') }}">Espace administrateur</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
