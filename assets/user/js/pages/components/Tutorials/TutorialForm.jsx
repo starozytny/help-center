@@ -173,7 +173,7 @@ class Form extends Component {
 	}
 
 	render () {
-		const { context } = this.props;
+		const { context, productSlug } = this.props;
 		const { errors, loadStep, name, status, description, nbSteps, visibility, isTwig, twigName } = this.state;
 
 		let params0 = { errors: errors, onChange: this.handleChange }
@@ -240,7 +240,7 @@ class Form extends Component {
 								mise en page n'est pas forcément raccord.
 							<br/><br/>
 							<span className="font-semibold">Nom du fichier twig</span> correspond nom du fichier
-							dans /template/user/pages/documentations/tutorials/[nom_produit]/xxxxxx
+							dans /template/user/pages/documentations/tutorials/{productSlug.toLowerCase()}/xxxxxx
                         </div>
                     </div>
 					<div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
