@@ -11,7 +11,7 @@ import Validateur from "@commonFunctions/validateur";
 
 import { Button } from "@tailwindComponents/Elements/Button";
 import { TinyMCE } from "@tailwindComponents/Elements/TinyMCE";
-import { Input, Radiobox } from "@tailwindComponents/Elements/Fields";
+import { Input, Radiobox, Switcher } from "@tailwindComponents/Elements/Fields";
 import { LoaderElements } from "@tailwindComponents/Elements/Loader";
 
 import { StepFormulaire } from "@userPages/Tutorials/StepForm";
@@ -37,6 +37,8 @@ export function TutorialFormulaire ({ context, productSlug, element, steps }) {
         status={element ? Formulaire.setValue(element.status) : 0}
         description={element ? Formulaire.setValue(element.description) : ""}
         visibility={element ? Formulaire.setValue(element.visibility) : 0}
+		isTwig={element ? Formulaire.setValue(element.isTwig ? 1 : 0) : 0}
+		twigName={element ? Formulaire.setValue(element.twigName) : ""}
     />
 }
 
@@ -59,6 +61,8 @@ class Form extends Component {
 			status: props.status,
 			description: { value: description, html: description },
 			visibility: props.visibility,
+			isTwig: [props.isTwig],
+			twigName: props.twigName,
 			errors: [],
 			loadSteps: true,
 		}
@@ -81,7 +85,16 @@ class Form extends Component {
 		this.setState({ nbSteps: nbSteps, loadStep: false })
 	}
 
-	handleChange = (e) => { this.setState({ [e.currentTarget.name]: e.currentTarget.value }) }
+	handleChange = (e) => {
+		let name = e.currentTarget.name;
+		let value = e.currentTarget.value;
+
+		if (name === "isTwig") {
+			value = e.currentTarget.checked ? [parseInt(value)] : [0];
+		}
+
+		this.setState({ [name]: value })
+	}
 
 	handleChangeTinyMCE = (name, html) => {
 		this.setState({ [name]: { value: this.state[name].value, html: html } })
@@ -117,7 +130,7 @@ class Form extends Component {
 		e.preventDefault();
 
 		const { context, url, productSlug } = this.props;
-		const { name, status, description } = this.state;
+		const { name, status, description, isTwig, twigName } = this.state;
 
 		this.setState({ errors: [] });
 
@@ -126,6 +139,10 @@ class Form extends Component {
 			{ type: "text", id: 'status', value: status },
 			{ type: "text", id: 'description', value: description.html },
 		];
+
+		if (isTwig[0] === 1) {
+			paramsToValidate = [...paramsToValidate, ...[{ type: "text", id: 'twigName', value: twigName }]];
+		}
 
 		let validate = Validateur.validateur(paramsToValidate)
 		if (!validate.code) {
@@ -157,9 +174,9 @@ class Form extends Component {
 
 	render () {
 		const { context } = this.props;
-		const { errors, loadStep, name, status, description, nbSteps, visibility } = this.state;
+		const { errors, loadStep, name, status, description, nbSteps, visibility, isTwig, twigName } = this.state;
 
-		let params = { errors: errors, onChange: this.handleChange }
+		let params0 = { errors: errors, onChange: this.handleChange }
 
 		let steps = [];
 		for (let i = 1 ; i <= nbSteps ; i++) {
@@ -179,6 +196,8 @@ class Form extends Component {
 			{ value: 1, label: 'Pour administration', identifiant: 'visi-1' },
 		]
 
+		let twigItems = [{ value: 1, label: "Oui", identifiant: "oui" }];
+
         return <form onSubmit={this.handleSubmit}>
             <div className="flex flex-col gap-4 xl:gap-6">
                 <div className="grid gap-2 xl:grid-cols-3 xl:gap-6">
@@ -191,18 +210,18 @@ class Form extends Component {
                     <div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
                         <div className="flex gap-4">
                             <div className="w-full">
-                                <Radiobox items={statusItems} identifiant="status" valeur={status} {...params}>
+                                <Radiobox items={statusItems} identifiant="status" valeur={status} {...params0}>
                                     Statut *
                                 </Radiobox>
                             </div>
                             <div class="w-full">
-                                <Radiobox items={visibilityItems} identifiant="visibility" valeur={visibility} {...params}>
+                                <Radiobox items={visibilityItems} identifiant="visibility" valeur={visibility} {...params0}>
                                     Visibilité *
                                 </Radiobox>
                             </div>
                         </div>
                         <div>
-                            <Input identifiant="name" valeur={name} {...params}>Intitulé *</Input>
+                            <Input identifiant="name" valeur={name} {...params0}>Intitulé *</Input>
                         </div>
                         <div>
                             <TinyMCE type={3} identifiant='description' valeur={description.value}
@@ -216,26 +235,42 @@ class Form extends Component {
                     <div>
                         <div className="font-medium text-lg">Contenu</div>
                         <div className="text-gray-600 text-sm">
-                            Le contenu d'un tutoriel est scindé en étapes.
+							<span className="font-semibold">Contenu physique</span> correspond au fichier twig en physique alors que l'inverse
+																					permet d'écrire le contenu directement via le site mais la
+																					mise en page n'est pas forcément raccord.
+							<br/><br/>
+							<span className="font-semibold">Nom du fichier twig</span> correspond nom du fichier dans /template/user/pages/documentations/tutorials/[nom_produit]
+							<br/>
+							Nom sans l'extension .html.twig
                         </div>
                     </div>
-                    <div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
-                        {loadStep
-                            ? <LoaderElements />
-                            : <>
-                                {steps}
-                                <div>
-                                    <Button outline={true} type="default" onClick={this.handleIncreaseStep}>Ajouter une étape</Button>
-                                </div>
-                            </>
-                        }
-                    </div>
-                </div>
-            </div>
-            <div className="mt-4 flex justify-end gap-2">
-                <Button isSubmit={true} type="blue"> {context === "create" ? "Enregistrer" : "Enregistrer les modifications"}</Button>
-                <Button isSubmit={true} type="default" onClick={(e) => this.handleSubmit(e, true)}>Enregistrer et rester sur la page</Button>
-            </div>
+					<div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
+						<div>
+							<Switcher items={twigItems} identifiant="isTwig" valeur={isTwig} {...params0}>
+								Contenu physique
+							</Switcher>
+						</div>
+						<div>
+							{isTwig[0] === 1
+								? <Input identifiant="twigName" valeur={twigName} {...params0}>Nom du fichier twig (sans extension)</Input>
+								: (loadStep
+									? <LoaderElements />
+									: <>
+										{steps}
+										<div>
+											<Button outline={true} type="default" onClick={this.handleIncreaseStep}>Ajouter une étape</Button>
+										</div>
+									</>
+								)
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div className="mt-4 flex justify-end gap-2">
+				<Button isSubmit={true} type="blue"> {context === "create" ? "Enregistrer" : "Enregistrer les modifications"}</Button>
+				<Button isSubmit={true} type="default" onClick={(e) => this.handleSubmit(e, true)}>Enregistrer et rester sur la page</Button>
+			</div>
         </form>
 	}
 }

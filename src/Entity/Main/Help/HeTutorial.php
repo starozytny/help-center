@@ -65,7 +65,12 @@ class HeTutorial extends DataEntity
     private Collection $steps;
 
     #[ORM\Column]
+    #[Groups(['tuto_form'])]
     private ?bool $isTwig = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['tuto_form'])]
+    private ?string $twigName = null;
 
     public function __construct()
     {
@@ -225,6 +230,18 @@ class HeTutorial extends DataEntity
     public function setTwig(bool $isTwig): static
     {
         $this->isTwig = $isTwig;
+
+        return $this;
+    }
+
+    public function getTwigName(): ?string
+    {
+        return $this->twigName;
+    }
+
+    public function setTwigName(?string $twigName): static
+    {
+        $this->twigName = $twigName;
 
         return $this;
     }

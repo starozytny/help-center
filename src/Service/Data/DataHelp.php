@@ -34,6 +34,8 @@ class DataHelp
             ->setSlug($this->sanitizeData->slugString($data->name))
             ->setDescription($this->sanitizeData->trimData($data->description->html))
             ->setVisibility((int) $data->visibility)
+            ->setTwig((int) $data->isTwig[0])
+            ->setTwigName($this->sanitizeData->trimData($data->twigName))
         ;
     }
 
@@ -45,6 +47,8 @@ class DataHelp
             ->setDescription($this->sanitizeData->trimData($data->description->html))
             ->setContent($this->sanitizeData->trimData($data->content->html))
             ->setVisibility((int) $data->visibility)
+            ->setTwig((int) $data->isTwig[0])
+            ->setTwigName($this->sanitizeData->trimData($data->twigName))
         ;
     }
 
