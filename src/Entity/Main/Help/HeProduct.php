@@ -274,4 +274,9 @@ class HeProduct extends DataEntity
 
         return $this;
     }
+
+    public function getDirname(): array|bool|string|null
+    {
+        return mb_strtolower($this->slug);
+    }
 }

@@ -1,0 +1,12 @@
+{% extends 'user/pages/tutorials/template.html.twig' %}
+
+{% set page_actions %}
+    {% if is_granted('ROLE_ADMIN') %}
+        {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+            btn_link: path('user_help_tutorial_update', {p_slug: product.slug, slug: elem.slug}),
+            btn_type: 'default',
+            btn_icon: 'pencil',
+            btn_text: 'Modifier'
+        } %}
+    {% endif %}
+{% endset %}

@@ -181,13 +181,12 @@ class Form extends Component {
                     <div>
                         <div className="font-medium text-lg">Contenu</div>
                         <div className="text-gray-600 text-sm">
-                            <span className="font-semibold">Contenu physique</span> correspond au fichier twig en physique alors que l'inverse
-														  permet d'écrire le contenu directement via le site mais la
-														  mise en page n'est pas forcément raccord.
+                            <span className="font-semibold">Contenu physique</span> correspond au fichier twig en
+								physique alors que l'inverse permet d'écrire le contenu directement via le site mais la
+								mise en page n'est pas forcément raccord.
 							<br/><br/>
-                            <span className="font-semibold">Nom du fichier twig</span> correspond nom du fichier dans /template/user/pages/documentations/products/[nom_produit]
-							<br/>
-							Nom sans l'extension .html.twig
+                            <span className="font-semibold">Nom du fichier twig</span> correspond nom du fichier
+							dans /template/user/pages/documentations/products/[nom_produit]/xxxxxx
                         </div>
                     </div>
                     <div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
@@ -198,7 +197,7 @@ class Form extends Component {
 						</div>
 						<div>
 							{isTwig[0] === 1
-								? <Input identifiant="twigName" valeur={twigName} {...params0}>Nom du fichier twig (sans extension)</Input>
+								? <Input identifiant="twigName" valeur={twigName} {...params0} placeholder="xxxx.html.twig">Nom du fichier</Input>
 								: <TinyMCE type={4} identifiant='content' valeur={content.value}
 										   errors={errors} onUpdateData={this.handleChangeTinyMCE}>
 									Description *
