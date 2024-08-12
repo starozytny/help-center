@@ -41,9 +41,9 @@
                         {% if item.dropdown is defined %}
                             <div class="relative">
                                 <div class="bg-gray-700 w-0.5 h-[calc(100%-2.5rem)] absolute top-10 left-4"></div>
-                                <div class="{{- app.request.get('_route') in item.matchRoute ? "text-white" : "text-gray-300" }} rounded-md px-3 py-2 font-semibold">
+                                <a href="{{ item.path }}" class="{{- app.request.get('_route') in item.matchRoute ? "text-white" : "text-gray-300" }} block rounded-md px-3 py-2 font-semibold">
                                     {{ item.name }}
-                                </div>
+                                </a>
                                 <div class="flex flex-col">
                                     {% for it in item.items %}
                                         {% set itClass = "text-gray-300 hover:text-white" %}
