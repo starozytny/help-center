@@ -1,0 +1,75 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <div class="py-6">
+            <span class="text-red-500 font-semibold">Il n'existe pas de formulaire de création de support.
+                                                     En attendant, vous pouvez utiliser un autre support et Chanbora
+                                                     se chargera de l'ajouter proprement plus tard.</span>
+        </div>
+        <h3 class="text-2xl font-bold">Liste des supports</h3>
+        <div class="mt-4">
+            Les comptes administrateurs voient la totalité des supports.
+            Les comptes utilisateurs voient seulement ce que l'on souhaite leur montrer.
+            <br>
+            Pour qu'un support soit utilisé, il faut qu'il soit activé.
+            <br>
+            On peut activer la sélection par défaut des supports qui sont récurrents pour le client
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Formulaire</h3>
+        <div class="mt-4">
+            <h4 class="text-1xl font-bold">Informations générales</h4>
+            <div class="mt-2">
+                Le <b>format</b> correspond au type d'archive/fichier généré.
+                <br>
+                Le <b>Nom du support</b> et <b>Identifiant du support</b> sont utilisés uniquement sur Lotys pour les identifier.
+                <br>
+                Le <b>Id technique</b>, <b>Nom de l'archive</b> et <b>Nom du fichier</b> correspondent aux
+                spécifications transmis par le service technique du support. Généralement, pour les formats SeLoger, l'id technique
+                et nom de l'archive correspond au <i>code passerelle</i> et le nom du fichier à <i>annonces</i>.
+                Pour les autres formats, généralement, on met la même valeur pour les trois champs.
+            </div>
+        </div>
+        <div class="mt-8">
+            <h4 class="text-1xl font-bold">Re-dimensionner les photos</h4>
+            <div class="mt-2">
+                La <b>Transmission photos</b> permet de choisir entre :
+                <ul>
+                    <li>Physique : les photos sont envoyés dans l'archive. Cette méthode ralenti le temps d'envoi des annonces.</li>
+                    <li>URL : dans le fichier, les photos sont référencés via une URL que le support se charge de télécharger.</li>
+                </ul>
+                Les valeurs de <b>largeur et hauteur</b> permettent la re-dimension des photos en amont. Le mieux étant de laisser le support gérer cette partie.
+            </div>
+        </div>
+        <div class="mt-8">
+            <h4 class="text-1xl font-bold">Communication</h4>
+            <div class="mt-2">
+                Cette partie change selon le format utilisé.
+                <ul>
+                    <li>
+                        Pour le format Seloger/Logicimmo
+                        <ul>
+                            <li><b>Type de communication</b>, il existe le classique FTP et le spécial SeLoger qui utiliser une clé spécifique.</li>
+                            <li>Le reste des champs correspondent aux valeurs classiques d'une communication FTP.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Pour le format API
+                        <ul>
+                            <li><b>URL</b>, l'adresse complète de l'appel API. Exemple : <i>https://immobilieredelapaix.fr/api/immo/lotys/import/033</i></li>
+                            <li>Le reste des champs correspondant aux valeurs classiques d'une connexion.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-8">
+            <h4 class="text-1xl font-bold">Mise à jour du site</h4>
+            <div class="mt-2">
+                Cette partie est uniquement utilisée pour les sites nécessitant l'appel à un lien pour mettre à jour leurs annonces.
+            </div>
+        </div>
+    </div>
+{% endblock %}

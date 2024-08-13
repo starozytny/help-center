@@ -10,6 +10,24 @@
                 <li><span class="text-red-500 font-semibold">Inactif</span> : Inéligible à la publication sauf si l'option <i>Continuer sa publication</i> est active.</li>
                 <li><span class="text-yellow-500 font-semibold">Archive</span> : Bien conservé en base de donnée et invisible de la liste des biens.</li>
             </ul>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="mt-8">
+                    <div class="bg-white rounded-md border">
+                        <div class="p-4 font-medium bg-gray-200 rounded-t-md">
+                            Administrateurs
+                        </div>
+                        <div class="p-4">
+                            <ul>
+                                <li><span class="text-gray-500 font-semibold">Brouillon</span> : status = 3, isDraft = true</li>
+                                <li><span class="text-blue-500 font-semibold">Actif</span> : status = 1</li>
+                                <li><span class="text-red-500 font-semibold">Inactif</span> : status = 0</li>
+                                <li><span class="text-yellow-500 font-semibold">Archive</span> : status = 2, isArchived = true</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
     <div class="py-6">
