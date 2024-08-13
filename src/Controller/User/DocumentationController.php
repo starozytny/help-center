@@ -8,6 +8,7 @@ use App\Repository\Main\Help\HeDocumentationRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -61,7 +62,7 @@ class DocumentationController extends AbstractController
     }
 
     #[Route('/documentation/{slug}', name: 'read', options: ['expose' => true])]
-    public function read($p_slug, $slug, HeProductRepository $productRepository, HeDocumentationRepository $documentationRepository): Response
+    public function read($p_slug, $slug, HeProductRepository $productRepository, HeDocumentationRepository $documentationRepository): NotFoundHttpException|Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
 
@@ -73,6 +74,18 @@ class DocumentationController extends AbstractController
 
         if ($obj->getStatus() == HelpStatut::Draft && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException("Cette page n'existe pas.");
+        }
+
+        if($obj->isTwig() && $obj->getTwigName()){
+            $fileTwig = 'user/pages/documentations/products/' . $product->getDirname() . '/' . $obj->getTwigName();
+            if(!file_exists($this->getParameter('templates_directory') . $fileTwig)){
+                return $this->createNotFoundException('Cette page n\'existe pas.');
+            }
+
+            return $this->render($fileTwig, [
+                'product' => $product,
+                'elem' => $obj
+            ]);
         }
 
         return $this->render('user/pages/documentations/read.html.twig', [
