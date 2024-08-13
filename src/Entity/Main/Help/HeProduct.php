@@ -18,8 +18,8 @@ class HeProduct extends DataEntity
     const FOLDER = "images/editor/products";
 
     const ACCESS = ['product_access'];
-    const FORM   = ['product_form'];
-    const READ   = ['product_read'];
+    const FORM = ['product_form'];
+    const READ = ['product_read'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -171,6 +171,17 @@ class HeProduct extends DataEntity
     public function isWebservice(): bool
     {
         return $this->getType() == HelpType::Web;
+    }
+
+    public function getTypeString(): string
+    {
+        return match($this->getType()) {
+            HelpType::Web => "logiciel en ligne",
+            HelpType::Windev => "logiciel",
+            HelpType::Application => "application",
+            HelpType::Website => "site en ligne",
+            HelpType::Autre => "solution informatique",
+        };
     }
 
     /**

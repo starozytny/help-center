@@ -1,0 +1,56 @@
+{% extends 'user/pages/tutorials/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-12">
+        <div class="py-12">
+            <span class="text-red-500 font-semibold">Les transferts ne sont pas automatique et ne publie pas les annonces aux supports de diffusions.</span>
+        </div>
+        <h3 class="text-2xl font-bold">Fenêtre de transfert</h3>
+        <div class="mt-4">
+            Ouvrez le logiciel de Gérance.
+            <br>
+            - Rendez-vous sur Menu du haut > Trait.annexes > Interface gérance>transaction.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/lotys/synchro/1.png') }}" alt="image 1">
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Choix de la description à utiliser</h3>
+        <div class="mt-4">
+            <ul>
+                <li>Dans le 1<sup>er</sup> cadre <i>Type fichier à créer</i>, sélectionnez <b>Transfert web</b></li>
+                <li>Dans le cadre en bas à droite, <i>Transfert web</i>, sélectionnez la déscription que vous utilisez pour les annonces web.</li>
+            </ul>
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/lotys/synchro/2.png') }}" alt="image 2">
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Lancer un transfert</h3>
+        <div class="mt-4">
+            Cliquez sur le bouton <b>Transfert web</b>, cette procédure prend du temps. Ell est terminé lorsqu'on vous affiche <i>Transfert terminé</i>.
+            <br>
+            <span class="text-red-500 font-semibold">
+                ⚠️ Après le lancement d'un transfert, merci d'attendre que Lotys ait traité ce transfert avant d'en lancer une autre.
+            </span>
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/lotys/synchro/3.png') }}" alt="image 3">
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Résultat du transfert</h3>
+        <div class="mt-4">
+            Accédez à votre espace <a href="https://lotys.fr" class="text-blue-500 hover:underline">Lotys.fr</a>.
+            <br>
+            Tous les 5 minutes, Lotys vérifie si un transfert a eu lieu.
+            <br><br>
+            Vous pouvez vérifier le résultat dans la page <i>Dashboard</i>, au cadre <i>Transfert avec la gérance</i>.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/lotys/synchro/4.png') }}" alt="image 4">
+            </div>
+        </div>
+    </div>
+{% endblock %}

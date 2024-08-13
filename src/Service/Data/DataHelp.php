@@ -24,6 +24,7 @@ class DataHelp
             ->setUrl($this->sanitizeData->trimData($data->website))
             ->setStarter($this->sanitizeData->trimData($data->starter))
             ->setDescription($this->sanitizeData->trimData($data->description->html))
+            ->setIntern((int) $data->isIntern[0])
         ;
     }
 
