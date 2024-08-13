@@ -10,7 +10,6 @@ use App\Repository\Main\Help\HeStepRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -69,7 +68,7 @@ class TutorielController extends AbstractController
 
     #[Route('/tutoriel/{slug}', name: 'read', options: ['expose' => true])]
     public function read($p_slug, $slug, HeProductRepository $productRepository,
-                         HeTutorialRepository $tutorialRepository, HeStepRepository $stepRepository): NotFoundHttpException|Response
+                         HeTutorialRepository $tutorialRepository, HeStepRepository $stepRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
 
@@ -86,7 +85,7 @@ class TutorielController extends AbstractController
         if($obj->isTwig() && $obj->getTwigName()){
             $fileTwig = 'user/pages/tutorials/products/' . $product->getDirname() . '/' . $obj->getTwigName();
             if(!file_exists($this->getParameter('templates_directory') . $fileTwig)){
-                return $this->createNotFoundException('Cette page n\'existe pas.');
+                throw $this->createNotFoundException('Cette page n\'existe pas.');
             }
 
             return $this->render($fileTwig, [
