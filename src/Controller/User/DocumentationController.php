@@ -75,6 +75,18 @@ class DocumentationController extends AbstractController
             throw $this->createAccessDeniedException("Cette page n'existe pas.");
         }
 
+        if($obj->isTwig() && $obj->getTwigName()){
+            $fileTwig = 'user/pages/documentations/products/' . $product->getDirname() . '/' . $obj->getTwigName();
+            if(!file_exists($this->getParameter('templates_directory') . $fileTwig)){
+                throw $this->createNotFoundException('Cette page n\'existe pas.');
+            }
+
+            return $this->render($fileTwig, [
+                'product' => $product,
+                'elem' => $obj
+            ]);
+        }
+
         return $this->render('user/pages/documentations/read.html.twig', [
             'product' => $product,
             'elem' => $obj,

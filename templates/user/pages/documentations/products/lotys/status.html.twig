@@ -1,0 +1,67 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Les différents statuts</h3>
+        <div class="mt-4">
+            <ul>
+                <li><span class="text-gray-500 font-semibold">Brouillon</span> : En cours de rédaction, inéligible à la publication.</li>
+                <li><span class="text-blue-500 font-semibold">Actif</span> : Les informations principales sont renseignées. Éligible à la publication.</li>
+                <li><span class="text-red-500 font-semibold">Inactif</span> : Inéligible à la publication sauf si l'option <i>Continuer sa publication</i> est active.</li>
+                <li><span class="text-yellow-500 font-semibold">Archive</span> : Bien conservé en base de donnée et invisible de la liste des biens.</li>
+            </ul>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="mt-8">
+                    <div class="bg-white rounded-md border">
+                        <div class="p-4 font-medium bg-gray-200 rounded-t-md">
+                            Administrateurs
+                        </div>
+                        <div class="p-4">
+                            <ul>
+                                <li><span class="text-gray-500 font-semibold">Brouillon</span> : status = 3, isDraft = true</li>
+                                <li><span class="text-blue-500 font-semibold">Actif</span> : status = 1</li>
+                                <li><span class="text-red-500 font-semibold">Inactif</span> : status = 0</li>
+                                <li><span class="text-yellow-500 font-semibold">Archive</span> : status = 2, isArchived = true</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Comment un bien possède le statut <span class="text-gray-500">Brouillon</span> ?</h3>
+        <div class="mt-4">
+            Dans le formulaire de création ou d'édition d'un bien, quand l'utilisateur clique sur le bouton <b>Sauvegarder en brouillon</b> ou <b>Sauvegarder</b>.
+            <br>
+            Le bien apparaît en gris dans la liste des biens. Ce statut permet de préparer la diffusion de l'annonce.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Comment un bien possède le statut <span class="text-blue-500">Actif</span> ?</h3>
+        <div class="mt-4">
+            Dans le formulaire de création ou d'édition d'un bien, quand l'utilisateur clique sur le bouton <b>Enregistrer</b> ou <b>Enregistrer et rester</b>.
+            <br>
+            Le bien apparaît en blue dans la liste des biens. Ce statut permet de rendre le bien éligible à la diffusion de l'annonce.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Comment un bien possède le statut <span class="text-red-500">Inactif</span> ?</h3>
+        <div class="mt-4">
+            <ul>
+                <li>Lors de la vente/location du bien, en cliquant sur <b>Bien vendu/loué</b>.</li>
+                <li>Manuellement, en cliquant sur <b>Désactiver</b></li>.
+            </ul>
+            Le bien apparaît en rouge dans la liste des biens. Ce statut permet de rendre le bien inéligible à la diffusion de l'annonce sauf si l'option <i>Continuer sa publication</i> est active.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Comment un bien possède le statut <span class="text-yellow-500">Archive</span> ?</h3>
+        <div class="mt-4">
+            Manuellement, en cliquant sur <b>Archiver</b>.
+            <br>
+            Le bien apparaît dans les archives. Ce statut permet de rendre le bien inéligible à la diffusion de l'annonce et d'avoir une bonne organisation des biens.
+        </div>
+    </div>
+{% endblock %}
