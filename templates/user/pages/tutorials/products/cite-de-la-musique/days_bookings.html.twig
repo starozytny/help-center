@@ -1,0 +1,75 @@
+{% extends 'user/pages/tutorials/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Création des journées d'inscriptions</h3>
+        <div class="mt-4">
+            - Rendez-vous sur la page <i>Journées d'inscriptions</i>.
+            <br>
+            Commencez par supprimer les journées d'inscriptions de l'année précédente.
+            <br>
+            En haut à droite de votre écran, cliquez sur <b>Paramètres</b> pour renseigner la période d'inscriptions.
+            <br><br>
+            Revenez dans la liste pour ajouter vos journées.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/cite-de-la-musique/days_bookings/1.png') }}" alt="image 1">
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Ajouter des créneaux pour vos journées</h3>
+        <div class="mt-4">
+            Dans la colonne <i>Actions</i>, cliquez sur le bouton en forme de
+            calendrier <span class="icon-calendar"></span> (Créneaux).
+            <br>
+            Ajouter un créneau ou une plage de créneau pour ajouter des places.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/cite-de-la-musique/days_bookings/2.png') }}" alt="image 2">
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Déroulement des journées d'inscriptions</h3>
+        <div class="mt-4">
+            Système du premier arrivé, premier servi.
+            <br>Cela implique le blocage d'une place dès lors qu'un utilisateur accède au formulaire.
+            <br><br>
+            A la validation du formulaire de réservation, l'utilisateur peut être confronté à deux cas :
+            <ul>
+                <li>Il obtient directement son ticket.</li>
+                <li>Il obtient son numéro de dossier et son ticket sera envoyé plus tard.
+                    Cela arrive quand cet utilisateur a fini de remplir son formulaire avant l'utilisateur
+                    qui a accédé au formulaire avant lui.</li>
+            </ul>
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/cite-de-la-musique/days_bookings/3.png') }}" alt="image 3">
+            </div>
+            <br>
+            Une tâche se lance tous les 2 minutes pour vérifier qu'une réservation n'a
+            pas été abandonné en cours de route et qui bloque la délivrabilité des tickets.
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Validité des inscriptions</h3>
+        <div class="mt-4">
+            Dans la liste des inscriptions, vous pouvez modifier le status d'un futur élève en <i>Non inscrit</i>,
+            ainsi, ils ne seront pas envoyés au logiciel Cursus.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/cite-de-la-musique/days_bookings/4.png') }}" alt="image 4">
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Exporter les données</h3>
+        <div class="mt-4">
+            ⚠️ <u>Une fois la journée passée</u>, vous pouvez exporter les données de la journée au logiciel Cursus.
+            Ne pas superposer deux exports de données.
+            <br><br>
+            - Rendez-vous sur la page <i>Logiciel Cursus</i>
+            - Cliquez sur <b>Envoyer les données des journées d'inscriptions des anciens ou nouveaux</b>.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/cite-de-la-musique/days_bookings/5.png') }}" alt="image 5">
+            </div>
+        </div>
+    </div>
+{% endblock %}
