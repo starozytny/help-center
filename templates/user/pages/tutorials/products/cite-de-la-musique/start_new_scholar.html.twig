@@ -1,0 +1,33 @@
+{% extends 'user/pages/tutorials/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-12">
+        <div class="py-12">
+            <span class="text-red-500 font-semibold">Procédure à réaliser une fois par année scolaire.</span>
+        </div>
+        <h3 class="text-2xl font-bold">Envois des données du logiciel Cursus vers l'Espace</h3>
+        <div class="mt-4">
+            Depuis le logiciel Cursus.
+            <br>- Rendez-vous dans la fenêtre <i>Inscription web</i>.
+            <br>- Cliquez sur <b>Export FTP</b>
+            <br>- Une fenêtre s'affichera pour vous informer que le transfert est terminé.
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Récupération des données</h3>
+        <div class="mt-4">
+            Depuis l'interface administrateur.
+            <br>- Rendez-vous dans la page <i>Logiciel Cursus</i>.
+            <br>- Cliquez sur <b>Récupérer les données</b>
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/cite-de-la-musique/new_scholar/1.png') }}" alt="image 1">
+            </div>
+            <br>
+            Une fois la commande terminée, cliquez sur <b>Démarrer une nouvelle année scolaire à partir de
+                                                          sept. - 1 fois par année scolaire.</b>
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/cite-de-la-musique/new_scholar/2.png') }}" alt="image 2">
+            </div>
+        </div>
+    </div>
+{% endblock %}
