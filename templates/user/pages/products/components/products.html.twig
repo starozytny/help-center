@@ -6,12 +6,22 @@
             </div>
             <div>
                 <div class="font-semibold text-lg">{{ elem.name }}</div>
-                <div>
-                    <a href="https://{{ elem.url }}" title="{{ elem.url }}" target="_blank" class="text-sm text-blue-500 hover:underline">
-                        <span class="pr-1">{{ elem.url }}</span>
-                        <span class="icon-link-2 !text-sm"></span>
-                    </a>
-                </div>
+                {% if elem.url %}
+                    <div>
+                        <a href="https://{{ elem.url }}" title="{{ elem.url }}" target="_blank" class="text-sm text-blue-500 hover:underline">
+                            <span class="pr-1">{{ elem.url }}</span>
+                            <span class="icon-link-2 !text-sm"></span>
+                        </a>
+                    </div>
+                {% endif %}
+                {% if elem.intern %}
+                    <div>
+                        {% include "layout/components/tailwind/badges/badge.html.twig" with {
+                            badge_type: "red",
+                            badge_text: "Interne"
+                        } %}
+                    </div>
+                {% endif %}
             </div>
         </div>
         <div class="p-4 border-t min-h-32">

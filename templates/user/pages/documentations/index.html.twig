@@ -1,6 +1,6 @@
 {% extends 'user/pages/documentations/template.html.twig' %}
 
-{% set typeString = product.webservice ? "logiciel en ligne" : "logiciel" %}
+{% set typeString = product.typeString %}
 
 {% set page_title %}{{ product.name }}{% endset %}
 {% set page_subtitle %}Liste des documentations{% endset %}
