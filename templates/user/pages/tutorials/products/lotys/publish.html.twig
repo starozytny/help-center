@@ -1,0 +1,81 @@
+{% extends 'user/pages/tutorials/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Page de publication</h3>
+        <div class="mt-4">
+            - Rendez-vous sur Publications > Publications des annonces
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Liste des biens</h3>
+        <div class="mt-4">
+            Sur cette page est listée les biens qui seront publiés aux supports de diffusions.
+            <div class="mt-6 flex flex-col gap-4 md:flex-row">
+                <img src="{{ asset('build/user/images/help/guides/products/lotys/publish/1.png') }}" alt="image 1">
+                <div>
+                    Grisé, le support n'est pas sélectionné. <br>
+                    En couleur, le support est sélectionné.
+                    <br><br>
+                    Vous pouvez cliquer sur le support pour le sélectionner/désélectionner.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Démarrer le processus</h3>
+        <div class="mt-4">
+            Cliquez sur le bouton <b>Démarrer le processus</b> pour initier la diffusion de vos annonces.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/lotys/publish/2.png') }}" alt="image 2">
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Paramétrage de la diffusion</h3>
+        <div class="mt-4">
+            Vous avez deux options disponibles.
+            <ul>
+                <li>Filigrane : permet d'afficher un filigrane pour limiter le vol de vos photos.</li>
+                <li>Bandeau : permet d'afficher un bandeau avec un texte sur la première photo de l'annonce.</li>
+            </ul>
+            <br>
+            Cliquez sur le bouton <b>Diffuser les annonces</b> pour continuer le processus de diffusion.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/lotys/publish/3.png') }}" alt="image 3">
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Confirmer la diffusion</h3>
+        <div class="mt-4">
+            Une boite de dialogue vous demande confirmer la diffusion de vos annonces.
+            <br>C'est à cette étape que les annonces seront transmis aux supports de diffusion.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/lotys/publish/4.png') }}" alt="image 4">
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Résultats</h3>
+        <div class="mt-4">
+            Pour chaque support, un résultat sera affiché.
+            <ul>
+                <li>
+                    {% include "layout/components/tailwind/badges/badge.html.twig" with {
+                        badge_type: 'blue',
+                        badge_text: 'Succès'
+                    } %}
+                    Les annonces ont été transmis au support de diffusion, c'est à eux de manipuler les données.
+                </li>
+                <li>
+                    {% include "layout/components/tailwind/badges/badge.html.twig" with {
+                        badge_type: 'red',
+                        badge_text: 'Erreur'
+                    } %}
+                    Contacter le support de Logilink : <a href="mailto:chanbora@logilink.fr" class="underline hover:text-gray-700">chanbora@logilink.fr</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
