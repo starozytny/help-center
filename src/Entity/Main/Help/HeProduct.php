@@ -64,6 +64,7 @@ class HeProduct extends DataEntity
     private Collection $categories;
 
     #[ORM\Column]
+    #[Groups(['product_form'])]
     private ?bool $isIntern = null;
 
     public function __construct()
