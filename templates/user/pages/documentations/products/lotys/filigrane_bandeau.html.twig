@@ -1,0 +1,55 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Filigrane</h3>
+        <div class="mt-4">
+            Le but principal d'un filigrane est de limiter le vol de vos photos par des concurrents.
+            <br>
+            Par défaut, Lotys utilise le logo utilisé dans la page <i>Paramètres > Agence</i>.
+            <br><br>
+            Le filigrane est personnalisable dans <i>Paramètres > Paramètres généraux</i>, vous pouvez choisir
+            sa position ainsi qu'une autre image.
+            <br>
+            <div class="mt-4 bg-white rounded-md text-sm p-4 border">
+                <span class="icon-question pr-1"></span> Vérifiez la taille de votre logo pour qu'il convienne
+                                                         parfaitement aux formats de vos photos. Par contre, si la photo
+                                                         est trop petite, le logo risque de prendre toute la place. Donc,
+                                                         vous devez modifier la photo pour une meilleure qualité.
+            </div>
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Bandeau</h3>
+        <div class="mt-4">
+            Le bandeau permet d'afficher une bande avec un texte sur la première photo de vos annonces.
+            <br>
+            Le bandeau est personnalisation dans <i>Paramètres > Paramètres généraux</i>. Pour avoir quelque chose de
+            plus unique, vous pouvez soumettre une demande à Logilink. Nous étudierons votre proposition
+            pour savoir si c'est réalisable.
+            <br>
+            <div class="mt-4 bg-white rounded-md text-sm p-4 border">
+                <span class="icon-question pr-1"></span> Selon la résolution de vos photos, le bandeau peut mal s'afficher.
+                                                         Nous vous recommandons de changer de photo pour une photo de meilleure qualité.
+            </div>
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Fonctionnement</h3>
+        <div class="mt-4">
+            L'utilisation du filigrane et/ou bandeau est activable dans deux pages.
+            <ul>
+                <li>Dans le formulaire du dit bien.</li>
+                <li>Dans la page de publication de vos annonces.</li>
+            </ul>
+            <br>
+            L'activation des options dans le formulaire du dit bien, prend la priorité sur le
+            statut d'activation utilisé dans la page de publication.
+            <br>Attention, la désactivation des options dans le formulaire ne prend pas la priorité sur le
+            statut d'activation utilisé dans la page de publication
+            <br><br>
+            L'activation des options dans la page de publication permet de cibler la totalité des annonces même
+            si les options sont désactivées dans le formulaire du dit bien.
+        </div>
+    </div>
+{% endblock %}
