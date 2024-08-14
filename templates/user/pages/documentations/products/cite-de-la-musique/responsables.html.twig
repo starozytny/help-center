@@ -1,0 +1,31 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Principe de priorité</h3>
+        <div class="mt-4">
+            Le responsable peut modifier les informations suivantes :
+            <ul>
+                <li>Prénom</li>
+                <li>Nom</li>
+                <li>Adresse e-mail</li>
+                <li>Adresse postale</li>
+                <li>Téléphones</li>
+                <li>Infos téléphones</li>
+            </ul>
+            <br>
+            Nous mettons un <i>flag</i> lorsque qu'un responsable valide le formulaire, ce qui nous
+            permet de savoir que ces informations sont à jour.
+            <br><br>
+            Lors de l'export des données responsables, nous allons envoyer tous les responsables ayant ce flag
+            et leurs informations remplaceront ceux du logiciel Cursus.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Pourquoi la priorité à l'Espace ?</h3>
+        <div class="mt-4">
+            Puisque le responsable a accès au formulaire de modification, il peut valider lui-même ces informations.
+            Donc, s'il valide le formulaire, c'est que les informations sont à jour.
+        </div>
+    </div>
+{% endblock %}

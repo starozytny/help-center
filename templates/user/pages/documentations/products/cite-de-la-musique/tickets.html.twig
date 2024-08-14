@@ -1,0 +1,24 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Fonctionnement</h3>
+        <div class="mt-4">
+            Le système des tickets est régie par le <i>premier arrivé, premier servi</i>.
+            <br><br>
+            La réservation d'une place est faite lors de l'entrée au formulaire du responsable.
+            <ul>
+                <li>
+                    La personne A entre dans le formulaire et possède la plus récente place possible.
+                    <ul style="list-style: circle">
+                        <li>Si A fini sa réservation puis, que B fini la sienne juste après, B aura tout de suite son ticket.</li>
+                        <li>Si A n'a pas fini sa réservation, mais que B a fini la sienne, B devra attendre que A finisse son ticket pour avoir le sien.</li>
+                    </ul>
+                </li>
+            </ul>
+            <br>
+            Une tâche tourne tous les 2 minutes pour vérifier qu'une personne n'ait pas abandonné sa réservation sans quitter la page.
+            <br> Cette tâche a pour but de supprimer ces personnes pour que les autres puissent obtenir leur ticket.
+        </div>
+    </div>
+{% endblock %}
