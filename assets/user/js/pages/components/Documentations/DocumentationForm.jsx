@@ -172,7 +172,7 @@ class Form extends Component {
                         <div>
                             <TinyMCE type={3} identifiant='description' valeur={description.value}
                                      errors={errors} onUpdateData={this.handleChangeTinyMCE}>
-                                Courte description
+                                Courte description *
                             </TinyMCE>
                         </div>
                     </div>
