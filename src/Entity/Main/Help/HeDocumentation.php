@@ -33,7 +33,7 @@ class HeDocumentation extends DataEntity
     #[Groups(['doc_read'])]
     private ?string $slug = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['doc_form'])]
     private ?string $content = null;
 
@@ -126,7 +126,7 @@ class HeDocumentation extends DataEntity
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setContent(?string $content): self
     {
         $this->content = $content;
 

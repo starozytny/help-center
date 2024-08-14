@@ -9,7 +9,7 @@ import Formulaire from "@commonFunctions/formulaire";
 import { Button } from "@tailwindComponents/Elements/Button";
 import { Modal } from "@tailwindComponents/Elements/Modal";
 
-const URL_INDEX_ELEMENTS = 'user_help_product_read';
+const URL_INDEX_ELEMENTS = 'user_help_tutorial_index';
 const URL_DELETE_ELEMENT = 'intern_api_help_tutorials_delete';
 
 export function TutorialDelete ({ id, name, productSlug })
@@ -24,7 +24,7 @@ export function TutorialDelete ({ id, name, productSlug })
         modalRef.current.handleUpdateFooter(<Button isLoader={true} type="red">Confirmer la suppression</Button>);
         axios({ method: "DELETE", url: Routing.generate(URL_DELETE_ELEMENT, {id: id}), data: {} })
             .then(function (response) {
-                location.href = Routing.generate(URL_INDEX_ELEMENTS, {slug: productSlug});
+                location.href = Routing.generate(URL_INDEX_ELEMENTS, {p_slug: productSlug});
             })
             .catch(function (error) { Formulaire.displayErrors(self, error); Formulaire.loader(false); })
         ;

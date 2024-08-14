@@ -1,0 +1,44 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Fonctionnement</h3>
+        <div class="mt-4">
+            Le rapprochement fonctionne entre les biens et les prospects (futurs acquéreurs/futures locataires).
+            <br> Les prospects doivent avoir une recherche pour qu'un rapprochement puisse se faire avec des biens.
+            <br><br>
+            Dans la liste des biens, la colonne <i>Rapprochement</i>, permet de voir rapidement si un bien
+            correspond à la recherche d'un prospect.
+            <br><br>
+            Dans la page <i>Rapprochement</i>, nous allons être plus précis dans notre recherche et voir le pourcentage de
+            correspondance entre un bien et la recherche d'un prospect.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Calcul du pourcentage</h3>
+        <div class="mt-4">
+            Les critères de recherche obligatoires :
+            <ul>
+                <li>Type d'annonce, s'il  ne correspond pas, le calcul renvoi 0%.</li>
+                <li>Type de biens, si aucun des types renseignés ne correspond, le calcul renvoi 0%.</li>
+                <li>Localisation, si aucune des localisations ne correspond, le calcul renvoi 0%.</li>
+                <li>Prix min et/ou max, si le prix ne rentre pas dans la tranche, le calcul renvoi 0%.</li>
+            </ul>
+            <br>
+            Les autres critères de recherche permettent de rendre le pourcentage plus précis donc nous vous
+            conseillons de les remplir afin d'avoir un pourcentage qui reflète la recherche du prospect.
+            <br>
+            Le total des critères qui permet le calcul du pourcentage varie selon les critères renseignés.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Affichage dans la liste des biens</h3>
+        <div class="mt-4">
+            Par défaut, les rapprochements qui ressortent dans la liste des biens sont les recherches avec
+            un pourcentage supérieur à 80%.
+            <br><br>
+            Vous pouvez personnaliser cette valeur dans le menu de personnalisation dans la liste des biens <i>[Liste > Personnalisation > Params.]</i>,
+            ou dans les paramètres de votre compte <i>[Paramètres > Mon compte]</i>.
+        </div>
+    </div>
+{% endblock %}

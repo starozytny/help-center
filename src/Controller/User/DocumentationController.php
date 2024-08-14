@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 #[Route('/espace-membre/produits/produit/{p_slug}/documentations', name: 'user_help_documentation_')]
 class DocumentationController extends AbstractController
 {
-    #[Route('/', name: 'index')]
+    #[Route('/', name: 'index', options: ['expose' => true])]
     public function index($p_slug, HeProductRepository $productRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
