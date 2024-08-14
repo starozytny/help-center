@@ -147,25 +147,27 @@ export function FaqList ({ role, productSlug, categories, questions, defaultCate
 					}
 					{questions.map((elem, index) => {
 						if (elem.category.id === category) {
-							return <div className={`w-full flex flex-col rounded cursor-pointer bg-white ${elem.id === question ? "mb-8" : ""}`} key={index}>
-								<div className="w-full flex items-center justify-between gap-2 p-4" onClick={() => setQuestion(elem.id === question ? null : elem.id)}>
-									<div className="font-medium">{elem.name}</div>
-									<div><span className="icon-down-chevron"></span></div>
+							if ((elem.visibility === 1 && role === "admin") || elem.visibility === 0){
+								return <div className={`w-full flex flex-col rounded cursor-pointer bg-white ${elem.id === question ? "mb-8" : ""}`} key={index}>
+									<div className="w-full flex items-center justify-between gap-2 p-4" onClick={() => setQuestion(elem.id === question ? null : elem.id)}>
+										<div className="font-medium">{elem.visibility === 1 ? <span className="text-red-500">[A] </span>  : ""}{elem.name}</div>
+										<div><span className="icon-down-chevron"></span></div>
+									</div>
+									<div className={`border-t p-4 ${elem.id === question ? "block" : "hidden"}`}>
+										{role === "admin" && <div className="flex gap-2 mb-4">
+											<ButtonIconA icon="pencil" type="default"
+														 onClick={Routing.generate(URL_UPDATE_QUESTION, { 'slug': productSlug, 'category': elem.category.id, 'id': elem.id })}>
+												Modifier
+											</ButtonIconA>
+											<ButtonIcon icon="trash" type="default"
+														onClick={() => handleModal('delete-question', elem.id, elem.category.id)}>
+												Supprimer
+											</ButtonIcon>
+										</div>}
+										<div dangerouslySetInnerHTML={{ __html: elem.content }} />
+									</div>
 								</div>
-								<div className={`border-t p-4 ${elem.id === question ? "block" : "hidden"}`}>
-									{role === "admin" && <div className="flex gap-2 mb-4">
-										<ButtonIconA icon="pencil" type="default"
-													onClick={Routing.generate(URL_UPDATE_QUESTION, { 'slug': productSlug, 'category': elem.category.id, 'id': elem.id })}>
-											Modifier
-										</ButtonIconA>
-										<ButtonIcon icon="trash" type="default"
-													onClick={() => handleModal('delete-question', elem.id, elem.category.id)}>
-											Supprimer
-										</ButtonIcon>
-									</div>}
-									<div dangerouslySetInnerHTML={{ __html: elem.content }} />
-								</div>
-							</div>
+							}
 						}
 					})}
 				</div>
