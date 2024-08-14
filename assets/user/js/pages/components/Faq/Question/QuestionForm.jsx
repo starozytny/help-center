@@ -9,7 +9,7 @@ import Validateur from "@commonFunctions/validateur";
 
 import { Button } from "@tailwindComponents/Elements/Button";
 import { TinyMCE } from "@tailwindComponents/Elements/TinyMCE";
-import { Input, InputView } from "@tailwindComponents/Elements/Fields";
+import { Input, InputView, Radiobox } from "@tailwindComponents/Elements/Fields";
 
 const URL_INDEX_ELEMENTS = "user_help_product_read";
 const URL_CREATE_ELEMENT = "intern_api_help_faq_questions_create";
@@ -29,6 +29,7 @@ export function QuestionFormulaire ({ context, element, category, productSlug })
         productSlug={productSlug}
         name={element ? Formulaire.setValue(element.name) : ""}
         content={element ? Formulaire.setValue(element.content) : ""}
+		visibility={element ? Formulaire.setValue(element.visibility) : 0}
     />
 }
 
@@ -50,6 +51,7 @@ class Form extends Component {
 			productSlug: props.productSlug,
 			name: props.name,
 			content: { value: content, html: content },
+			visibility: props.visibility,
 			errors: [],
 		}
 	}
@@ -97,9 +99,14 @@ class Form extends Component {
 
 	render () {
 		const { context, category } = this.props;
-		const { errors, name, content } = this.state;
+		const { errors, name, content, visibility } = this.state;
 
-		let params = { errors: errors, onChange: this.handleChange }
+		let params0 = { errors: errors, onChange: this.handleChange }
+
+		let visibilityItems = [
+			{ value: 0, label: 'Pour tous', identifiant: 'visi-0' },
+			{ value: 1, label: 'Pour administration', identifiant: 'visi-1' },
+		]
 
         return <form onSubmit={this.handleSubmit}>
             <div className="flex flex-col gap-4 xl:gap-6">
@@ -107,28 +114,35 @@ class Form extends Component {
                     <div>
                         <div className="font-medium text-lg">Question</div>
                     </div>
-                    <div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
-                        <div>
-                            <InputView valeur={category.name} errors={errors}>Catégorie *</InputView>
-                        </div>
-                        <div>
-                            <Input identifiant="name" valeur={name} {...params}>Intitulé *</Input>
-                        </div>
-                        <div>
-                            <TinyMCE type={6} identifiant='content' valeur={content.value}
-                                     errors={errors} onUpdateData={this.handleChangeTinyMCE}>
-                                Description *
-                            </TinyMCE>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="mt-4 flex justify-end gap-2">
-                <Button type="blue" isSubmit={true}>
-                    {context === "create" ? "Enregistrer" : "Enregistrer les modifications"}
-                </Button>
-            </div>
-        </form>
+					<div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
+						<div className="flex gap-4">
+							<div class="w-full">
+								<Radiobox items={visibilityItems} identifiant="visibility" valeur={visibility} {...params0}>
+									Visibilité *
+								</Radiobox>
+							</div>
+							<div className="w-full">
+								<InputView valeur={category.name} errors={errors}>Catégorie *</InputView>
+							</div>
+						</div>
+						<div>
+							<Input identifiant="name" valeur={name} {...params0}>Intitulé *</Input>
+						</div>
+						<div>
+							<TinyMCE type={6} identifiant='content' valeur={content.value}
+									 errors={errors} onUpdateData={this.handleChangeTinyMCE}>
+								Description *
+							</TinyMCE>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div className="mt-4 flex justify-end gap-2">
+				<Button type="blue" isSubmit={true}>
+					{context === "create" ? "Enregistrer" : "Enregistrer les modifications"}
+				</Button>
+			</div>
+		</form>
 	}
 }
 

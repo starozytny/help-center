@@ -34,6 +34,10 @@ class HeQuestion
     #[Groups(['help_quest_list'])]
     private ?HeCategory $category = null;
 
+    #[ORM\Column]
+    #[Groups(['help_quest_list', 'help_quest_form'])]
+    private ?int $visibility = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,6 +75,18 @@ class HeQuestion
     public function setCategory(?HeCategory $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getVisibility(): ?int
+    {
+        return $this->visibility;
+    }
+
+    public function setVisibility(int $visibility): static
+    {
+        $this->visibility = $visibility;
 
         return $this;
     }

@@ -69,6 +69,7 @@ class DataHelp
         return ($obj)
             ->setName($this->sanitizeData->trimData($data->name))
             ->setContent($this->sanitizeData->trimData($data->content->html))
+            ->setVisibility((int) $data->visibility)
         ;
     }
 }
