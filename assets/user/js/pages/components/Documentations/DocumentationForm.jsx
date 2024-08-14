@@ -90,15 +90,16 @@ class Form extends Component {
 		let paramsToValidate = [
 			{ type: "text", id: 'name', value: name },
 			{ type: "text", id: 'status', value: status },
-			{ type: "text", id: 'description', value: description.html },
-			{ type: "text", id: 'content', value: content.html },
+			{ type: "text", id: 'description', value: description.html }
 		];
 
 		if (isTwig[0] === 1) {
 			paramsToValidate = [...paramsToValidate, ...[{ type: "text", id: 'twigName', value: twigName }]];
+		}else{
+			paramsToValidate = [...paramsToValidate, ...[{ type: "text", id: 'content', value: content.html }]];
 		}
 
-		let validate = Validateur.validateur(paramsToValidate)
+		let validate = Validateur.validateur(paramsToValidate);
 		if (!validate.code) {
 			Formulaire.showErrors(this, validate);
 		} else {
@@ -160,7 +161,7 @@ class Form extends Component {
                                     Statut *
                                 </Radiobox>
                             </div>
-                            <div class="w-full">
+                            <div className="w-full">
                                 <Radiobox items={visibilityItems} identifiant="visibility" valeur={visibility} {...params0}>
                                     Visibilité *
                                 </Radiobox>
