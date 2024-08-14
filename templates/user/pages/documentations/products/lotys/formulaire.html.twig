@@ -1,0 +1,60 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Structure et fonctionnement de la page</h3>
+        <div class="mt-4">
+            Selon la taille de votre écran, le menu est soit en haut via
+            l'icône <span class="icon-menu"></span>, soit à gauche de votre écran.
+            <br><br>
+            Lorsque vous souhaitez quitter le page, le navigateur que vous utilisez vous
+            demandera d'être sûr de vouloir quitter la page. C'est une sécurité pour vous rappeler de
+            sauvegarder vos modifications si nécessaire.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Navigation</h3>
+        <div class="mt-4">
+            La navigation peut être faite en bas du contenu via les boutons <b>Étape précédente</b> et <b>Étape suivante</b>.
+            <br> Ou, en cliquant directement sur l'étape qui vous intéresse dans le menu des étapes.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Options du formulaire</h3>
+        <div class="mt-4">
+            En dessous du menu, vous avez 3 options disponibles.
+            <ul>
+                <li>
+                    <i>Affichage du formulaire</i> : <u>Essentiel</u> permet d'afficher uniquement les informations transmis aux
+                    supports de diffusion autres que Logilink (votre site agence).
+                </li>
+                <li>
+                    <i>Modification gérance</i> : <u>Bloqué</u>, vérrouille les champs utilisés par le logiciel de
+                    gérance pour éviter toute confusion de données. <u>Libre</u>, permet de rendre tous les champs utilisable.
+                </li>
+                <li>
+                    <i>Automatiser le calcul</i> : <u>Oui</u> permet d'avoir un calcul automatique des valeurs
+                    dans la partie <i>Financier</i>.
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Sauvegarder ou enregistrer le bien ?</h3>
+        <div class="mt-4">
+            Les boutons <b>Sauvegarder en brouillon</b> et <b>Sauvegarder</b> permettent
+            de sauvegarder le bien en brouillon, les champs obligatoires ne sont pas requis.
+            <br><br>
+            Les boutons <b>Enregistrer</b> et <b>Enregistrer et rester</b> permettent de vérifier la saisie des champs
+            obligatoires, d'enregistrer le bien, et de le rendre éligible à la publication.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-2xl font-bold">Les photos</h3>
+        <div class="mt-4">
+            À la création d'un bien, l'étape 11 des photos est vérrouillé pour éviter la perte des données des autres étapes.
+            <br><br>
+            Pour débloquer cette étape, vous devez soit sauvegarder, soit enregistrer le bien pour continuer.
+        </div>
+    </div>
+{% endblock %}
