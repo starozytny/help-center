@@ -56,17 +56,24 @@
                                     </div>
                                 </a>
                                 {% if app.user.admin %}
-                                    <div class="mt-2 flex gap-2 justify-end pr-2">
-                                        <a href="{{ path('user_help_tutorial_update', {p_slug: product.slug, slug: el.slug}) }}"
-                                           class="text-sm underline cursor-pointer hover:text-gray-700">
-                                            Modifier
-                                        </a>
-                                        <div class="delete-tuto"
-                                             data-id="{{ el.id }}"
-                                             data-name="{{ el.name }}"
-                                             data-product-slug="{{ product.slug }}"
-                                        >
-                                            <div class="text-sm underline cursor-not-allowed hover:text-gray-700">Supprimer</div>
+                                    <div class="mt-2 px-2 flex gap-2 justify-between">
+                                        {% if el.twig == 1 %}
+                                            <div class="text-xs text-gray-400">[Twig]</div>
+                                        {% else %}
+                                            <div></div>
+                                        {% endif %}
+                                        <div class="flex gap-2 justify-end">
+                                            <a href="{{ path('user_help_tutorial_update', {p_slug: product.slug, slug: el.slug}) }}"
+                                               class="text-sm underline cursor-pointer hover:text-gray-700">
+                                                Modifier
+                                            </a>
+                                            <div class="delete-tuto"
+                                                 data-id="{{ el.id }}"
+                                                 data-name="{{ el.name }}"
+                                                 data-product-slug="{{ product.slug }}"
+                                            >
+                                                <div class="text-sm underline cursor-not-allowed hover:text-gray-700">Supprimer</div>
+                                            </div>
                                         </div>
                                     </div>
                                 {% endif %}
