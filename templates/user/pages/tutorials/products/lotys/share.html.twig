@@ -1,0 +1,38 @@
+{% extends 'user/pages/tutorials/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Bouton de partage</h3>
+        <div class="mt-4">
+            Dans la liste des biens, cliquez sur <b>Partager</b>.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/lotys/share/1.png') }}" alt="image 1">
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Options de partage</h3>
+        <div class="mt-4">
+            Vous avez à disposition :
+            <ul>
+                <li>
+                    Un document PDF, que vous pouvez télécharger et imprimer. Vous pouvez personnaliser les
+                    couleurs du document dans les <i>Paramètres</i>.
+                </li>
+                <li>Un lien public redirigeant vers une page web Lotys relatant les informations du bien.</li>
+            </ul>
+            <br>
+            Vous pouvez directement envoyer un mail aux intéressés via le formulaire mis à disposition.
+            <br>La signature du mail correspond au négociateur relié au compte utilisateur.
+            <br>L'expéditeur du mail correspond au négociateur relié au compte utilisateur, sinon l'adresse email relié au compte utilisateur.
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Aperçu du mail reçu par les intéressés.</h3>
+        <div class="mt-4">
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/lotys/share/2.png') }}" alt="image 2">
+            </div>
+        </div>
+    </div>
+{% endblock %}
