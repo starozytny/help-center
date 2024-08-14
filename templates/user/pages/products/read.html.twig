@@ -54,7 +54,7 @@
 
             <div>
                 <h2 class="font-bold text-2xl">Documentation</h2>
-                <div class="text-gray-800">Le meilleur moyen de maitriser l'utilisation du {{ typeString }}.</div>
+                <div class="text-gray-800">Le meilleur moyen de comprendre l'utilisation du {{ typeString }}.</div>
 
                 <div class="mt-4">
                     <a href="{{ path('user_help_documentation_index', {p_slug: elem.slug}) }}"
@@ -67,8 +67,10 @@
 
             <div>
                 <h2 class="font-bold text-2xl">Guides</h2>
-                <div class="text-gray-800">Prenez en main facilement le {{ typeString }} avec nos guides.</div>
-
+                <div class="text-gray-800">
+                    Prenez en main facilement le {{ typeString }} avec nos guides. Pour plus
+                    d'explications, veuillez lire la documentation.
+                </div>
                 <div class="mt-4">
                     <a href="{{ path('user_help_tutorial_index', {p_slug: elem.slug}) }}"
                        class="group font-medium flex items-center gap-2 text-blue-500">
