@@ -56,7 +56,7 @@ class ProductController extends AbstractController
             'elem' => $obj,
             'docs' => $documentations,
             'tutorials' => $tutorials,
-            'canRead' => in_array($obj->getId(), $user->getAccess()) || (!$this->isGranted('ROLE_ADMIN') && $obj->isIntern() || $this->isGranted("ROLE_ADMIN"))
+            'canRead' => in_array($obj->getId(), $user->getAccess()) || ($this->isGranted('ROLE_ADMIN') && $obj->isIntern() || $this->isGranted("ROLE_ADMIN"))
         ]);
     }
 
