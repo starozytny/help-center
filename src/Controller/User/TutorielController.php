@@ -23,7 +23,9 @@ class TutorielController extends AbstractController
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
 
         if (!in_array($product->getId(), $this->getUser()->getAccess())) {
-            throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
+            if(!$this->isGranted("ROLE_ADMIN")){
+                throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
+            }
         }
 
         $objs = $product->getTutorials();
@@ -72,7 +74,7 @@ class TutorielController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
 
-        if (!in_array($product->getId(), $this->getUser()->getAccess()) || (!$this->isGranted('ROLE_ADMIN') && $product->isIntern())) {
+        if (!in_array($product->getId(), $this->getUser()->getAccess()) || (!$this->isGranted('ROLE_ADMIN') && $product->isIntern()) || $this->isGranted("ROLE_ADMIN")) {
             throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
         }
 
