@@ -1,0 +1,91 @@
+{% extends 'user/pages/tutorials/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Accéder à la page de création</h3>
+        <div class="mt-4">
+            Sur la liste des états des lieux, cliquez sur <b class="uppercase text-fokus-color0">Ajouter un état des lieux</b>.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/fokus/create_by_tablet/1.png') }}" alt="image 1">
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Champs obligatoires</h3>
+        <div class="mt-4">
+            Il faut renseigner obligatoirement :
+            <ul>
+                <li>la date</li>
+                <li>la structure</li>
+                <li>le type (<i>entrant</i> ou <i>sortant</i>)</li>
+                <li>le bien</li>
+                <li>Au moins un locataire</li>
+            </ul>
+            <br>
+            Les administrateurs ont la possibilité d'attribuer un état des lieux à un autre utilisateur en le sélectionnant.
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Champ 1 : La date</h3>
+        <div class="mt-4">
+            <div class="flex gap-2">
+                <div>Cliquez sur le bouton en forme d'horloge</div>
+                <div class="bg-fokus-color0 rounded-md flex items-center justify-center w-8 h-8 text-white">
+                    <span class="icon-clock !text-lg"></span>
+                </div>
+            </div>
+            <br>
+            Un calendrier s'affichera pour sélectionner la date souhaitée.
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Champ 2 : la structure</h3>
+        <div class="mt-4">
+            Cliquez sur le sélecteur pour afficher les possibilités et sélectionner l'option qui vous convient.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/fokus/create_by_tablet/2.png') }}" alt="image 2">
+            </div>
+            <br>
+            Si vous avez ajouté des modèles, ils seront disponibles dans un sélecteur après avoir sélectionné <i>Etablir structure</i>.
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Champ 3 : le type</h3>
+        <div class="mt-4">
+            Cliquez sur le bouton qui convient pour l'état des lieux.
+            <div>
+                <span class="text-blue-500 font-semibold">Entrant</span> ou <span class="text-red-500 font-semibold">Sortant</span>
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Champ 4 : le bien</h3>
+        <div class="mt-4">
+            Cliquez sur le bouton en forme de maison pour sélectionner et/ou créer un bien.
+            <br><br>
+            Sélectionnez un bien en cliquant dessus.
+            <br>
+            Ou créez un bien en cliquant sur le bouton <span class="icon-add"></span> en haut à droite de votre écran.
+            <br><br>
+            <span class="text-sm"><i>Vous pouvez rechercher un bien par sa référence, propriétaire, adresse ou ville</i></span>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Champ 5 : au moins un locataire</h3>
+        <div class="mt-4">
+            Cliquez sur le bouton en forme de bonhomme pour sélectionner et/ou créer un locataire.
+            <br><br>
+            Sélectionnez un locataire en cliquant dessus.
+            <br>
+            Ou créez un locataire en cliquant sur le bouton <span class="icon-add"></span> en haut à droite de votre écran.
+            <br><br>
+            <span class="text-sm"><i>Vous pouvez rechercher un bien par sa référence, nom ou adresse</i></span>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-2xl font-bold">Valider le formulaire</h3>
+        <div class="mt-4">
+            Cliquez sur le bouton <b>Valider</b>.
+        </div>
+    </div>
+{% endblock %}

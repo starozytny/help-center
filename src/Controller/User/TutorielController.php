@@ -10,7 +10,7 @@ use App\Repository\Main\Help\HeStepRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -23,7 +23,9 @@ class TutorielController extends AbstractController
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
 
         if (!in_array($product->getId(), $this->getUser()->getAccess())) {
-            throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
+            if(!$this->isGranted("ROLE_ADMIN")){
+                throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
+            }
         }
 
         $objs = $product->getTutorials();
@@ -73,7 +75,9 @@ class TutorielController extends AbstractController
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
 
         if (!in_array($product->getId(), $this->getUser()->getAccess()) || (!$this->isGranted('ROLE_ADMIN') && $product->isIntern())) {
-            throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
+            if(!$this->isGranted("ROLE_ADMIN")){
+                throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
+            }
         }
 
         $obj = $tutorialRepository->findOneBy(['product' => $product, 'slug' => $slug]);

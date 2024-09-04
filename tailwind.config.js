@@ -14,6 +14,9 @@ module.exports = {
         '6.5': '1.625rem',
         '8.5': '2.25rem'
       },
+      colors: {
+        'fokus-color0': '#334D6E'
+      }
     },
   },
   plugins: [

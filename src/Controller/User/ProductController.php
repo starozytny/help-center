@@ -12,7 +12,7 @@ use App\Repository\Main\Help\HeProductRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -56,7 +56,7 @@ class ProductController extends AbstractController
             'elem' => $obj,
             'docs' => $documentations,
             'tutorials' => $tutorials,
-            'canRead' => in_array($obj->getId(), $user->getAccess()) || (!$this->isGranted('ROLE_ADMIN') && $obj->isIntern())
+            'canRead' => in_array($obj->getId(), $user->getAccess()) || ($this->isGranted('ROLE_ADMIN') && $obj->isIntern() || $this->isGranted("ROLE_ADMIN"))
         ]);
     }
 
