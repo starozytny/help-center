@@ -13,15 +13,9 @@ class AppController extends AbstractController
     public function index(HeProductRepository $productRepository): Response
     {
         return $this->render('app/pages/index.html.twig', [
-            'products' => $productRepository->findBy(['isIntern' => false])
+            'products' => $productRepository->findBy(['isIntern' => false], [], 4)
         ]);
     }
-
-//    #[Route('/contact', name: 'app_contact')]
-//    public function contact(): Response
-//    {
-//        return $this->render('app/pages/contact/create.html.twig');
-//    }
 
     #[Route('/legales/mentions-legales', name: 'app_mentions')]
     public function mentions(): Response
