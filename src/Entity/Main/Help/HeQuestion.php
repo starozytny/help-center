@@ -19,7 +19,7 @@ class HeQuestion
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['help_quest_list', 'help_quest_form'])]
+    #[Groups(['help_quest_list', 'help_quest_form', 'help_quest_search'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -32,7 +32,7 @@ class HeQuestion
 
     #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'questions')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['help_quest_list'])]
+    #[Groups(['help_quest_list', 'help_quest_search'])]
     private ?HeCategory $category = null;
 
     #[ORM\Column]

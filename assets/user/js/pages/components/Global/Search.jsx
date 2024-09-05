@@ -81,7 +81,8 @@ export class Search extends Component {
 		}else if(elem.searchType === "guide"){
 			location.href = Routing.generate(URL_PAGE_GUIDE, {p_slug: pSlug, slug: elem.slug})
 		}else{
-			location.href = Routing.generate(URL_PAGE_QUESTION, {slug: pSlug})
+			console.log(elem);
+			location.href = Routing.generate(URL_PAGE_QUESTION, {slug: pSlug, category: elem.category.id, id: elem.id})
 		}
 	}
 
