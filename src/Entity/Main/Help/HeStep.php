@@ -21,7 +21,7 @@ class HeStep
     private ?int $position = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['step_form'])]
+    #[Groups(['step_form', 'tuto_search'])]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'steps')]

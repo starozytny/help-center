@@ -84,11 +84,13 @@ export function FaqList ({ role, productSlug, categories, questions, defaultCate
                 {categories.length !== 0
                     ? <div className="flex flex-col gap-2">
                         {categories.map((elem, index) => {
-                            return <div className={`flex gap-2 items-center p-2 rounded transition-colors cursor-pointer ${elem.id === category ? "bg-white" : "bg-gray-200 hover:bg-gray-50"}`} key={index}
-                                        onClick={() => setCategory(elem.id)}>
-                                <span className={"icon-" + elem.icon} />
-                                <span>{elem.name}</span>
-                            </div>
+							if ((elem.visibility === 1 && role === "admin") || elem.visibility === 0) {
+								return <div className={`flex gap-2 items-center p-2 rounded transition-colors cursor-pointer ${elem.id === category ? "bg-white" : "bg-gray-200 hover:bg-gray-50"}`} key={index}
+											onClick={() => setCategory(elem.id)}>
+									<span className={"icon-" + elem.icon} />
+									<span>{elem.name}</span>
+								</div>
+							}
                         })}
                     </div>
                     : <Alert type="blue" withIcon={false}>Aucun question-réponse pour le moment.</Alert>
@@ -111,7 +113,7 @@ export function FaqList ({ role, productSlug, categories, questions, defaultCate
 								{role === "admin" && <div>
 									<div className="flex gap-2">
 										<ButtonIconA icon="pencil" type="default"
-													onClick={Routing.generate(URL_UPDATE_CATEGORY, { slug: productSlug, id: elem.id })}>
+													 onClick={Routing.generate(URL_UPDATE_CATEGORY, { slug: productSlug, id: elem.id })}>
 											Modifier
 										</ButtonIconA>
 										<ButtonIcon icon="trash" type="default"

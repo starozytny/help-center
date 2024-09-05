@@ -18,7 +18,7 @@ class HeCategory
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['help_cat_list', 'help_cat_form', 'help_quest_list'])]
+    #[Groups(['help_cat_list', 'help_cat_form', 'help_quest_list', 'help_quest_search'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -30,7 +30,7 @@ class HeCategory
     private ?string $icon = null;
 
     #[ORM\Column]
-    #[Groups(['help_cat_form'])]
+    #[Groups(['help_cat_list', 'help_cat_form'])]
     private ?int $visibility = HelpVisibility::All;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: HeQuestion::class)]

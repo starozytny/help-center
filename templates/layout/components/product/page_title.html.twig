@@ -9,5 +9,14 @@
                 {{ page_actions is defined ? page_actions : "" }}
             </div>
         </div>
+        <div id="global_search_product" class="mt-2"
+             data-p-slug="{{ product.slug }}"
+             data-id="{{ product.id }}"
+        >
+            <div class="block bg-gray-50 rounded-md shadow-sm border-0 py-2 px-3 text-sm text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-500">
+                <span class="icon-chart-3"></span>
+                <span class="pl-2">Rechercher un guide, documentation, réponse..</span>
+            </div>
+        </div>
     </div>
 </header>

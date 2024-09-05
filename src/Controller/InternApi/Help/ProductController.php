@@ -2,8 +2,13 @@
 
 namespace App\Controller\InternApi\Help;
 
+use App\Entity\Main\Help\HeCategory;
+use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeProduct;
+use App\Entity\Main\Help\HeQuestion;
+use App\Entity\Main\Help\HeTutorial;
 use App\Repository\Main\Help\HeProductRepository;
+use App\Repository\Main\Help\HeQuestionRepository;
 use App\Service\ApiResponse;
 use App\Service\Data\DataHelp;
 use App\Service\FileUploader;
@@ -14,6 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/intern/api/help/products', name: 'intern_api_help_products_')]
 class ProductController extends AbstractController
@@ -89,5 +95,23 @@ class ProductController extends AbstractController
         $em->flush($obj);
 
         return $apiResponse->apiJsonResponseSuccessful("ok");
+    }
+
+    #[Route('/data/search/{id}', name: 'data_search', options: ['expose' => true], methods: 'POST')]
+    public function dataSearch(HeProduct $obj, HeQuestionRepository $heQuestionRepository,
+                               ApiResponse $apiResponse, SerializerInterface $serializer): Response
+    {
+        $ids = [];
+        foreach($obj->getCategories() as $category){
+            $ids[] = $category->getId();
+        }
+
+        $questions = $heQuestionRepository->findBy(['category' => $ids]);
+
+        return $apiResponse->apiJsonResponseCustom([
+            'documentations' => $serializer->serialize($obj->getDocumentations(), 'json', ['groups' => HeDocumentation::SEARCH]),
+            'guides' => $serializer->serialize($obj->getTutorials(), 'json', ['groups' => HeTutorial::SEARCH]),
+            'questions' => $serializer->serialize($questions, 'json', ['groups' => HeQuestion::SEARCH]),
+        ]);
     }
 }
