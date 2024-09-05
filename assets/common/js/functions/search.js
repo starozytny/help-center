@@ -47,6 +47,14 @@ function switchFunction(type, search, v) {
                 return v;
             }
             break;
+        case "global-search":
+            if((v.name && searchContainsWith(v.name, search))
+                || (v.content && searchContainsWith(v.content, search))
+                || (v.description && searchContainsWith(v.description, search))
+            ){
+                return v;
+            }
+            break;
         default:
             break;
     }

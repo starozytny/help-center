@@ -123,4 +123,22 @@ class ProductController extends AbstractController
         $cat = $serializer->serialize($category, 'json', ['groups' => HeCategory::LIST]);
         return $this->render('user/pages/faq/question/update.html.twig', ['product' => $product, 'category' => $category, 'cat' => $cat, 'elem' => $elem, 'obj' => $obj]);
     }
+
+    #[Route('/produit/{slug}/questions/{category}/consulter/{id}', name: 'question_read', options: ['expose' => true])]
+    public function questionRead($slug, HeCategory $category, HeQuestion $obj, HeProductRepository $productRepository): Response
+    {
+        $product = $productRepository->findOneBy(['slug' => $slug]);
+
+        if (!in_array($product->getId(), $this->getUser()->getAccess()) || (!$this->isGranted('ROLE_ADMIN') && $product->isIntern())) {
+            if(!$this->isGranted("ROLE_ADMIN")){
+                throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
+            }
+        }
+
+        return $this->render('user/pages/faq/question/read.html.twig', [
+            'product' => $product,
+            'category' => $category,
+            'elem' => $obj
+        ]);
+    }
 }

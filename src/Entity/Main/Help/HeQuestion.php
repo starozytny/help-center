@@ -14,6 +14,7 @@ class HeQuestion
 
     const LIST = ["help_quest_list"];
     const FORM = ["help_quest_form"];
+    const SEARCH = ["help_quest_search"];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,11 +23,11 @@ class HeQuestion
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['help_quest_list', 'help_quest_form'])]
+    #[Groups(['help_quest_list', 'help_quest_form', 'help_quest_search'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['help_quest_list', 'help_quest_form'])]
+    #[Groups(['help_quest_list', 'help_quest_form', 'help_quest_search'])]
     private ?string $content = null;
 
     #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'questions')]
@@ -89,5 +90,11 @@ class HeQuestion
         $this->visibility = $visibility;
 
         return $this;
+    }
+
+    #[Groups(['help_quest_search'])]
+    public function getSearchType(): string
+    {
+        return "question";
     }
 }

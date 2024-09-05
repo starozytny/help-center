@@ -18,6 +18,7 @@ class HeDocumentation extends DataEntity
 
     const FORM = ['doc_form'];
     const READ = ['doc_read'];
+    const SEARCH = ['doc_search'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -26,19 +27,19 @@ class HeDocumentation extends DataEntity
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['doc_form'])]
+    #[Groups(['doc_form', 'doc_search'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['doc_read'])]
+    #[Groups(['doc_read', 'doc_search'])]
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(['doc_form'])]
+    #[Groups(['doc_form', 'doc_search'])]
     private ?string $content = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['doc_form'])]
+    #[Groups(['doc_form', 'doc_search'])]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -243,5 +244,11 @@ class HeDocumentation extends DataEntity
         $this->twigName = $twigName;
 
         return $this;
+    }
+
+    #[Groups(['doc_search'])]
+    public function getSearchType(): string
+    {
+        return "documentation";
     }
 }

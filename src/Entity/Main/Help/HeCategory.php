@@ -30,7 +30,7 @@ class HeCategory
     private ?string $icon = null;
 
     #[ORM\Column]
-    #[Groups(['help_cat_form'])]
+    #[Groups(['help_cat_list', 'help_cat_form'])]
     private ?int $visibility = HelpVisibility::All;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: HeQuestion::class)]

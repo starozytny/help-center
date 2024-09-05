@@ -20,6 +20,7 @@ class HeTutorial extends DataEntity
 
     const FORM = ['tuto_form'];
     const READ = ['tuto_read'];
+    const SEARCH = ['tuto_search'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -28,15 +29,15 @@ class HeTutorial extends DataEntity
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['tuto_form'])]
+    #[Groups(['tuto_form', 'tuto_search'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['tuto_read'])]
+    #[Groups(['tuto_read', 'tuto_search'])]
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['tuto_form'])]
+    #[Groups(['tuto_form', 'tuto_search'])]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -62,6 +63,7 @@ class HeTutorial extends DataEntity
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'tutorial', targetEntity: HeStep::class)]
+    #[Groups(['tuto_search'])]
     private Collection $steps;
 
     #[ORM\Column]
@@ -244,5 +246,11 @@ class HeTutorial extends DataEntity
         $this->twigName = $twigName;
 
         return $this;
+    }
+
+    #[Groups(['tuto_search'])]
+    public function getSearchType(): string
+    {
+        return "guide";
     }
 }
