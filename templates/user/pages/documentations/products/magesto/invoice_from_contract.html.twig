@@ -1,0 +1,22 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Propriété isHidden</h3>
+        <div class="mt-4">
+            Cette propriété est à <b>true</b> quand une facture est modifié ou consulté dans <u>le module des contrats</u>.
+            <br><br>
+            Une fois la facture traitée dans le module des contrats, la facture sera visible.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Pourquoi ce système ?</h3>
+        <div class="mt-4">
+            Cela permet de ne pas afficher cette facture dans la liste des factures et éviter toutes mauvaises manipulations.
+            <br>
+            La modification d'une facture issue d'un contrat fonctionne différement des factures classiques car, elle
+            est régie par la période et des propriétés permettant de lier une facture à un
+            contrat <i>(contractId, refContract, relationId, refRelation, numRelation)</i>.
+        </div>
+    </div>
+{% endblock %}
