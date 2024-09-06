@@ -1,0 +1,26 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Page de paramétrage</h3>
+        <div class="mt-4">
+            Dans le menu du haut, cliquez sur le bouton des Paramètres <span class="icon-settings"></span>, puis dans le sous-menu, cliquez sur <i>Compteur et dates</i>.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Format</h3>
+        <div class="mt-4">
+            <span class="text-red-500 font-semibold">Le format n'est pas personnalisable.</span>
+            <br>
+            Il se compose des 2 premières lettres du type (ex: FA pour les factures), suivi de l'année et du compteur incrémenté.
+            <br>
+            <span class="italic text-sm">Pour les avoirs les 2 premières lettres sont FA.</span>
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Compteur</h3>
+        <div class="mt-4">
+            Le compteur s'incrémente à chaque finalisation du document. Si une nouvelle année est détectée, le compteur recommence à 0.
+        </div>
+    </div>
+{% endblock %}
