@@ -1,0 +1,50 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Numéro site</h3>
+        <div class="mt-4">
+            Les sites possèdent un numéro unique. <br>
+            Vous pouvez choisir de suivre la numérotation automatique utilisée par Magesto ou utiliser votre
+            propre numérotation mais, celle-ci ne sera pas automatique.
+            <br>
+            Le numéro n'est pas modifiable après la création.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Champs S.D.C</h3>
+        <div class="mt-4">
+            Son activation permet d'afficher la mention S.D.C à coté de l'adresse dans les documents.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Champs emails</h3>
+        <div class="mt-4">
+            Le deuxième et troisième email seront en copie des mails lors des envois automatique des documents.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Champs mode de règlement</h3>
+        <div class="mt-4">
+            Il sera sélectionner automatiquement lors de la création d'un document ou d'un contrat.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Si l'option Comptabilité est active</h3>
+        <div class="mt-4">
+            Le numéro de comptabilité devient obligatoire à la saisie.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Modification d'un client</h3>
+        <div class="mt-4">
+            Les documents en brouillon et les contrats seront modifiés.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Suppression d'un client</h3>
+        <div class="mt-4">
+            Si un document ou contrat existe, vous ne pourrez pas le supprimer.
+        </div>
+    </div>
+{% endblock %}
