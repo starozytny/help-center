@@ -1,0 +1,39 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Factures</h3>
+        <div class="mt-4">
+            <ul>
+                <li><span class="text-gray-500 font-semibold">0</span> : Brouillon, en cours de rédaction, aucun numéro attribué.</li>
+                <li><span class="text-blue-500 font-semibold">1</span> : Facture finalisée, en attente de paiement. <span class="font-medium">Un numéro est attribué.</span></li>
+                <li><span class="text-green-500 font-semibold">2</span> : Facture payée totalement.</li>
+                <li><span class="text-red-500 font-semibold">3</span> : Facture payée partiellement.</li>
+                <li><span class="text-yellow-500 font-semibold">4</span> : Rattaché à un avoir.</li>
+            </ul>
+            <br>
+            <span class="text-red-500 font-semibold">Toutes les factures ayant un statut supérieur à 0 ne peuvent pas être modifié car, elles ont été communiqué au client.</span>
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Devis</h3>
+        <div class="mt-4">
+            <ul>
+                <li><span class="text-gray-500 font-semibold">0</span> : Brouillon, en cours de rédaction, aucun numéro attribué.</li>
+                <li><span class="text-blue-500 font-semibold">1</span> : Devis en cours. <span class="font-medium">Un numéro est attribué.</span></li>
+                <li><span class="text-green-500 font-semibold">2</span> : Devis accepté. <span class="text-sm">Action manuelle de la part de l'utilisateur.</span></li>
+                <li><span class="text-red-500 font-semibold">3</span> : Devis refusé.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Avoir</h3>
+        <div class="mt-4">
+            <ul>
+                <li><span class="text-gray-500 font-semibold">0</span> : Brouillon, en cours de rédaction, aucun numéro attribué.</li>
+                <li><span class="text-blue-500 font-semibold">1</span> : Avoir finalisé. <span class="font-medium">Un numéro est attribué.</span></li>
+            </ul><br>
+            <span class="text-red-500 font-semibold">Tous les avoirs ayant un statut supérieur à 0 ne peuvent pas être modifié car, elles ont été communiqué au client.</span>
+        </div>
+    </div>
+{% endblock %}
