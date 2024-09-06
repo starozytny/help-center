@@ -1,0 +1,41 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Page de paramétrage</h3>
+        <div class="mt-4">
+            Dans le menu du haut, cliquez sur le bouton des Paramètres <span class="icon-settings"></span>.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Communication interne</h3>
+        <div class="mt-4">
+            Pour permettre la communication avec as2.logilink.fr, il faut activer le <b>Système de communication interne</b>.
+            <br>
+            <span class="italic text-sm">Une fois activée, vérifiez dans l'interface administrateur > Société, que le badge est visible à côté de la société concernée.</span>
+            <br><br>
+            Dans le formulaire d'édition d'un client, vous pourrez sélectionner le moyen de transmission des factures.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Comptabilité</h3>
+        <div class="mt-4">
+            En activant le système de compatibilité, l'utilisateur pourra accéder à l'onglet <i>Comptabilité</i> dans le sous-menu de cette même page.
+            <br><br>
+            Les clients et les articles auront l'obligation d'avoir un numéro de comptabilité.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Cotisation</h3>
+        <div class="mt-4">
+            Système exclusif à la FNAIM. C'est un module simplifié des contrats.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Prélèvement</h3>
+        <div class="mt-4">
+            Son activation permet à l'utilisateur d'accéder aux pages <i>Prélèvement</i> et <i>Échéancier</i>
+            depuis le menu du haut, rubrique <i>Récurrent</i>, ainsi que l'onglet <i>Paiement</i> dans le sous-menu de cette même page.
+        </div>
+    </div>
+{% endblock %}
