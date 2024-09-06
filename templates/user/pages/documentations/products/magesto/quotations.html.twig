@@ -1,0 +1,32 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Fonctionnement</h3>
+        <div class="mt-4">
+            Une fois finalisé, le devis prend le statut {% include "layout/components/tailwind/badges/badge.html.twig" with {
+                badge_type: 'yellow',
+                badge_text: 'En attente de réponse'
+            } %}, un mail est envoyé automatiquement avec le devis en pièce jointe.
+            <br>
+            Quand l'utilisateur sait que le client a accepté ou refusé le devis, il peut ouvrir le menu du devis et sélectionner la réponse adéquate.
+            <br><br>
+            <ul>
+                <li>Si le devis est accepté, on peut créer une facture directement à partir de ce devis.</li>
+                <li>Si le devis est refusé, on le déplace automatiquement en archive.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Modification</h3>
+        <div class="mt-4">
+            Modification possible à tout moment mais, l'envoi est automatique seulement à la finalisation.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Suppression</h3>
+        <div class="mt-4">
+            S'il n'est pas en brouillon, vous ne pourrez pas le supprimer.
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Fonctionnement</h3>
+        <div class="mt-4">
+            Une fois finalisé, la facture prend le statut {% include "layout/components/tailwind/badges/badge.html.twig" with {
+                badge_type: 'blue',
+                badge_text: 'A régler'
+            } %}, un mail est envoyé automatiquement avec la facture en pièce jointe.
+            <br><br>
+            Lors d'un paiement, vous pouvez le retranscrire dans le menu de la facture en cliquant sur <b>Entrer un paiement</b>.
+            <br>
+            Si le paiement est total, la facture prendra le statut {% include "layout/components/tailwind/badges/badge.html.twig" with {
+                badge_type: 'green',
+                badge_text: 'Payé'
+            } %}. <br>
+            Si le paiement est partiel, la facture prendra le statut {% include "layout/components/tailwind/badges/badge.html.twig" with {
+                badge_type: 'red',
+                badge_text: 'Partiel'
+            } %}.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Modification</h3>
+        <div class="mt-4">
+            Modifiable uniquement si la facture est en brouillon.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Suppression</h3>
+        <div class="mt-4">
+            Suppression autorisé si la facture est en brouillon.
+        </div>
+    </div>
+{% endblock %}
