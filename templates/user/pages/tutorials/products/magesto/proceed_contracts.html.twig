@@ -1,0 +1,53 @@
+{% extends 'user/pages/tutorials/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Fonctionnement de la page</h3>
+        <div class="mt-4">
+            La page de traitement des contrats sélectionne automatiquement le mois suivant de la dernière génération
+            globale réalisée.
+            <br>
+            <span class="text-sm italic">Par exemple : si on est en 2024, et que la dernière génération globale a été
+                                         réalisée en octobre 2023, la page sélectionnera automatiquement l'année 2023 et le mois de novembre.</span>
+            <br><br>
+            La page liste les contrats à traiter et ceux traités en fonction de sa périodicité.
+            <br>
+            Les contrats à traiter ont un bouton actions permettant de désactiver le contrat pour ce mois, générer, modifier et consulter un aperçu de la facture.
+            Les contrats déjà traités ont un bouton pour consulter la facture finalisée.
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Modifier une facture</h3>
+        <div class="mt-4">
+            Il est possible de modifier la facture d'un contrat pour le mois concerné. Cliquez sur le bouton Modifier <span class="icon-pencil"></span>.
+            <br>
+            Cette modification sera active uniquement pour l'année et mois concerné.
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Générer les factures</h3>
+        <div class="mt-4">
+            Un bouton <b>Générer les factures</b> permet la génération de tous les contrats listés pour le mois concerné.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/magesto/proceed_contracts/1.png') }}" alt="image 1" class="shadow p-2 rounded-md bg-white">
+            </div>
+            <br>
+            Une boite de dialogue s'ouvre pour renseigner la date de facture et la date d'échéance.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/magesto/proceed_contracts/2.png') }}" alt="image 2" class="shadow p-2 rounded-md bg-white">
+            </div>
+            <br>
+            Au clique du bouton <b>Générer</b>, la procédure est lancée, les factures sont générées et envoyées aux clients.
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Générer une seule facture</h3>
+        <div class="mt-4">
+            Au lieu de cliquer sur le bouton de génération de toutes les factures,
+            rendez-vous sur le bouton action du contrat et cliquez sur Générer la facture.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/magesto/proceed_contracts/3.png') }}" alt="image 3" class="shadow p-2 rounded-md bg-white">
+            </div>
+        </div>
+    </div>
+{% endblock %}
