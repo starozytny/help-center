@@ -1,0 +1,38 @@
+{% extends 'user/pages/tutorials/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Société</h3>
+        <div class="mt-4">
+            Dans les paramètres de la société, menu du haut <span class="icon-settings"></span>.
+            <br>
+            Dans la partie communication interne, il faut sélectionner Activé et enregistrer les modifications.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/magesto/interne/1.png') }}" alt="image 1" class="shadow p-2 rounded-md bg-white">
+            </div>
+            <br>
+            Dans l'interface administrateur, vérifiez que la société a la communication interne d'activée.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/magesto/interne/2.png') }}" alt="image 2" class="shadow p-2 rounded-md bg-white">
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Clients</h3>
+        <div class="mt-4">
+            Un nouveau choix est disponible pour les clients concernant le mode d'envoi des factures. Sélectionnez interne.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/magesto/interne/3.png') }}" alt="image 3" class="shadow p-2 rounded-md bg-white">
+            </div>
+            <br>
+            <span class="font-semibold text-red-500">Attention</span>, le <i>SIRET</i> devient un champ obligatoire à remplir
+            lors de la communication interne pour que Logilink puisse identifier le client.
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Facture</h3>
+        <div class="mt-4">
+            Lors de la génération de la facture, le programme va vérifier le mode d'envoi des factures pour le client concerné.
+        </div>
+    </div>
+{% endblock %}
