@@ -1,0 +1,41 @@
+{% extends 'user/pages/tutorials/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Numérotation et date</h3>
+        <div class="mt-4">
+            Le numéro est attribué automatiquement par Magesto lorsque vous générez le document.
+            <br>
+            La date est obligatoire lors de la génération mais facultative pour l'enregistrement en brouillon.
+            La date ne peut pas être antérieur à la dernière date de facture générée.
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Client et/ou site</h3>
+        <div class="mt-4">
+            Sélectionnez un client déjà existant en cliquant sur le bouton <span class="icon-user"></span> ou créez un
+            nouveau client directement via ce formulaire.
+            <br><br>
+            Pour sélectionner un site ou en créer un, il faut au préalable sélectionner un client.
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Article(s)</h3>
+        <div class="mt-4">
+            Sélectionnez un article déjà existant en cliquant sur le bouton <span class="icon-box"></span> ou créez un
+            nouveau article directement via ce formulaire.
+            <br><br>
+            <span class="font-semibold">N'oubliez pas d'appuyer sur le bouton <u>Ajouter l'article</u> pour valider la saisie.</span>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Sauvegarder ou générer</h3>
+        <div class="mt-4">
+            La sauvegarde en brouillon permet de reprendre la facture à plus tard pour y apporter des nouveaux
+            éléments ou attendre le bon jour pour générer la facture.
+            <br><br>
+            La génération permet de finaliser la facture et de lui attribuer un numéro de facture. Des vérifications
+            sont faites pour être sûr de l'ordre des factures et la cohérence des dates.
+        </div>
+    </div>
+{% endblock %}
