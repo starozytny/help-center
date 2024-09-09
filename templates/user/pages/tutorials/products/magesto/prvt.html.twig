@@ -1,0 +1,49 @@
+{% extends 'user/pages/tutorials/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Générer les prélèvements</h3>
+        <div class="mt-4">
+            Dans la page des prélèvements, sélectionner la date du prélèvement.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/magesto/prvt/1.png') }}" alt="image 1" class="shadow p-2 rounded-md bg-white">
+            </div>
+            <br>
+            Cela vous donne la liste des prélèvements des factures jusqu'à la date sélectionnée. La liste est classée
+            par client et par factures des clients. Vous pouvez modifier le montant de l'échéance et reporter le prélèvement d'une facture au mois suivant.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/magesto/prvt/2.png') }}" alt="image 2" class="shadow p-2 rounded-md bg-white">
+            </div>
+            En cliquant sur Générer les prélèvements, une boite de dialogue vous demande de confirmer votre action.
+            En confirmant, un fichier XML est généré, vous devez le transmettre à votre banque pour que les prélèvements se fassent.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/magesto/prvt/3.png') }}" alt="image 3" class="shadow p-2 rounded-md bg-white">
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Prélèvement rejeté</h3>
+        <div class="mt-4">
+            Dans l'historique des prélèvements, en cliquant sur Détails, vous pouvez signaler qu'un prélèvement a été rejeté.
+            <br>
+            Vous pouvez regénérer un rejet pour le remettre dans la boucle des prélèvements.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/magesto/prvt/4.png') }}" alt="image 4" class="shadow p-2 rounded-md bg-white">
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Échéancier des prélèvements</h3>
+        <div class="mt-4">
+            Visualiser l'échéancier de l'année en cours pour prélèvements des clients dans la page <i>Échéancier</i>.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/magesto/prvt/5.png') }}" alt="image 5" class="shadow p-2 rounded-md bg-white">
+            </div>
+            <br>
+            En cliquant sur un montant, vous pouvez modifier le montant de l'échéance ainsi que sa date d'échéance..
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/magesto/prvt/6.png') }}" alt="image 6" class="shadow p-2 rounded-md bg-white">
+            </div>
+        </div>
+    </div>
+{% endblock %}
