@@ -19,6 +19,20 @@
                 badge_type: 'red',
                 badge_text: 'Partiel'
             } %}.
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="mt-8">
+                    <div class="bg-white rounded-md border">
+                        <div class="p-4 font-medium bg-gray-200 rounded-t-md">
+                            Administrateurs
+                        </div>
+                        <div class="p-4">
+                            Les factures générées ne sont pas stockés en tant que document. Les informations contenues
+                            dans la base de données permettent de construire le PDF.
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
     <div class="py-6">
