@@ -95,6 +95,21 @@ class LoginController extends AbstractController
 
             $page = $request->query->get('page');
             if($page){
+
+                if($type = $request->query->get('type')){
+                    $slug = $request->query->get('slug');
+
+                    if($type == "documentations"){
+                        return $this->redirectToRoute('user_help_documentation_read', ['p_slug' => $page, 'slug' => $slug]);
+                    }else if($type == "tutoriels"){
+                        return $this->redirectToRoute('user_help_tutorial_read', ['p_slug' => $page, 'slug' => $slug]);
+                    }else if($type == "faq"){
+                        $category = $request->query->get('cat');
+                        $id = $request->query->get('id');
+                        return $this->redirectToRoute('user_help_question_read', ['slug' => $page, 'category' => $category, 'id' => $id]);
+                    }
+                }
+
                 return $this->redirectToRoute('user_help_product_read', ['slug' => $page]);
             }
         }
