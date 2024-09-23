@@ -3,10 +3,12 @@
 namespace App\Service\Data;
 
 use App\Entity\Main\Help\HeCategory;
+use App\Entity\Main\Help\HeCommentary;
 use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
 use App\Entity\Main\Help\HeTutorial;
+use App\Entity\Main\User;
 use App\Service\SanitizeData;
 
 class DataHelp
@@ -70,6 +72,14 @@ class DataHelp
             ->setName($this->sanitizeData->trimData($data->name))
             ->setContent($this->sanitizeData->trimData($data->content->html))
             ->setVisibility((int) $data->visibility)
+        ;
+    }
+
+    public function setDataCommentary(HeCommentary $obj, $data, User $user): HeCommentary
+    {
+        return ($obj)
+            ->setUser($user)
+            ->setMessage($this->sanitizeData->trimData($data->message))
         ;
     }
 }

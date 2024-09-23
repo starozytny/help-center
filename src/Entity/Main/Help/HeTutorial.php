@@ -74,10 +74,17 @@ class HeTutorial extends DataEntity
     #[Groups(['tuto_form'])]
     private ?string $twigName = null;
 
+    /**
+     * @var Collection<int, HeCommentary>
+     */
+    #[ORM\OneToMany(mappedBy: 'tutorial', targetEntity: HeCommentary::class)]
+    private Collection $commentaries;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->steps = new ArrayCollection();
+        $this->commentaries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -252,5 +259,35 @@ class HeTutorial extends DataEntity
     public function getSearchType(): string
     {
         return "guide";
+    }
+
+    /**
+     * @return Collection<int, HeCommentary>
+     */
+    public function getCommentaries(): Collection
+    {
+        return $this->commentaries;
+    }
+
+    public function addCommentary(HeCommentary $commentary): static
+    {
+        if (!$this->commentaries->contains($commentary)) {
+            $this->commentaries->add($commentary);
+            $commentary->setTutorial($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentary(HeCommentary $commentary): static
+    {
+        if ($this->commentaries->removeElement($commentary)) {
+            // set the owning side to null (unless already changed)
+            if ($commentary->getTutorial() === $this) {
+                $commentary->setTutorial(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -4,9 +4,11 @@ namespace App\Controller\User;
 
 use App\Entity\Enum\Help\HelpStatut;
 use App\Entity\Main\Help\HeDocumentation;
+use App\Entity\Main\User;
 use App\Repository\Main\Help\HeDocumentationRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -18,9 +20,11 @@ class DocumentationController extends AbstractController
     #[Route('/', name: 'index', options: ['expose' => true])]
     public function index($p_slug, HeProductRepository $productRepository): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
 
-        if (!in_array($product->getId(), $this->getUser()->getAccess())) {
+        if (!in_array($product->getId(), $user->getAccess())) {
             if(!$this->isGranted("ROLE_ADMIN")){
                 throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
             }
@@ -63,11 +67,13 @@ class DocumentationController extends AbstractController
     }
 
     #[Route('/documentation/{slug}', name: 'read', options: ['expose' => true])]
-    public function read($p_slug, $slug, HeProductRepository $productRepository, HeDocumentationRepository $documentationRepository): Response
+    public function read(Request $request, $p_slug, $slug, HeProductRepository $productRepository, HeDocumentationRepository $documentationRepository): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
 
-        if (!in_array($product->getId(), $this->getUser()->getAccess()) || (!$this->isGranted('ROLE_ADMIN') && $product->isIntern())) {
+        if (!in_array($product->getId(), $user->getAccess()) || (!$this->isGranted('ROLE_ADMIN') && $product->isIntern())) {
             if(!$this->isGranted("ROLE_ADMIN")){
                 throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
             }
@@ -86,12 +92,14 @@ class DocumentationController extends AbstractController
             }
 
             return $this->render($fileTwig, [
+                'commentaries' => $obj->getCommentaries(),
                 'product' => $product,
                 'elem' => $obj
             ]);
         }
 
         return $this->render('user/pages/documentations/read.html.twig', [
+            'commentaries' => $obj->getCommentaries(),
             'product' => $product,
             'elem' => $obj,
         ]);
