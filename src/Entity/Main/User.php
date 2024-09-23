@@ -3,6 +3,7 @@
 namespace App\Entity\Main;
 
 use App\Entity\DataEntity;
+use App\Entity\Main\Help\HeCommentary;
 use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeTutorial;
 use App\Repository\Main\UserRepository;
@@ -109,6 +110,12 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     private Collection $mails;
 
     /**
+     * @var Collection<int, HeCommentary>
+     */
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: HeCommentary::class)]
+    private Collection $heCommentaries;
+
+    /**
      * @throws Exception
      */
     public function __construct()
@@ -118,6 +125,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
         $this->documentations = new ArrayCollection();
         $this->tutorials = new ArrayCollection();
         $this->mails = new ArrayCollection();
+        $this->heCommentaries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -493,6 +501,36 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
             // set the owning side to null (unless already changed)
             if ($mail->getUser() === $this) {
                 $mail->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HeCommentary>
+     */
+    public function getHeCommentaries(): Collection
+    {
+        return $this->heCommentaries;
+    }
+
+    public function addHeCommentary(HeCommentary $heCommentary): static
+    {
+        if (!$this->heCommentaries->contains($heCommentary)) {
+            $this->heCommentaries->add($heCommentary);
+            $heCommentary->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHeCommentary(HeCommentary $heCommentary): static
+    {
+        if ($this->heCommentaries->removeElement($heCommentary)) {
+            // set the owning side to null (unless already changed)
+            if ($heCommentary->getUser() === $this) {
+                $heCommentary->setUser(null);
             }
         }
 

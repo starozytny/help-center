@@ -7,6 +7,8 @@ use App\Entity\Enum\Help\HelpStatut;
 use App\Entity\Enum\Help\HelpVisibility;
 use App\Entity\Main\User;
 use App\Repository\Main\Help\HeDocumentationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -76,9 +78,16 @@ class HeDocumentation extends DataEntity
     #[Groups(['doc_form'])]
     private ?string $twigName = null;
 
+    /**
+     * @var Collection<int, HeCommentary>
+     */
+    #[ORM\OneToMany(mappedBy: 'documentation', targetEntity: HeCommentary::class)]
+    private Collection $commentaries;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->commentaries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -250,5 +259,35 @@ class HeDocumentation extends DataEntity
     public function getSearchType(): string
     {
         return "documentation";
+    }
+
+    /**
+     * @return Collection<int, HeCommentary>
+     */
+    public function getCommentaries(): Collection
+    {
+        return $this->commentaries;
+    }
+
+    public function addCommentary(HeCommentary $commentary): static
+    {
+        if (!$this->commentaries->contains($commentary)) {
+            $this->commentaries->add($commentary);
+            $commentary->setDocumentation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentary(HeCommentary $commentary): static
+    {
+        if ($this->commentaries->removeElement($commentary)) {
+            // set the owning side to null (unless already changed)
+            if ($commentary->getDocumentation() === $this) {
+                $commentary->setDocumentation(null);
+            }
+        }
+
+        return $this;
     }
 }
