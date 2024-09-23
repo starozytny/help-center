@@ -127,9 +127,11 @@ class ProductController extends AbstractController
     #[Route('/produit/{slug}/questions/{category}/consulter/{id}', name: 'question_read', options: ['expose' => true])]
     public function questionRead($slug, HeCategory $category, HeQuestion $obj, HeProductRepository $productRepository): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
         $product = $productRepository->findOneBy(['slug' => $slug]);
 
-        if (!in_array($product->getId(), $this->getUser()->getAccess()) || (!$this->isGranted('ROLE_ADMIN') && $product->isIntern())) {
+        if (!in_array($product->getId(), $user->getAccess()) || (!$this->isGranted('ROLE_ADMIN') && $product->isIntern())) {
             if(!$this->isGranted("ROLE_ADMIN")){
                 throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
             }

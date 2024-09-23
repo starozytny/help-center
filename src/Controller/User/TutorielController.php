@@ -5,6 +5,7 @@ namespace App\Controller\User;
 use App\Entity\Enum\Help\HelpStatut;
 use App\Entity\Main\Help\HeStep;
 use App\Entity\Main\Help\HeTutorial;
+use App\Entity\Main\User;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Repository\Main\Help\HeStepRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
@@ -20,9 +21,11 @@ class TutorielController extends AbstractController
     #[Route('/', name: 'index', options: ['expose' => true])]
     public function index($p_slug, HeProductRepository $productRepository): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
 
-        if (!in_array($product->getId(), $this->getUser()->getAccess())) {
+        if (!in_array($product->getId(), $user->getAccess())) {
             if(!$this->isGranted("ROLE_ADMIN")){
                 throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
             }
@@ -72,9 +75,11 @@ class TutorielController extends AbstractController
     public function read($p_slug, $slug, HeProductRepository $productRepository,
                          HeTutorialRepository $tutorialRepository, HeStepRepository $stepRepository): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
 
-        if (!in_array($product->getId(), $this->getUser()->getAccess()) || (!$this->isGranted('ROLE_ADMIN') && $product->isIntern())) {
+        if (!in_array($product->getId(), $user->getAccess()) || (!$this->isGranted('ROLE_ADMIN') && $product->isIntern())) {
             if(!$this->isGranted("ROLE_ADMIN")){
                 throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à ces informations.");
             }
