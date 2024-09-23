@@ -1,7 +1,7 @@
 {% extends 'user/pages/tutorials/template.html.twig' %}
 
 {% set page_title %}Guide : {{ elem.name }}{% endset %}
-{% set page_subtitle %}{{ elem.status == 0 ? "<span class='txt-danger'>[HORS LIGNE]</span>" : "" }}{% endset %}
+{% set page_subtitle %}{{ elem.status == 0 ? "<span class='text-red-500 font-semibold'>[HORS LIGNE]</span>" : "" }}{% endset %}
 
 {% set page_actions %}
     {% if is_granted('ROLE_ADMIN') %}
