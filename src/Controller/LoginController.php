@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Main\LogHistory;
 use App\Entity\Main\User;
+use App\Repository\Main\LogHistoryRepository;
 use App\Repository\Main\UserRepository;
 use App\Service\Expiration;
 use Doctrine\Persistence\ManagerRegistry;
@@ -86,7 +88,8 @@ class LoginController extends AbstractController
     }
 
     #[Route('/auto-connect/{token}', name: 'auto_connect')]
-    public function autoConnect(Request $request, $token, UserRepository $repository, Security $security): Response
+    public function autoConnect(Request $request, $token, UserRepository $repository, Security $security,
+                                LogHistoryRepository $historyRepository): Response
     {
         $user = $repository->findOneBy(['token' => $token]);
 
@@ -95,6 +98,7 @@ class LoginController extends AbstractController
 
             $page = $request->query->get('page');
             if($page){
+                $this->createLogHistory($request, $historyRepository, $token);
 
                 if($type = $request->query->get('type')){
                     $slug = $request->query->get('slug');
@@ -115,5 +119,17 @@ class LoginController extends AbstractController
         }
 
         return $this->redirectToRoute('app_login');
+    }
+
+    private function createLogHistory(Request $request, LogHistoryRepository $historyRepository, $token): void
+    {
+        $urlUsed = $request->query->get('page') . "/" . $request->query->get('type', 'null') . "/" . $request->query->get('slug', 'null');
+
+        $obj = (new LogHistory())
+            ->setWho($request->query->get('who', $token))
+            ->setUrlUsed($urlUsed)
+        ;
+
+        $historyRepository->save($obj, true);
     }
 }
