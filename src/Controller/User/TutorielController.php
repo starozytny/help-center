@@ -98,6 +98,7 @@ class TutorielController extends AbstractController
             }
 
             return $this->render($fileTwig, [
+                'commentaries' => $obj->getCommentaries(),
                 'product' => $product,
                 'elem' => $obj
             ]);
@@ -106,6 +107,7 @@ class TutorielController extends AbstractController
         $steps = $stepRepository->findBy(['tutorial' => $obj]);
 
         return $this->render('user/pages/tutorials/read.html.twig', [
+            'commentaries' => $obj->getCommentaries(),
             'product' => $product,
             'elem' => $obj,
             'steps' => $steps,
