@@ -16,6 +16,15 @@ class HeCommentaryRepository extends ServiceEntityRepository
         parent::__construct($registry, HeCommentary::class);
     }
 
+    public function save(HeCommentary $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
     //    /**
     //     * @return HeCommentary[] Returns an array of HeCommentary objects
     //     */

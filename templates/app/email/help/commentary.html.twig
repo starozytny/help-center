@@ -1,0 +1,14 @@
+{% extends 'app/email/template/template.html.twig' %}
+
+{% block preheader %}Commentaire.{% endblock %}
+
+{% block title %}Commentaire{% endblock %}
+
+{% block body %}
+    <div>
+        <p style="width: 540px;">
+            Message en {{ type }} : <br>
+            {{ elem.message }}
+        </p>
+    </div>
+{% endblock %}
