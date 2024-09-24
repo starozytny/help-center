@@ -1,0 +1,14 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <div class="mt-4">
+            Dans la base de donnée de la table <i>society</i>, une propriété appelée <i>stamp</i> stocker le nom de fichier du tampon.
+            <br>
+            Les fichiers tampons sont stockés dans le répertoire <b>/public/stamps</b>.
+        </div>
+        <div class="mt-4">
+            📱 Lors de l'appel API, le fichier est converti en base64 pour être utilisé.
+        </div>
+    </div>
+{% endblock %}
