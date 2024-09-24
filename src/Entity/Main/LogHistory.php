@@ -5,22 +5,29 @@ namespace App\Entity\Main;
 use App\Repository\Main\LogHistoryRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: LogHistoryRepository::class)]
 class LogHistory
 {
+    const LIST = ['logs_list'];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['logs_list'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['logs_list'])]
     private ?string $who = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['logs_list'])]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['logs_list'])]
     private ?string $urlUsed = null;
 
     public function __construct()
