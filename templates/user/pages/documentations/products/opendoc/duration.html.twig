@@ -1,0 +1,12 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <div class="mt-4">
+            Les fichiers sont conservés 14 jours à partir de la date de dépôt sur OpenDoc.
+        </div>
+        <div class="mt-4 bg-red-200 rounded-md text-sm p-4 border border-red-400">
+            <span class="icon-warning pr-1"></span> Une fois les 14 jours passés, les fichiers sont supprimés définitivement. Aucun retour en arrière n'est possible.
+        </div>
+    </div>
+{% endblock %}
