@@ -80,6 +80,7 @@ Encore
 	.addEntry('admin_agenda', './assets/admin/js/pages/agenda.js')
 	.addEntry('admin_storage', './assets/admin/js/pages/storage.js')
 	.addEntry('admin_mails', './assets/admin/js/pages/mails.js')
+	.addEntry('admin_logs', './assets/admin/js/pages/logs.js')
 
 	.addEntry('user_app', './assets/user/js/app.js')
 	.addEntry('user_homepage', './assets/user/js/pages/homepage.js')

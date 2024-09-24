@@ -1,0 +1,10 @@
+{% extends 'admin/pages/logs/template.html.twig' %}
+
+{% set page_title %}Logs Historique{% endset %}
+{% set page_subtitle %}Visualisez l'historique de connexion au site.{% endset %}
+
+{% block main_content %}
+    <div id="logs_history_list">
+        {% include "layout/components/tailwind/loaders/loader.html.twig" %}
+    </div>
+{% endblock %}

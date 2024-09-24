@@ -1,0 +1,15 @@
+{% extends 'admin/layout/layout.html.twig' %}
+
+{% set breadcrumbs = [
+    { icon: 'task', text: "Logs historique"  }
+] %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('admin_logs') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('admin_logs') }}
+{% endblock %}
