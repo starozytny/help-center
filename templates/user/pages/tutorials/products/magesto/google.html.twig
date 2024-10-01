@@ -1,0 +1,54 @@
+{% extends 'user/pages/tutorials/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Dans quel cas l'utiliser ?</h3>
+        <div class="mt-4">
+            <span class="text-red-500 font-medium">Uniquement si vous utilisez une adresse email Gmail.</span>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Comment l'utiliser ?</h3>
+        <div class="mt-4">
+            Sur la page des <i>Paramètres</i> puis <i>Serveur de messagerie</i>. Sélectionner <b>Gmail</b> en type de
+            serveur de messagerie. Puis cliquez sur le bouton <b class="text-blue-500">Enregistrer</b>.
+        </div>
+        <div class="mt-6">
+            <img src="{{ asset('build/user/images/help/guides/products/magesto/google/input.png') }}" alt="image 1" class="shadow p-2 rounded-md bg-white">
+        </div>
+        <div class="mt-6">
+            Ensuite, cliquez sur le bouton <b>Se connecter avec Google</b>. Cela vous ouvre une page google.
+            <br>
+            Sélectionner <b>votre compte Gmail</b> que vous utilisez sur Magesto.
+        </div>
+        <div class="mt-6">
+            <img src="{{ asset('build/user/images/help/guides/products/magesto/google/select.png') }}" alt="image 2" class="shadow p-2 rounded-md bg-white">
+        </div>
+        <div class="mt-6">
+            Cliquez sur le bouton <b>Continuer</b>.
+        </div>
+        <div class="mt-6">
+            <img src="{{ asset('build/user/images/help/guides/products/magesto/google/continue.png') }}" alt="image 3" class="shadow p-2 rounded-md bg-white">
+        </div>
+        <div class="mt-6 font-medium text-red-500">
+            Cliquez sur la <u>coche</u> <b>Envoyer des e-mails en votre nom</b>.
+        </div>
+        <div class="mt-6">
+            <img src="{{ asset('build/user/images/help/guides/products/magesto/google/rights.png') }}" alt="image 4" class="shadow p-2 rounded-md bg-white">
+        </div>
+        <div class="mt-6">
+            Vous êtes redirigé automatiquement sur Magesto, vous pouvez vérifier que vous êtes bien connecté en voyant votre adresse email affichée.
+        </div>
+        <div class="mt-6">
+            <img src="{{ asset('build/user/images/help/guides/products/magesto/google/proof.png') }}" alt="image 5" class="shadow p-2 rounded-md bg-white">
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Conséquence</h3>
+        <div class="mt-4">
+            Les envois de mails sont envoyés via le serveur de messagerie Gmail, donc Magesto ne pourra plus savoir
+            les détails des envois des mails. Par contre, vous savez que les mails sont envoyés en vous rendant
+            sur votre compte Gmail puis dans messages envoyés.
+        </div>
+    </div>
+{% endblock %}
