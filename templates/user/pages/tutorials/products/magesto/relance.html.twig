@@ -1,0 +1,67 @@
+{% extends 'user/pages/tutorials/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Les différences</h3>
+        <div class="mt-4">
+            La <b>relance d'une facture</b> se fait dans la page <i>Factures</i> et permet d'envoyer un mail avec en pièce jointe
+            la facture et d'écrire un texte personnalisé de la relance à un ou plusieurs destinataires.
+            <br> Le système de relance se fait facture par facture et permet de savoir combien de relance vous avez réalisé.
+            <br><br>
+            Le <b>renvoi des factures</b> se fait dans la page des <i>Clients</i> ou des <i>Sites</i> et permet de sélectionner
+            les documents à envoyer. Un mail générique avec en pièce jointe les documents sélectionnés seront
+            envoyé à une seule adresse e-mail que vous pouvez saisir ou sélectionner.
+            <br> Le système de renvoi permet d'envoyer plusieurs documents en même temps mais, le texte du mail n'est pas
+            personnalisable et ne compte pas en tant que relance, donc aucun historique n'existe de ces envois.
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Comment fonctionne les relances ?</h3>
+        <div class="mt-4">
+            Sur la page des <i>Factures</i> puis dans le menu action d'une facture <span class="icon-more"></span>.
+            Sélectionnez <b>Relance</b> pour ouvrir la boite de dialogue permettant d'envoyer la relance à votre/vos destinataires.
+        </div>
+        <div class="mt-6">
+            <img src="{{ asset('build/user/images/help/guides/products/magesto/relance/btn.png') }}" alt="image 1" class="shadow p-2 rounded-md bg-white">
+        </div>
+        <div class="mt-6">
+            Modifiez et/ou saisissez une adresse email de destinataire. Personnalisez si besoin l'objet et le message
+            du mail. Puis cliquez sur le bouton <b class="text-blue-500">Envoyer</b>.
+            <br>
+            <span class="text-sm">Par défaut, les adresses mails liés à la facture sont automatiquement sélectionnée.</span>
+        </div>
+        <div class="mt-6">
+            <img src="{{ asset('build/user/images/help/guides/products/magesto/relance/modal.png') }}" alt="image 2" class="shadow p-2 rounded-md bg-white">
+        </div>
+        <div class="mt-6">
+            Une fois envoyé, vous pouvez voir le nombre de relances réalisé pour la facture dans le menu action ou
+            dans les détails de la facture.
+            <br>
+            <span class="text-sm">Pour accéder aux détails de la facture, cliquez sur la ligne de la facture.</span>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Comment fonctionne les renvois ?</h3>
+        <div class="mt-4">
+            Sur la page des <i>Clients</i> ou des <i>Sites</i> puis dans le menu action d'une facture <span class="icon-more"></span>.
+            Sélectionnez <b>Détails</b> pour ouvrir les détails du client ou site.
+        </div>
+        <div class="mt-6">
+            <img src="{{ asset('build/user/images/help/guides/products/magesto/relance/btn_renvoi.png') }}" alt="image 1" class="shadow p-2 rounded-md bg-white">
+        </div>
+        <div class="mt-6">
+            Cliquez sur les documents que vous souhaitez envoyer pour les sélectionner. Les documents sélectionnés sont encadrés en bleu.
+        </div>
+        <div class="mt-6">
+            <img src="{{ asset('build/user/images/help/guides/products/magesto/relance/select.png') }}" alt="image 2" class="shadow p-2 rounded-md bg-white">
+        </div>
+        <div class="mt-6">
+            Cliquez sur le bouton <b>Envoyer des documents</b> pour ouvrir une boite de dialogue pour
+            sélectionner le destinataire ou le saisir. Cliquez sur <b class="text-blue-500">Confirmer</b> pour envoyer les documents
+            à l'adresse e-mail renseignée.
+        </div>
+        <div class="mt-6">
+            <img src="{{ asset('build/user/images/help/guides/products/magesto/relance/to.png') }}" alt="image 2" class="shadow p-2 rounded-md bg-white">
+        </div>
+    </div>
+{% endblock %}
