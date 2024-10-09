@@ -5,7 +5,7 @@ import { Alert } from "@tailwindComponents/Elements/Alert";
 
 import { LogsItems } from "@adminPages/Logs/LogsItems";
 
-export function LogsList ({ data }) {
+export function LogsList ({ data, users }) {
     return <div className="list my-4">
         <div className="list-table bg-white rounded-md shadow">
             <div className="items items-logs">
@@ -21,7 +21,7 @@ export function LogsList ({ data }) {
 
                 {data.length > 0
                     ? data.map((elem) => {
-                        return <LogsItems key={elem.id} elem={elem} />;
+                        return <LogsItems key={elem.id} elem={elem} users={users} />;
                     })
                     : <div className="item border-t">
                         <Alert type="gray">Aucun résultat.</Alert>

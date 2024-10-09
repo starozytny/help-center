@@ -62,6 +62,7 @@ export class Logs extends Component {
 	}
 
 	render () {
+		const { users } = this.props;
 		const { data, currentData, loadingData, perPage, currentPage } = this.state;
 
 		return <>
@@ -72,7 +73,7 @@ export class Logs extends Component {
 										 onClick={this.handlePaginationClick}
 										 onPerPage={this.handlePerPage}  />
 
-					<LogsList data={currentData} />
+					<LogsList data={currentData} users={JSON.parse(users)} />
 
 					<Pagination ref={this.pagination} items={data} taille={data.length} currentPage={currentPage}
 								perPage={perPage} onUpdate={this.handleUpdateData} onChangeCurrentPage={this.handleChangeCurrentPage} />

@@ -1,0 +1,31 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Principe</h3>
+        <div class="mt-4">
+            L'historique garde seulement les données des référents et élèves si un document a été envoyé et si un des
+            élèves rattachés à confirmé sa place à un cours.
+            <br><br>
+            Selon l'antériorité de l'historique, certaines données ne sont pas affichées car, à cette
+            époque, elles n'existaient pas.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Les données récupérées</h3>
+        <div class="mt-4">
+            L'historique des renouvellements gardent en mémoire les documents envoyés par le référent,
+            le nom des activités assignées et les données du récapitulatif des élèves.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Où voir ces données ?</h3>
+        <div class="mt-4">
+            Dans la page <i>Liste des élèves</i>, en cliquant sur le bouton en forme de <span class="icon-vision"></span>, vous
+            accédez à une boite de dialogue listant les années auxquelles l'élève à fait une demande de renouvellement.
+            <br><br>
+            Dans cette page <i>Liste des élèves</i>, seuls les élèves actifs durant l'année en cours sont affichés.
+            Vous pouvez voir les anciens en cliquant sur le bouton <b>Voir les anciens</b> en haut à droite de la page.
+        </div>
+    </div>
+{% endblock %}
