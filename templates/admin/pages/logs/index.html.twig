@@ -4,7 +4,7 @@
 {% set page_subtitle %}Visualisez l'historique de connexion au site.{% endset %}
 
 {% block main_content %}
-    <div id="logs_history_list">
+    <div id="logs_history_list" data-users="{{ users }}">
         {% include "layout/components/tailwind/loaders/loader.html.twig" %}
     </div>
 {% endblock %}

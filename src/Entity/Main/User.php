@@ -23,6 +23,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     const LIST = ['user_list'];
     const FORM = ['user_form'];
     const EXTERNAL_SELECT = ['user_ext_select'];
+    const LOGS = ['user_log'];
 
     const CODE_ROLE_USER = 0;
     const CODE_ROLE_DEVELOPER = 1;
@@ -35,7 +36,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['user_list', 'user_form', 'user_ext_select'])]
+    #[Groups(['user_list', 'user_form', 'user_ext_select', 'user_log'])]
     private ?string $username = null;
 
     #[ORM\Column]
@@ -81,7 +82,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     private ?\DateTime $lostAt = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user_list', 'user_ext_select'])]
+    #[Groups(['user_list', 'user_ext_select', 'user_log'])]
     private ?string $token = null;
 
     #[ORM\Column(length: 255, nullable: true)]
