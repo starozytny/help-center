@@ -60,14 +60,46 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/produits/ajouter', name: 'product_create')]
+    #[Route('/produit/{slug}/guide-demarrage', name: 'product_starter')]
+    public function productStarter($slug, HeProductRepository $productRepository,
+                                HeDocumentationRepository $documentationRepository,
+                                HeTutorialRepository $tutorialRepository): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $obj = $productRepository->findOneBy(['slug' => $slug]);
+
+        if ($user->getHighRoleCode() == User::CODE_ROLE_USER) {
+            $documentations = $documentationRepository->findBy(['product' => $obj, 'status' => HelpStatut::Active]);
+            $tutorials = $tutorialRepository->findBy(['product' => $obj, 'status' => HelpStatut::Active]);
+        } else {
+            $documentations = $documentationRepository->findBy(['product' => $obj]);
+            $tutorials = $tutorialRepository->findBy(['product' => $obj]);
+        }
+
+        $fileTwig = 'user/pages/products/starters/' . mb_strtolower($obj->getName()) . '.html.twig';
+        if(!file_exists($this->getParameter('templates_directory') . $fileTwig)){
+            throw $this->createNotFoundException('Cette page n\'existe pas.');
+        }
+
+        return $this->render($fileTwig, [
+            'product' => $obj,
+            'elem' => $obj,
+            'docs' => $documentations,
+            'tutorials' => $tutorials,
+            'canRead' => in_array($obj->getId(), $user->getAccess()) || ($this->isGranted('ROLE_ADMIN') && $obj->isIntern() || $this->isGranted("ROLE_ADMIN"))
+        ]);
+    }
+
+    #[Route('/ajouter', name: 'product_create')]
     #[IsGranted('ROLE_ADMIN')]
     public function productCreate(): Response
     {
         return $this->render('user/pages/products/create.html.twig');
     }
 
-    #[Route('/produits/modifier/{slug}', name: 'product_update')]
+    #[Route('/modifier/{slug}', name: 'product_update')]
     #[IsGranted('ROLE_ADMIN')]
     public function productUpdate($slug, HeProductRepository $productRepository, SerializerInterface $serializer): Response
     {

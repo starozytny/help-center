@@ -1,0 +1,253 @@
+{% extends 'user/pages/products/template_product.html.twig' %}
+
+{% set typeString = product.typeString %}
+
+{% set page_title %}{{ elem.name }}{% endset %}
+{% set page_subtitle %}Guide de démarrage de {{ typeString }} {{ elem.name }}{% endset %}
+
+{% block main_content %}
+    {% if canRead %}
+        <div class="flex flex-col gap-12">
+            <div class="bg-white rounded-md shadow p-4 flex gap-4">
+                <div class="w-12">
+                    <img src="{{ asset(elem.logoFile) }}" alt="logo {{ elem.name }}" class="w-12 h-12 object-contain bg-gray-200 rounded-md p-2 flex justify-center items-center">
+                </div>
+                <div class="w-full">
+                    <h2 class="font-bold text-xl">Guide de démarrage de Lotys</h2>
+                    <p class="text-gray-600 text-sm">Nous allons voir les grandes étapes pour une première utilisation du logiciel en ligne.</p>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="font-bold text-2xl">Point 1. Accéder à Lotys</h2>
+
+                <div class="mt-4 bg-white border p-4 rounded-md flex flex-col gap-4">
+                    <div>
+                        Lotys est accessible depuis n'importe quel support doté d'un navigateur internet.
+                        <br>
+                        Vous retrouverez facilement le site sur Google en tapant lotys ou lotys.immo.
+                    </div>
+
+                    <div>
+                        Votre compte a été envoyé par mail. Il contient votre nom utilisateur et mot de passe.
+                        <br> Par la suite, il est vivement conseillé de modifier ce mot de passe dans votre profil.
+                    </div>
+
+                    <div>
+                        Une fois connecté, vous serait sur la page dite : <i>Dashboard</i>, c'est la page d'accueil de
+                        votre compte représentant une synthèse de vos données.
+                        <br> Vous avez un bloc nommé <u>Centre d'aide</u>, vous y trouverez l'adresse e-mail à contacter
+                        pour toutes demandes relatives à Lotys, ainsi qu'un bouton pour vous rendre à la documentation
+                        et tutoriels du logiciel en ligne.
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="font-bold text-2xl">Point 2. Les transferts du logiciel de gérance à Lotys</h2>
+                <div class="text-gray-800">Si vous n'avez pas le logiciel de gérance de Logilink, vous pouvez passer au point suivant.</div>
+
+                <div class="my-4 flex flex-col gap-4">
+                    <div class="p-4 border rounded-md bg-red-100 border-red-300 text-sm">
+                        Quelques informations essentielles à savoir :
+                        <ul>
+                            <li>Les données du logiciel de gérance écrasent à chaque transfert les données de Lotys.</li>
+                            <li>Les transferts n'impliquent pas la publication des biens chez les supports de diffusions. Sauf option activée.</li>
+                            <li>Attendre que le transfert ait été traité sur Lotys pour lancer un nouveau transfert.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white border p-4 rounded-md flex flex-col gap-4">
+                        <div>
+                            Sur le logiciel de gérance.
+                            <br>
+                            Dans le menu du haut, ouvrez la fenêtre sous <i>Trait.annexes > Interface gérance>transaction</i>.
+                            <br><br>
+                            Sélectionnez dans le cadre <i>Type fichier à créer</i>, l'option <span class="font-semibold">Transfert web</span>.
+                            <br>
+                            Sélectionnez dans le cadre <i>Transfert web</i>, l'option correspondant au texte que vos clients verront.
+                            <br>
+                            Lancer le transfert en cliquant sur le bouton <span class="font-semibold">Transfert web</span>.
+                            <br><br>
+                            Sur Lotys, une tâche se lance tous les 5-10 minutes pour lire les transferts.
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 md:grid-cols-4">
+                            <img src="{{ asset('build/user/images/help/guides/products/lotys/synchro/1.png') }}" alt="image 1" class="shadow p-1 rounded-md bg-gray-300">
+                            <img src="{{ asset('build/user/images/help/guides/products/lotys/synchro/2.png') }}" alt="image 2" class="shadow p-1 rounded-md bg-gray-300">
+                            <img src="{{ asset('build/user/images/help/guides/products/lotys/synchro/3.png') }}" alt="image 3" class="shadow p-1 rounded-md bg-gray-300">
+                            <img src="{{ asset('build/user/images/help/guides/products/lotys/synchro/4.png') }}" alt="image 4" class="shadow p-1 rounded-md bg-gray-300">
+                        </div>
+
+                        <div>
+                            <a href="{{ path('user_help_tutorial_read', {p_slug: elem.slug, slug: 'De-la-Gerance-a-Lotys'}) }}" target="_blank"
+                               class="group font-medium flex items-center gap-2 text-blue-500">
+                                <span class="group-hover:underline">En savoir plus (version complète)</span>
+                                <span class="icon-right-arrow"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="font-bold text-2xl">Point 3. Ajouter un bien</h2>
+                <div class="text-gray-800">Le bouton pour ajouter un bien se trouve dans le dashboard, le menu ou la liste des biens.</div>
+
+                <div class="mt-4 bg-white border p-4 rounded-md flex flex-col gap-4">
+                    <div>
+                        La mise en page du formulaire d'ajout d'un bien est différent du reste du site pour la rendre plus ergonomique à utiliser.
+                    </div>
+
+                    <div>
+                        Sur votre gauche, vous trouverez un menu et des options.
+                    </div>
+
+                    <div>
+                        <div class="p-4 border rounded-md bg-gray-200 border-gray-300 text-sm">
+                            Le menu permet de savoir où vous êtes dans la création de votre bien, ainsi que de naviguer entre les étapes.
+                            <br><br>
+                            Les options permettent un réglage du formulaire.
+
+                            <ul>
+                                <li>
+                                    <i>Affichage du formulaire</i>, en cliquant sur Essentiel, le formulaire affichera seulement
+                                    les champs qui sont lus par les supports de diffusions. Le reste est intéressant pour ceux qui ont un site chez Logilink.
+                                </li>
+                                <li>
+                                    <i>Modification gérance</i>, cette option concerne uniquement les biens qui ont été transférés
+                                    depuis la gérance. Sur <i>Bloquée</i>, cela vous permet de voir les données grisées qui seront écrasées lors des transferts.
+                                    Ceux qui ne sont pas grisée sont des champs qui n'ont pas de lien avec le logiciel de gérance.
+                                </li>
+                                <li>
+                                    <i>Automatiser le calcul</i>, permet de calculer par exemple le loyer avec
+                                    charges en fonction des valeurs saisies.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div>
+                        En haut à droite de la page vous avez les actions permettant de sauvegarder les données.
+                    </div>
+                    <div>
+                        <div class="p-4 border rounded-md bg-gray-200 border-gray-300 text-sm">
+                            <ul>
+                                <li>
+                                    <i>Sauvegarder en brouillon</i>, permet de remettre à plus tard la création du bien.
+                                </li>
+                                <li>
+                                    <i>Enregistrer et rester</i>, permet de vérifier que les informations obligatoires sont renseignées et de rester sur la page.
+                                </li>
+                                <li>
+                                    <i>Enregistrer</i>, permet de vérifier que les informations obligatoires sont renseignées et de retourner à la liste des biens.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p>
+                            <i>Enregistrer et rester</i> et <i>Enregistrer</i> mettent en évidence en rouge sur le
+                                                         menu, les étapes avec des champs obligatoires à remplir.
+                        </p>
+                    </div>
+
+                    <div class="p-4 border rounded-md bg-red-100 border-red-300 text-sm">
+                        Informations essentielles à savoir :
+                        <ul>
+                            <li>
+                                Pour accéder à l'étape 11 des photos, il faudra sauvegarder, enregistrer et rester ou enregistre le formulaire.
+                                <br>Cette mesure permet d'éviter la perte des données avant de travailler sur les photos.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="font-bold text-2xl">Point 4. Publier les annonces</h2>
+                <div class="text-gray-800">Pour envoyer vos annonces à vos supports de diffusion. 4 étapes à respecter.</div>
+
+                <div class="mt-4 bg-white border p-4 rounded-md flex flex-col gap-4">
+                    <div>
+                        Tout se passe sur la page <i>Publications des annonces</i>.
+                        <br>
+                        <ul>
+                            <li>
+                                Dans un premier temps, vous êtes sur la liste de tous les biens éligibles à la publication.
+                                <br>
+                                Vous pouvez modifier les supports en cliquant sur la pastille correspondante dans la colonne <i>Supports</i>.
+                                <br>
+                                Cliquez sur le bouton <span class="font-semibold">Démarrer le processus</span>, pour passer à l'étape suivante.
+                            </li>
+                            <li>
+                                Dans cette nouvelle étape, vous pouvez sélectionner des options d'envois des annonces.
+                                <br>
+                                Cliquez sur le bouton <span class="font-semibold">Diffuser les annonces</span>.
+                            </li>
+                            <li>
+                                Une boite de dialogue vous demander de confirmer la diffusion de vos annonces.
+                                <br>
+                                Cliquez sur le bouton <span class="font-semibold">Confirmer</span> pour lancer le processus.
+                            </li>
+                            <li>
+                                Sur la nouvelle page, attendez la fin de l'envoi à tous vos supports de diffusions.
+                                <br>
+                                Si une erreur survient, veuillez contacter le support de Logilink.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 md:grid-cols-4">
+                        <img src="{{ asset('build/user/images/help/guides/products/lotys/publish/1.png') }}" alt="image 1" class="shadow p-1 rounded-md bg-gray-300">
+                        <img src="{{ asset('build/user/images/help/guides/products/lotys/publish/2.png') }}" alt="image 2" class="shadow p-1 rounded-md bg-gray-300">
+                        <img src="{{ asset('build/user/images/help/guides/products/lotys/publish/3.png') }}" alt="image 3" class="shadow p-1 rounded-md bg-gray-300">
+                        <img src="{{ asset('build/user/images/help/guides/products/lotys/publish/4.png') }}" alt="image 4" class="shadow p-1 rounded-md bg-gray-300">
+                    </div>
+
+                    <div>
+                        <a href="{{ path('user_help_tutorial_read', {p_slug: elem.slug, slug: 'Diffuser-ses-annonces'}) }}" target="_blank"
+                           class="group font-medium flex items-center gap-2 text-blue-500">
+                            <span class="group-hover:underline">En savoir plus (version complète)</span>
+                            <span class="icon-right-arrow"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="font-bold text-2xl">Point 5. Accéder à Lotys</h2>
+
+                <div class="mt-4 bg-white border p-4 rounded-md flex flex-col gap-4">
+                    <div>
+                        Lotys est accessible depuis n'importe quel support doté d'un navigateur internet.
+                        <br>
+                        Vous retrouverez facilement le site sur Google en tapant lotys ou lotys.immo.
+                    </div>
+
+                    <div>
+                        Votre compte a été envoyé par mail. Il contient votre nom utilisateur et mot de passe.
+                        <br> Par la suite, il est vivement conseillé de modifier ce mot de passe dans votre profil.
+                    </div>
+
+                    <div>
+                        Une fois connecté, vous serait sur la page dite : <i>Dashboard</i>, c'est la page d'accueil de
+                        votre compte représentant une synthèse de vos données.
+                        <br> Vous avez un bloc nommé <u>Centre d'aide</u>, vous y trouverez l'adresse e-mail à contacter
+                        pour toutes demandes relatives à Lotys, ainsi qu'un bouton pour vous rendre à la documentation
+                        et tutoriels du logiciel en ligne.
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="rounded-md bg-red-100 p-4">
+            <h2 class="font-bold text-red-500 text-2xl">Accès non autorisé</h2>
+            <div class="text-gray-800">Vous n'avez pas l'autorisation d'accéder à cette page.</div>
+            <div class="mt-2">
+                <a href="{{ path('user_help_products_index') }}" class="text-blue-700 underline hover:text-blue-500">Revenir aux produits</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
