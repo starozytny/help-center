@@ -20,8 +20,7 @@
                             <div class="text-gray-800">Apprenez rapidement à prendre en main ce {{ typeString }} !</div>
                             <div class="mt-4">
                                 {% include 'layout/components/tailwind/buttons/button.html.twig' with {
-                                    btn_link: elem.starter,
-                                    btn_target: "_blank",
+                                    btn_link: path('user_help_product_starter', {slug: elem.slug}),
                                     btn_type: 'blue',
                                     btn_icon_right: 'right-arrow',
                                     btn_text: 'Démarrer'
