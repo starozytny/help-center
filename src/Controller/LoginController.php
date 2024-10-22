@@ -97,7 +97,9 @@ class LoginController extends AbstractController
 
             $page = $request->query->get('page');
             if($page){
-                $this->createLogHistory($request, $historyRepository, $token);
+                if($user->getHighRoleCode() == User::CODE_ROLE_USER){
+                    $this->createLogHistory($request, $historyRepository, $token);
+                }
 
                 if($type = $request->query->get('type')){
                     $slug = $request->query->get('slug');
