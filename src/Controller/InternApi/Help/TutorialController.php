@@ -4,6 +4,7 @@ namespace App\Controller\InternApi\Help;
 
 use App\Entity\Main\Help\HeStep;
 use App\Entity\Main\Help\HeTutorial;
+use App\Repository\Main\Help\HeCommentaryRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Repository\Main\Help\HeStepRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
@@ -93,12 +94,18 @@ class TutorialController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'delete', options: ['expose' => true], methods: 'DELETE')]
-    public function delete(HeTutorial $obj, HeTutorialRepository $repository, HeStepRepository $stepRepository, ApiResponse $apiResponse): Response
+    public function delete(HeTutorial $obj, HeTutorialRepository $repository, HeStepRepository $stepRepository,
+                           HeCommentaryRepository $commentaryRepository, ApiResponse $apiResponse): Response
     {
         foreach($obj->getSteps() as $step){
             $stepRepository->remove($step);
         }
 
+        $commentaries = $obj->getCommentaries();
+
+        foreach($commentaries as $commentary){
+            $commentaryRepository->remove($commentary);
+        }
 
         $repository->remove($obj, true);
         return $apiResponse->apiJsonResponseSuccessful("ok");

@@ -25,6 +25,15 @@ class HeCommentaryRepository extends ServiceEntityRepository
         }
     }
 
+    public function remove(HeCommentary $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
     //    /**
     //     * @return HeCommentary[] Returns an array of HeCommentary objects
     //     */
