@@ -3,6 +3,7 @@
 namespace App\Controller\InternApi\Help;
 
 use App\Entity\Main\Help\HeDocumentation;
+use App\Repository\Main\Help\HeCommentaryRepository;
 use App\Repository\Main\Help\HeDocumentationRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Service\ApiResponse;
@@ -67,8 +68,15 @@ class DocumentationController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'delete', options: ['expose' => true], methods: 'DELETE')]
-    public function delete(HeDocumentation $obj, HeDocumentationRepository $repository, ApiResponse $apiResponse): Response
+    public function delete(HeDocumentation $obj, HeDocumentationRepository $repository,
+                           HeCommentaryRepository $commentaryRepository, ApiResponse $apiResponse): Response
     {
+        $commentaries = $obj->getCommentaries();
+
+        foreach($commentaries as $commentary){
+            $commentaryRepository->remove($commentary);
+        }
+
         $repository->remove($obj, true);
         return $apiResponse->apiJsonResponseSuccessful("ok");
     }

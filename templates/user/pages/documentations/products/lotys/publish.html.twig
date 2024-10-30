@@ -1,0 +1,45 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Les supports</h3>
+        <div class="mt-4">
+            Seuls les supports activés sont concernés par la diffusion des annonces. Vous pouvez vérifier
+            les données du support et son activation dans <i>Paramètres > Supports</i>.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Fonctionnement global</h3>
+        <div class="mt-4">
+            La publication des annonces requiert 3 étapes, avant l'envoi vers les plateformes de diffusion.
+            <br><br>
+            <ul>
+                <li>Étape 1 : Visualisation des annonces et gestion des supports liés à chaque bien.</li>
+                <li>Étape 2 : Visualisation globale de ce qui sera envoyé et paramétrage du filigrane et/ou bandeau.</li>
+                <li>Étape 3 : Envoi des annonces aux supports.</li>
+            </ul>
+            <br>
+            Les envois en simultanées ne sont pas autorisés afin d'éviter tout conflit de données. Un message d'erreur
+            s'affichera si un autre utilisateur
+            réalise une publication <span class="text-sm italic">(ou un robot pour le cas des publications automatiques à 18h40)</span>.
+        </div>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="mt-8">
+                <div class="bg-white rounded-md border border-red-500">
+                    <div class="p-4 font-medium bg-red-400 text-white rounded-t-md">
+                        Administrateurs
+                    </div>
+                    <div class="p-4">
+                        Le paramètre gérant la publication par un utilisateur ou robot se situe en base de donnée.
+                        <br>
+                        <br>
+                        Dans la base principale <i>lotys_transac</i>, propriété <i>whoRunPublish</i> est à <b>NULL</b>
+                        quand personne n'est en train de publier ses annonces. Sinon, il prend l'<b>ID</b> de
+                        l'utilisateur ou <b>9999</b> pour le robot.
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
