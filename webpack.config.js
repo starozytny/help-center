@@ -55,10 +55,10 @@ Encore
 		to: 'user/images/[path][name].[ext]',
 	})
 
-	.configureFilenames({
-		css: !Encore.isProduction() ? 'css/[name].css' : 'css/[name].[hash:8].css',
-		js: !Encore.isProduction() ? 'js/[name].js' : 'js/[name].[hash:8].js'
-	})
+    .configureFilenames({
+        css: !Encore.isProduction() ? 'css/[name].css' : 'css/[name].[contenthash:8].css',
+        js: !Encore.isProduction() ? 'js/[name].js' : 'js/[name].[contenthash:8].js'
+    })
 
 	/*
 	 * ENTRY CONFIG
