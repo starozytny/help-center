@@ -8,12 +8,10 @@ import { createRoot } from "react-dom/client";
 import { Search } from "@userPages/Global/Search";
 
 import Menu from "@tailwindFunctions/menu";
-import Toastr from "@tailwindFunctions/toastr";
 
 Routing.setRoutingData(routes);
 
 Menu.menuListener();
-Toastr.flashes();
 
 let el = document.getElementById("global_search_product");
 if (el) {

@@ -1,3 +1,5 @@
+@use "../vars/vars";
+
 .help-categories{
   & > .item{
     &.active{
@@ -39,7 +41,7 @@
   }
 
   .icons-choice{
-    @include flex(row, flex-start, flex-start, 4px);
+    @include vars.flex(row, flex-start, flex-start, 4px);
     flex-wrap: wrap;
   }
 

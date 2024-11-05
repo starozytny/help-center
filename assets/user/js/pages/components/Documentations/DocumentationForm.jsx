@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import axios from "axios";
-import toastr from "toastr";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
+import Toastr from "@tailwindFunctions/toastr";
 import Formulaire from "@commonFunctions/formulaire";
 import Validateur from "@commonFunctions/validateur";
 
@@ -110,7 +110,7 @@ class Form extends Component {
 					if (!stay) {
 						location.href = Routing.generate(URL_INDEX_PAGE, { p_slug: productSlug, slug: response.data.slug });
 					} else {
-						toastr.info('Données enregistrées.');
+						Toastr.toast('info', 'Données enregistrées.');
 
 						if (context === "create") {
 							location.href = Routing.generate(URL_UPDATE_PAGE, { p_slug: productSlug, slug: response.data.slug });

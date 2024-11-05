@@ -1,7 +1,8 @@
-@import "../../../common/css/components/pagination";
+@use "../vars/vars";
+@use "../../../common/css/components/pagination";
 
 .pagination-container{
-  @include flex(row, flex-start, flex-end);
+  @include vars.flex(row, flex-start, flex-end);
 
   a {
     color: var(--alpha);
