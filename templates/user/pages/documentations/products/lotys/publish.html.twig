@@ -22,6 +22,10 @@
             Les envois en simultanées ne sont pas autorisés afin d'éviter tout conflit de données. Un message d'erreur
             s'affichera si un autre utilisateur
             réalise une publication <span class="text-sm italic">(ou un robot pour le cas des publications automatiques à 18h40)</span>.
+            <br><br>
+            Si aucun changement dans au moins un bien n'a été réalisé, le processus vous informe que la publication
+            n'a pas d'utilité à être envoyé. Vous pouvez tout de même forcer la publication en confirmant votre
+            souhait de publier les annonces.
         </div>
 
         {% if is_granted('ROLE_ADMIN') %}
@@ -34,9 +38,17 @@
                         Le paramètre gérant la publication par un utilisateur ou robot se situe en base de donnée.
                         <br>
                         <br>
-                        Dans la base principale <i>lotys_transac</i>, propriété <i>whoRunPublish</i> est à <b>NULL</b>
+                        Dans la base principale <i>lotys_transac</i> dans la table <i>society</i>, propriété <i>whoRunPublish</i> est à <b>NULL</b>
                         quand personne n'est en train de publier ses annonces. Sinon, il prend l'<b>ID</b> de
                         l'utilisateur ou <b>9999</b> pour le robot.
+                        <br>
+                        <br>
+                        <br>
+                        Le paramètre pour le savoir si un changement sur au moins un bien a été réalisé se situe en base de donnée.
+                        <br>
+                        <br>
+                        Dans la base principale <i>lotys_transac</i> dans la table <i>society</i>, propriété <i>biensHaveChanged</i> est à <b>0</b>
+                        quand aucun changement a été détecté. Sinon, il prend la valeur <b>1</b> et la publication est forcément envoyée.
                     </div>
                 </div>
             </div>
