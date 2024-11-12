@@ -1,0 +1,35 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Bouton de désabonnement</h3>
+        <div class="mt-4">
+            Seuls les mails de partage d'une fiche d'un bien et de visites ont le bouton pour se désabonner.
+            <br><br>
+            Ce bouton permet de connaitre le prospect, et l'email qui va se désabonner.
+            <br> Si le prospect existe toujours en base de données, son autorisation d'envoi de mail passera à <b>inactive</b>.
+            <br> Dans tous les cas, l'email rattaché au mail sera passé en désabonnement.
+        </div>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="mt-8">
+                <div class="bg-white rounded-md border border-red-500">
+                    <div class="p-4 font-medium bg-red-400 text-white rounded-t-md">
+                        Administrateurs
+                    </div>
+                    <div class="p-4">
+                        Une tâche CRON tourne tous les soirs pour désactiver l'autorisation des prospects qui ont
+                        leur mail dans la liste des désabonnements.
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Réactivation de l'adresse email</h3>
+        <div class="mt-4">
+            La réactivation d'une adresse email se traduit par sa suppression de la liste des
+            désabonnements <i>(Outils > Désabonnement)</i> et si le prospect existe, à l'activation de l'autorisation
+            des mails dans son formulaire d'édition.
+        </div>
+    </div>
+{% endblock %}

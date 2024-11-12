@@ -1,0 +1,49 @@
+{% extends 'user/pages/documentations/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Pourquoi archiver ?</h3>
+        <div class="mt-4">
+            Archiver ne supprime pas les données. Elles sont simplement déplacées dans une page dédiée afin de rendre
+            la navigation sur les données actives plus ergonomique et vous permettre d'être mieux organisé.
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Paramétrage</h3>
+        <div class="mt-4">
+            Dans les <i>Paramétres généraux</i>, vous avez une section <i>Archivage</i>, où vous pouvez renseigner
+            le nombre d'années pour archivage pour tel type de données.
+            <br>
+            Chaque jour, une tâche permet de vérifier la dernière date de modification de la donnée et de
+            l'archiver si nécessaire.
+        </div>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="mt-8">
+                <div class="bg-white rounded-md border border-red-500">
+                    <div class="p-4 font-medium bg-red-400 text-white rounded-t-md">
+                        Administrateurs
+                    </div>
+                    <div class="p-4">
+                        Une tâche CRON tourne tous les soirs pour prendre en compte ce paramétrage.
+                        <br><br>
+                        Par défaut, le paramétrage dans <b>ImSettings</b> est comme suit :
+                    </div>
+                    <ul>
+                        <li>Biens en location : <b>2</b></li>
+                        <li>Biens en vente : <b>1</b></li>
+                        <li>Biens en estimation : <b>1</b></li>
+                        <li>Prospects : <b>1</b> <span class="text-xs text-gray-600">(2 pour les sociétés qui étaient sur Lotys avant le 12/11/2024)</span></li>
+                    </ul>
+                    <br>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Archivage manuel</h3>
+        <div class="mt-4">
+            Il est possible d'archiver manuellement une donnée. Il existe un bouton <b>Archiver</b>, généralement situé
+            dans le menu span.icon-more de la donnée concernée.
+        </div>
+    </div>
+{% endblock %}
