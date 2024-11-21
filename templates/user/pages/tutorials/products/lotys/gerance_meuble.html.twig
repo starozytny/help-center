@@ -1,0 +1,30 @@
+{% extends 'user/pages/tutorials/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Villa ou maison ?</h3>
+        <div class="mt-4">
+            Dans le logiciel de gérance, la <b>Villa</b> est comprise en tant que <b>Maison</b> chez Lotys mais aussi
+            chez tous les supports de diffusions.
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Comment Lotys comprend qu'une maison est meublée ?</h3>
+        <div class="mt-4">
+            Dans un premier temps, vérifiez que le bail lié à la fiche de bien soit un meublé.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/lotys/gerance_meuble/reloc.png') }}" alt="image 1">
+            </div>
+            <br> Ensuite, rendez-vous dans les <b>Baux</b> pour voir le bon paramétrage du bail.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/lotys/gerance_meuble/baux.png') }}" alt="image 2">
+            </div>
+            <br> Saisissez <b>Meublé</b> dans la case : <i>Code bail en Transaction</i>.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/lotys/gerance_meuble/fiche_bail.png') }}" alt="image 3">
+            </div>
+            <br><br>
+            Vous pouvez lancer un transfert pour que Lotys mette à jour les données.
+        </div>
+    </div>
+{% endblock %}
