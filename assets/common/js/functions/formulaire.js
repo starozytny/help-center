@@ -50,19 +50,11 @@ function setValue (value, defaultValue = "") {
 }
 
 function setValueDate (value, defaultValue = "") {
-<<<<<<< HEAD
-    return value === null ? defaultValue : moment(value).utcOffset(0, true).format('DD/MM/YYYY');
-}
-
-function setValueTime (value, defaultValue = "") {
-    return value === null ? defaultValue : moment(value).utcOffset(0, true).format('HH[h]mm');
-=======
     return value === null ? defaultValue : moment(value).format('YYYY-MM-DD');
 }
 
 function setValueTime (value, defaultValue = "") {
     return value === null ? defaultValue : moment(value).format('HH[:]mm');
->>>>>>> 251d6b835b277d790026f78767009e548af5cc65
 }
 
 function showErrors(self, validate, text="Veuillez vérifier les informations transmises.", toTop = false)
