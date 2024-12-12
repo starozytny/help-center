@@ -37,4 +37,4 @@ winpty.exe.stackdump
 /config/databaseConfig.json
 /config/packages/doctrine.yaml
 
-/public/tinymce/
+/public/tinymce/*
