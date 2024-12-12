@@ -1,5 +1,8 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+
+import Toastr from "@tailwindFunctions/toastr";
+
 import { DocumentationFormulaire } from "@userPages/Documentations/DocumentationForm";
 import { DocumentationDelete } from "@userPages/Documentations/DocumentationDelete";
 import { CommentaryFormulaire } from "@userPages/Commentary/CommentaryForm";
@@ -26,4 +29,12 @@ if(deletesDoc){
 let commentary = document.getElementById('commentary_create');
 if(commentary){
     createRoot(commentary).render(<CommentaryFormulaire type="documentation" {...commentary.dataset} />)
+}
+
+let shareUrl = document.getElementById('share_url');
+if(shareUrl){
+    shareUrl.addEventListener('click', () => {
+        navigator.clipboard.writeText(shareUrl.dataset.url);
+        Toastr.toast('info', 'Lien copié dans le presse papier.')
+    })
 }
