@@ -10,8 +10,10 @@ import Formulaire from "@commonFunctions/formulaire";
 import { Modal } from "@tailwindComponents/Elements/Modal";
 import { Alert } from "@tailwindComponents/Elements/Alert";
 import { Button, ButtonA, ButtonIcon, ButtonIconA } from "@tailwindComponents/Elements/Button";
+import Toastr from "@tailwindFunctions/toastr";
 
 const URL_INDEX_ELEMENTS = "user_help_product_read";
+const URL_AUTO_CONNECT = "auto_connect";
 
 const URL_CREATE_CATEGORY = "user_help_category_create";
 const URL_UPDATE_CATEGORY = "user_help_category_update";
@@ -67,6 +69,11 @@ export function FaqList ({ role, productSlug, categories, questions, defaultCate
 				Formulaire.displayErrors(self, error);
 			})
 		;
+	}
+
+	let handleShare = (elem) => {
+		navigator.clipboard.writeText(location.origin + Routing.generate(URL_AUTO_CONNECT, {token: 'TOKEN_USER_A_REMPLACER', page: productSlug, type: 'faq', cat: elem.category.id, id: elem.id}));
+		Toastr.toast('info', 'Lien copié dans le presse papier.')
 	}
 
 	return <div>
@@ -163,6 +170,10 @@ export function FaqList ({ role, productSlug, categories, questions, defaultCate
 											</ButtonIconA>
 											<ButtonIcon icon="trash" type="default"
 														onClick={() => handleModal('delete-question', elem.id, elem.category.id)}>
+												Supprimer
+											</ButtonIcon>
+											<ButtonIcon icon="share" type="default"
+														onClick={() => handleShare(elem)}>
 												Supprimer
 											</ButtonIcon>
 										</div>}

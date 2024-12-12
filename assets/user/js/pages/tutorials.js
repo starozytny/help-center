@@ -1,5 +1,8 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+
+import Toastr from "@tailwindFunctions/toastr";
+
 import { TutorialFormulaire } from "@userPages/Tutorials/TutorialForm";
 import { TutorialDelete } from "@userPages/Tutorials/TutorialDelete";
 import { CommentaryFormulaire } from "@userPages/Commentary/CommentaryForm";
@@ -27,4 +30,12 @@ if(deletesTuto){
 let commentary = document.getElementById('commentary_create');
 if(commentary){
     createRoot(commentary).render(<CommentaryFormulaire type="tutorial" {...commentary.dataset} />)
+}
+
+let shareUrl = document.getElementById('share_url');
+if(shareUrl){
+    shareUrl.addEventListener('click', () => {
+        navigator.clipboard.writeText(shareUrl.dataset.url);
+        Toastr.toast('info', 'Lien copié dans le presse papier.')
+    })
 }

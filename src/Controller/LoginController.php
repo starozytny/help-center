@@ -86,7 +86,7 @@ class LoginController extends AbstractController
         return $this->render('app/pages/security/reinit.html.twig', ['token' => $token]);
     }
 
-    #[Route('/auto-connect/{token}', name: 'auto_connect')]
+    #[Route('/auto-connect/{token}', name: 'auto_connect', options: ['expose' => true])]
     public function autoConnect(Request $request, $token, UserRepository $repository, Security $security,
                                 LogHistoryRepository $historyRepository): Response
     {
