@@ -2,6 +2,23 @@
 
 {% block main_content_in %}
     <div class="py-6">
+        <h3 class="text-3xl font-bold">Ajouter un support</h3>
+        <div class="mt-4">
+            Il existe deux cas :
+            <ul>
+                <li>Ajouter un tout nouveau support</li>
+                <li>Ajouter un support à une agence</li>
+            </ul>
+            <br>
+            Dans le premier cas, le support n'existe pas du tout, donc on va le créer depuis l'interface administrateur,
+            pour ensuite, pouvoir l'ajouter à l'agence.
+            <br>
+            Dans le second cas, le support existe mais, n'est pas relié à l'agence. Dans la liste des supports
+            de l'interface utilisateur, on clique sur le bouton <b>Ajouter</b> sur le support concerné puis on modifie
+            le support avec les informations relatives à l'agence.
+        </div>
+    </div>
+    <div class="py-6">
         <h3 class="text-3xl font-bold">Liste des supports</h3>
         <div class="mt-4">
             Les comptes administrateurs voient la totalité des supports.
@@ -9,7 +26,7 @@
             <br>
             Pour qu'un support soit utilisé, il faut qu'il soit activé.
             <br>
-            On peut activer la sélection par défaut des supports qui sont récurrents pour le client
+            On peut activer la sélection par défaut des supports qui sont récurrents pour le client en activant l'option <i>Par défaut</i>
         </div>
     </div>
     <div class="py-6">
@@ -28,14 +45,15 @@
             </div>
         </div>
         <div class="mt-8">
-            <h4 class="text-1xl font-bold">Re-dimensionner les photos</h4>
+            <h4 class="text-1xl font-bold">Les photos</h4>
             <div class="mt-2">
                 La <b>Transmission photos</b> permet de choisir entre :
                 <ul>
                     <li>Physique : les photos sont envoyés dans l'archive. Cette méthode ralenti le temps d'envoi des annonces.</li>
                     <li>URL : dans le fichier, les photos sont référencés via une URL que le support se charge de télécharger.</li>
                 </ul>
-                Les valeurs de <b>largeur et hauteur</b> permettent la re-dimension des photos en amont. Le mieux étant de laisser le support gérer cette partie.
+                La valeur <b>largeur</b> permet la re-dimension des photos en amont. Le mieux étant de laisser le support gérer cette partie.
+                <br> La photo est redimensionner uniquement si sa largeur est supérieur à la valeur donnée.
             </div>
         </div>
         <div class="mt-8">
@@ -58,6 +76,13 @@
                         </ul>
                     </li>
                 </ul>
+            </div>
+        </div>
+        <div class="mt-8">
+            <h4 class="text-1xl font-bold">Types de bien</h4>
+            <div class="mt-2">
+                Quand l'option <i>Par défaut</i> est activé pour le support, Lotys va prendre en compte la liste
+                des types de bien concernés.
             </div>
         </div>
         <div class="mt-8">
