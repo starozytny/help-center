@@ -2,46 +2,56 @@
 
 {% block main_content_in %}
     <div class="py-6">
-        <h3 class="text-3xl font-bold">Dépot des fichiers lors transfert</h3>
-        <div class="mt-4">
-            Les fichiers sont déposés dans le dossier : <i>/documents/import/gerance</i>.
-            <br><br>
-            Dans un premier temps, les photos sont déposées dans le dossier {code_societe}, puis le fichier
-            CSV est déposé à la racine du dossier sous {code_societe}.csv.
-        </div>
-    </div>
-    <div class="py-6">
         <h3 class="text-3xl font-bold">Données transmises</h3>
         <div class="mt-4">
             <span class="text-yellow-500 font-semibold">[WIP]</span>
-            <br>
-            <br>
-            Le lien entre le fichier transmis et Lotys est réalisé avec le code société renseigné dans la table <b>ImAgency</b>.
         </div>
     </div>
-    <div class="py-6">
-        <h3 class="text-3xl font-bold">Lancer la lecture du transfert</h3>
-        <div class="mt-4">
-            Il existe une tâche CRON automatique, tous les 5 minutes, qui est lancée.
-            <br>
-            On peut lancer la tâche manuellement.
-            <div class="my-4 bg-gray-900 rounded-md">
-                <div class="py-2.5 px-4 font-medium bg-gray-800 rounded-t-md text-slate-50">Terminal</div>
-                <div class="p-4 border-t border-gray-700">
-                    <div>
-                        <span class="text-blue-400">php bin/console</span>
-                        <span class="text-slate-50">do:ge:sy </span>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="py-6">
+            <div class="bg-white rounded-md border border-red-500">
+                <div class="p-4 font-medium bg-red-400 text-white rounded-t-md">
+                    Administrateurs
+                </div>
+                <div class="p-4">
+                    <div class="py-6">
+                        <h3 class="text-3xl font-bold">Dépot des fichiers lors transfert</h3>
+                        <div class="mt-4">
+                            Les fichiers sont déposés dans le dossier : <i>/documents/import/gerance</i>.
+                            <br><br>
+                            Dans un premier temps, les photos sont déposées dans le dossier {code_societe}, puis le fichier
+                            CSV est déposé à la racine du dossier sous {code_societe}.csv.
+                        </div>
                     </div>
-                    <span class="text-gray-300">ou</span>
-                    <div>
-                        <span class="text-blue-400">php bin/console</span>
-                        <span class="text-slate-50">do:ge:sy [society_id] [agency_id]</span>
-                    </div>
-                    <div class="mt-4 text-sm text-gray-500 italic">
-                        Fichier commande : /src/Command/Donnee/DonneeGeranceSyncCommand.php
+
+                    <div class="pt-6">
+                        <h3 class="text-3xl font-bold">Lancer la lecture du transfert</h3>
+                        <div class="mt-4">
+                            Il existe une tâche CRON automatique, tous les 5 minutes, qui est lancée.
+                            <br>
+                            On peut lancer la tâche manuellement.
+                            <div class="my-4 bg-gray-900 rounded-md">
+                                <div class="py-2.5 px-4 font-medium bg-gray-800 rounded-t-md text-slate-50">Terminal</div>
+                                <div class="p-4 border-t border-gray-700">
+                                    <div>
+                                        <span class="text-blue-400">php bin/console</span>
+                                        <span class="text-slate-50">do:ge:sy </span>
+                                    </div>
+                                    <span class="text-gray-300">ou</span>
+                                    <div>
+                                        <span class="text-blue-400">php bin/console</span>
+                                        <span class="text-slate-50">do:ge:sy [society_id] [agency_id]</span>
+                                    </div>
+                                    <div class="mt-4 text-sm text-gray-500 italic">
+                                        Fichier commande : /src/Command/Donnee/DonneeGeranceSyncCommand.php
+                                    </div>
+                                </div>
+                            </div>
+                            Le lien entre le fichier transmis et Lotys est réalisé avec le code société renseigné dans la table <b>ImAgency</b>.
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}
