@@ -20,6 +20,8 @@ Encore
 		'@tailwindFolder': path.resolve(__dirname, './assets/theme/tailwind/js'),
 		'@tailwindComponents': path.resolve(__dirname, './assets/theme/tailwind/js/components'),
 		'@tailwindFunctions': path.resolve(__dirname, './assets/theme/tailwind/js/functions'),
+		'@shadcnComponents': path.resolve(__dirname, './assets/theme/shadcn/js/components'),
+		'@shadcnLib': path.resolve(__dirname, './assets/theme/shadcn/js/lib'),
 		'@commonFolder': path.resolve(__dirname, './assets/common/js'),
 		'@commonComponents': path.resolve(__dirname, './assets/common/js/components'),
 		'@commonFunctions': path.resolve(__dirname, './assets/common/js/functions'),
@@ -127,7 +129,7 @@ Encore
 	.enablePostCssLoader()
 
 	// uncomment if you use TypeScript
-	//.enableTypeScriptLoader()
+	.enableTypeScriptLoader()
 
 	// uncomment if you use React
 	.enableReactPreset()

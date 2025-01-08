@@ -16,6 +16,8 @@
         "sass": "^1.80.2",
         "sass-loader": "^16.0.2",
         "tailwindcss": "^3.4.14",
+        "ts-loader": "^9.0.0",
+        "typescript": "^5.7.2",
         "webpack": "^5.95.0",
         "webpack-cli": "^5.1.4",
         "webpack-notifier": "^1.15.0"
@@ -30,25 +32,31 @@
         "postinstall": "node ./postinstall.js"
     },
     "dependencies": {
-        "fs-extra": "^11.1.0",
-        "jquery-resizable-dom": "^0.35.0",
         "@fullcalendar/core": "^6.1.15",
         "@fullcalendar/daygrid": "^6.1.15",
         "@fullcalendar/interaction": "^6.1.15",
         "@fullcalendar/list": "^6.1.15",
         "@fullcalendar/react": "^6.1.15",
         "@fullcalendar/timegrid": "^6.1.15",
+        "@radix-ui/react-hover-card": "^1.1.4",
         "@tinymce/tinymce-react": "^5.1.1",
         "axios": "^1.7.7",
+        "class-variance-authority": "^0.7.1",
         "cleave.js": "^1.6.0",
+        "clsx": "^2.1.1",
+        "fs-extra": "^11.1.0",
         "html-react-parser": "^5.1.18",
+        "jquery-resizable-dom": "^0.35.0",
         "lodash": "^4.17.21",
+        "lucide-react": "^0.469.0",
         "moment": "^2.29.4",
         "normalize.css": "^8.0.1",
         "prop-types": "^15.8.1",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "react-paginate": "^8.1.4",
+        "tailwind-merge": "^2.6.0",
+        "tailwindcss-animate": "^1.0.7",
         "uid": "^2.0.1"
     }
 }
