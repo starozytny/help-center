@@ -4,12 +4,13 @@ import { cn } from "@shadcnComponents/lib/utils"
 
 import { General } from "@userPages/Documentations/Products/Lotys/CommGerance/Fiche/General";
 import { Description } from "@userPages/Documentations/Products/Lotys/CommGerance/Fiche/Description";
+import { Photos } from "@userPages/Documentations/Products/Lotys/CommGerance/Fiche/Photos";
 
 const images = require.context('../../../../../../../images/help/documentations/products/lotys/comm_gerance', false, /\.png$/);
 
 export function CommGerance() {
-	const [tab, setTab] = useState(1);
-	const [imgSrc, setImgSrc] = useState("description");
+	const [tab, setTab] = useState(2);
+	const [imgSrc, setImgSrc] = useState("photos");
 
 	const handleChangeTab = (item) => {
 		setTab(item.value);
@@ -23,14 +24,14 @@ export function CommGerance() {
 	let tabs = [
 		{ value: 0, label: "Général", imgSrc: 'general' },
 		{ value: 1, label: "Description", imgSrc: 'description' },
-		{ value: 2, label: "Photos", imgSrc: 'general' },
+		{ value: 2, label: "Photos", imgSrc: 'photos' },
 		{ value: 3, label: "Conditions", imgSrc: 'general' },
 	];
 
 	let itemContext = <General />
 	switch (tab){
 		case 1: itemContext = <Description />; break;
-		case 2: itemContext = <General />; break;
+		case 2: itemContext = <Photos />; break;
 		case 3: itemContext = <General />; break;
 		default: break;
 	}
