@@ -7,6 +7,7 @@ import { Description } from "@userPages/Documentations/Products/Lotys/CommGeranc
 import { Photos } from "@userPages/Documentations/Products/Lotys/CommGerance/Fiche/Photos";
 import { Observations } from "@userPages/Documentations/Products/Lotys/CommGerance/Fiche/Observations";
 import { DescReloc } from "@userPages/Documentations/Products/Lotys/CommGerance/Fiche/DescReloc";
+import { Relocation } from "@userPages/Documentations/Products/Lotys/CommGerance/Fiche/Relocation";
 
 const images = require.context('../../../../../../../images/help/documentations/products/lotys/comm_gerance', false, /\.png$/);
 
@@ -22,7 +23,7 @@ export function CommGerance() {
 		{ value: 1, label: "Description", imgSrc: 'description', content: <Description /> },
 		{ value: 2, label: "Photos", imgSrc: 'photos', content: <Photos /> },
 		{ value: 3, label: "Observations", imgSrc: 'observations', content: <Observations /> },
-		{ value: 4, label: "Relocation", imgSrc: 'relocation', content: <Observations /> },
+		{ value: 4, label: "Relocation", imgSrc: 'relocation', content: <Relocation /> },
 		{ value: 5, label: "Desc. complémentaire", imgSrc: 'descr_complementaire', content: <Observations /> },
 		{ value: 6, label: "Description pour re-location", imgSrc: 'desc_reloc', content: <DescReloc /> },
 	];
