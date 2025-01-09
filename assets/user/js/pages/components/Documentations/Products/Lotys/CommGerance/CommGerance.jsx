@@ -3,12 +3,13 @@ import React, { useState } from "react";
 import { cn } from "@shadcnComponents/lib/utils"
 
 import { General } from "@userPages/Documentations/Products/Lotys/CommGerance/Fiche/General";
+import { Description } from "@userPages/Documentations/Products/Lotys/CommGerance/Fiche/Description";
 
 const images = require.context('../../../../../../../images/help/documentations/products/lotys/comm_gerance', false, /\.png$/);
 
 export function CommGerance() {
-	const [tab, setTab] = useState(0);
-	const [imgSrc, setImgSrc] = useState("general");
+	const [tab, setTab] = useState(1);
+	const [imgSrc, setImgSrc] = useState("description");
 
 	const handleChangeTab = (item) => {
 		setTab(item.value);
@@ -26,6 +27,14 @@ export function CommGerance() {
 		{ value: 3, label: "Conditions", imgSrc: 'general' },
 	];
 
+	let itemContext = <General />
+	switch (tab){
+		case 1: itemContext = <Description />; break;
+		case 2: itemContext = <General />; break;
+		case 3: itemContext = <General />; break;
+		default: break;
+	}
+
 	return <>
 		<div className="flex gap-4">
 			<div className="w-[870px] h-[668px]">
@@ -33,8 +42,8 @@ export function CommGerance() {
 			</div>
 
 			<div className="w-[calc(100%-870px-1rem)]">
-				<div className="absolute top-0 left-0 w-[870px] h-[668px] rounded-md  bg-gray-950/30">
-					<General />
+				<div className="absolute top-0 left-0 w-[870px] h-[668px] rounded-md bg-gray-950/30">
+					{itemContext}
 				</div>
 				<div className="bg-white border shadow rounded-md w-full">
 					<div className="py-2 border-b font-medium text-lg text-center bg-gray-50 rounded-t-md">Navigation</div>
