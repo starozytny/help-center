@@ -5,17 +5,8 @@
         <h3 class="text-3xl font-bold">Données transmises</h3>
         <div class="mt-4">
             <div class="relative">
-                <div class="flex gap-4">
-                    <div class="w-[870px] h-[668px]">
-                        <img src="{{ asset('build/user/images/help/documentations/products/lotys/comm_gerance/general.png') }}"
-                             alt="image general" class="w-full h-full shadow p-1 rounded-md bg-gray-300">
-                    </div>
-
-                    <div id="lotys_comm_gerance" class="w-[calc(100%-870px-1rem)]">
-                        <div class="absolute top-0 left-0 w-[870px] h-[668px] rounded-md bg-gray-950/30 flex items-center justify-center">
-                            {% include "layout/components/tailwind/loaders/loader.html.twig" %}
-                        </div>
-                    </div>
+                <div id="lotys_comm_gerance">
+                    {% include "layout/components/tailwind/loaders/loader.html.twig" %}
                 </div>
             </div>
         </div>

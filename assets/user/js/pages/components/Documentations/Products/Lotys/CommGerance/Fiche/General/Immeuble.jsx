@@ -11,10 +11,10 @@ export function Immeuble () {
 		<div className="absolute top-[94px] left-[22px]">
 			<Address />
 		</div>
-		<div className="absolute top-[187px] left-[22px]">
+		<div className="absolute top-[188px] left-[22px]">
 			<Zipcode />
 		</div>
-		<div className="absolute top-[187px] left-[111px]">
+		<div className="absolute top-[188px] left-[111px]">
 			<City />
 		</div>
 	</>

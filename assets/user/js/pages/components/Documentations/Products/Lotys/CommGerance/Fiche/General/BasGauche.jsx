@@ -8,19 +8,19 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@shadcnComponents
 
 export function BasGauche () {
 	return <>
-		<div className="absolute top-[310px] left-[332px]">
+		<div className="absolute top-[312px] left-[332px]">
 			<NumeroMandat />
 		</div>
-		<div className="absolute top-[346px] left-[158px]">
+		<div className="absolute top-[348px] left-[158px]">
 			<DebutMandat />
 		</div>
-		<div className="absolute top-[346px] left-[307px]">
+		<div className="absolute top-[348px] left-[307px]">
 			<FinMandat />
 		</div>
-		<div className="absolute top-[453px] left-[158px]">
+		<div className="absolute top-[455px] left-[158px]">
 			<CodeGLI />
 		</div>
-		<div className="absolute top-[489px] left-[158px]">
+		<div className="absolute top-[491px] left-[158px]">
 			<DateGLI />
 		</div>
 	</>
