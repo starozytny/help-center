@@ -48,6 +48,10 @@ function Usage () {
 				pour <i>Habitation et Meublé</i> qui prennent la valeur <i>Appartement</i>.
 				<br/>
 				Vous pouvez modifier cette valeur depuis Lotys par un titre personnalisé et il ne sera pas écrasé lors des transferts.
+				<br/><br/>
+				Si vous souhaitez rendre une <i>Maison meublée</i>, veuillez vous référer au
+				guide <a href="https://aide.logilink.fr/espace-membre/produits/produit/Lotys/tutoriels/tutoriel/Gerance-Maison-meublee"
+						 title="Gerance : Maison meublée" className="text-blue-500 hover:text-blue-700 hover:underline">Gérance : Maison meublée</a>.
 			</div>
 		</HoverCardContent>
 	</HoverCard>
