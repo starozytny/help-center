@@ -66,7 +66,6 @@ function Chauffage () {
 	</HoverCard>
 }
 
-
 function Energie () {
 	return <HoverCard openDelay={100} closeDelay={0}>
 		<HoverCardTrigger>

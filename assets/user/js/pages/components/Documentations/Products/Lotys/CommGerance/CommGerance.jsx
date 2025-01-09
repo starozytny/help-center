@@ -8,11 +8,12 @@ import { Photos } from "@userPages/Documentations/Products/Lotys/CommGerance/Fic
 import { Observations } from "@userPages/Documentations/Products/Lotys/CommGerance/Fiche/Observations";
 import { DescReloc } from "@userPages/Documentations/Products/Lotys/CommGerance/Fiche/DescReloc";
 import { Relocation } from "@userPages/Documentations/Products/Lotys/CommGerance/Fiche/Relocation";
+import { DescComp } from "@userPages/Documentations/Products/Lotys/CommGerance/Fiche/DescComp";
 
 const images = require.context('../../../../../../../images/help/documentations/products/lotys/comm_gerance', false, /\.png$/);
 
 export function CommGerance() {
-	const [tab, setTab] = useState(4);
+	const [tab, setTab] = useState(5);
 
 	let styleTab = "cursor-pointer px-2 py-1.5";
 	let styleTabInactive = "hover:bg-blue-100 transition-colors";
@@ -24,7 +25,7 @@ export function CommGerance() {
 		{ value: 2, label: "Photos", imgSrc: 'photos', content: <Photos /> },
 		{ value: 3, label: "Observations", imgSrc: 'observations', content: <Observations /> },
 		{ value: 4, label: "Relocation", imgSrc: 'relocation', content: <Relocation /> },
-		{ value: 5, label: "Desc. complémentaire", imgSrc: 'descr_complementaire', content: <Observations /> },
+		{ value: 5, label: "Desc. complémentaire", imgSrc: 'descr_complementaire', content: <DescComp /> },
 		{ value: 6, label: "Description pour re-location", imgSrc: 'desc_reloc', content: <DescReloc /> },
 	];
 
