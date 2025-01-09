@@ -25,6 +25,7 @@ function Usage () {
 		<HoverCardContent className="w-96 sm:w-[414px] lg:w-[520px]">
 			<div className="font-medium flex gap-2">
 				<Badge type="blue">Étape 1 : Informations globales</Badge>
+				<Badge type="blue">Étape 9 : Description</Badge>
 			</div>
 			<div className="mt-2 text-sm">
 				<p>Selon si la valeur cochée :</p>
@@ -42,6 +43,11 @@ function Usage () {
 					<li><span className="font-medium">Villa : </span> Type de bien - Maison</li>
 					<li><span className="font-medium">Local/Bureaux : </span> Type de bien - Local</li>
 				</ul>
+				<br/>
+				La valeur <span className="font-medium">Titre de l'annonce</span> prend la valeur cochée sauf
+				pour <i>Habitation et Meublé</i> qui prennent la valeur <i>Appartement</i>.
+				<br/>
+				Vous pouvez modifier cette valeur depuis Lotys par un titre personnalisé et il ne sera pas écrasé lors des transferts.
 			</div>
 		</HoverCardContent>
 	</HoverCard>
@@ -51,24 +57,26 @@ function Usage () {
 function Description () {
 	return <HoverCard openDelay={100} closeDelay={0}>
 		<HoverCardTrigger>
-			<div className={cn(getInputStyle(), getPlaceholderStyle(), "w-[645px] h-[288px]")}>
-				Description détaillé du lot
-				<br/>
-				<br/>
-				Merci d'éviter les points-virgules (;)
-				<br/><br/>
-				<span className="text-red-500 font-medium">Attention !</span> Champ à sélectionner lors du transfert entre
-				le logiciel de gérance et Lotys, si c'est celui que vous utilisez pour vos annonces.
+			<div className={cn(getInputStyle(), getPlaceholderStyle(), "w-[645px] h-[288px] border-2 border-white bg-white/40")}>
+				<span className="inline-block mt-1 p-2 bg-white rounded w-[calc(520px-1rem)]">
+					Description WEB
+					<br />
+					<br />
+					Merci d'éviter les points-virgules (;)
+					<br /><br />
+					<span className="text-red-500 font-medium">Attention !</span> Champ à sélectionner lors du transfert entre
+					le logiciel de gérance et Lotys, si c'est celui que vous utilisez pour vos annonces.
+				</span>
 			</div>
 		</HoverCardTrigger>
 		<HoverCardContent className="w-96 sm:w-[414px] lg:w-[520px]">
 			<div className="font-medium flex gap-2">
-				<Badge type="blue">Étape 1 : Informations globales</Badge>
+				<Badge type="blue">Étape 9 : Description</Badge>
 			</div>
 			<div className="mt-2 text-sm">
 				<p>
 					Merci d'éviter les points-virgules (;)
-					<br/>
+					<br />
 					<span className="text-red-500 font-medium">Attention !</span> Champ à sélectionner lors du transfert entre
 					le logiciel de gérance et Lotys, si c'est celui que vous utilisez pour vos annonces.
 				</p>
