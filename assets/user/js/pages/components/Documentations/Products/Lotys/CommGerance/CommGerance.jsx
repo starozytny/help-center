@@ -9,13 +9,14 @@ import { Observations } from "@userPages/Documentations/Products/Lotys/CommGeran
 import { DescReloc } from "@userPages/Documentations/Products/Lotys/CommGerance/Fiche/DescReloc";
 import { Relocation } from "@userPages/Documentations/Products/Lotys/CommGerance/Fiche/Relocation";
 import { DescComp } from "@userPages/Documentations/Products/Lotys/CommGerance/Fiche/DescComp";
+import { Alert } from "@tailwindComponents/Elements/Alert";
 
 const images = require.context('../../../../../../../images/help/documentations/products/lotys/comm_gerance', false, /\.png$/);
 
 export function CommGerance() {
-	const [tab, setTab] = useState(5);
+	const [tab, setTab] = useState(0);
 
-	let styleTab = "cursor-pointer px-2 py-1.5";
+	let styleTab = "cursor-pointer px-2 py-1.5 text-ellipsis overflow-hidden";
 	let styleTabInactive = "hover:bg-blue-100 transition-colors";
 	let styleTabActive = "bg-blue-500 text-slate-50 font-medium";
 
@@ -30,17 +31,20 @@ export function CommGerance() {
 	];
 
 	return <>
-		<div className="flex gap-4">
+		<div className="lg:hidden">
+			<Alert type="gray">Pour voir le contenu, vous devez utiliser un plus grand écran. (min >= 1024px).</Alert>
+		</div>
+		<div className="hidden lg:flex lg:flex-col lg:gap-4 xl:flex-row">
 			<div className="w-[870px] h-[668px]">
 				<img src={images(`./${tabs[tab].imgSrc}.png`)} alt="image general" className="w-full h-full shadow p-1 rounded-md bg-gray-300" />
 			</div>
 
-			<div className="w-[calc(100%-870px-1rem)]">
+			<div className="max-w-96 xl:w-[calc(100%-870px-1rem)] 2xl:max-w-none">
 				<div className="absolute top-0 left-0 w-[870px] h-[668px] rounded-md bg-gray-950/30">
 					{tabs[tab].content}
 				</div>
 				<div className="bg-white border shadow rounded-md w-full">
-					<div className="py-2 border-b font-medium text-lg text-center bg-gray-50 rounded-t-md">Navigation</div>
+					<div className="py-2 border-b font-medium text-lg text-center bg-gray-50 rounded-t-md  text-ellipsis overflow-hidden">Navigation</div>
 					<div>
 						{tabs.map((item, index) => {
 							return <div key={index}>
