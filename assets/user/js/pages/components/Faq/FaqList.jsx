@@ -5,18 +5,16 @@ import PropTypes from 'prop-types';
 import axios from "axios";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
-import Toastr from "@tailwindFunctions/toastr";
 import Formulaire from "@commonFunctions/formulaire";
 
 import { Modal } from "@tailwindComponents/Elements/Modal";
 import { Alert } from "@tailwindComponents/Elements/Alert";
+import { ShareContent } from "@userPages/Share/ShareContent";
 import { Button, ButtonA, ButtonIcon, ButtonIconA } from "@tailwindComponents/Elements/Button";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@shadcnComponents/ui/hover-card";
-import { ShareContent } from "@userPages/Share/ShareContent";
 
 const URL_INDEX_ELEMENTS = "user_help_product_read";
 const URL_SELECT_ITEMS = "intern_api_selection_share";
-const URL_AUTO_CONNECT = "auto_connect";
 
 const URL_CREATE_CATEGORY = "user_help_category_create";
 const URL_UPDATE_CATEGORY = "user_help_category_update";
