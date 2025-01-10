@@ -24,6 +24,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     const FORM = ['user_form'];
     const EXTERNAL_SELECT = ['user_ext_select'];
     const LOGS = ['user_log'];
+    const SHARE = ['user_share'];
 
     const CODE_ROLE_USER = 0;
     const CODE_ROLE_DEVELOPER = 1;
@@ -82,7 +83,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     private ?\DateTime $lostAt = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user_list', 'user_ext_select', 'user_log'])]
+    #[Groups(['user_list', 'user_ext_select', 'user_log', 'user_share'])]
     private ?string $token = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -541,5 +542,17 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     public function getIsAdmin(): bool
     {
         return $this->getHighRoleCode() == User::CODE_ROLE_DEVELOPER || $this->getHighRoleCode() == User::CODE_ROLE_ADMIN;
+    }
+
+    #[Groups(['user_share'])]
+    public function getValue(): ?int
+    {
+        return $this->id;
+    }
+
+    #[Groups(['user_share'])]
+    public function getLabel(): string
+    {
+        return trim($this->lastname . " " . $this->firstname);
     }
 }

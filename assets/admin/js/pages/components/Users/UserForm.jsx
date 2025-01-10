@@ -81,9 +81,8 @@ class Form extends Component {
 				data.sort(Sort.compareCode)
 				let societyName = "";
 				data.forEach(elem => {
-					let label = elem.code + " - " + elem.name;
-					societyName = elem.id === society ? label : societyName;
-					societies.push({ value: elem.id, label: label, inputName: label, identifiant: "so-" + elem.id })
+					societyName = elem.value === society ? elem.label : societyName;
+					societies.push({ value: elem.value, label: elem.label, inputName: elem.label, identifiant: "so-" + elem.id })
 				})
 
 				self.setState({ societyName: societyName, loadData: false })
