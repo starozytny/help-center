@@ -58,7 +58,7 @@ function LibelleVacance () {
 	return <HoverCard openDelay={100} closeDelay={0}>
 		<HoverCardTrigger>
 			<div className={cn(getInputStyle(), getPlaceholderStyle(), "w-[326px] h-[24px] font-semibold text-red-400 hover:text-red-500")}>
-				<span class="icon-warning !font-semibold"></span> Statut : Important
+				<span className="icon-warning !font-semibold"></span> Statut : Important
 			</div>
 		</HoverCardTrigger>
 		<HoverCardContent className="w-96 sm:w-[414px] lg:w-[568px]">
