@@ -1,11 +1,10 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 
-import Toastr from "@tailwindFunctions/toastr";
-
 import { TutorialFormulaire } from "@userPages/Tutorials/TutorialForm";
 import { TutorialDelete } from "@userPages/Tutorials/TutorialDelete";
 import { CommentaryFormulaire } from "@userPages/Commentary/CommentaryForm";
+import { ShareButton } from "@userPages/Share/ShareButton";
 
 let el = document.getElementById("tutorials_update");
 if(el){
@@ -34,8 +33,5 @@ if(commentary){
 
 let shareUrl = document.getElementById('share_url');
 if(shareUrl){
-    shareUrl.addEventListener('click', () => {
-        navigator.clipboard.writeText(shareUrl.dataset.url);
-        Toastr.toast('info', 'Lien copié dans le presse papier.')
-    })
+    createRoot(shareUrl).render(<ShareButton {...shareUrl.dataset} />)
 }

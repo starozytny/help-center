@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import PropTypes from 'prop-types';
 
@@ -9,11 +9,12 @@ import Formulaire from "@commonFunctions/formulaire";
 
 import { Modal } from "@tailwindComponents/Elements/Modal";
 import { Alert } from "@tailwindComponents/Elements/Alert";
+import { ShareContent } from "@userPages/Share/ShareContent";
 import { Button, ButtonA, ButtonIcon, ButtonIconA } from "@tailwindComponents/Elements/Button";
-import Toastr from "@tailwindFunctions/toastr";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@shadcnComponents/ui/hover-card";
 
 const URL_INDEX_ELEMENTS = "user_help_product_read";
-const URL_AUTO_CONNECT = "auto_connect";
+const URL_SELECT_ITEMS = "intern_api_selection_share";
 
 const URL_CREATE_CATEGORY = "user_help_category_create";
 const URL_UPDATE_CATEGORY = "user_help_category_update";
@@ -24,11 +25,27 @@ const URL_UPDATE_QUESTION = "user_help_question_update";
 const URL_DELETE_QUESTION = "intern_api_help_faq_questions_delete";
 
 export function FaqList ({ role, productSlug, categories, questions, defaultCategory }) {
+	const [itemsShare, setItemsShare] = useState([]);
+	const [loadData, setLoadData] = useState(true);
 	const [category, setCategory] = useState(defaultCategory);
 	const [question, setQuestion] = useState(null);
 
 	const refDeleteCategory = useRef(null);
 	const refDeleteQuestion = useRef(null);
+
+	useEffect(() => {
+		axios({ method: "GET", url: Routing.generate(URL_SELECT_ITEMS, {productSlug: productSlug}), data: {} })
+			.then(function (response) {
+				setItemsShare(response.data)
+			})
+			.catch(function (error) {
+				Formulaire.displayErrors(null, error);
+			})
+			.then(function () {
+				setLoadData(false)
+			})
+		;
+	}, []);
 
 	let handleModal = (identifiant, id, idCategory) => {
 		switch (identifiant) {
@@ -69,11 +86,6 @@ export function FaqList ({ role, productSlug, categories, questions, defaultCate
 				Formulaire.displayErrors(self, error);
 			})
 		;
-	}
-
-	let handleShare = (elem) => {
-		navigator.clipboard.writeText(location.origin + Routing.generate(URL_AUTO_CONNECT, {token: 'TOKEN_USER_A_REMPLACER', page: productSlug, type: 'faq', cat: elem.category.id, id: elem.id}));
-		Toastr.toast('info', 'Lien copié dans le presse papier.')
 	}
 
 	return <div>
@@ -172,10 +184,20 @@ export function FaqList ({ role, productSlug, categories, questions, defaultCate
 														onClick={() => handleModal('delete-question', elem.id, elem.category.id)}>
 												Supprimer
 											</ButtonIcon>
-											<ButtonIcon icon="share" type="default"
-														onClick={() => handleShare(elem)}>
-												Supprimer
-											</ButtonIcon>
+											<HoverCard openDelay={100} closeDelay={0}>
+												<HoverCardTrigger>
+													<ButtonIcon icon="share" type="default">
+														Partager
+													</ButtonIcon>
+												</HoverCardTrigger>
+												<HoverCardContent className="w-96" align="end">
+													{loadData
+														? <span className="icon-chart-3"></span>
+														: <ShareContent page={productSlug} type="faq" cat={elem.category.id} id={elem.id} itemsShare={itemsShare} />
+													}
+												</HoverCardContent>
+											</HoverCard>
+
 										</div>}
 										<div dangerouslySetInnerHTML={{ __html: elem.content }} />
 									</div>

@@ -5,18 +5,24 @@
 
 {% set page_actions %}
     {% if is_granted('ROLE_ADMIN') %}
-        {% include 'layout/components/tailwind/buttons/button.html.twig' with {
-            btn_link: path('user_help_tutorial_update', {p_slug: product.slug, slug: elem.slug}),
-            btn_type: 'default',
-            btn_icon: 'pencil',
-            btn_text: 'Modifier'
-        } %}
-        <button id="share_url"
-                data-url="{{ app.request.schemeAndHttpHost ~ path('auto_connect', {token: 'TOKEN_USER_A_REMPLACER', page: product.slug, type: 'tutoriels', slug: elem.slug}) }}"
-                class="inline-flex justify-center text-center rounded-md py-2 px-4 text-sm font-semibold shadow-sm bg-white text-gray-900 hover:bg-gray-50 ring-1 ring-inset ring-gray-300">
-                <span class="icon-share inline-block translate-y-0.5"></span>
-            <span class="ml-2">Partager</span>
-        </button>
+        <div class="flex gap-1">
+            {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+                btn_link: path('user_help_tutorial_update', {p_slug: product.slug, slug: elem.slug}),
+                btn_type: 'default',
+                btn_icon: 'pencil',
+                btn_text: 'Modifier'
+            } %}
+            <div id="share_url"
+                 data-page="{{ product.slug }}"
+                 data-type="tutoriels"
+                 data-slug="{{ elem.slug }}"
+            >
+                <button class="inline-flex justify-center text-center rounded-md py-2 px-4 text-sm font-semibold shadow-sm bg-white text-gray-900 hover:bg-gray-50 ring-1 ring-inset ring-gray-300">
+                    <span class="icon-chart-3 inline-block translate-y-0.5"></span>
+                    <span class="ml-2">Partager</span>
+                </button>
+            </div>
+        </div>
     {% endif %}
 {% endset %}
 

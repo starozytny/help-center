@@ -1,12 +1,11 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 
-import Toastr from "@tailwindFunctions/toastr";
-
 import { DocumentationFormulaire } from "@userPages/Documentations/DocumentationForm";
 import { DocumentationDelete } from "@userPages/Documentations/DocumentationDelete";
 import { CommentaryFormulaire } from "@userPages/Commentary/CommentaryForm";
 import { CommGerance } from "@userPages/Documentations/Products/Lotys/CommGerance/CommGerance";
+import { ShareButton } from "@userPages/Share/ShareButton";
 
 let el = document.getElementById("documentations_update");
 if(el){
@@ -34,10 +33,7 @@ if(commentary){
 
 let shareUrl = document.getElementById('share_url');
 if(shareUrl){
-    shareUrl.addEventListener('click', () => {
-        navigator.clipboard.writeText(shareUrl.dataset.url);
-        Toastr.toast('info', 'Lien copié dans le presse papier.')
-    })
+    createRoot(shareUrl).render(<ShareButton {...shareUrl.dataset} />)
 }
 
 let lotysCommGerance = document.getElementById('lotys_comm_gerance');

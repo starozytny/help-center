@@ -35,7 +35,7 @@ class SocietyController extends AbstractController
         $settings  = $settingsService->getSettings();
 
         $settings = $serializer->serialize($settings, 'json', ['groups' => Settings::IS_MULTIPLE_DB]);
-        $objs     = $serializer->serialize($societies,'json', ['groups' => Society::LIST]);
+        $objs     = $serializer->serialize($societies, 'json', ['groups' => Society::LIST]);
 
         return $apiResponse->apiJsonResponseCustom([
             'donnees' => $objs, 'settings' => $settings

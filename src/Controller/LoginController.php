@@ -20,7 +20,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
-
     #[Route('/connexion', name: 'app_login', options: ['expose' => true])]
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
