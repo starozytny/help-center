@@ -138,12 +138,6 @@ class Society extends DataEntity
         return $this;
     }
 
-    #[Groups(['society_list', 'society_form'])]
-    public function getLogoFile(): string
-    {
-        return $this->getFileOrDefault($this->logo, self::FOLDER);
-    }
-
     public function getLogo(): ?string
     {
         return $this->logo;
@@ -186,6 +180,12 @@ class Society extends DataEntity
         return $this;
     }
 
+    #[Groups(['society_list', 'society_form'])]
+    public function getLogoFile(): string
+    {
+        return $this->getFileOrDefault($this->logo, self::FOLDER);
+    }
+
     #[Groups(['society_select'])]
     public function getValue(): ?int
     {
@@ -193,7 +193,7 @@ class Society extends DataEntity
     }
 
     #[Groups(['society_select'])]
-    public function getLabel(): string
+    public function getLabel(): ?string
     {
         return $this->code . " - " . $this->name;
     }
