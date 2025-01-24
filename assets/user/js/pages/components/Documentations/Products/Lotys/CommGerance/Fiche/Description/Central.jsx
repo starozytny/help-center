@@ -34,7 +34,7 @@ function Usage () {
 					<li><span className="font-medium">Garage/Parking : </span> Type de bien - Parking/Box</li>
 					<li><span className="font-medium">Divers : </span> Type de bien - Autres</li>
 					<li><span className="font-medium">Cave : </span> Type de bien - Autres</li>
-					<li><span className="font-medium">Professionnel : </span> Type de bien - Bureau</li>
+					<li><span className="font-medium">Professionnel : </span> Type de bien - Local</li>
 					<li><span className="font-medium">Meublé : </span> Type de bien - Appartement et Étape 2 : Caractéristique - meublé</li>
 					<li><span className="font-medium">Espace pub. : </span> Type de bien - Autres</li>
 					<li><span className="font-medium">Terrain : </span> Type de bien - Terrain</li>
