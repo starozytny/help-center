@@ -23,28 +23,30 @@
         <h3 class="text-3xl font-bold">Mattermost</h3>
         <div class="mt-4">
             Mise à jour du certificat pour Mattermost. <br>
-            <div class="my-4 bg-gray-900 rounded-md">
-                <div class="py-2.5 px-4 font-medium bg-gray-800 rounded-t-md text-slate-50">Terminal</div>
-                <div class="p-4 border-t border-gray-700">
-                    <div>
-                        <span class="text-blue-400">sudo certbo </span>
-                        <span class="text-slate-50">certonly --manual -d mattermost.logilink.fr --preferred-challenges dns</span>
-                    </div>
-                    <div class="mt-4 text-sm text-gray-500 italic">
-                        ⚠️ Après avoir lancé la commande, n'appuyez pas tout de suite sur ENTER, <u>avant</u>, renseignez la partie DNS expliqué ci-dessous.
-                    </div>
-                </div>
-            </div>
-            La commande va afficher un texte à remplacer dans les DNS de Mattermost.
+
             <div class="mt-4">
-                <h4 class="text-1xl font-bold">DNS dans le CPANEL de Logilink</h4>
                 <div class="mt-2">
-                    - Rendez-vous sur la page <i>Zone Editor</i>
+                    - DNS dans le CPANEL de Logilink
+                    <br>- Rendez-vous sur la page <i>Zone Editor</i>
                     <br>- Cliquez sur le bouton <b>Gérer</b> de logilink.fr.
                     <br>- Repérez la ligne pour : <i>_acme-challenge.mattermost.logilink.fr.</i> <span class="text-sm">(ne pas prendre celui avec le www)</span>
+                    <br>- Dans le terminal SSH, lancer la commande suivante :
+                    <br>
+                    <div class="my-4 bg-gray-900 rounded-md">
+                        <div class="py-2.5 px-4 font-medium bg-gray-800 rounded-t-md text-slate-50">Terminal</div>
+                        <div class="p-4 border-t border-gray-700">
+                            <div>
+                                <span class="text-blue-400">sudo certbot </span>
+                                <span class="text-slate-50">certonly --manual -d mattermost.logilink.fr --preferred-challenges dns</span>
+                            </div>
+                            <div class="mt-4 text-sm text-red-500 italic">
+                                ⚠️ Après avoir lancé la commande, n'appuyez pas tout de suite sur ENTER, <u>avant</u>, renseignez la partie DNS.
+                            </div>
+                        </div>
+                    </div>
                     <br>- Copier coller ce que la commande vous a affiché dans la colonne <i>Enregistrement</i> de la ligne.
                     <br>- Patientez 1 minute le temps que le DSN se propage
-                    <br>- Maintenant, vous pouvez appuyer sur <b>ENTER</b> dans la terminal.
+                    <br>- Maintenant, vous pouvez appuyer sur <b>ENTER</b> dans le terminal.
                 </div>
             </div>
         </div>
@@ -53,31 +55,33 @@
         <h3 class="text-3xl font-bold">Gitlab</h3>
         <div class="mt-4">
             Mise à jour du certificat pour Gitlab. <br>
-            <div class="my-4 bg-gray-900 rounded-md">
-                <div class="py-2.5 px-4 font-medium bg-gray-800 rounded-t-md text-slate-50">Terminal</div>
-                <div class="p-4 border-t border-gray-700">
-                    <div>
-                        <span class="text-blue-400">sudo certbo </span>
-                        <span class="text-slate-50">certonly --manual -d gitlab.logilink.fr --preferred-challenges dns</span>
-                    </div>
-                    <div class="mt-4 text-sm text-gray-400 italic pl-8">
-                        - Réponse pour update la key existante : choisir (<b>K</b>)eep
-                    </div>
-                    <div class="mt-4 text-sm text-gray-500 italic">
-                        ⚠️ Après avoir lancé la commande, n'appuyez pas tout de suite sur ENTER, <u>avant</u>, renseignez la partie DNS expliqué ci-dessous.
-                    </div>
-                </div>
-            </div>
-            La commande va afficher un texte à remplacer dans les DNS de Mattermost.
+
             <div class="mt-4">
-                <h4 class="text-1xl font-bold">DNS dans le CPANEL de Logilink</h4>
                 <div class="mt-2">
-                    - Rendez-vous sur la page <i>Zone Editor</i>
+                    - DNS dans le CPANEL de Logilink
+                    <br>- Rendez-vous sur la page <i>Zone Editor</i>
                     <br>- Cliquez sur le bouton <b>Gérer</b> de logilink.fr.
                     <br>- Repérez la ligne pour : <i>_acme-challenge.gitlab.logilink.fr.</i> <span class="text-sm">(ne pas prendre celui avec le www)</span>
+                    <br>- Dans le terminal SSH, lancer la commande suivante :
+                    <br>
+                    <div class="my-4 bg-gray-900 rounded-md">
+                        <div class="py-2.5 px-4 font-medium bg-gray-800 rounded-t-md text-slate-50">Terminal</div>
+                        <div class="p-4 border-t border-gray-700">
+                            <div>
+                                <span class="text-blue-400">sudo certbot </span>
+                                <span class="text-slate-50">certonly --manual -d gitlab.logilink.fr --preferred-challenges dns</span>
+                            </div>
+                            <div class="mt-4 text-sm text-gray-400 italic pl-8">
+                                - Réponse pour update la key existante : choisir (<b>K</b>)eep
+                            </div>
+                            <div class="mt-4 text-sm text-red-500 italic">
+                                ⚠️ Après avoir lancé la commande, n'appuyez pas tout de suite sur ENTER, <u>avant</u>, renseignez la partie DNS.
+                            </div>
+                        </div>
+                    </div>
                     <br>- Copier coller ce que la commande vous a affiché dans la colonne <i>Enregistrement</i> de la ligne.
                     <br>- Patientez 1 minute le temps que le DSN se propage
-                    <br>- Maintenant, vous pouvez appuyer sur <b>ENTER</b> dans la terminal.
+                    <br>- Maintenant, vous pouvez appuyer sur <b>ENTER</b> dans le terminal.
                 </div>
             </div>
         </div>
@@ -85,7 +89,7 @@
     <div class="py-12">
         <h3 class="text-3xl font-bold">Valider les certificats</h3>
         <div class="mt-4">
-            Lancer la commande ci-dessous pour que les certificats soient pris en compte.
+            Lancer la commande dans le terminal SSH pour que les certificats soient pris en compte.
             <div class="my-4 bg-gray-900 rounded-md">
                 <div class="py-2.5 px-4 font-medium bg-gray-800 rounded-t-md text-slate-50">Terminal</div>
                 <div class="p-4 border-t border-gray-700">
