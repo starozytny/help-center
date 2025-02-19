@@ -24,8 +24,8 @@ function Address () {
 	return <HoverCard openDelay={100} closeDelay={0}>
 		<HoverCardTrigger>
 			<div className="w-[396px] h-[87px] rounded group">
-				<div className={cn(getInputStyle(), getPlaceholderStyle(), "w-[396px] h-[24px]")}>Adresse</div>
-				<div className={cn(getInputStyle(), "w-[396px] h-[24px] translate-y-[8px]")}></div>
+				<div className={cn(getInputStyle(), "w-[396px] h-[24px] bg-transparent")}></div>
+				<div className={cn(getInputStyle(), getPlaceholderStyle(),"w-[396px] h-[24px] translate-y-[8px]")}>Adresse</div>
 				<div className={cn(getInputStyle(), "w-[396px] h-[24px] translate-y-[16px]")}></div>
 			</div>
 		</HoverCardTrigger>
