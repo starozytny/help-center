@@ -1,0 +1,28 @@
+{% extends 'user/pages/tutorials/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Envoi des données de l'Espace vers le logiciel Cursus</h3>
+        <div class="mt-4">
+            Depuis l'interface administrateur web.
+            <br>- Rendez-vous dans la page <i>Logiciel Cursus</i>.
+            <br>- Rubrique <b>Quelle exportation de données souhaitez vous réaliser ?</b>, cliquez sur <b>Envoyer les données des responsables et adhérents</b>
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/cite-de-la-musique/send_resp/1.png') }}" alt="image 1" class="shadow p-2 rounded-md bg-white">
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Récupération des données</h3>
+        <div class="mt-4">
+            Depuis le logiciel Cursus.
+            <br>- Rendez-vous dans la fenêtre <i>Maintenance > Inscription web</i>.
+            <br>- Renseignez le mot de passe.
+            <br>- Cliquez sur <b>Import FTP sans validation</b>
+            <br>- Une fenêtre s'affichera pour vous informer que le transfert est terminé.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/cite-de-la-musique/send_resp/2.png') }}" alt="image 2" class="shadow p-2 rounded-md bg-white">
+            </div>
+        </div>
+    </div>
+{% endblock %}
