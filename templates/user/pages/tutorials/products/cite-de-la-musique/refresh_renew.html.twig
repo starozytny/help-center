@@ -1,0 +1,29 @@
+{% extends 'user/pages/tutorials/products/template.html.twig' %}
+
+{% block main_content_in %}
+    <div class="py-12">
+        <div class="py-12">
+            <span class="text-red-500 font-semibold">Procédure après la bascule de l'année dans le logiciel de cursus..</span>
+        </div>
+        <h3 class="text-3xl font-bold">Envoi les données de l'Espace vers le logiciel Cursus</h3>
+        <div class="mt-4">
+            Depuis l'interface administrateur web.
+            <br>- Rendez-vous dans la page <i>Logiciel Cursus</i>.
+            <br>- Rubrique <b>Quelle exportation de données souhaitez vous réaliser ?</b>, cliquez sur <b>Envoyer les données des renouvellements</b>
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/cite-de-la-musique/refresh_renew/1.png') }}" alt="image 1" class="shadow p-2 rounded-md bg-white">
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <h3 class="text-3xl font-bold">Traitement des données</h3>
+        <div class="mt-4">
+            Depuis le logiciel Cursus.
+            <br>- Cliquez sur <i>Maintenance > Cursus > <b>Import Cours et Activités adhérents</b></i>.
+            <br>- Le traitement peut prendre du temps.
+            <div class="mt-6">
+                <img src="{{ asset('build/user/images/help/guides/products/cite-de-la-musique/refresh_renew/2.png') }}" alt="image 2" class="shadow p-2 rounded-md bg-white">
+            </div>
+        </div>
+    </div>
+{% endblock %}
