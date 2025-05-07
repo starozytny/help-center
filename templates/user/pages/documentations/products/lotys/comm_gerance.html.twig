@@ -2,6 +2,35 @@
 
 {% block main_content_in %}
     <div class="py-6">
+        <h3 class="text-3xl font-bold">Biens à louer</h3>
+        <div class="mt-4">
+            Dans le logiciel de gérance, les biens ayant le statut
+            à <b>Vacant</b> <u>et</u> un <i>Libelle vacance</i> à <b>Libre / Néant</b>, seront considérés
+            comme des biens <span class="font-medium text-blue-500">à louer</span>, ils seront éligibles
+            à être <span class="font-medium text-blue-500">actif</span> selon les options sélectionnées sur Lotys.
+            <br><br>
+            Pour que le bien soit <b>Vacant</b>, assurez-vous qu'il n'y ait pas de locataire ou que le locataire
+            en place ait une <b>date de départ prévu et/ou réel</b>. Si la date est supérieur à la date actuelle, il
+            sera tout de même considéré comme vacant. N'oubliez pas de cliquer sur le
+            bouton <i>Données du dernier locataire</i> pour mettre à jour la fiche du bien.
+            <br>
+            Pour que le bien soit <b>Libre / Néant</b>, sélectionner dans le menu déroule du
+            champ <i>Libelle vacance</i> l'option <b>Libre ou Néant</b>
+        </div>
+    </div>
+    <div class="py-6">
+        <h3 class="text-3xl font-bold">Biens loué ou inactif</h3>
+        <div class="mt-4">
+            Dans le logiciel de gérance, les biens ayant le statut
+            à <b>Occupé</b> <u>ou</u> un <i>Libelle vacance</i> avec une (étoile) <b>*</b>, seront considérés
+            comme des biens <span class="font-medium text-red-500">inactifs</span>, ils seront enlevés de la boucle
+            des supports et seront considérés comme inactif sur Lotys.
+            <br>
+            Veuillez noter que les informations ne seront pas mises à jour pour ces biens. Seul le statut actif/inactif
+            sera modifié chez Lotys.
+        </div>
+    </div>
+    <div class="py-6">
         <h3 class="text-3xl font-bold">Données transmises</h3>
         <div class="mt-4">
             <div class="relative">
