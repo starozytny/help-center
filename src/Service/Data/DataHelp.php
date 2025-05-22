@@ -3,6 +3,7 @@
 namespace App\Service\Data;
 
 use App\Entity\Main\Help\HeCategory;
+use App\Entity\Main\Help\HeChangelog;
 use App\Entity\Main\Help\HeCommentary;
 use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeProduct;
@@ -80,6 +81,12 @@ class DataHelp
         return ($obj)
             ->setUser($user)
             ->setMessage($this->sanitizeData->trimData($data->message))
+        ;
+    }
+
+    public function setDataChangelog(HeChangelog $obj, $data): HeChangelog
+    {
+        return ($obj)
         ;
     }
 }

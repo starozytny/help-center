@@ -10,41 +10,49 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: HeChangelogRepository::class)]
 class HeChangelog
 {
+    const LIST = ['changelog_list'];
     const FORM = ['changelog_form'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['changelog_form'])]
+    #[Groups(['changelog_list', 'changelog_form'])]
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Groups(['changelog_form'])]
+    #[Groups(['changelog_list', 'changelog_form'])]
     private ?int $numero = null;
 
+    #[ORM\Column(length: 255)]
+    #[Groups(['changelog_list', 'changelog_form'])]
+    private ?string $name = null;
+
     #[ORM\Column(length: 5)]
-    #[Groups(['changelog_form'])]
+    #[Groups(['changelog_list', 'changelog_form'])]
     private ?string $numVersion = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['changelog_list'])]
     private ?string $filename = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(['changelog_form'])]
+    #[Groups(['changelog_list', 'changelog_form'])]
     private ?string $contentCreated = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(['changelog_form'])]
+    #[Groups(['changelog_list', 'changelog_form'])]
     private ?string $contentUpdated = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(['changelog_form'])]
+    #[Groups(['changelog_list', 'changelog_form'])]
     private ?string $contentFix = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['changelog_list'])]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['changelog_list'])]
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'changelogs')]
@@ -69,6 +77,18 @@ class HeChangelog
     public function setNumero(int $numero): static
     {
         $this->numero = $numero;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }

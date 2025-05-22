@@ -16,6 +16,24 @@ class HeChangelogRepository extends ServiceEntityRepository
         parent::__construct($registry, HeChangelog::class);
     }
 
+    public function save(HeChangelog $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(HeChangelog $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
     //    /**
     //     * @return HeChangelog[] Returns an array of HeChangelog objects
     //     */

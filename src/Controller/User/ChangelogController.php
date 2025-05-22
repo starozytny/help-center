@@ -20,11 +20,8 @@ class ChangelogController extends AbstractController
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
 
-        $objs = $product->getChangelogs();
-
         return $this->render('user/pages/changelogs/index.html.twig', [
-            'product' => $product,
-            'changelogs' => $objs
+            'product' => $product
         ]);
     }
 
