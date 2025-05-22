@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 #[IsGranted('ROLE_ADMIN')]
 class ChangelogController extends AbstractController
 {
-    #[Route('/', name: 'index', options: ['expose' => true])]
+    #[Route('/', name: 'index', options: ['expose' => true], methods: 'GET')]
     public function index($p_slug, HeProductRepository $productRepository): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
@@ -35,7 +35,7 @@ class ChangelogController extends AbstractController
         ]);
     }
 
-    #[Route('/modifier/{slug}', name: 'update', options: ['expose' => true])]
+    #[Route('/modifier/{slug}', name: 'update', options: ['expose' => true], methods: 'GET')]
     public function update($p_slug, $slug, HeChangelogRepository $changelogRepository,
                            HeProductRepository $productRepository, SerializerInterface $serializer): Response
     {
