@@ -1,0 +1,147 @@
+<?php
+
+namespace App\Entity\Main\Help;
+
+use App\Repository\Main\Help\HeChangelogRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: HeChangelogRepository::class)]
+class HeChangelog
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 5)]
+    private ?string $numVersion = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $filename = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $contentCreated = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $contentUpdated = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $contentFix = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createdAt = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'changelogs')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?HeProduct $product = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getNumVersion(): ?string
+    {
+        return $this->numVersion;
+    }
+
+    public function setNumVersion(string $numVersion): static
+    {
+        $this->numVersion = $numVersion;
+
+        return $this;
+    }
+
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    public function setFilename(string $filename): static
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    public function getContentCreated(): ?string
+    {
+        return $this->contentCreated;
+    }
+
+    public function setContentCreated(?string $contentCreated): static
+    {
+        $this->contentCreated = $contentCreated;
+
+        return $this;
+    }
+
+    public function getContentUpdated(): ?string
+    {
+        return $this->contentUpdated;
+    }
+
+    public function setContentUpdated(?string $contentUpdated): static
+    {
+        $this->contentUpdated = $contentUpdated;
+
+        return $this;
+    }
+
+    public function getContentFix(): ?string
+    {
+        return $this->contentFix;
+    }
+
+    public function setContentFix(?string $contentFix): static
+    {
+        $this->contentFix = $contentFix;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getProduct(): ?HeProduct
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?HeProduct $product): static
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+}
