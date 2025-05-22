@@ -45,6 +45,16 @@
     },
 ] %}
 
+{% if is_granted('ROLE_ADMIN') %}
+    {% set menu = menu | merge([
+        {
+            name: "Changelogs",
+            path: path('user_help_changelogs_index', {p_slug: product.slug}),
+            matchRoute: ['user_help_changelogs_index', 'user_help_changelogs_create', 'user_help_changelogs_update'],
+        }
+    ]) %}
+{% endif %}
+
 {% set menu_bottom = [] %}
 {% if is_granted('ROLE_ADMIN') %}
     {% set menu_bottom = [

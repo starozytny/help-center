@@ -1,0 +1,19 @@
+{% extends 'user/pages/changelogs/template.html.twig' %}
+
+{% set page_title %}Création d'un changelog pour {{ product.name }}{% endset %}
+{% set page_subtitle %}Décrivez le cheminement d'une fonctionnalité de votre solution.{% endset %}
+
+{% set page_actions %}
+    {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+        btn_link: path('user_help_changelogs_index', {p_slug: product.slug}),
+        btn_type: 'default',
+        btn_icon: 'left-arrow',
+        btn_text: 'Retourner aux changelogs'
+    } %}
+{% endset %}
+
+{% block main_content %}
+    <div id="changelogs_create" data-product-slug="{{ product.slug }}">
+        {% include "layout/components/loader.html.twig" %}
+    </div>
+{% endblock %}
