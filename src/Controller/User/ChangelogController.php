@@ -35,12 +35,12 @@ class ChangelogController extends AbstractController
         ]);
     }
 
-    #[Route('/modifier/{slug}', name: 'update', options: ['expose' => true], methods: 'GET')]
-    public function update($p_slug, $slug, HeChangelogRepository $changelogRepository,
+    #[Route('/modifier/{id}', name: 'update', options: ['expose' => true], methods: 'GET')]
+    public function update($p_slug, $id, HeChangelogRepository $changelogRepository,
                            HeProductRepository $productRepository, SerializerInterface $serializer): Response
     {
         $product = $productRepository->findOneBy(['slug' => $p_slug]);
-        $obj = $changelogRepository->findOneBy(['slug' => $slug]);
+        $obj = $changelogRepository->findOneBy(['id' => $id]);
 
         $element = $serializer->serialize($obj, 'json', ['groups' => HeChangelog::FORM]);
 

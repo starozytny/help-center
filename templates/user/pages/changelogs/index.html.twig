@@ -31,6 +31,7 @@
         <div class="mt-4">
             <div id="changelogs_list"
                  data-product-slug="{{ product.slug }}"
+                 data-highlight="{{ app.request.query.get('h') }}"
             >
                 {% include "layout/components/loader.html.twig" %}
             </div>

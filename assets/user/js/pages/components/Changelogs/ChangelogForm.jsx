@@ -14,7 +14,7 @@ const URL_INDEX_ELEMENTS = "user_help_changelogs_index";
 const URL_CREATE_ELEMENT = "intern_api_help_changelogs_create";
 const URL_UPDATE_GROUP = "intern_api_help_changelogs_update";
 
-export function ChangelogFormulaire ({ context, element }) {
+export function ChangelogFormulaire ({ context, element, productSlug }) {
 	let url = Routing.generate(URL_CREATE_ELEMENT);
 
 	if (context === "update") {
@@ -24,12 +24,15 @@ export function ChangelogFormulaire ({ context, element }) {
 	return <Form
         context={context}
         url={url}
+
         numVersion={element ? Formulaire.setValue(element.numVersion) : ""}
         numero={element ? Formulaire.setValue(element.numero) : ""}
         name={element ? Formulaire.setValue(element.name) : ""}
 		contentCreated={element ? Formulaire.setValue(element.contentCreated) : ""}
 		contentUpdated={element ? Formulaire.setValue(element.contentUpdated) : ""}
 		contentFix={element ? Formulaire.setValue(element.contentFix) : ""}
+
+		productSlug={productSlug}
     />;
 }
 
@@ -49,6 +52,7 @@ class Form extends Component {
 			contentUpdated: { value: contentUpdated, html: contentUpdated },
 			contentFix: { value: contentFix, html: contentFix },
 			errors: [],
+			productSlug: props.productSlug
 		}
 	}
 
@@ -63,7 +67,7 @@ class Form extends Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 
-		const { context, url } = this.props;
+		const { context, url, productSlug } = this.props;
 		const { numVersion, numero, name } = this.state;
 
 		this.setState({ errors: [] });
@@ -82,9 +86,10 @@ class Form extends Component {
 			Formulaire.loader(true);
 			axios({ method: context === "update" ? "PUT" : "POST", url: url, data: this.state })
 				.then(function (response) {
-					location.href = Routing.generate(URL_INDEX_ELEMENTS, { h: response.data.id });
+					location.href = Routing.generate(URL_INDEX_ELEMENTS, { p_slug: productSlug, h: response.data.id });
 				})
 				.catch(function (error) {
+					console.log(error)
 					Formulaire.displayErrors(self, error);
 					Formulaire.loader(false);
 				})
@@ -109,7 +114,7 @@ class Form extends Component {
 						<div>
 							<Input identifiant="name" valeur={name} {...params0}>Intitulé</Input>
 						</div>
-						<div class="flex gap-4">
+						<div className="flex gap-4">
 							<div className="w-full">
 								<Input identifiant="numero" valeur={numero} {...params0}>Numéro</Input>
 							</div>

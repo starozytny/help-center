@@ -13,10 +13,10 @@ if(el){
 
 el = document.getElementById("changelogs_update");
 if(el){
-    createRoot(el).render(<ChangelogFormulaire context="update" element={JSON.parse(el.dataset.obj)} />)
+    createRoot(el).render(<ChangelogFormulaire context="update" productSlug={el.dataset.productSlug} element={JSON.parse(el.dataset.element)} />)
 }
 
 el = document.getElementById("changelogs_create");
 if(el){
-    createRoot(el).render(<ChangelogFormulaire context="create" element={null} />)
+    createRoot(el).render(<ChangelogFormulaire context="create" productSlug={el.dataset.productSlug} element={null} />)
 }

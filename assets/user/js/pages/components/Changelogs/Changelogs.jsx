@@ -38,7 +38,7 @@ export class Changelogs extends Component {
 	}
 
 	handleGetData = () => {
-		const { perPage, sorter, filters } = this.state;
+		const { perPage, sorter } = this.state;
 		List.getData(this, Routing.generate(URL_GET_DATA), perPage, sorter, this.props.highlight);
 	}
 
@@ -47,7 +47,7 @@ export class Changelogs extends Component {
 	}
 
 	handleSearch = (search) => {
-		const { perPage, sorter, dataImmuable, filters } = this.state;
+		const { perPage, sorter, dataImmuable } = this.state;
 		List.search(this, 'changelog', search, dataImmuable, perPage, sorter, true)
 	}
 
@@ -74,7 +74,7 @@ export class Changelogs extends Component {
 	}
 
 	render () {
-		const { highlight } = this.props;
+		const { highlight, productSlug } = this.props;
 		const { data, currentData, element, loadingData, perPage, currentPage } = this.state;
 
 		return <>
@@ -89,7 +89,10 @@ export class Changelogs extends Component {
 										 onClick={this.handlePaginationClick}
 										 onPerPage={this.handlePerPage} />
 
-					<ChangelogsList data={currentData} highlight={parseInt(highlight)} onModal={this.handleModal} />
+					<ChangelogsList data={currentData}
+									productSlug={productSlug}
+									highlight={parseInt(highlight)}
+									onModal={this.handleModal} />
 
 					<Pagination ref={this.pagination} items={data} taille={data.length} currentPage={currentPage}
 								perPage={perPage} onUpdate={this.handleUpdateData} onChangeCurrentPage={this.handleChangeCurrentPage} />

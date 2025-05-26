@@ -5,15 +5,15 @@ import { Alert } from "@tailwindComponents/Elements/Alert";
 
 import { ChangelogsItem } from "@userPages/Changelogs/ChangelogsItem";
 
-export function ChangelogsList ({ data, highlight, onModal }) {
+export function ChangelogsList ({ data, highlight, onModal, productSlug }) {
     return <div className="list my-4">
         <div className="list-table bg-white rounded-md shadow">
             <div className="items items-changelogs">
                 <div className="item item-header uppercase text-sm text-gray-600">
                     <div className="item-content">
                         <div className="item-infos">
-                            <div className="col-1">Intitulé</div>
-                            <div className="col-2">Description</div>
+                            <div className="col-1">Numéros</div>
+                            <div className="col-2">Intitulé</div>
                             <div className="col-3">Publication</div>
                             <div className="col-4 actions" />
                         </div>
@@ -22,7 +22,7 @@ export function ChangelogsList ({ data, highlight, onModal }) {
 
                 {data.length > 0
                     ? data.map((elem) => {
-                        return <ChangelogsItem key={elem.id} elem={elem} highlight={highlight} onModal={onModal} />;
+                        return <ChangelogsItem key={elem.id} elem={elem} highlight={highlight} onModal={onModal} productSlug={productSlug} />;
                     })
                     : <div className="item border-t">
                         <Alert type="gray">Aucun résultat.</Alert>

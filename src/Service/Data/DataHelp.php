@@ -87,6 +87,13 @@ class DataHelp
     public function setDataChangelog(HeChangelog $obj, $data): HeChangelog
     {
         return ($obj)
+            ->setName($this->sanitizeData->trimData($data->name))
+            ->setNumero((int) $data->numero)
+            ->setNumVersion($this->sanitizeData->trimData($data->numVersion))
+            ->setContentCreated($this->sanitizeData->trimData($data->contentCreated->html))
+            ->setContentUpdated($this->sanitizeData->trimData($data->contentUpdated->html))
+            ->setContentFix($this->sanitizeData->trimData($data->contentFix->html))
+            ->setFilename((int) $data->numero . "_NV_" . ($obj->getCreatedAt() ? $obj->getCreatedAt()->getTimestamp() : time()))
         ;
     }
 }
