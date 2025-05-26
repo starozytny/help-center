@@ -93,7 +93,6 @@ class DataHelp
             ->setContentCreated($this->sanitizeData->trimData($data->contentCreated->html))
             ->setContentUpdated($this->sanitizeData->trimData($data->contentUpdated->html))
             ->setContentFix($this->sanitizeData->trimData($data->contentFix->html))
-            ->setFilename((int) $data->numero . "_NV_" . ($obj->getCreatedAt() ? $obj->getCreatedAt()->getTimestamp() : time()))
         ;
     }
 }

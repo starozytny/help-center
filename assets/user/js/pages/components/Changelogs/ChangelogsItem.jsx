@@ -6,7 +6,7 @@ import Sanitaze from "@commonFunctions/sanitaze";
 
 import { setHighlightClass, useHighlight } from "@commonHooks/item";
 
-import { ButtonIcon, ButtonIconA } from "@tailwindComponents/Elements/Button";
+import { Button, ButtonIcon, ButtonIconA } from "@tailwindComponents/Elements/Button";
 
 const URL_UPDATE_PAGE = "user_help_changelogs_update";
 
@@ -35,6 +35,7 @@ export function ChangelogsItem ({ elem, highlight, onModal, productSlug }) {
 					<span className="font-medium">{elem.name}</span>
 				</div>
 				<div className="col-3">
+					<Button type="default" onClick={() => onModal('generate', elem)}>Générer le fichier</Button>
 				</div>
 				<div className="col-4 actions">
 					<ButtonIconA type="default" icon="pencil" onClick={urlUpdate}>Modifier</ButtonIconA>

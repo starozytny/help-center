@@ -31,7 +31,7 @@ class HeChangelog
     #[Groups(['changelog_list', 'changelog_form'])]
     private ?string $numVersion = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['changelog_list'])]
     private ?string $filename = null;
 
@@ -110,7 +110,7 @@ class HeChangelog
         return $this->filename;
     }
 
-    public function setFilename(string $filename): static
+    public function setFilename(?string $filename): static
     {
         $this->filename = $filename;
 

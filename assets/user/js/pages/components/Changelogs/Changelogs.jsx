@@ -1,12 +1,18 @@
 import React, { Component } from "react";
+import { createPortal } from "react-dom";
 
+import axios from "axios";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import Sort from "@commonFunctions/sort";
 import List from "@commonFunctions/list";
+import Toastr from "@tailwindFunctions/toastr";
+import Formulaire from "@commonFunctions/formulaire";
 
 import { ChangelogsList } from "@userPages/Changelogs/ChangelogsList";
 
+import { Modal } from "@tailwindComponents/Elements/Modal";
+import { Button } from "@tailwindComponents/Elements/Button";
 import { Search } from "@tailwindComponents/Elements/Search";
 import { ModalDelete } from "@tailwindComponents/Shortcut/Modal";
 import { LoaderElements } from "@tailwindComponents/Elements/Loader";
@@ -14,6 +20,7 @@ import { Pagination, TopSorterPagination } from "@tailwindComponents/Elements/Pa
 
 const URL_GET_DATA = "intern_api_help_changelogs_list";
 const URL_DELETE_ELEMENT = "intern_api_help_changelogs_delete";
+const URL_GENERATE_FILE = "intern_api_help_changelogs_generate_file";
 
 const SESSION_PERPAGE = "help.user.perpage.changelogs";
 
@@ -31,6 +38,7 @@ export class Changelogs extends Component {
 
 		this.pagination = React.createRef();
 		this.delete = React.createRef();
+		this.generate = React.createRef();
 	}
 
 	componentDidMount = () => {
@@ -69,8 +77,27 @@ export class Changelogs extends Component {
 	}
 
 	handleModal = (identifiant, elem) => {
-		this.delete.current.handleClick();
+		this[identifiant].current.handleClick();
 		this.setState({ element: elem })
+	}
+
+	handleGenerate = () => {
+		const { element } = this.state;
+
+		let self = this;
+		Formulaire.loader(true);
+		axios({ method: "POST", url: Routing.generate(URL_GENERATE_FILE, {id: element.id}), data: {} })
+			.then(function (response) {
+				Toastr.toast('info', "Fichier généré.");
+				self.generate.current.handleClose();
+			})
+			.catch(function (error) {
+				Formulaire.displayErrors(self, error);
+			})
+			.then(function () {
+				Formulaire.loader(false);
+			})
+		;
 	}
 
 	render () {
@@ -102,6 +129,14 @@ export class Changelogs extends Component {
 								 onUpdateList={this.handleUpdateList}>
 						Êtes-vous sûr de vouloir supprimer définitivement ce changelog ?
 					</ModalDelete>
+
+					{createPortal(
+						<Modal ref={this.generate} identifiant="generate" maxWidth={414}
+							   title={element ? "Génération du fichier de " + element.numero + " - " + element.name : ""}
+							   content={<div>Êtes-vous sûr de vouloir générer le fichier de ce changelog : {element ? element.name : ""} ?</div>}
+							   footer={<Button type="blue" onClick={this.handleGenerate}>Générer</Button>} />,
+						document.body
+					)}
 				</>
 			}
 		</>
