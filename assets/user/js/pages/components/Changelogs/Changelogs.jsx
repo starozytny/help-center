@@ -56,7 +56,7 @@ export class Changelogs extends Component {
 
 	handleSearch = (search) => {
 		const { perPage, sorter, dataImmuable } = this.state;
-		List.search(this, 'changelog', search, dataImmuable, perPage, sorter, true)
+		List.search(this, 'he_changelog', search, dataImmuable, perPage, sorter)
 	}
 
 	handleUpdateList = (element, context) => {
