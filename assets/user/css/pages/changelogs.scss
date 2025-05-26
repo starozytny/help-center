@@ -1,6 +1,6 @@
 .items-changelogs{
   .item-infos{
-    $col1: 220px; $col3: 160px; $col4: 72px; $colGap: 24px;
+    $col1: 200px; $col3: 180px; $col4: 72px; $colGap: 24px;
     @media (min-width:768px) {
       & > .col-1{ width: $col1; }
       & > .col-2{

@@ -6,6 +6,7 @@ use App\Entity\Main\Help\HeChangelog;
 use App\Repository\Main\Help\HeChangelogRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -49,5 +50,24 @@ class ChangelogController extends AbstractController
             'elem' => $obj,
             'element' => $element
         ]);
+    }
+
+    #[Route('/apercu/html/{id}', name: 'preview_html', options: ['expose' => true], methods: 'GET')]
+    public function previewHtml($p_slug, HeChangelog $obj): Response
+    {
+        if(!$obj->getFilename()){
+            $this->addFlash('error', 'Veuillez générer le fichier pour voir l\'aperçu.');
+            return $this->redirectToRoute('user_help_changelogs_index', ['p_slug' => $p_slug]);
+        }
+
+        $file = $this->getParameter('private_directory') . '/export/generated/' . $obj->getFilename();
+
+        if(!file_exists($file)){
+            throw $this->createNotFoundException("Fichier HTML introuvable.");
+        }
+
+        $html = file_get_contents($file);
+
+        return new Response($html, 200, ['Content-Type' => 'text/html']);
     }
 }

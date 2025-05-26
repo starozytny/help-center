@@ -9,6 +9,7 @@ import { setHighlightClass, useHighlight } from "@commonHooks/item";
 import { Button, ButtonIcon, ButtonIconA } from "@tailwindComponents/Elements/Button";
 
 const URL_UPDATE_PAGE = "user_help_changelogs_update";
+const URL_PREVIEW_FILE = "user_help_changelogs_preview_html";
 
 export function ChangelogsItem ({ elem, highlight, onModal, productSlug }) {
 	const refItem = useRef(null);
@@ -35,7 +36,20 @@ export function ChangelogsItem ({ elem, highlight, onModal, productSlug }) {
 					<span className="font-medium">{elem.name}</span>
 				</div>
 				<div className="col-3">
-					<Button type="default" onClick={() => onModal('generate', elem)}>Générer le fichier</Button>
+					<div className="flex gap-1">
+						<div>
+							<Button type="default" onClick={() => onModal('generate', elem)}>Générer le fichier</Button>
+						</div>
+						{elem.filename
+							? <div>
+								<ButtonIconA type="default" icon="vision" target="_blank"
+											 onClick={Routing.generate(URL_PREVIEW_FILE, {p_slug: productSlug, id: elem.id})}>
+									Aperçu
+								</ButtonIconA>
+							</div>
+							: null
+						}
+					</div>
 				</div>
 				<div className="col-4 actions">
 					<ButtonIconA type="default" icon="pencil" onClick={urlUpdate}>Modifier</ButtonIconA>
