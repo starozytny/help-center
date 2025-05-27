@@ -49,6 +49,7 @@ class ChangelogController extends AbstractController
         $obj = $dataEntity->setDataChangelog($obj, $data);
         $obj = ($obj)
             ->setProduct($product)
+            ->setNumero($product->getNumeroChangelog() + 1)
         ;
 
         if($type === "update"){
@@ -59,6 +60,8 @@ class ChangelogController extends AbstractController
         if ($noErrors !== true) {
             return $apiResponse->apiJsonResponseValidationFailed($noErrors);
         }
+
+        $product->setNumeroChangelog($product->getNumeroChangelog() + 1);
 
         $repository->save($obj, true);
         return $apiResponse->apiJsonResponse($obj, Changelog::LIST);

@@ -26,7 +26,6 @@ export function ChangelogFormulaire ({ context, element, productSlug }) {
         url={url}
 
         numVersion={element ? Formulaire.setValue(element.numVersion) : ""}
-        numero={element ? Formulaire.setValue(element.numero) : ""}
         name={element ? Formulaire.setValue(element.name) : ""}
         dateAt={element ? Formulaire.setValueDate(element.dateAt) : ""}
 		contentCreated={element ? Formulaire.setValue(element.contentCreated) : ""}
@@ -47,7 +46,6 @@ class Form extends Component {
 
 		this.state = {
 			numVersion: props.numVersion,
-			numero: props.numero,
 			name: props.name,
 			dateAt: props.dateAt,
 			contentCreated: { value: contentCreated, html: contentCreated },
@@ -70,13 +68,12 @@ class Form extends Component {
 		e.preventDefault();
 
 		const { context, url, productSlug } = this.props;
-		const { numVersion, numero, name, dateAt } = this.state;
+		const { numVersion, name, dateAt } = this.state;
 
 		this.setState({ errors: [] });
 
 		let paramsToValidate = [
 			{ type: "text", id: 'numVersion', value: numVersion },
-			{ type: "text", id: 'numero', value: numero },
 			{ type: "text", id: 'name', value: name },
 			{ type: "text", id: 'dateAt', value: dateAt },
 		];
@@ -102,7 +99,7 @@ class Form extends Component {
 
 	render () {
         const { context } = this.props;
-		const { errors, numVersion, numero, name, dateAt, contentCreated, contentUpdated, contentFix } = this.state;
+		const { errors, numVersion, name, dateAt, contentCreated, contentUpdated, contentFix } = this.state;
 
         let params0 = { errors: errors, onChange: this.handleChange };
         let params1 = { errors: errors, onUpdateData: this.handleChangeTinyMCE };
@@ -118,9 +115,6 @@ class Form extends Component {
 							<Input identifiant="name" valeur={name} {...params0}>Intitulé</Input>
 						</div>
 						<div className="flex gap-4">
-							<div className="w-full">
-								<Input identifiant="numero" valeur={numero} {...params0}>Numéro</Input>
-							</div>
 							<div className="w-full">
 								<Input identifiant="numVersion" valeur={numVersion} {...params0}>Numéro de version</Input>
 							</div>

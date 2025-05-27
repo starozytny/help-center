@@ -73,6 +73,9 @@ class HeProduct extends DataEntity
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: HeChangelog::class)]
     private Collection $changelogs;
 
+    #[ORM\Column]
+    private ?int $numeroChangelog = null;
+
     public function __construct()
     {
         $this->documentations = new ArrayCollection();
@@ -325,6 +328,18 @@ class HeProduct extends DataEntity
                 $changelog->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNumeroChangelog(): ?int
+    {
+        return $this->numeroChangelog;
+    }
+
+    public function setNumeroChangelog(int $numeroChangelog): static
+    {
+        $this->numeroChangelog = $numeroChangelog;
 
         return $this;
     }
