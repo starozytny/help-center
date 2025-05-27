@@ -59,6 +59,10 @@ class HeChangelog
     #[ORM\JoinColumn(nullable: false)]
     private ?HeProduct $product = null;
 
+    #[ORM\Column]
+    #[Groups(['changelog_list', 'changelog_form'])]
+    private ?\DateTime $dateAt = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -185,6 +189,18 @@ class HeChangelog
     public function setProduct(?HeProduct $product): static
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getDateAt(): ?\DateTime
+    {
+        return $this->dateAt;
+    }
+
+    public function setDateAt(\DateTime $dateAt): static
+    {
+        $this->dateAt = $dateAt;
 
         return $this;
     }
