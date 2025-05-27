@@ -24,7 +24,7 @@ class HeProduct extends DataEntity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['product_access', 'product_form', 'product_read'])]
+    #[Groups(['product_access', 'product_form', 'product_read', 'changelog_settings'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -67,11 +67,26 @@ class HeProduct extends DataEntity
     #[Groups(['product_form'])]
     private ?bool $isIntern = null;
 
+    /**
+     * @var Collection<int, HeChangelog>
+     */
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: HeChangelog::class)]
+    private Collection $changelogs;
+
+    #[ORM\Column]
+    #[Groups(['changelog_settings'])]
+    private ?int $numeroChangelog = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['changelog_settings'])]
+    private ?string $folderChangelog = null;
+
     public function __construct()
     {
         $this->documentations = new ArrayCollection();
         $this->tutorials = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->changelogs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -290,5 +305,59 @@ class HeProduct extends DataEntity
     public function getDirname(): array|bool|string|null
     {
         return mb_strtolower($this->slug);
+    }
+
+    /**
+     * @return Collection<int, HeChangelog>
+     */
+    public function getChangelogs(): Collection
+    {
+        return $this->changelogs;
+    }
+
+    public function addChangelog(HeChangelog $changelog): static
+    {
+        if (!$this->changelogs->contains($changelog)) {
+            $this->changelogs->add($changelog);
+            $changelog->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChangelog(HeChangelog $changelog): static
+    {
+        if ($this->changelogs->removeElement($changelog)) {
+            // set the owning side to null (unless already changed)
+            if ($changelog->getProduct() === $this) {
+                $changelog->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getNumeroChangelog(): ?int
+    {
+        return $this->numeroChangelog;
+    }
+
+    public function setNumeroChangelog(int $numeroChangelog): static
+    {
+        $this->numeroChangelog = $numeroChangelog;
+
+        return $this;
+    }
+
+    public function getFolderChangelog(): ?string
+    {
+        return $this->folderChangelog;
+    }
+
+    public function setFolderChangelog(?string $folderChangelog): static
+    {
+        $this->folderChangelog = $folderChangelog;
+
+        return $this;
     }
 }

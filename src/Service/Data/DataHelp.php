@@ -3,6 +3,7 @@
 namespace App\Service\Data;
 
 use App\Entity\Main\Help\HeCategory;
+use App\Entity\Main\Help\HeChangelog;
 use App\Entity\Main\Help\HeCommentary;
 use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeProduct;
@@ -80,6 +81,18 @@ class DataHelp
         return ($obj)
             ->setUser($user)
             ->setMessage($this->sanitizeData->trimData($data->message))
+        ;
+    }
+
+    public function setDataChangelog(HeChangelog $obj, $data): HeChangelog
+    {
+        return ($obj)
+            ->setName($this->sanitizeData->trimData($data->name))
+            ->setNumVersion($this->sanitizeData->trimData($data->numVersion))
+            ->setDateAt($this->sanitizeData->createDate($data->dateAt))
+            ->setContentCreated($this->sanitizeData->trimData($data->contentCreated->html))
+            ->setContentUpdated($this->sanitizeData->trimData($data->contentUpdated->html))
+            ->setContentFix($this->sanitizeData->trimData($data->contentFix->html))
         ;
     }
 }

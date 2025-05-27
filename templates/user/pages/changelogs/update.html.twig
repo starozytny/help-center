@@ -1,0 +1,24 @@
+{% extends 'user/pages/changelogs/template.html.twig' %}
+
+{% set page_title %}Modifier : {{ elem.numero }}{% endset %}
+{% set page_subtitle %}Modifiez les informations du changelog de {{ product.name }} : {{ elem.numero }}.{% endset %}
+
+{% set page_actions %}
+    <div class="flex gap-2">
+        {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+            btn_link: path('user_help_changelogs_index', {p_slug: product.slug}),
+            btn_type: 'default',
+            btn_icon: 'left-arrow',
+            btn_text: 'Retourner aux changelogs'
+        } %}
+    </div>
+{% endset %}
+
+{% block main_content %}
+    <div id="help_changelogs_update"
+         data-product-slug="{{ product.slug }}"
+         data-element="{{ element }}"
+    >
+        {% include "layout/components/loader.html.twig" %}
+    </div>
+{% endblock %}

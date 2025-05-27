@@ -1,0 +1,44 @@
+{% extends 'user/pages/changelogs/template.html.twig' %}
+
+{% set typeString = product.typeString %}
+
+{% set page_title %}{{ product.name }}{% endset %}
+{% set page_subtitle %}Liste des changelogs{% endset %}
+
+{% set page_actions %}
+    {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+        btn_link: path('user_help_changelogs_settings', {p_slug: product.slug}),
+        btn_type: 'default',
+        btn_icon: 'settings',
+        btn_text: 'Paramètres'
+    } %}
+    {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+        btn_link: path('user_help_changelogs_create', {p_slug: product.slug}),
+        btn_type: 'blue',
+        btn_icon: 'add',
+        btn_text: 'Ajouter un changelog'
+    } %}
+{% endset %}
+
+{% block main_content %}
+    <div class="mb-4">
+        {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+            btn_link: path('user_help_product_read', {slug: product.slug}),
+            btn_type: 'default',
+            btn_icon: 'left-arrow',
+            btn_text: 'Retourner à ' ~ product.name
+        } %}
+    </div>
+    <div>
+        <h2 class="font-bold text-2xl">Changelogs</h2>
+
+        <div class="mt-4">
+            <div id="help_changelogs_list"
+                 data-product-slug="{{ product.slug }}"
+                 data-highlight="{{ app.request.query.get('h') }}"
+            >
+                {% include "layout/components/loader.html.twig" %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

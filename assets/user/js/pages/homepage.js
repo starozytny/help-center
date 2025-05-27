@@ -4,6 +4,7 @@ import { ProductDelete } from "@userPages/Products/ProductDelete";
 
 let deletesProd = document.querySelectorAll('.delete-product');
 if(deletesProd){
+    console.log(deletesProd);
     deletesProd.forEach(elem => {
         createRoot(elem).render(<ProductDelete context="product" {...elem.dataset}/>)
     })

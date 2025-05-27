@@ -32,6 +32,19 @@
             'user_help_category_update', 'user_help_question_update'
         ]
     },
+] %}
+
+{% if is_granted('ROLE_ADMIN') %}
+    {% set menu = menu | merge([
+        {
+            name: "Changelogs",
+            path: path('user_help_changelogs_index', {p_slug: product.slug}),
+            matchRoute: ['user_help_changelogs_index', 'user_help_changelogs_create', 'user_help_changelogs_update', 'user_help_changelogs_settings'],
+        }
+    ]) %}
+{% endif %}
+
+{% set menu = menu | merge([
     {
         name: "Documentations",
         path: path('user_help_documentation_index', {p_slug: product.slug}),
@@ -43,7 +56,7 @@
         matchRoute: ['user_help_tutorial_read', 'user_help_tutorial_index', 'user_help_tutorial_create', 'user_help_tutorial_update'],
         items : menuGuides
     },
-] %}
+]) %}
 
 {% set menu_bottom = [] %}
 {% if is_granted('ROLE_ADMIN') %}

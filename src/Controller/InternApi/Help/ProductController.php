@@ -2,7 +2,6 @@
 
 namespace App\Controller\InternApi\Help;
 
-use App\Entity\Main\Help\HeCategory;
 use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
@@ -12,6 +11,7 @@ use App\Repository\Main\Help\HeQuestionRepository;
 use App\Service\ApiResponse;
 use App\Service\Data\DataHelp;
 use App\Service\FileUploader;
+use App\Service\SanitizeData;
 use App\Service\ValidatorService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -113,5 +113,22 @@ class ProductController extends AbstractController
             'guides' => $serializer->serialize($obj->getTutorials(), 'json', ['groups' => HeTutorial::SEARCH]),
             'questions' => $serializer->serialize($questions, 'json', ['groups' => HeQuestion::SEARCH]),
         ]);
+    }
+
+    #[Route('/changelogs/settings/{id}', name: 'changelogs_settings', options: ['expose' => true], methods: 'PUT')]
+    public function changelogsSetting(Request $request, HeProduct $obj, HeProductRepository $repository, SanitizeData $sanitizeData,
+                                      ApiResponse $apiResponse, SerializerInterface $serializer): Response
+    {
+        $data = json_decode($request->getContent());
+        if ($data === null) {
+            return $apiResponse->apiJsonResponseBadRequest('Les données sont vides.');
+        }
+
+        $obj->setNumeroChangelog((int) $data->numeroChangelog);
+        $obj->setFolderChangelog($sanitizeData->trimData($data->folderChangelog));
+
+        $repository->save($obj, true);
+
+        return $apiResponse->apiJsonResponseSuccessful("ok");
     }
 }

@@ -72,6 +72,15 @@ function compareLabel(a, b){
     return comparison(a.label, b.label);
 }
 
+function compareNumeroInverseThenDateAtInverse(a, b){
+    if (b.numero > a.numero) {
+        return 1;
+    } else if (b.numero < a.numero) {
+        return -1;
+    }
+    return comparison(b.dateAt, a.dateAt);
+}
+
 function comparison (objA, objB){
     if(objA === objB){
         return 0;
@@ -101,4 +110,5 @@ module.exports = {
     compareCode,
     compareRankThenLabel,
     compareLabel,
+    compareNumeroInverseThenDateAtInverse,
 }
