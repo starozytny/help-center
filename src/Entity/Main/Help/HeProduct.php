@@ -24,7 +24,7 @@ class HeProduct extends DataEntity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['product_access', 'product_form', 'product_read'])]
+    #[Groups(['product_access', 'product_form', 'product_read', 'changelog_settings'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -74,9 +74,11 @@ class HeProduct extends DataEntity
     private Collection $changelogs;
 
     #[ORM\Column]
+    #[Groups(['changelog_settings'])]
     private ?int $numeroChangelog = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['changelog_settings'])]
     private ?string $folderChangelog = null;
 
     public function __construct()

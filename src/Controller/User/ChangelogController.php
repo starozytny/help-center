@@ -69,4 +69,17 @@ class ChangelogController extends AbstractController
 
         return new Response($html, 200, ['Content-Type' => 'text/html']);
     }
+
+    #[Route('/parametres', name: 'settings')]
+    public function settings($p_slug, HeProductRepository $productRepository, SerializerInterface $serializer): Response
+    {
+        $product = $productRepository->findOneBy(['slug' => $p_slug]);
+
+        $element = $serializer->serialize($product, 'json', ['groups' => HeChangelog::SETTINGS]);
+
+        return $this->render('user/pages/changelogs/settings.html.twig', [
+            'product' => $product,
+            'element' => $element
+        ]);
+    }
 }

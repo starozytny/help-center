@@ -5,6 +5,7 @@ import { createRoot } from "react-dom/client";
 
 import { Changelogs } from "@userPages/Changelogs/Changelogs";
 import { ChangelogFormulaire } from "@userPages/Changelogs/ChangelogForm";
+import { SettingsFormulaire } from "@userPages/Changelogs/SettingsForm";
 
 let el = document.getElementById("help_changelogs_list");
 if(el){
@@ -19,4 +20,10 @@ if(el){
 el = document.getElementById("help_changelogs_create");
 if(el){
     createRoot(el).render(<ChangelogFormulaire context="create" productSlug={el.dataset.productSlug} element={null} />)
+}
+
+
+el = document.getElementById("help_changelogs_settings");
+if(el){
+    createRoot(el).render(<SettingsFormulaire element={JSON.parse(el.dataset.element)} />)
 }

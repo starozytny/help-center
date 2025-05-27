@@ -12,6 +12,7 @@ class HeChangelog
 {
     const LIST = ['changelog_list'];
     const FORM = ['changelog_form'];
+    const SETTINGS = ['changelog_settings'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

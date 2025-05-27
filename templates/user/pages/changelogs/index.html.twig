@@ -6,14 +6,18 @@
 {% set page_subtitle %}Liste des changelogs{% endset %}
 
 {% set page_actions %}
-    {% if app.user.admin %}
-        {% include 'layout/components/tailwind/buttons/button.html.twig' with {
-            btn_link: path('user_help_changelogs_create', {p_slug: product.slug}),
-            btn_type: 'blue',
-            btn_icon: 'add',
-            btn_text: 'Ajouter un changelog'
-        } %}
-    {% endif %}
+    {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+        btn_link: path('user_help_changelogs_settings', {p_slug: product.slug}),
+        btn_type: 'default',
+        btn_icon: 'settings',
+        btn_text: 'Paramètres'
+    } %}
+    {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+        btn_link: path('user_help_changelogs_create', {p_slug: product.slug}),
+        btn_type: 'blue',
+        btn_icon: 'add',
+        btn_text: 'Ajouter un changelog'
+    } %}
 {% endset %}
 
 {% block main_content %}

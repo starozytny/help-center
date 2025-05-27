@@ -51,8 +51,7 @@ class Form extends Component {
 			contentCreated: { value: contentCreated, html: contentCreated },
 			contentUpdated: { value: contentUpdated, html: contentUpdated },
 			contentFix: { value: contentFix, html: contentFix },
-			errors: [],
-			productSlug: props.productSlug
+			errors: []
 		}
 	}
 
@@ -89,7 +88,6 @@ class Form extends Component {
 					location.href = Routing.generate(URL_INDEX_ELEMENTS, { p_slug: productSlug, h: response.data.id });
 				})
 				.catch(function (error) {
-					console.log(error)
 					Formulaire.displayErrors(self, error);
 					Formulaire.loader(false);
 				})
