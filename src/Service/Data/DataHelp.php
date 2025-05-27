@@ -90,6 +90,7 @@ class DataHelp
             ->setName($this->sanitizeData->trimData($data->name))
             ->setNumero((int) $data->numero)
             ->setNumVersion($this->sanitizeData->trimData($data->numVersion))
+            ->setDateAt($this->sanitizeData->createDate($data->dateAt))
             ->setContentCreated($this->sanitizeData->trimData($data->contentCreated->html))
             ->setContentUpdated($this->sanitizeData->trimData($data->contentUpdated->html))
             ->setContentFix($this->sanitizeData->trimData($data->contentFix->html))

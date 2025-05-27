@@ -24,7 +24,7 @@ export function ChangelogsItem ({ elem, highlight, onModal, productSlug }) {
 				<div className="col-1">
 					<div>
 						<div className="font-bold">{elem.numero} - {elem.numVersion}</div>
-						<div className="text-gray-600 text-sm">{Sanitaze.toDateFormat(elem.dateAt)}</div>
+						<div className="text-gray-600 text-sm">{Sanitaze.toDateFormat(elem.dateAt, 'LL')}</div>
 					</div>
 				</div>
 				<div className="col-2">
