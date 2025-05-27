@@ -34,6 +34,20 @@ class HeChangelogRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return HeChangelog[] Returns an array of HeChangelog objects
+     */
+    public function findLastTenBeforeNumero(int $numero): array
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.numero <= :numero')
+            ->setParameter('numero', $numero)
+            ->orderBy('e.numero', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return HeChangelog[] Returns an array of HeChangelog objects
     //     */
