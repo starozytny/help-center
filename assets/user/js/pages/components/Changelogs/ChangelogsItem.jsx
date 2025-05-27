@@ -33,7 +33,7 @@ export function ChangelogsItem ({ elem, highlight, onModal, productSlug }) {
 				<div className="col-3">
 					<div className="flex gap-1">
 						<div>
-							<Button type="default" onClick={() => onModal('generate', elem)}>Générer le fichier</Button>
+							<Button type="default" onClick={() => onModal('generate', elem)}>{elem.filename ? "Regénérer" : "Générer"} le fichier</Button>
 						</div>
 						{elem.filename
 							? <div>

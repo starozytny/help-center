@@ -78,14 +78,19 @@ export class Changelogs extends Component {
 
 	handleModal = (identifiant, elem) => {
 		this[identifiant].current.handleClick();
-		this.setState({ element: elem })
+
+		if(identifiant === "generate"){
+			modalGenerate(this, elem);
+		}
+
+		this.setState({ element: elem });
 	}
 
 	handleGenerate = () => {
 		const { element } = this.state;
 
 		let self = this;
-		Formulaire.loader(true);
+		this.generate.current.handleUpdateFooter(<Button type="blue" iconLeft="chart-3" onClick={null}>{element.filename ? "Regénérer" : "Générer"}</Button>)
 		axios({ method: "POST", url: Routing.generate(URL_GENERATE_FILE, {id: element.id}), data: {} })
 			.then(function (response) {
 				Toastr.toast('info', "Fichier généré.");
@@ -95,7 +100,7 @@ export class Changelogs extends Component {
 				Formulaire.displayErrors(self, error);
 			})
 			.then(function () {
-				Formulaire.loader(false);
+				modalGenerate(self, elem);
 			})
 		;
 	}
@@ -132,13 +137,21 @@ export class Changelogs extends Component {
 
 					{createPortal(
 						<Modal ref={this.generate} identifiant="generate" maxWidth={414}
-							   title={element ? "Génération du fichier de " + element.numero + " - " + element.name : ""}
-							   content={<div>Êtes-vous sûr de vouloir générer le fichier de ce changelog : {element ? element.name : ""} ?</div>}
-							   footer={<Button type="blue" onClick={this.handleGenerate}>Générer</Button>} />,
+							   title={element ? `${element.filename ? "Regénération" : `Génération du fichier de ${element.numero} - ${element.name}`}` : ""}
+							   content={<div>Êtes-vous sûr de vouloir {element && element.filename ? "regénérer" : "générer"} le fichier de : {element ? element.name : ""} ?</div>}
+							   footer={null} />,
 						document.body
 					)}
 				</>
 			}
 		</>
+	}
+}
+
+function modalGenerate (self, elem) {
+	if(elem.filename){
+		self.generate.current.handleUpdateFooter(<Button type="blue" onClick={self.handleGenerate}>Regénérer</Button>)
+	}else{
+		self.generate.current.handleUpdateFooter(<Button type="blue" onClick={self.handleGenerate}>Générer</Button>)
 	}
 }

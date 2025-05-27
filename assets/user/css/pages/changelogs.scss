@@ -1,6 +1,6 @@
 .items-changelogs{
   .item-infos{
-    $col1: 200px; $col3: 180px; $col4: 72px; $colGap: 24px;
+    $col1: 200px; $col3: 200px; $col4: 72px; $colGap: 24px;
     @media (min-width:768px) {
       & > .col-1{ width: $col1; }
       & > .col-2{
@@ -10,11 +10,12 @@
       & > .col-4.actions{ width: $col4; }
     }
     @media (min-width:1280px) {
-      $col1: 240px;
+      $col1: 240px; $col3: 240px;
       & > .col-1{ width: $col1; }
       & > .col-2{
         width: calc(100% - $col1 - $col3 - $col4 - $colGap);
       }
+      & > .col-3{ width: $col3; }
     }
     @media (min-width:1536px) {
       & > .col-2{
