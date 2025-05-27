@@ -8,6 +8,7 @@ use App\Repository\Main\Help\HeChangelogRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Service\ApiResponse;
 use App\Service\Data\DataHelp;
+use App\Service\Transfert\TransfertService;
 use App\Service\ValidatorService;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -99,7 +100,7 @@ class ChangelogController extends AbstractController
      * @throws LoaderError
      */
     #[Route('/generate/file/{id}', name: 'generate_file', options: ['expose' => true], methods: 'POST')]
-    public function generateFile(HeChangelog $obj, ApiResponse $apiResponse, Environment $twig): Response
+    public function generateFile(HeChangelog $obj, ApiResponse $apiResponse, Environment $twig, TransfertService $transfertService): Response
     {
         $html = $twig->render('user/generate/changelogs/gerance.html.twig', [
             'elem' => $obj
@@ -111,6 +112,11 @@ class ChangelogController extends AbstractController
         $obj->setFilename($filename);
 
         file_put_contents($path, $html);
+
+        $resultFtp = $transfertService->sendToFTP($filename, $path);
+        if($resultFtp !== true){
+            return $apiResponse->apiJsonResponseBadRequest($resultFtp);
+        }
 
         return $apiResponse->apiJsonResponseSuccessful("ok");
     }

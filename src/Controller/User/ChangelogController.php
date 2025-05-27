@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
-use Twig\Environment;
 
 #[Route('/espace-membre/produits/produit/{p_slug}/changelogs', name: 'user_help_changelogs_')]
 #[IsGranted('ROLE_ADMIN')]
