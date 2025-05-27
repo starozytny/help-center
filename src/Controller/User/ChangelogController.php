@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
+use Twig\Environment;
 
 #[Route('/espace-membre/produits/produit/{p_slug}/changelogs', name: 'user_help_changelogs_')]
 #[IsGranted('ROLE_ADMIN')]
@@ -53,7 +54,7 @@ class ChangelogController extends AbstractController
     }
 
     #[Route('/apercu/html/{id}', name: 'preview_html', options: ['expose' => true], methods: 'GET')]
-    public function previewHtml($p_slug, HeChangelog $obj): Response
+    public function previewHtml($p_slug, HeChangelog $obj, Environment $twig): Response
     {
         if(!$obj->getFilename()){
             $this->addFlash('error', 'Veuillez générer le fichier pour voir l\'aperçu.');
@@ -65,6 +66,16 @@ class ChangelogController extends AbstractController
         if(!file_exists($file)){
             throw $this->createNotFoundException("Fichier HTML introuvable.");
         }
+
+        // temp
+        $html = $twig->render('user/generate/changelogs/gerance.html.twig', [
+            'elem' => $obj
+        ]);
+
+        $path = $this->getParameter('private_directory') . '/export/generated/' . $obj->getFilename();
+
+        file_put_contents($path, $html);
+        // temp
 
         $html = file_get_contents($file);
 

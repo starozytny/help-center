@@ -101,7 +101,9 @@ class ChangelogController extends AbstractController
     #[Route('/generate/file/{id}', name: 'generate_file', options: ['expose' => true], methods: 'POST')]
     public function generateFile(HeChangelog $obj, ApiResponse $apiResponse, Environment $twig): Response
     {
-        $html = $twig->render('user/generate/template.html.twig', []);
+        $html = $twig->render('user/generate/changelogs/gerance.html.twig', [
+            'elem' => $obj
+        ]);
 
         $filename = $obj->getFilename() ?: $obj->getNumero() . "_NV_" .$obj->getCreatedAt()->getTimestamp(). '.html';
         $path = $this->getParameter('private_directory') . '/export/generated/' . $filename;
