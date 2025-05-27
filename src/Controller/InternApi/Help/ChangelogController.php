@@ -11,6 +11,7 @@ use App\Service\Data\DataHelp;
 use App\Service\Transfert\TransfertService;
 use App\Service\ValidatorService;
 use DateTime;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -101,6 +102,7 @@ class ChangelogController extends AbstractController
      * @throws SyntaxError
      * @throws RuntimeError
      * @throws LoaderError
+     * @throws Exception
      */
     #[Route('/generate/file/{id}', name: 'generate_file', options: ['expose' => true], methods: 'POST')]
     public function generateFile(HeChangelog $obj, ApiResponse $apiResponse, Environment $twig,
@@ -117,7 +119,7 @@ class ChangelogController extends AbstractController
 
         file_put_contents($path, $html);
 
-        $resultFtp = $transfertService->sendToFTP($filename, $path);
+        $resultFtp = $transfertService->sendToFTP($obj->getProduct(), $filename, $path);
         if($resultFtp !== true){
             return $apiResponse->apiJsonResponseBadRequest($resultFtp);
         }

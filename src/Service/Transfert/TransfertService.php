@@ -2,12 +2,18 @@
 
 namespace App\Service\Transfert;
 
+use App\Entity\Main\Help\HeProduct;
+use Exception;
+
 class TransfertService
 {
     public function __construct(private readonly string $ftpServer, private readonly string $ftpUsername, private readonly string $ftpPassword)
     {}
 
-    public function sendToFTP($filename, $localFile): bool|string
+    /**
+     * @throws Exception
+     */
+    public function sendToFTP(HeProduct $product, $filename, $localFile): bool|string
     {
         try {
             $ftp = ftp_connect($this->ftpServer);
@@ -15,7 +21,15 @@ class TransfertService
                 ftp_login($ftp, $this->ftpUsername, $this->ftpPassword);
                 ftp_pasv($ftp, true);
 
-                $directoryFtp = "./gerance/INSTALL/NEW";
+                $directoryFtp = $product->getFolderChangelog();
+
+                if(!ftp_nlist($ftp, $directoryFtp)){
+                    return "Dossier introuvable sur le FTP.";
+                }
+
+                if(!ftp_nlist($ftp, $directoryFtp . "/OLD")){
+                    ftp_mkdir($ftp, $directoryFtp . "/OLD");
+                }
 
                 $contents = ftp_nlist($ftp, $directoryFtp);
                 foreach($contents as $contentFile){
@@ -32,8 +46,8 @@ class TransfertService
             }else{
                 return "Connexion indisponible avec le FTP.";
             }
-        }catch (\Exception $ex){
-            return "Erreur avec le traitement FTP : " . $ex;
+        }catch (Exception $ex){
+            throw new Exception($ex);
         }
 
         return true;

@@ -76,6 +76,9 @@ class HeProduct extends DataEntity
     #[ORM\Column]
     private ?int $numeroChangelog = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $folderChangelog = null;
+
     public function __construct()
     {
         $this->documentations = new ArrayCollection();
@@ -340,6 +343,18 @@ class HeProduct extends DataEntity
     public function setNumeroChangelog(int $numeroChangelog): static
     {
         $this->numeroChangelog = $numeroChangelog;
+
+        return $this;
+    }
+
+    public function getFolderChangelog(): ?string
+    {
+        return $this->folderChangelog;
+    }
+
+    public function setFolderChangelog(?string $folderChangelog): static
+    {
+        $this->folderChangelog = $folderChangelog;
 
         return $this;
     }
