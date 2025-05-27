@@ -100,7 +100,8 @@ class ChangelogController extends AbstractController
      * @throws LoaderError
      */
     #[Route('/generate/file/{id}', name: 'generate_file', options: ['expose' => true], methods: 'POST')]
-    public function generateFile(HeChangelog $obj, ApiResponse $apiResponse, Environment $twig, TransfertService $transfertService): Response
+    public function generateFile(HeChangelog $obj, ApiResponse $apiResponse, Environment $twig,
+                                 TransfertService $transfertService, HeChangelogRepository $repository): Response
     {
         $html = $twig->render('user/generate/changelogs/gerance.html.twig', [
             'elem' => $obj
@@ -118,6 +119,8 @@ class ChangelogController extends AbstractController
             return $apiResponse->apiJsonResponseBadRequest($resultFtp);
         }
 
-        return $apiResponse->apiJsonResponseSuccessful("ok");
+        $repository->save($obj, true);;
+
+        return $apiResponse->apiJsonResponse($obj, HeChangelog::LIST);
     }
 }

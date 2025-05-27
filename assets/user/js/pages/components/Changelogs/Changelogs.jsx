@@ -95,12 +95,13 @@ export class Changelogs extends Component {
 			.then(function (response) {
 				Toastr.toast('info', "Fichier généré.");
 				self.generate.current.handleClose();
+				self.handleUpdateList(response.data, "update");
 			})
 			.catch(function (error) {
 				Formulaire.displayErrors(self, error);
 			})
 			.then(function () {
-				modalGenerate(self, elem);
+				modalGenerate(self, element);
 			})
 		;
 	}
