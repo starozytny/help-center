@@ -10,6 +10,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: HeChangelogRepository::class)]
 class HeChangelog
 {
+    const FOLDER = "images/editor/changelogs";
+
     const LIST = ['changelog_list'];
     const FORM = ['changelog_form'];
     const SETTINGS = ['changelog_settings'];

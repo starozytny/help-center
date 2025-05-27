@@ -11,4 +11,5 @@ enum ImageType: int
     const Documentation = 4;
     const Product = 5;
     const Question = 6;
+    const HeChangelog = 7;
 }
