@@ -132,17 +132,17 @@ class Form extends Component {
                     </div>
                     <div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
 						<div>
-							<TinyMCE type={7} identifiant='contentCreated' valeur={contentCreated.value}{...params1}>
+							<TinyMCE type={99} identifiant='contentCreated' valeur={contentCreated.value} {...params1}>
 								Ajouts
 							</TinyMCE>
 						</div>
 						<div>
-							<TinyMCE type={7} identifiant='contentUpdated' valeur={contentUpdated.value}{...params1}>
+							<TinyMCE type={99} identifiant='contentUpdated' valeur={contentUpdated.value} {...params1}>
 								Modifications
 							</TinyMCE>
 						</div>
 						<div>
-							<TinyMCE type={7} identifiant='contentFix' valeur={contentFix.value}{...params1}>
+							<TinyMCE type={99} identifiant='contentFix' valeur={contentFix.value} {...params1}>
 								Correctifs
 							</TinyMCE>
 						</div>
