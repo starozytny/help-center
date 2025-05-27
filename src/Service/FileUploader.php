@@ -8,6 +8,7 @@ use App\Entity\Enum\Image\ImageType;
 use App\Entity\Main\Agenda\AgEvent;
 use App\Entity\Main\Changelog;
 
+use App\Entity\Main\Help\HeChangelog;
 use App\Entity\Main\Help\HeDocumentation;
 use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
@@ -116,6 +117,7 @@ class FileUploader
                 ImageType::Documentation => HeDocumentation::FOLDER,
                 ImageType::Product => HeProduct::FOLDER,
                 ImageType::Question => HeQuestion::FOLDER,
+                ImageType::HeChangelog => HeChangelog::FOLDER,
             };
 
             $fileName = $this->replaceFile($file, $folder);
