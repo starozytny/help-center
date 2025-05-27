@@ -75,7 +75,7 @@ class HeProduct extends DataEntity
 
     #[ORM\Column]
     #[Groups(['changelog_settings'])]
-    private ?int $numeroChangelog = null;
+    private ?int $numeroChangelog = 0;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['changelog_settings'])]
