@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import axios from "axios";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
+import moment from "moment";
+import "moment/locale/fr";
+
 import Formulaire from "@commonFunctions/formulaire";
 import Validateur from "@commonFunctions/validateur";
 
@@ -27,7 +30,7 @@ export function ChangelogFormulaire ({ context, element, productSlug }) {
 
         numVersion={element ? Formulaire.setValue(element.numVersion) : ""}
         name={element ? Formulaire.setValue(element.name) : ""}
-        dateAt={element ? Formulaire.setValueDate(element.dateAt) : new Date()}
+        dateAt={element ? Formulaire.setValueDate(element.dateAt) : moment().format("YYYY-MM-DD")}
 		contentCreated={element ? Formulaire.setValue(element.contentCreated) : ""}
 		contentUpdated={element ? Formulaire.setValue(element.contentUpdated) : ""}
 		contentFix={element ? Formulaire.setValue(element.contentFix) : ""}
