@@ -139,7 +139,11 @@ export class Changelogs extends Component {
 					{createPortal(
 						<Modal ref={this.generate} identifiant="generate" maxWidth={414}
 							   title={element ? `${element.filename ? "Regénération" : `Génération du fichier de ${element.numero} - ${element.name}`}` : ""}
-							   content={<div>Êtes-vous sûr de vouloir {element && element.filename ? "regénérer" : "générer"} le fichier de : {element ? element.name : ""} ?</div>}
+							   content={<div>
+								   Êtes-vous sûr de vouloir {element && element.filename ? "regénérer" : "générer"} le fichier de : {element ? element.name : ""} ?
+								   <br/><br/>
+								   Attention, le fichier <i>HTML</i> présent sur le FTP sera déplacé dans le dossier <i>OLD</i> et ce fichier prendra sa place.
+								</div>}
 							   footer={null} />,
 						document.body
 					)}
