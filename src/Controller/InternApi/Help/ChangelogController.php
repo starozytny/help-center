@@ -110,7 +110,7 @@ class ChangelogController extends AbstractController
             'elem' => $obj
         ]);
 
-        $filename = $obj->getFilename() ?: $obj->getNumero() . "_NV_" .$obj->getCreatedAt()->getTimestamp(). '.html';
+        $filename = $obj->getFilename() ?: $obj->getNumero() . "_NV_" .$obj->getCreatedAt()->format('Ymd'). '.html';
         $path = $this->getParameter('private_directory') . '/export/generated/' . $filename;
 
         $obj->setFilename($filename);

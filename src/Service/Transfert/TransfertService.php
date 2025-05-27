@@ -15,7 +15,16 @@ class TransfertService
                 ftp_login($ftp, $this->ftpUsername, $this->ftpPassword);
                 ftp_pasv($ftp, true);
 
-                if (!ftp_put($ftp, $filename, $localFile, FTP_BINARY)) {
+                $directoryFtp = "./gerance/INSTALL/NEW";
+
+                $contents = ftp_nlist($ftp, $directoryFtp);
+                foreach($contents as $contentFile){
+                    if(str_contains($contentFile, '.html')){
+                        ftp_rename($ftp, $contentFile, dirname($contentFile) . "/OLD/" . basename($contentFile));
+                    }
+                }
+
+                if (!ftp_put($ftp, $directoryFtp . "/" . $filename, $localFile, FTP_BINARY)) {
                     return "Dépôt non autorisé par le FTP.";
                 }
 
@@ -24,7 +33,7 @@ class TransfertService
                 return "Connexion indisponible avec le FTP.";
             }
         }catch (\Exception $ex){
-            return "Identification erronée avec le FTP.";
+            return "Erreur avec le traitement FTP : " . $ex;
         }
 
         return true;

@@ -27,7 +27,7 @@ export function ChangelogFormulaire ({ context, element, productSlug }) {
 
         numVersion={element ? Formulaire.setValue(element.numVersion) : ""}
         name={element ? Formulaire.setValue(element.name) : ""}
-        dateAt={element ? Formulaire.setValueDate(element.dateAt) : ""}
+        dateAt={element ? Formulaire.setValueDate(element.dateAt) : new Date()}
 		contentCreated={element ? Formulaire.setValue(element.contentCreated) : ""}
 		contentUpdated={element ? Formulaire.setValue(element.contentUpdated) : ""}
 		contentFix={element ? Formulaire.setValue(element.contentFix) : ""}
