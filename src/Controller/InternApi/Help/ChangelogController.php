@@ -28,9 +28,9 @@ use Twig\Error\SyntaxError;
 class ChangelogController extends AbstractController
 {
     #[Route('/list', name: 'list', options: ['expose' => true], methods: 'GET')]
-    public function list(HeChangelogRepository $repository, ApiResponse $apiResponse): Response
+    public function list(Request $request, HeChangelogRepository $repository, ApiResponse $apiResponse): Response
     {
-        return $apiResponse->apiJsonResponse($repository->findAll(), HeChangelog::LIST);
+        return $apiResponse->apiJsonResponse($repository->findBy(['product' => $request->query->get('productId')]), HeChangelog::LIST);
     }
 
     public function submitForm($type, HeChangelogRepository $repository, HeChangelog $obj, Request $request,
