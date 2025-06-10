@@ -7,6 +7,7 @@ import Sanitaze from "@commonFunctions/sanitaze";
 import { setHighlightClass, useHighlight } from "@commonHooks/item";
 
 import { Button, ButtonIcon, ButtonIconA } from "@tailwindComponents/Elements/Button";
+import { Badge } from "@tailwindComponents/Elements/Badge";
 
 const URL_UPDATE_PAGE = "user_help_changelogs_update";
 const URL_PREVIEW_FILE = "user_help_changelogs_preview_html";
@@ -23,12 +24,19 @@ export function ChangelogsItem ({ elem, highlight, onModal, productSlug }) {
 			<div className="item-infos">
 				<div className="col-1">
 					<div>
-						<div className="font-bold">{elem.numero} - {elem.numVersion}</div>
+						<div className="font-bold">{elem.numero}</div>
 						<div className="text-gray-600 text-sm">{Sanitaze.toDateFormat(elem.dateAt, 'LL')}</div>
 					</div>
 				</div>
 				<div className="col-2">
-					<span className="font-medium">{elem.name}</span>
+					<div className="flex gap-2">
+						<Badge type="blue">{elem.numVersion}</Badge>
+						{elem.isPatch
+							? <Badge type="gray">P.{elem.numPatch}</Badge>
+							: null
+						}
+						<div className="font-medium">{elem.name}</div>
+					</div>
 				</div>
 				<div className="col-3">
 					<div className="flex gap-1">
