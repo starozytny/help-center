@@ -68,7 +68,7 @@ class ChangelogController extends AbstractController
             [$filename, $pathFile] = $changelogsService->createFile($obj);
         }
 
-        $file = $this->getParameter('private_directory') . HeChangelog::FOLDER_GENERATED . "/" . $filename;
+        $file = $this->getParameter('private_directory') . HeChangelog::FOLDER_GENERATED . "/" . $obj->getId() . "/" . $filename;
 
         if(!file_exists($file)){
             throw $this->createNotFoundException("Fichier HTML introuvable.");

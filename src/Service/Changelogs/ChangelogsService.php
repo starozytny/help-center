@@ -44,7 +44,14 @@ class ChangelogsService
         ]);
 
         $filename = $obj->getFilename() ?: $obj->getNumero() . "_" . ($obj->isPatch() ? "PATCH_" . $obj->getNumPatch() : "VERSION_" . $obj->getNumVersion()) . '.html';
-        $pathFile = $this->privateDirectory . HeChangelog::FOLDER_GENERATED . "/" . $filename;
+
+        $folder = $this->privateDirectory . HeChangelog::FOLDER_GENERATED . "/" . $obj->getId() . "/";
+
+        if(!is_dir($folder)){
+            mkdir($folder, 0777, true);
+        }
+
+        $pathFile = $folder . $filename;
 
         file_put_contents($pathFile, $html);
 
