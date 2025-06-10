@@ -66,6 +66,14 @@ class HeChangelog
     #[Groups(['changelog_list', 'changelog_form'])]
     private ?\DateTime $dateAt = null;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    #[Groups(['changelog_list', 'changelog_form'])]
+    private ?string $numPatch = null;
+
+    #[ORM\Column]
+    #[Groups(['changelog_list', 'changelog_form'])]
+    private ?bool $isPatch = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -204,6 +212,30 @@ class HeChangelog
     public function setDateAt(\DateTime $dateAt): static
     {
         $this->dateAt = $dateAt;
+
+        return $this;
+    }
+
+    public function getNumPatch(): ?string
+    {
+        return $this->numPatch;
+    }
+
+    public function setNumPatch(?string $numPatch): static
+    {
+        $this->numPatch = $numPatch;
+
+        return $this;
+    }
+
+    public function isPatch(): ?bool
+    {
+        return $this->isPatch;
+    }
+
+    public function setIsPatch(bool $isPatch): static
+    {
+        $this->isPatch = $isPatch;
 
         return $this;
     }

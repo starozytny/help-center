@@ -89,6 +89,8 @@ class DataHelp
         return ($obj)
             ->setName($this->sanitizeData->trimData($data->name))
             ->setNumVersion($this->sanitizeData->trimData($data->numVersion))
+            ->setNumPatch($this->sanitizeData->trimData($data->numPatch))
+            ->setIsPatch((int) $data->isPatch[0])
             ->setDateAt($this->sanitizeData->createDate($data->dateAt))
             ->setContentCreated($this->sanitizeData->trimData($data->contentCreated->html))
             ->setContentUpdated($this->sanitizeData->trimData($data->contentUpdated->html))
