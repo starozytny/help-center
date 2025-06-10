@@ -46,8 +46,9 @@ export class Changelogs extends Component {
 	}
 
 	handleGetData = () => {
+		const { productId, highlight } = this.props;
 		const { perPage, sorter } = this.state;
-		List.getData(this, Routing.generate(URL_GET_DATA), perPage, sorter, this.props.highlight);
+		List.getData(this, Routing.generate(URL_GET_DATA, { productId: productId }), perPage, sorter, highlight);
 	}
 
 	handleUpdateData = (currentData) => {

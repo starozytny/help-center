@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class HeChangelog
 {
     const FOLDER = "images/editor/changelogs";
+    const FOLDER_GENERATED = "export/generated";
 
     const LIST = ['changelog_list'];
     const FORM = ['changelog_form'];
@@ -65,6 +66,14 @@ class HeChangelog
     #[ORM\Column]
     #[Groups(['changelog_list', 'changelog_form'])]
     private ?\DateTime $dateAt = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    #[Groups(['changelog_list', 'changelog_form'])]
+    private ?string $numPatch = null;
+
+    #[ORM\Column]
+    #[Groups(['changelog_list', 'changelog_form'])]
+    private ?bool $isPatch = null;
 
     public function __construct()
     {
@@ -204,6 +213,30 @@ class HeChangelog
     public function setDateAt(\DateTime $dateAt): static
     {
         $this->dateAt = $dateAt;
+
+        return $this;
+    }
+
+    public function getNumPatch(): ?string
+    {
+        return $this->numPatch;
+    }
+
+    public function setNumPatch(?string $numPatch): static
+    {
+        $this->numPatch = $numPatch;
+
+        return $this;
+    }
+
+    public function isPatch(): ?bool
+    {
+        return $this->isPatch;
+    }
+
+    public function setIsPatch(bool $isPatch): static
+    {
+        $this->isPatch = $isPatch;
 
         return $this;
     }

@@ -13,7 +13,7 @@ export function ChangelogsList ({ data, highlight, onModal, productSlug }) {
                     <div className="item-content">
                         <div className="item-infos">
                             <div className="col-1">Numéros</div>
-                            <div className="col-2">Intitulé</div>
+                            <div className="col-2">Version/Titre</div>
                             <div className="col-3">Publication</div>
                             <div className="col-4 actions" />
                         </div>
