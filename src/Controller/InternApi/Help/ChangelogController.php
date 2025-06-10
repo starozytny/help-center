@@ -108,9 +108,9 @@ class ChangelogController extends AbstractController
     public function generateFile(HeChangelog $obj, ApiResponse $apiResponse, TransfertService $transfertService,
                                  HeChangelogRepository $repository, ChangelogsService $changelogsService): Response
     {
-        [$filename, $path] = $changelogsService->createFile($obj);
+        [$filename, $pathFile] = $changelogsService->createFile($obj);
 
-        $resultFtp = $transfertService->sendToFTP($obj->getProduct(), $filename, $path);
+        $resultFtp = $transfertService->sendToFTP($obj->getProduct(), $filename, $pathFile);
         if($resultFtp !== true){
             return $apiResponse->apiJsonResponseBadRequest($resultFtp);
         }

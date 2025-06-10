@@ -28,12 +28,12 @@ class ChangelogsService
         ]);
 
         $filename = $obj->getFilename() ?: $obj->getNumero() . "_NV_" .$obj->getCreatedAt()->format('Ymd'). '.html';
-        $path = $this->privateDirectory . HeChangelog::FOLDER_GENERATED . "/" . $filename;
+        $pathFile = $this->privateDirectory . HeChangelog::FOLDER_GENERATED . "/" . $filename;
 
-        file_put_contents($path, $html);
+        file_put_contents($pathFile, $html);
 
         $obj->setFilename($filename);
 
-        return [$filename, $path];
+        return [$filename, $pathFile];
     }
 }

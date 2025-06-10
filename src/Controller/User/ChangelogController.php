@@ -65,7 +65,7 @@ class ChangelogController extends AbstractController
     {
         $filename = $obj->getFilename();
         if(!$filename){
-            [$filename, $path] = $changelogsService->createFile($obj);
+            [$filename, $pathFile] = $changelogsService->createFile($obj);
         }
 
         $file = $this->getParameter('private_directory') . HeChangelog::FOLDER_GENERATED . "/" . $filename;
