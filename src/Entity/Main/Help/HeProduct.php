@@ -77,10 +77,6 @@ class HeProduct extends DataEntity
     #[Groups(['changelog_settings'])]
     private ?int $numeroChangelogVersion = 0;
 
-    #[ORM\Column]
-    #[Groups(['changelog_settings'])]
-    private ?int $numeroChangelogPatch = 0;
-
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['changelog_settings'])]
     private ?string $folderChangelog = null;
@@ -349,18 +345,6 @@ class HeProduct extends DataEntity
     public function setNumeroChangelogVersion(int $numeroChangelogVersion): static
     {
         $this->numeroChangelogVersion = $numeroChangelogVersion;
-
-        return $this;
-    }
-
-    public function getNumeroChangelogPatch(): ?int
-    {
-        return $this->numeroChangelogPatch;
-    }
-
-    public function setNumeroChangelogPatch(int $numeroChangelogPatch): static
-    {
-        $this->numeroChangelogPatch = $numeroChangelogPatch;
 
         return $this;
     }

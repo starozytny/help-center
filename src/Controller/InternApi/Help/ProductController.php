@@ -125,7 +125,6 @@ class ProductController extends AbstractController
         }
 
         $obj->setNumeroChangelogVersion((int) $data->numeroChangelogVersion);
-        $obj->setNumeroChangelogPatch((int) $data->numeroChangelogPatch);
         $obj->setFolderChangelog($sanitizeData->trimData($data->folderChangelog));
 
         $repository->save($obj, true);

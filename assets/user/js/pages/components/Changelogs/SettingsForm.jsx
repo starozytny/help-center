@@ -19,7 +19,6 @@ export function SettingsFormulaire ({ element }) {
         url={url}
 
 		numeroChangelogVersion={Formulaire.setValue(element.numeroChangelogVersion)}
-		numeroChangelogPatch={Formulaire.setValue(element.numeroChangelogPatch)}
         folderChangelog={Formulaire.setValue(element.folderChangelog)}
     />;
 }
@@ -30,7 +29,6 @@ class Form extends Component {
 
 		this.state = {
 			numeroChangelogVersion: props.numeroChangelogVersion,
-			numeroChangelogPatch: props.numeroChangelogPatch,
 			folderChangelog: props.folderChangelog,
 			errors: []
 		}
@@ -44,13 +42,12 @@ class Form extends Component {
 		e.preventDefault();
 
 		const { url } = this.props;
-		const { numeroChangelogVersion, numeroChangelogPatch } = this.state;
+		const { numeroChangelogVersion } = this.state;
 
 		this.setState({ errors: [] });
 
 		let paramsToValidate = [
-			{ type: "text", id: 'numeroChangelogVersion', value: numeroChangelogVersion },
-			// { type: "text", id: 'numeroChangelogPatch', value: numeroChangelogPatch },
+			{ type: "text", id: 'numeroChangelogVersion', value: numeroChangelogVersion }
 		];
 
 		let validate = Validateur.validateur(paramsToValidate)
@@ -74,7 +71,7 @@ class Form extends Component {
 	}
 
 	render () {
-		const { errors, numeroChangelogVersion, numeroChangelogPatch, folderChangelog } = this.state;
+		const { errors, numeroChangelogVersion, folderChangelog } = this.state;
 
         let params0 = { errors: errors, onChange: this.handleChange };
 
@@ -99,9 +96,6 @@ class Form extends Component {
 							<div className="w-full">
 								<Input identifiant="numeroChangelogVersion" valeur={numeroChangelogVersion} {...params0}>Compteur des versions</Input>
 							</div>
-							{/*<div className="w-full">*/}
-							{/*	<Input identifiant="numeroChangelogPatch" valeur={numeroChangelogPatch} {...params0}>Compteur des patchs</Input>*/}
-							{/*</div>*/}
 							<div className="w-full">
 								<Input identifiant="folderChangelog" valeur={folderChangelog} {...params0}>Dossier FTP</Input>
 							</div>
