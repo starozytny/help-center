@@ -108,11 +108,11 @@ class ChangelogController extends AbstractController
     public function generateFile(HeChangelog $obj, ApiResponse $apiResponse, Environment $twig,
                                  TransfertService $transfertService, HeChangelogRepository $repository): Response
     {
-        $lastData = $repository->findLastTenBeforeNumero($obj->getNumero());
+//        $lastData = $repository->findLastTenBeforeNumero($obj->getNumero());
 
         $html = $twig->render('user/generate/changelogs/gerance.html.twig', [
             'obj' => $obj,
-            'lastData' => $lastData
+            'lastData' => [$obj]
         ]);
 
         $filename = $obj->getFilename() ?: $obj->getNumero() . "_NV_" .$obj->getCreatedAt()->format('Ymd'). '.html';
