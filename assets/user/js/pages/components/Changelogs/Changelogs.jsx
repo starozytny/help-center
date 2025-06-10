@@ -31,7 +31,7 @@ export class Changelogs extends Component {
 		this.state = {
 			perPage: List.getSessionPerpage(SESSION_PERPAGE, 20),
 			currentPage: 0,
-			sorter: Sort.compareNumeroInverseThenDateAtInverse,
+			sorter: Sort.compareDateAtInverse,
 			loadingData: true,
 			element: null,
 		}
