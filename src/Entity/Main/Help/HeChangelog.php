@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class HeChangelog
 {
     const FOLDER = "images/editor/changelogs";
+    const FOLDER_GENERATED = "export/generated";
 
     const LIST = ['changelog_list'];
     const FORM = ['changelog_form'];

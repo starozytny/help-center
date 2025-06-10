@@ -43,15 +43,12 @@ export function ChangelogsItem ({ elem, highlight, onModal, productSlug }) {
 						<div>
 							<Button type="default" onClick={() => onModal('generate', elem)}>{elem.filename ? "Regénérer" : "Générer"} le fichier</Button>
 						</div>
-						{elem.filename
-							? <div>
-								<ButtonIconA type="default" icon="vision" target="_blank"
-											 onClick={Routing.generate(URL_PREVIEW_FILE, {p_slug: productSlug, id: elem.id})}>
-									Aperçu
-								</ButtonIconA>
-							</div>
-							: null
-						}
+						<div>
+							<ButtonIconA type="default" icon="vision" target="_blank"
+										 onClick={Routing.generate(URL_PREVIEW_FILE, {p_slug: productSlug, id: elem.id})}>
+								Aperçu
+							</ButtonIconA>
+						</div>
 					</div>
 				</div>
 				<div className="col-4 actions">

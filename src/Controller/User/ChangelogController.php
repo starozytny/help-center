@@ -5,11 +5,15 @@ namespace App\Controller\User;
 use App\Entity\Main\Help\HeChangelog;
 use App\Repository\Main\Help\HeChangelogRepository;
 use App\Repository\Main\Help\HeProductRepository;
+use App\Service\Changelogs\ChangelogsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 #[Route('/espace-membre/produits/produit/{p_slug}/changelogs', name: 'user_help_changelogs_')]
 #[IsGranted('ROLE_ADMIN')]
@@ -51,15 +55,20 @@ class ChangelogController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     #[Route('/apercu/html/{id}', name: 'preview_html', options: ['expose' => true], methods: 'GET')]
-    public function previewHtml($p_slug, HeChangelog $obj): Response
+    public function previewHtml($p_slug, HeChangelog $obj, ChangelogsService $changelogsService): Response
     {
-        if(!$obj->getFilename()){
-            $this->addFlash('error', 'Veuillez générer le fichier pour voir l\'aperçu.');
-            return $this->redirectToRoute('user_help_changelogs_index', ['p_slug' => $p_slug]);
+        $filename = $obj->getFilename();
+        if(!$filename){
+            [$filename, $path] = $changelogsService->createFile($obj);
         }
 
-        $file = $this->getParameter('private_directory') . '/export/generated/' . $obj->getFilename();
+        $file = $this->getParameter('private_directory') . HeChangelog::FOLDER_GENERATED . "/" . $filename;
 
         if(!file_exists($file)){
             throw $this->createNotFoundException("Fichier HTML introuvable.");

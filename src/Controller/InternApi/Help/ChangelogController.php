@@ -7,6 +7,7 @@ use App\Entity\Main\Help\HeChangelog;
 use App\Repository\Main\Help\HeChangelogRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Service\ApiResponse;
+use App\Service\Changelogs\ChangelogsService;
 use App\Service\Data\DataHelp;
 use App\Service\Transfert\TransfertService;
 use App\Service\ValidatorService;
@@ -18,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -105,29 +105,17 @@ class ChangelogController extends AbstractController
      * @throws Exception
      */
     #[Route('/generate/file/{id}', name: 'generate_file', options: ['expose' => true], methods: 'POST')]
-    public function generateFile(HeChangelog $obj, ApiResponse $apiResponse, Environment $twig,
-                                 TransfertService $transfertService, HeChangelogRepository $repository): Response
+    public function generateFile(HeChangelog $obj, ApiResponse $apiResponse, TransfertService $transfertService,
+                                 HeChangelogRepository $repository, ChangelogsService $changelogsService): Response
     {
-//        $lastData = $repository->findLastTenBeforeNumero($obj->getNumero());
-
-        $html = $twig->render('user/generate/changelogs/gerance.html.twig', [
-            'obj' => $obj,
-            'lastData' => [$obj]
-        ]);
-
-        $filename = $obj->getFilename() ?: $obj->getNumero() . "_NV_" .$obj->getCreatedAt()->format('Ymd'). '.html';
-        $path = $this->getParameter('private_directory') . '/export/generated/' . $filename;
-
-        $obj->setFilename($filename);
-
-        file_put_contents($path, $html);
+        [$filename, $path] = $changelogsService->createFile($obj);
 
         $resultFtp = $transfertService->sendToFTP($obj->getProduct(), $filename, $path);
         if($resultFtp !== true){
             return $apiResponse->apiJsonResponseBadRequest($resultFtp);
         }
 
-        $repository->save($obj, true);;
+        $repository->save($obj, true);
 
         return $apiResponse->apiJsonResponse($obj, HeChangelog::LIST);
     }
