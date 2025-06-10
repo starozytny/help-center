@@ -55,8 +55,8 @@ class ChangelogController extends AbstractController
         if($type === "update"){
             $obj->setUpdatedAt(new DateTime());
         }else{
-            $obj->setNumero($product->getNumeroChangelog() + 1);
-            $product->setNumeroChangelog($product->getNumeroChangelog() + 1);
+            $obj->setNumero($product->getNumeroChangelogVersion() + 1);
+            $product->setNumeroChangelogVersion($product->getNumeroChangelogVersion() + 1);
         }
 
         $noErrors = $validator->validate($obj);

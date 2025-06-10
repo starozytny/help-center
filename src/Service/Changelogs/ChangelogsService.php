@@ -10,7 +10,7 @@ use Twig\Error\SyntaxError;
 
 class ChangelogsService
 {
-    public function __construct(private readonly string $privateDirectory, private readonly Environment $twig)
+    public function __construct(private readonly string $publicDirectory, private readonly string $privateDirectory, private readonly Environment $twig)
     {}
 
     /**
@@ -22,13 +22,36 @@ class ChangelogsService
     {
 //        $lastData = $repository->findLastTenBeforeNumero($obj->getNumero());
 
-        $html = $this->twig->render('user/generate/changelogs/gerance.html.twig', [
+        $logoPath = $obj->getProduct()->getLogoFile();
+
+        $logoUrl = null;
+        $logoFilePath = $this->publicDirectory . $logoPath;
+        if(file_exists($this->publicDirectory . $logoPath)){
+            $logoBase64 = base64_encode(file_get_contents($this->publicDirectory . $logoPath));
+
+            // Obtenir le type MIME du fichier
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_file($finfo, $logoFilePath);
+            finfo_close($finfo);
+
+            $logoUrl = 'data:' . $mimeType . ';base64,' . $logoBase64;
+        }
+
+        $html = $this->twig->render('user/generate/changelogs/changelog.html.twig', [
+            'logoUrl' => $logoUrl,
             'obj' => $obj,
             'lastData' => [$obj]
         ]);
 
         $filename = $obj->getFilename() ?: $obj->getNumero() . "_" . ($obj->isPatch() ? "PATCH_" . $obj->getNumPatch() : "VERSION_" . $obj->getNumVersion()) . '.html';
-        $pathFile = $this->privateDirectory . HeChangelog::FOLDER_GENERATED . "/" . $filename;
+
+        $folder = $this->privateDirectory . HeChangelog::FOLDER_GENERATED . "/" . $obj->getId() . "/";
+
+        if(!is_dir($folder)){
+            mkdir($folder, 0777, true);
+        }
+
+        $pathFile = $folder . $filename;
 
         file_put_contents($pathFile, $html);
 

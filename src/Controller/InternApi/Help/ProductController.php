@@ -116,15 +116,15 @@ class ProductController extends AbstractController
     }
 
     #[Route('/changelogs/settings/{id}', name: 'changelogs_settings', options: ['expose' => true], methods: 'PUT')]
-    public function changelogsSetting(Request $request, HeProduct $obj, HeProductRepository $repository, SanitizeData $sanitizeData,
-                                      ApiResponse $apiResponse, SerializerInterface $serializer): Response
+    public function changelogsSetting(Request $request, HeProduct $obj, HeProductRepository $repository,
+                                      SanitizeData $sanitizeData, ApiResponse $apiResponse): Response
     {
         $data = json_decode($request->getContent());
         if ($data === null) {
             return $apiResponse->apiJsonResponseBadRequest('Les données sont vides.');
         }
 
-        $obj->setNumeroChangelog((int) $data->numeroChangelog);
+        $obj->setNumeroChangelogVersion((int) $data->numeroChangelogVersion);
         $obj->setFolderChangelog($sanitizeData->trimData($data->folderChangelog));
 
         $repository->save($obj, true);
