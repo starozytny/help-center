@@ -18,11 +18,16 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use OpenApi\Attributes as OA;
 
 #[Route('/api/users', name: 'api_users_')]
 #[IsGranted('ROLE_ADMIN')]
+#[OA\Tag(name: 'Utilisateurs')]
 class UserController extends AbstractController
 {
+    /**
+     * Récupère la liste des utilisateurs qui ne sont pas bloquée.
+     */
     #[Route('/list', name: 'list', methods: 'GET')]
     public function list(UserRepository $repository, ApiResponse $apiResponse): Response
     {
@@ -31,6 +36,10 @@ class UserController extends AbstractController
             User::EXTERNAL_SELECT
         );
     }
+
+    /**
+     * Récupère les informations de l'utilisateur actuel
+     */
     #[Route('/me', name: 'me', methods: 'GET')]
     public function me(ApiResponse $apiResponse): Response
     {
@@ -40,6 +49,9 @@ class UserController extends AbstractController
         );
     }
 
+    /**
+     * Créer un utilisateur selon la société
+     */
     #[Route('/create/user/by/society', name: 'create_by_society', methods: 'POST')]
     public function createBySociety(Request $request, ManagerRegistry $doctrine,
                                     UserRepository $repository, ApiResponse $apiResponse,
@@ -79,6 +91,10 @@ class UserController extends AbstractController
         return $apiResponse->apiJsonResponseCustom(['token' => $obj->getToken()]);
     }
 
+
+    /**
+     * Accorde l'accès à un utilisateur à un produit
+     */
     #[Route('/access/add/{token}', name: 'access_add', methods: 'PUT')]
     public function addAccess(Request $request, User $obj, ManagerRegistry $doctrine,
                               UserRepository $repository, ApiResponse $apiResponse,

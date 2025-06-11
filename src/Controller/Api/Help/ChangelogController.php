@@ -5,6 +5,7 @@ namespace App\Controller\Api\Help;
 use App\Repository\Main\Help\HeChangelogRepository;
 use App\Service\ApiResponse;
 use App\Service\Changelogs\ChangelogsService;
+use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,13 +16,47 @@ use Twig\Error\SyntaxError;
 
 #[Route('/api/help/changelogs', name: 'api_help_changelogs_')]
 #[IsGranted('ROLE_ADMIN')]
+#[OA\Tag(name: 'Changelog')]
 class ChangelogController extends AbstractController
 {
     /**
+     * Génère un changelog HTML entre deux versions.
+     *
+     * Cette route permet de générer un changelog HTML entre deux numéros de version donnés.
+
      * @throws SyntaxError
      * @throws RuntimeError
      * @throws LoaderError
      */
+    #[OA\Parameter(
+        name: 'fromNumVersion',
+        description: "Version de départ (ex: 1.0.0)",
+        in: 'path',
+        required: true,
+        schema: new OA\Schema(type: 'string')
+    )]
+    #[OA\Parameter(
+        name: 'toNumVersion',
+        description: "Version d'arrivée (ex: 2.0.0)",
+        in: 'path',
+        required: true,
+        schema: new OA\Schema(type: 'string')
+    )]
+    #[OA\Response(
+        response: 200,
+        description: 'Changelog généré au format HTML',
+        content: new OA\MediaType(
+            mediaType: 'text/html',
+            schema: new OA\Schema(
+                type: 'string',
+                example: '<html><body><h1>Changelog..</h1></body></html>'
+            )
+        )
+    )]
+    #[OA\Response(
+        response: 400,
+        description: 'Vérifiez l\'existence des numéros de version renseignés. <br/> ou <br/> La version fromNumVersion est supérieur à la version toNumVersion.',
+    )]
     #[Route('/generate/range/{fromNumVersion}/{toNumVersion}', name: 'generate_by_range', methods: 'POST')]
     public function generateByRange($fromNumVersion, $toNumVersion, ApiResponse $apiResponse,
                                     HeChangelogRepository $repository, ChangelogsService $changelogsService): Response
@@ -30,7 +65,7 @@ class ChangelogController extends AbstractController
         $toObj = $repository->findOneBy(['numVersion' => $toNumVersion], ['numero' => 'DESC']);
 
         if(!$fromObj || !$toObj){
-            return $apiResponse->apiJsonResponseBadRequest('Vérifiez les numéros de version renseignés.');
+            return $apiResponse->apiJsonResponseBadRequest('Vérifiez l\'existence des numéros de version renseignés.');
         }
 
         if($fromObj->getNumero() > $toObj->getNumero()){
