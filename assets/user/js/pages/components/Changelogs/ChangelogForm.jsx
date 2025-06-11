@@ -80,7 +80,7 @@ class Form extends Component {
 	componentDidMount () {
 		setTimeout(() => {
 			this.handleSave()
-			this.intervalId = setInterval(this.handleSave, 5 * 60 * 1000); // toutes les 5 minutes
+			this.intervalId = setInterval(this.handleSave, 2 * 60 * 1000); // toutes les 5 minutes
 		}, 30000);
 	}
 
@@ -178,6 +178,15 @@ class Form extends Component {
                 <div className="grid gap-2 xl:grid-cols-3 xl:gap-6">
                     <div>
                         <div className="font-medium text-lg">Identification</div>
+						<div className="text-gray-600 text-sm">
+							{context === "create"
+								? <p class="font-semibold">Le numéro est attribué automatiquement à la création. <br/></p>
+								: null
+							}
+							<p>
+								La date n'apparait pas dans le HTML.
+							</p>
+						</div>
                     </div>
                     <div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
 						{context === "update"
@@ -185,7 +194,7 @@ class Form extends Component {
 								<Input identifiant="numero" valeur={numero} {...params0}>
 									Numéro
 									<br/>
-									<span class="text-red-500">En cas de changement, le compteur automatique ne sera pas affecté.</span>
+									<span class="text-yellow-600">En cas de changement, le compteur automatique ne sera pas affecté.</span>
 								</Input>
 							</div>
 							: null

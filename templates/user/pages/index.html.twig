@@ -24,6 +24,9 @@
                                 <img src="{{ asset(elem.logoFile) }}" alt="Logo {{ elem.name }}">
                             </a>
                             <div>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <div class="text-xs text-gray-600">UID: {{ elem.uid }}</div>
+                                {% endif %}
                                 <a class="font-semibold text-lg" href="{{ path('user_help_product_read', {slug: elem.slug}) }}">
                                     {{ elem.name }}
                                 </a>
