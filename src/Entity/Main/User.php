@@ -25,6 +25,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     const EXTERNAL_SELECT = ['user_ext_select'];
     const LOGS = ['user_log'];
     const SHARE = ['user_share'];
+    const ME = ['user_me'];
 
     const CODE_ROLE_USER = 0;
     const CODE_ROLE_DEVELOPER = 1;
@@ -37,11 +38,11 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['user_list', 'user_form', 'user_ext_select', 'user_log'])]
+    #[Groups(['user_list', 'user_form', 'user_ext_select', 'user_log', 'user_me'])]
     private ?string $username = null;
 
     #[ORM\Column]
-    #[Groups(['user_form'])]
+    #[Groups(['user_form', 'user_me'])]
     private array $roles = [];
 
     #[ORM\Column]
@@ -55,15 +56,15 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user_list', 'user_form'])]
+    #[Groups(['user_list', 'user_form', 'user_me'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user_list', 'user_form', 'user_ext_select'])]
+    #[Groups(['user_list', 'user_form', 'user_ext_select', 'user_me'])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user_list', 'user_form', 'user_ext_select'])]
+    #[Groups(['user_list', 'user_form', 'user_ext_select', 'user_me'])]
     private ?string $firstname = null;
 
     #[ORM\Column]

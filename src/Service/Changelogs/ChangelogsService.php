@@ -13,15 +13,18 @@ class ChangelogsService
     public function __construct(private readonly string $publicDirectory, private readonly string $privateDirectory, private readonly Environment $twig)
     {}
 
+    public function getFolderGenerated(HeChangelog $obj): string
+    {
+        return $this->privateDirectory . HeChangelog::FOLDER_GENERATED . "/" . $obj->getId() . "/";
+    }
+
     /**
      * @throws SyntaxError
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function createFile(HeChangelog $obj): array
+    public function createFile(HeChangelog $obj): string
     {
-//        $lastData = $repository->findLastTenBeforeNumero($obj->getNumero());
-
         $logoPath = $obj->getProduct()->getLogoFile();
 
         $logoUrl = null;
@@ -45,7 +48,7 @@ class ChangelogsService
 
         $filename = $obj->getFilename() ?: $obj->getNumero() . "_" . ($obj->isPatch() ? "PATCH_" . $obj->getNumPatch() : "VERSION_" . $obj->getNumVersion()) . '.html';
 
-        $folder = $this->privateDirectory . HeChangelog::FOLDER_GENERATED . "/" . $obj->getId() . "/";
+        $folder = $this->getFolderGenerated($obj);
 
         if(!is_dir($folder)){
             mkdir($folder, 0777, true);
@@ -57,7 +60,7 @@ class ChangelogsService
 
         $obj->setFilename($filename);
 
-        return [$filename, $pathFile];
+        return $filename;
     }
 }
 

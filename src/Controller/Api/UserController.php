@@ -31,6 +31,14 @@ class UserController extends AbstractController
             User::EXTERNAL_SELECT
         );
     }
+    #[Route('/me', name: 'me', methods: 'GET')]
+    public function me(ApiResponse $apiResponse): Response
+    {
+        return $apiResponse->apiJsonResponse(
+            $this->getUser(),
+            User::ME
+        );
+    }
 
     #[Route('/create/user/by/society', name: 'create_by_society', methods: 'POST')]
     public function createBySociety(Request $request, ManagerRegistry $doctrine,

@@ -7,21 +7,15 @@ use App\Entity\Main\Help\HeChangelog;
 use App\Repository\Main\Help\HeChangelogRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Service\ApiResponse;
-use App\Service\Changelogs\ChangelogsService;
 use App\Service\Data\DataHelp;
-use App\Service\Transfert\TransfertService;
 use App\Service\ValidatorService;
 use DateTime;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 #[Route('/intern/api/help/changelogs', name: 'intern_api_help_changelogs_')]
 #[IsGranted('ROLE_ADMIN')]
@@ -124,27 +118,5 @@ class ChangelogController extends AbstractController
         $repository->remove($obj, true);
 
         return $apiResponse->apiJsonResponseSuccessful("ok");
-    }
-
-    /**
-     * @throws SyntaxError
-     * @throws RuntimeError
-     * @throws LoaderError
-     * @throws Exception
-     */
-    #[Route('/generate/file/{id}', name: 'generate_file', options: ['expose' => true], methods: 'POST')]
-    public function generateFile(HeChangelog $obj, ApiResponse $apiResponse, TransfertService $transfertService,
-                                 HeChangelogRepository $repository, ChangelogsService $changelogsService): Response
-    {
-        [$filename, $pathFile] = $changelogsService->createFile($obj);
-
-        $resultFtp = $transfertService->sendToFTP($obj->getProduct(), $filename, $pathFile);
-        if($resultFtp !== true){
-            return $apiResponse->apiJsonResponseBadRequest($resultFtp);
-        }
-
-        $repository->save($obj, true);
-
-        return $apiResponse->apiJsonResponse($obj, HeChangelog::LIST);
     }
 }
