@@ -64,6 +64,15 @@ class ChangelogController extends AbstractController
     #[OA\Response(
         response: 400,
         description: 'Vérifiez l\'existence des numéros de version renseignés. <br/> ou <br/> La version fromNumVersion est supérieur à la version toNumVersion. <br/> ou <br/> Produit inconnu.',
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(
+                properties: [
+                    new OA\Property(property: 'message', type: 'string', example: 'Message d\'erreur...')
+                ],
+                type: 'object'
+            )
+        )
     )]
     #[Route('/generate/range/{productUid}/{fromNumVersion}/{toNumVersion}', name: 'generate_by_range', methods: 'POST')]
     public function generateByRange($productUid, $fromNumVersion, $toNumVersion, ApiResponse $apiResponse,
