@@ -28,6 +28,9 @@ class HeProduct extends DataEntity
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $uid = null;
+
+    #[ORM\Column(length: 255)]
     #[Groups(['product_access', 'product_form'])]
     private ?string $name = null;
 
@@ -357,6 +360,18 @@ class HeProduct extends DataEntity
     public function setFolderChangelog(?string $folderChangelog): static
     {
         $this->folderChangelog = $folderChangelog;
+
+        return $this;
+    }
+
+    public function getUid(): ?string
+    {
+        return $this->uid;
+    }
+
+    public function setUid(string $uid): static
+    {
+        $this->uid = $uid;
 
         return $this;
     }

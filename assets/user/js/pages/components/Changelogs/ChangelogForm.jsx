@@ -33,6 +33,7 @@ export function ChangelogFormulaire ({ context, element, productSlug }) {
 
         id={element ? Formulaire.setValue(element.id) : null}
         uid={element ? Formulaire.setValue(element.uid) : uid()}
+        numero={element ? Formulaire.setValue(element.numero) : ""}
         numVersion={element ? Formulaire.setValue(element.numVersion) : ""}
         numPatch={element ? Formulaire.setValue(element.numPatch) : ""}
         isPatch={element ? element.isPatch : false}
@@ -58,6 +59,7 @@ class Form extends Component {
 		this.state = {
 			id: props.id,
 			uid: props.uid,
+			numero: props.numero,
 			numVersion: props.numVersion,
 			numPatch: props.numPatch,
 			isPatch: props.isPatch ? [1] : [0],
@@ -164,7 +166,7 @@ class Form extends Component {
 
 	render () {
         const { context } = this.props;
-		const { errors, numVersion, isPatch, numPatch,  name, dateAt, contentCreated, contentUpdated, contentFix } = this.state;
+		const { errors, numero, numVersion, isPatch, numPatch,  name, dateAt, contentCreated, contentUpdated, contentFix } = this.state;
 
         let params0 = { errors: errors, onChange: this.handleChange };
         let params1 = { errors: errors, onUpdateData: this.handleChangeTinyMCE };
@@ -178,6 +180,16 @@ class Form extends Component {
                         <div className="font-medium text-lg">Identification</div>
                     </div>
                     <div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
+						{context === "update"
+							? <div className="w-full">
+								<Input identifiant="numero" valeur={numero} {...params0}>
+									Numéro
+									<br/>
+									<span class="text-red-500">En cas de changement, le compteur automatique ne sera pas affecté.</span>
+								</Input>
+							</div>
+							: null
+						}
 						<div className="flex gap-4">
 							<div className="w-full">
 								<Input type="date" identifiant="dateAt" valeur={dateAt} {...params0}>Date</Input>

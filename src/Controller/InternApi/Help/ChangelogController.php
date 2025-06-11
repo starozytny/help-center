@@ -54,7 +54,7 @@ class ChangelogController extends AbstractController
             }
         }
 
-        $obj = $dataEntity->setDataChangelog($obj, $data);
+        $obj = $dataEntity->setDataChangelog($obj, $data, $type);
         $obj = ($obj)
             ->setProduct($product)
         ;

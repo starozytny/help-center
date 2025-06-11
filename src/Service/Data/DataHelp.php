@@ -84,8 +84,12 @@ class DataHelp
         ;
     }
 
-    public function setDataChangelog(HeChangelog $obj, $data): HeChangelog
+    public function setDataChangelog(HeChangelog $obj, $data, $type): HeChangelog
     {
+        if($type === "update"){
+            $obj->setNumero($this->sanitizeData->trimData($data->numero));
+        }
+
         return ($obj)
             ->setUid($this->sanitizeData->trimData($data->uid))
             ->setName($this->sanitizeData->trimData($data->name))

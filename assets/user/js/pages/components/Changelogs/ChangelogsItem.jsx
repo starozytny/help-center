@@ -46,10 +46,7 @@ export function ChangelogsItem ({ elem, highlight, onModal, productSlug }) {
 				</div>
 				<div className="col-4 actions">
 					<ButtonIconA type="default" icon="pencil" onClick={urlUpdate}>Modifier</ButtonIconA>
-					{elem.isDraft
-						? <ButtonIcon type="default" icon="trash" onClick={() => onModal("delete", elem)}>Supprimer</ButtonIcon>
-						: null
-					}
+					<ButtonIcon type="default" icon="trash" onClick={() => onModal("delete", elem)}>Supprimer</ButtonIcon>
 				</div>
 			</div>
 		</div>
