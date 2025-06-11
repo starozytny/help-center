@@ -3,6 +3,7 @@
 namespace App\Controller\Api\Help;
 
 use App\Repository\Main\Help\HeChangelogRepository;
+use App\Repository\Main\Help\HeProductRepository;
 use App\Service\ApiResponse;
 use App\Service\Changelogs\ChangelogsService;
 use OpenApi\Attributes as OA;
@@ -28,6 +29,13 @@ class ChangelogController extends AbstractController
      * @throws RuntimeError
      * @throws LoaderError
      */
+    #[OA\Parameter(
+        name: 'productUid',
+        description: "Uid du produit",
+        in: 'path',
+        required: true,
+        schema: new OA\Schema(type: 'string')
+    )]
     #[OA\Parameter(
         name: 'fromNumVersion',
         description: "Version de départ (ex: 1.0.0)",
@@ -55,14 +63,21 @@ class ChangelogController extends AbstractController
     )]
     #[OA\Response(
         response: 400,
-        description: 'Vérifiez l\'existence des numéros de version renseignés. <br/> ou <br/> La version fromNumVersion est supérieur à la version toNumVersion.',
+        description: 'Vérifiez l\'existence des numéros de version renseignés. <br/> ou <br/> La version fromNumVersion est supérieur à la version toNumVersion. <br/> ou <br/> Produit inconnu.',
     )]
-    #[Route('/generate/range/{fromNumVersion}/{toNumVersion}', name: 'generate_by_range', methods: 'POST')]
-    public function generateByRange($fromNumVersion, $toNumVersion, ApiResponse $apiResponse,
-                                    HeChangelogRepository $repository, ChangelogsService $changelogsService): Response
+    #[Route('/generate/range/{productUid}/{fromNumVersion}/{toNumVersion}', name: 'generate_by_range', methods: 'POST')]
+    public function generateByRange($productUid, $fromNumVersion, $toNumVersion, ApiResponse $apiResponse,
+                                    HeChangelogRepository $repository, ChangelogsService $changelogsService,
+                                    HeProductRepository $productRepository): Response
     {
-        $fromObj = $repository->findOneBy(['numVersion' => $fromNumVersion], ['numero' => 'ASC']);
-        $toObj = $repository->findOneBy(['numVersion' => $toNumVersion], ['numero' => 'DESC']);
+        $product = $productRepository->findOneBy(['uid' => $productUid]);
+
+        if(!$product){
+            return $apiResponse->apiJsonResponseBadRequest('Produit inconnu.');
+        }
+
+        $fromObj = $repository->findOneBy(['product' => $product, 'numVersion' => $fromNumVersion], ['numero' => 'ASC']);
+        $toObj = $repository->findOneBy(['product' => $product, 'numVersion' => $toNumVersion], ['numero' => 'DESC']);
 
         if(!$fromObj || !$toObj){
             return $apiResponse->apiJsonResponseBadRequest('Vérifiez l\'existence des numéros de version renseignés.');
