@@ -73,7 +73,10 @@ class HeChangelog
 
     #[ORM\Column]
     #[Groups(['changelog_list', 'changelog_form'])]
-    private ?bool $isPatch = null;
+    private ?bool $isPatch = false;
+
+    #[ORM\Column]
+    private ?bool $isDraft = false;
 
     public function __construct()
     {
@@ -237,6 +240,18 @@ class HeChangelog
     public function setIsPatch(bool $isPatch): static
     {
         $this->isPatch = $isPatch;
+
+        return $this;
+    }
+
+    public function isDraft(): ?bool
+    {
+        return $this->isDraft;
+    }
+
+    public function setIsDraft(bool $isDraft): static
+    {
+        $this->isDraft = $isDraft;
 
         return $this;
     }
