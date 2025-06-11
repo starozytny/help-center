@@ -3,6 +3,7 @@
 namespace App\Service\Changelogs;
 
 use App\Entity\Main\Help\HeChangelog;
+use App\Entity\Main\Help\HeProduct;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -13,7 +14,7 @@ class ChangelogsService
     public function __construct(private readonly string $publicDirectory, private readonly string $privateDirectory, private readonly Environment $twig)
     {}
 
-    public function getFolderGenerated(HeChangelog $obj): string
+    public function getFolderGenerated(HeProduct $obj): string
     {
         return $this->privateDirectory . HeChangelog::FOLDER_GENERATED . "/" . $obj->getId() . "/";
     }
@@ -23,7 +24,7 @@ class ChangelogsService
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function createFile(HeChangelog $obj): string
+    public function createFile(HeChangelog $obj, array $data): string
     {
         $logoPath = $obj->getProduct()->getLogoFile();
 
@@ -43,12 +44,12 @@ class ChangelogsService
         $html = $this->twig->render('user/generate/changelogs/changelog.html.twig', [
             'logoUrl' => $logoUrl,
             'obj' => $obj,
-            'lastData' => [$obj]
+            'lastData' => $data
         ]);
 
         $filename = $obj->getFilename() ?: $obj->getNumero() . "_" . ($obj->isPatch() ? "PATCH_" . $obj->getNumPatch() : "VERSION_" . $obj->getNumVersion()) . '.html';
 
-        $folder = $this->getFolderGenerated($obj);
+        $folder = $this->getFolderGenerated($obj->getProduct());
 
         if(!is_dir($folder)){
             mkdir($folder, 0777, true);

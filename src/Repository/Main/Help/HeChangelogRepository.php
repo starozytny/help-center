@@ -48,6 +48,22 @@ class HeChangelogRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return HeChangelog[] Returns an array of HeChangelog objects
+     */
+    public function findBetweenNumeros(int $minNumero, int $maxNumero): array
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.numero BETWEEN :minNumero AND :maxNumero')
+            ->setParameter('minNumero', $minNumero)
+            ->setParameter('maxNumero', $maxNumero)
+            ->orderBy('e.numero', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
     //    /**
     //     * @return HeChangelog[] Returns an array of HeChangelog objects
     //     */

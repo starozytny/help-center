@@ -78,10 +78,10 @@ class ChangelogController extends AbstractController
     {
         $filename = $obj->getFilename();
         if(!$filename){
-            $filename = $changelogsService->createFile($obj);
+            $filename = $changelogsService->createFile($obj, [$obj]);
         }
 
-        $folder = $changelogsService->getFolderGenerated($obj);
+        $folder = $changelogsService->getFolderGenerated($obj->getProduct());
         $file = $folder . $filename;
 
         if(!file_exists($file)){
