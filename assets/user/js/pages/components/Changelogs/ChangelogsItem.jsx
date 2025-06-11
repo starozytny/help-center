@@ -24,7 +24,7 @@ export function ChangelogsItem ({ elem, highlight, onModal, productSlug }) {
 			<div className="item-infos">
 				<div className="col-1">
 					<div>
-						<div className="font-bold">{elem.numero}</div>
+						<div className="font-bold">{elem.isDraft ? "Brouillon" : elem.numero}</div>
 						<div className="text-gray-600 text-sm">{Sanitaze.toDateFormat(elem.dateAt, 'LL')}</div>
 					</div>
 				</div>
@@ -40,9 +40,15 @@ export function ChangelogsItem ({ elem, highlight, onModal, productSlug }) {
 				</div>
 				<div className="col-3">
 					<div className="flex gap-1">
-						<div>
-							<Button type="default" onClick={() => onModal('generate', elem)}>{elem.filename ? "Regénérer" : "Générer"} le fichier</Button>
-						</div>
+						{elem.isDraft
+							? null
+							:<div>
+								<Button type={elem.filename ? "default" : "blue"}
+										onClick={() => onModal('generate', elem)}>
+									{elem.filename ? "Regénérer" : "Générer"} le fichier
+								</Button>
+							</div>
+						}
 						<div>
 							<ButtonIconA type="default" icon="vision" target="_blank"
 										 onClick={Routing.generate(URL_PREVIEW_FILE, {p_slug: productSlug, id: elem.id})}>
@@ -53,7 +59,10 @@ export function ChangelogsItem ({ elem, highlight, onModal, productSlug }) {
 				</div>
 				<div className="col-4 actions">
 					<ButtonIconA type="default" icon="pencil" onClick={urlUpdate}>Modifier</ButtonIconA>
-					<ButtonIcon type="default" icon="trash" onClick={() => onModal("delete", elem)}>Supprimer</ButtonIcon>
+					{elem.isDraft
+						? <ButtonIcon type="default" icon="trash" onClick={() => onModal("delete", elem)}>Supprimer</ButtonIcon>
+						: null
+					}
 				</div>
 			</div>
 		</div>

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 
 import axios from "axios";
+import { uid } from "uid";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import moment from "moment";
 import "moment/locale/fr";
 
+import Toastr from "@tailwindFunctions/toastr";
 import Formulaire from "@commonFunctions/formulaire";
 import Validateur from "@commonFunctions/validateur";
 
@@ -15,19 +17,22 @@ import { TinyMCE } from "@tailwindComponents/Elements/TinyMCE";
 
 const URL_INDEX_ELEMENTS = "user_help_changelogs_index";
 const URL_CREATE_ELEMENT = "intern_api_help_changelogs_create";
-const URL_UPDATE_GROUP = "intern_api_help_changelogs_update";
+const URL_UPDATE_ELEMENT = "intern_api_help_changelogs_update";
+const URL_SAVE_ELEMENT = "intern_api_help_changelogs_save";
 
 export function ChangelogFormulaire ({ context, element, productSlug }) {
 	let url = Routing.generate(URL_CREATE_ELEMENT);
 
 	if (context === "update") {
-		url = Routing.generate(URL_UPDATE_GROUP, { id: element.id });
+		url = Routing.generate(URL_UPDATE_ELEMENT, { id: element.id });
 	}
 
 	return <Form
         context={context}
         url={url}
 
+        id={element ? Formulaire.setValue(element.id) : null}
+        uid={element ? Formulaire.setValue(element.uid) : uid()}
         numVersion={element ? Formulaire.setValue(element.numVersion) : ""}
         numPatch={element ? Formulaire.setValue(element.numPatch) : ""}
         isPatch={element ? element.isPatch : false}
@@ -36,6 +41,7 @@ export function ChangelogFormulaire ({ context, element, productSlug }) {
 		contentCreated={element ? Formulaire.setValue(element.contentCreated) : ""}
 		contentUpdated={element ? Formulaire.setValue(element.contentUpdated) : ""}
 		contentFix={element ? Formulaire.setValue(element.contentFix) : ""}
+		isDraft={element ? element.isDraft : true}
 
 		productSlug={productSlug}
     />;
@@ -50,6 +56,8 @@ class Form extends Component {
 		let contentFix = props.contentFix ? props.contentFix : "";
 
 		this.state = {
+			id: props.id,
+			uid: props.uid,
 			numVersion: props.numVersion,
 			numPatch: props.numPatch,
 			isPatch: props.isPatch ? [1] : [0],
@@ -58,8 +66,44 @@ class Form extends Component {
 			contentCreated: { value: contentCreated, html: contentCreated },
 			contentUpdated: { value: contentUpdated, html: contentUpdated },
 			contentFix: { value: contentFix, html: contentFix },
+			isDraft: props.isDraft,
 			errors: [],
-			productSlug: props.productSlug
+			productSlug: props.productSlug,
+			loadSave: false
+		}
+
+		this.intervalId = null;
+	}
+
+	componentDidMount () {
+		setTimeout(() => {
+			this.handleSave()
+			this.intervalId = setInterval(this.handleSave, 5000); // toutes les 5 minutes
+		}, 5000);
+	}
+
+	componentWillUnmount () {
+		clearInterval(this.intervalId);
+	}
+
+	handleSave = () => {
+		const { name, numVersion } = this.state;
+
+		if (document.visibilityState === 'visible' && name !== "" && numVersion !== "") {
+			this.setState({ loadSave: true })
+
+			let self = this;
+			axios({ method: "POST", url: Routing.generate(URL_SAVE_ELEMENT), data: this.state })
+				.then(function (response) {
+					self.setState({ id: response.data.id, uid: response.data.uid })
+				})
+				.catch(function (error) {
+					Formulaire.displayErrors(self, error);
+				})
+				.then(function () {
+					self.setState({ loadSave: false })
+				})
+			;
 		}
 	}
 
@@ -82,35 +126,39 @@ class Form extends Component {
 		e.preventDefault();
 
 		const { context, url, productSlug } = this.props;
-		const { numVersion, name, dateAt, isPatch, numPatch } = this.state;
+		const { loadSave, numVersion, name, dateAt, isPatch, numPatch } = this.state;
 
-		this.setState({ errors: [] });
+		if(loadSave){
+			Toastr.toast('warning', 'Veuillez re-cliquez sur enregistrer, une sauvegarde était en cours.');
+		}else{
+			this.setState({ errors: [] });
 
-		let paramsToValidate = [
-			{ type: "text", id: 'numVersion', value: numVersion },
-			{ type: "text", id: 'name', value: name },
-			{ type: "text", id: 'dateAt', value: dateAt },
-		];
+			let paramsToValidate = [
+				{ type: "text", id: 'numVersion', value: numVersion },
+				{ type: "text", id: 'name', value: name },
+				{ type: "text", id: 'dateAt', value: dateAt },
+			];
 
-		if(isPatch[0] === 1){
-			paramsToValidate = [...paramsToValidate, ...[{ type: "text", id: 'numPatch', value: numPatch }]];
-		}
+			if(isPatch[0] === 1){
+				paramsToValidate = [...paramsToValidate, ...[{ type: "text", id: 'numPatch', value: numPatch }]];
+			}
 
-		let validate = Validateur.validateur(paramsToValidate)
-		if (!validate.code) {
-			Formulaire.showErrors(this, validate);
-		} else {
-			let self = this;
-			Formulaire.loader(true);
-			axios({ method: context === "update" ? "PUT" : "POST", url: url, data: this.state })
-				.then(function (response) {
-					location.href = Routing.generate(URL_INDEX_ELEMENTS, { p_slug: productSlug, h: response.data.id });
-				})
-				.catch(function (error) {
-					Formulaire.displayErrors(self, error);
-					Formulaire.loader(false);
-				})
-			;
+			let validate = Validateur.validateur(paramsToValidate)
+			if (!validate.code) {
+				Formulaire.showErrors(this, validate);
+			} else {
+				let self = this;
+				Formulaire.loader(true);
+				axios({ method: context === "update" ? "PUT" : "POST", url: url, data: this.state })
+					.then(function (response) {
+						location.href = Routing.generate(URL_INDEX_ELEMENTS, { p_slug: productSlug, h: response.data.id });
+					})
+					.catch(function (error) {
+						Formulaire.displayErrors(self, error);
+						Formulaire.loader(false);
+					})
+				;
+			}
 		}
 	}
 

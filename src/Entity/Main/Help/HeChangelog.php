@@ -23,7 +23,7 @@ class HeChangelog
     #[Groups(['changelog_list', 'changelog_form'])]
     private ?int $id = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     #[Groups(['changelog_list', 'changelog_form'])]
     private ?int $numero = null;
 
@@ -31,7 +31,7 @@ class HeChangelog
     #[Groups(['changelog_list', 'changelog_form'])]
     private ?string $name = null;
 
-    #[ORM\Column(length: 5)]
+    #[ORM\Column(length: 50)]
     #[Groups(['changelog_list', 'changelog_form'])]
     private ?string $numVersion = null;
 
@@ -76,7 +76,12 @@ class HeChangelog
     private ?bool $isPatch = false;
 
     #[ORM\Column]
-    private ?bool $isDraft = false;
+    #[Groups(['changelog_list', 'changelog_form'])]
+    private ?bool $isDraft = true;
+
+    #[ORM\Column(length: 255)]
+    #[Groups(['changelog_list', 'changelog_form'])]
+    private ?string $uid = null;
 
     public function __construct()
     {
@@ -252,6 +257,18 @@ class HeChangelog
     public function setIsDraft(bool $isDraft): static
     {
         $this->isDraft = $isDraft;
+
+        return $this;
+    }
+
+    public function getUid(): ?string
+    {
+        return $this->uid;
+    }
+
+    public function setUid(string $uid): static
+    {
+        $this->uid = $uid;
 
         return $this;
     }
