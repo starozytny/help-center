@@ -78,8 +78,8 @@ class Form extends Component {
 	componentDidMount () {
 		setTimeout(() => {
 			this.handleSave()
-			this.intervalId = setInterval(this.handleSave, 5000); // toutes les 5 minutes
-		}, 5000);
+			this.intervalId = setInterval(this.handleSave, 5 * 60 * 1000); // toutes les 5 minutes
+		}, 30000);
 	}
 
 	componentWillUnmount () {
