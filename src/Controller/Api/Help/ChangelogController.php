@@ -18,6 +18,10 @@ use Twig\Error\SyntaxError;
 #[Route('/api/help/changelogs', name: 'api_help_changelogs_')]
 #[IsGranted('ROLE_ADMIN')]
 #[OA\Tag(name: 'Changelog')]
+#[OA\Response(
+    response: 401,
+    description: 'Accès non autorisé',
+)]
 class ChangelogController extends AbstractController
 {
     /**

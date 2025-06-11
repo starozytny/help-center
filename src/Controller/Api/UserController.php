@@ -23,6 +23,10 @@ use OpenApi\Attributes as OA;
 #[Route('/api/users', name: 'api_users_')]
 #[IsGranted('ROLE_ADMIN')]
 #[OA\Tag(name: 'Utilisateurs')]
+#[OA\Response(
+    response: 401,
+    description: 'Accès non autorisé',
+)]
 class UserController extends AbstractController
 {
     /**
