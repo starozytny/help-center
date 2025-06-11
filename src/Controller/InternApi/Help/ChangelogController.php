@@ -47,14 +47,31 @@ class ChangelogController extends AbstractController
             return $apiResponse->apiJsonResponseBadRequest('Produit introuvable.');
         }
 
+        if($type == "save"){
+            $obj = $repository->findOneBy(['uid' => $data->uid]);
+
+            if(!$obj && $data->id){
+                $obj = $repository->findOneBy(['id' => $data->id]);
+                if(!$obj){
+                    $obj = new HeChangelog();
+                }
+            }else if(!$obj){
+                $obj = new HeChangelog();
+            }
+        }
+
         $obj = $dataEntity->setDataChangelog($obj, $data);
         $obj = ($obj)
             ->setProduct($product)
         ;
 
         if($type === "update"){
+            $obj->setIsDraft(false);
             $obj->setUpdatedAt(new DateTime());
-        }else{
+        }
+
+        if($type === "create" || ($type === "update" && $data->isDraft)){
+            $obj->setIsDraft(false);
             $obj->setNumero($product->getNumeroChangelogVersion() + 1);
             $product->setNumeroChangelogVersion($product->getNumeroChangelogVersion() + 1);
         }
@@ -86,6 +103,17 @@ class ChangelogController extends AbstractController
     {
         return $this->submitForm(
             "update", $repository, $obj, $request, $apiResponse, $validator,
+            $dataEntity, $productRepository
+        );
+    }
+
+    #[Route('/save', name: 'save', options: ['expose' => true], methods: 'POST')]
+    public function save(Request $request, ApiResponse $apiResponse, ValidatorService $validator,
+                           DataHelp $dataEntity, HeChangelogRepository $repository,
+                           HeProductRepository $productRepository): Response
+    {
+        return $this->submitForm(
+            "save", $repository, new HeChangelog(), $request, $apiResponse, $validator,
             $dataEntity, $productRepository
         );
     }
