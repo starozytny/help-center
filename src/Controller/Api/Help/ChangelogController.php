@@ -2,12 +2,10 @@
 
 namespace App\Controller\Api\Help;
 
-use App\Entity\Main\Help\HeChangelog;
 use App\Repository\Main\Help\HeChangelogRepository;
 use App\Service\ApiResponse;
 use App\Service\Changelogs\ChangelogsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -40,16 +38,7 @@ class ChangelogController extends AbstractController
         }
 
         $objs = $repository->findBetweenNumeros($fromObj->getNumero(), $toObj->getNumero());
-        $filename = $changelogsService->createFile($toObj, $objs);
-
-        $folder = $changelogsService->getFolderGenerated($toObj->getProduct());
-        $file = $folder . $filename;
-
-        if(!file_exists($file)){
-            throw $this->createNotFoundException("Fichier HTML introuvable.");
-        }
-
-        $html = file_get_contents($file);
+        $html = $changelogsService->createHtml($toObj, $objs);
 
         return $apiResponse->apiJsonResponseCustom($html);
     }
