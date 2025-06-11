@@ -35,7 +35,6 @@ export function ChangelogFormulaire ({ context, element, productSlug }) {
         uid={element ? Formulaire.setValue(element.uid) : uid()}
         numero={element ? Formulaire.setValue(element.numero) : ""}
         numVersion={element ? Formulaire.setValue(element.numVersion) : ""}
-        numPatch={element ? Formulaire.setValue(element.numPatch) : ""}
         isPatch={element ? element.isPatch : false}
         name={element ? Formulaire.setValue(element.name) : ""}
         dateAt={element ? Formulaire.setValueDate(element.dateAt) : moment().format("YYYY-MM-DD")}
@@ -61,7 +60,6 @@ class Form extends Component {
 			uid: props.uid,
 			numero: props.numero,
 			numVersion: props.numVersion,
-			numPatch: props.numPatch,
 			isPatch: props.isPatch ? [1] : [0],
 			name: props.name,
 			dateAt: props.dateAt,
@@ -128,7 +126,7 @@ class Form extends Component {
 		e.preventDefault();
 
 		const { context, url, productSlug } = this.props;
-		const { loadSave, numVersion, name, dateAt, isPatch, numPatch } = this.state;
+		const { loadSave, numVersion, name, dateAt } = this.state;
 
 		if(loadSave){
 			Toastr.toast('warning', 'Veuillez re-cliquez sur enregistrer, une sauvegarde était en cours.');
@@ -140,10 +138,6 @@ class Form extends Component {
 				{ type: "text", id: 'name', value: name },
 				{ type: "text", id: 'dateAt', value: dateAt },
 			];
-
-			if(isPatch[0] === 1){
-				paramsToValidate = [...paramsToValidate, ...[{ type: "text", id: 'numPatch', value: numPatch }]];
-			}
 
 			let validate = Validateur.validateur(paramsToValidate)
 			if (!validate.code) {
@@ -166,7 +160,7 @@ class Form extends Component {
 
 	render () {
         const { context } = this.props;
-		const { errors, numero, numVersion, isPatch, numPatch,  name, dateAt, contentCreated, contentUpdated, contentFix } = this.state;
+		const { errors, numero, numVersion, isPatch, name, dateAt, contentCreated, contentUpdated, contentFix } = this.state;
 
         let params0 = { errors: errors, onChange: this.handleChange };
         let params1 = { errors: errors, onUpdateData: this.handleChangeTinyMCE };
@@ -217,15 +211,6 @@ class Form extends Component {
 								</Switcher>
 							</div>
 						</div>
-						{isPatch[0] === 1
-							? <div className="flex gap-4">
-								<div className="w-full">
-									<Input identifiant="numPatch" valeur={numPatch} {...params0}>Numéro de patch</Input>
-								</div>
-								<div className="w-full"></div>
-							</div>
-							: null
-						}
                     </div>
                 </div>
                 <div className="grid gap-2 xl:grid-cols-3 xl:gap-6">
