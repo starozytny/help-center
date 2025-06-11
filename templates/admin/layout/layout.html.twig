@@ -52,6 +52,11 @@
 
 {% set menu_bottom = [
     {
+        name: "API", icon: "dashboard",
+        path: path('app.swagger_ui'),
+        matchRoute: ['app.swagger_ui']
+    },
+    {
         name: "Espace utilisateur",  icon: "earth",
         path: path('user_homepage'),
         matchRoute: ['user_homepage']
