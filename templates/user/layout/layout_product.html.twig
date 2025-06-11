@@ -78,8 +78,14 @@
 {% if is_granted('ROLE_ADMIN') %}
     {% set menu_bottom = [
         {
+            name: "API", icon: "dashboard",
+            path: path('app.swagger_ui'),
+            matchRoute: ['app.swagger_ui']
+        },
+        {
             name: "Espace admin", icon: 'earth',
-            path: path('admin_homepage'), matchRoute: ['admin_homepage']
+            path: path('admin_homepage'),
+            matchRoute: ['admin_homepage']
         }
     ] %}
 {% endif %}
