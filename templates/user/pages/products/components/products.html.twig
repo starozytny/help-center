@@ -5,6 +5,9 @@
                 <img src="{{ asset(elem.logoFile) }}" alt="Logo {{ elem.name }}">
             </div>
             <div>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="text-xs text-gray-600">UID: {{ elem.uid }}</div>
+                {% endif %}
                 <div class="font-semibold text-lg">{{ elem.name }}</div>
                 {% if elem.url %}
                     <div>
