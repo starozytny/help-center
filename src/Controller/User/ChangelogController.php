@@ -55,30 +55,6 @@ class ChangelogController extends AbstractController
         ]);
     }
 
-    /**
-     * @throws SyntaxError
-     * @throws RuntimeError
-     * @throws LoaderError
-     */
-    #[Route('/apercu/html/{id}', name: 'preview_html', options: ['expose' => true], methods: 'GET')]
-    public function previewHtml($p_slug, HeChangelog $obj, ChangelogsService $changelogsService): Response
-    {
-        $filename = $obj->getFilename();
-        if(!$filename){
-            [$filename, $pathFile] = $changelogsService->createFile($obj);
-        }
-
-        $file = $this->getParameter('private_directory') . HeChangelog::FOLDER_GENERATED . "/" . $obj->getId() . "/" . $filename;
-
-        if(!file_exists($file)){
-            throw $this->createNotFoundException("Fichier HTML introuvable.");
-        }
-
-        $html = file_get_contents($file);
-
-        return new Response($html, 200, ['Content-Type' => 'text/html']);
-    }
-
     #[Route('/parametres', name: 'settings')]
     public function settings($p_slug, HeProductRepository $productRepository, SerializerInterface $serializer): Response
     {
@@ -90,5 +66,30 @@ class ChangelogController extends AbstractController
             'product' => $product,
             'element' => $element
         ]);
+    }
+
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
+    #[Route('/apercu/html/{id}', name: 'preview_html', options: ['expose' => true], methods: 'GET')]
+    public function previewHtml($p_slug, HeChangelog $obj, ChangelogsService $changelogsService): Response
+    {
+        $filename = $obj->getFilename();
+        if(!$filename){
+            $filename = $changelogsService->createFile($obj);
+        }
+
+        $folder = $changelogsService->getFolderGenerated($obj);
+        $file = $folder . $filename;
+
+        if(!file_exists($file)){
+            throw $this->createNotFoundException("Fichier HTML introuvable.");
+        }
+
+        $html = file_get_contents($file);
+
+        return new Response($html, 200, ['Content-Type' => 'text/html']);
     }
 }
