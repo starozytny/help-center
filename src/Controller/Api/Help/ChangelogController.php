@@ -100,7 +100,7 @@ class ChangelogController extends AbstractController
             return $apiResponse->apiJsonResponseBadRequest('La version ' . $fromNumVersion . ' est supérieur à la version ' . $toNumVersion . '.');
         }
 
-        $objs = $repository->findBetweenNumeros($fromObj->getNumero(), $toObj->getNumero());
+        $objs = $repository->findBetweenNumeros($productUid, $fromObj->getNumero(), $toObj->getNumero());
         $html = $changelogsService->createHtml($toObj, $objs);
 
         return new Response($html, 200, ['Content-Type' => 'text/html']);
