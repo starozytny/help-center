@@ -76,19 +76,7 @@ class ChangelogController extends AbstractController
     #[Route('/apercu/html/{id}', name: 'preview_html', options: ['expose' => true], methods: 'GET')]
     public function previewHtml($p_slug, HeChangelog $obj, ChangelogsService $changelogsService): Response
     {
-        $filename = $obj->getFilename();
-        if(!$filename){
-            $filename = $changelogsService->createFile($obj);
-        }
-
-        $folder = $changelogsService->getFolderGenerated($obj);
-        $file = $folder . $filename;
-
-        if(!file_exists($file)){
-            throw $this->createNotFoundException("Fichier HTML introuvable.");
-        }
-
-        $html = file_get_contents($file);
+        $html = $changelogsService->createHtml($obj, [$obj]);
 
         return new Response($html, 200, ['Content-Type' => 'text/html']);
     }

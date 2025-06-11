@@ -11,7 +11,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class HeChangelog
 {
     const FOLDER = "images/editor/changelogs";
-    const FOLDER_GENERATED = "export/generated";
 
     const LIST = ['changelog_list'];
     const FORM = ['changelog_form'];
@@ -34,10 +33,6 @@ class HeChangelog
     #[ORM\Column(length: 50)]
     #[Groups(['changelog_list', 'changelog_form'])]
     private ?string $numVersion = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['changelog_list'])]
-    private ?string $filename = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['changelog_list', 'changelog_form'])]
@@ -125,18 +120,6 @@ class HeChangelog
     public function setNumVersion(string $numVersion): static
     {
         $this->numVersion = $numVersion;
-
-        return $this;
-    }
-
-    public function getFilename(): ?string
-    {
-        return $this->filename;
-    }
-
-    public function setFilename(?string $filename): static
-    {
-        $this->filename = $filename;
 
         return $this;
     }

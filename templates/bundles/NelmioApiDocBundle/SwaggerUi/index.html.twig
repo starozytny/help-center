@@ -1,0 +1,86 @@
+{% extends 'admin/layout/layout.html.twig' %}
+
+{% set page_title %}Api documentation{% endset %}
+{% set page_h1 %}Api documentation 👏🥳🍰{% endset %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ nelmioAsset(assets_mode, 'swagger-ui/swagger-ui.css') }}
+
+    <script id="swagger-data" type="application/json">{{ swagger_data|json_encode(65)|raw }}</script>
+{% endblock stylesheets %}
+
+
+{% block main_content %}
+    <style>
+        .topbar, .information-container{
+            display: none;
+        }
+        .swagger-ui .wrapper{
+            padding: 0;
+            max-width: initial;
+        }
+        .swagger-ui .scheme-container{
+            padding: 12px;
+        }
+        .swagger-ui .scheme-container .schemes{
+            align-items: center;
+        }
+        .swagger-ui .auth-wrapper{
+            justify-content: center;
+        }
+
+        .dark-mode .swagger-ui .opblock-tag,
+        .dark-mode .swagger-ui .opblock .opblock-summary-operation-id,
+        .dark-mode .swagger-ui .opblock .opblock-summary-path,
+        .dark-mode .swagger-ui .opblock .opblock-summary-path__deprecated,
+        .dark-mode .swagger-ui table thead tr td,
+        .dark-mode .swagger-ui table thead tr th,
+        .dark-mode .swagger-ui .parameter__name,
+        .dark-mode .swagger-ui .parameter__type,
+        .dark-mode .swagger-ui .response-col_status,
+        .dark-mode .swagger-ui .responses-inner h4,
+        .dark-mode .swagger-ui .responses-inner h5,
+        .dark-mode .swagger-ui .opblock .opblock-summary-description{
+            color: white;
+        }
+        .dark-mode .swagger-ui .opblock .opblock-summary-description{
+            opacity: 0.8;
+        }
+        .dark-mode .swagger-ui .expand-methods, .swagger-ui .expand-operation, .swagger-ui svg:not(:root){
+            fill: white;
+        }
+        .dark-mode .swagger-ui .parameters-col_description input[type=text]{
+            color: black;
+        }
+    </style>
+
+    {#    {% extends '@!NelmioApiDoc/SwaggerUi/index.html.twig' %}#}
+
+    <div style="color: white;">
+        <div id="swagger-ui" class="api-platform"></div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ nelmioAsset(assets_mode, 'swagger-ui/swagger-ui-bundle.js') }}
+    {{ nelmioAsset(assets_mode, 'swagger-ui/swagger-ui-standalone-preset.js') }}
+
+    <script type="text/javascript">
+        window.onload = loadSwaggerUI({
+            defaultModelsExpandDepth: -1,
+            deepLinking: true,
+        });
+    </script>
+
+    {{ nelmioAsset(assets_mode, 'init-swagger-ui.js') }}
+
+    <script type="text/javascript">
+        (function () {
+            var swaggerUI = {{ swagger_ui_config|json_encode(65)|raw }};
+            window.onload = loadSwaggerUI(swaggerUI);
+        })();
+    </script>
+{% endblock javascripts %}
