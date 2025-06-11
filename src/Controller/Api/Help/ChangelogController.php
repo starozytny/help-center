@@ -40,6 +40,6 @@ class ChangelogController extends AbstractController
         $objs = $repository->findBetweenNumeros($fromObj->getNumero(), $toObj->getNumero());
         $html = $changelogsService->createHtml($toObj, $objs);
 
-        return $apiResponse->apiJsonResponseCustom($html);
+        return new Response($html, 200, ['Content-Type' => 'text/html']);
     }
 }
