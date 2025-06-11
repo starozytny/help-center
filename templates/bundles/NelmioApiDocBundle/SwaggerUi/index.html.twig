@@ -47,9 +47,6 @@
         .dark-mode .swagger-ui .opblock .opblock-summary-description{
             opacity: 0.8;
         }
-        .dark-mode .swagger-ui .expand-methods, .swagger-ui .expand-operation, .swagger-ui svg:not(:root){
-            fill: white;
-        }
         .dark-mode .swagger-ui .parameters-col_description input[type=text]{
             color: black;
         }
@@ -57,7 +54,12 @@
 
     {#    {% extends '@!NelmioApiDoc/SwaggerUi/index.html.twig' %}#}
 
-    <div style="color: white;">
+    <div>
+        <div class="mb-4 text-xs">
+            {% if is_granted('ROLE_ADMIN') %}
+                <b>Mon token</b> : {{ app.user.token }}
+            {% endif %}
+        </div>
         <div id="swagger-ui" class="api-platform"></div>
     </div>
 
