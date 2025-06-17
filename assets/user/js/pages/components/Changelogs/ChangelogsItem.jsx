@@ -31,10 +31,6 @@ export function ChangelogsItem ({ elem, highlight, onModal, productSlug }) {
 				<div className="col-2">
 					<div className="flex gap-2">
 						<Badge type="blue">{elem.numVersion}</Badge>
-						{elem.isPatch
-							? <Badge type="gray">P.{elem.numPatch}</Badge>
-							: null
-						}
 						<div className="font-medium">{elem.name}</div>
 					</div>
 				</div>

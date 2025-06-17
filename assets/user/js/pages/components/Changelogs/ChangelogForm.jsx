@@ -35,13 +35,13 @@ export function ChangelogFormulaire ({ context, element, productSlug }) {
         uid={element ? Formulaire.setValue(element.uid) : uid()}
         numero={element ? Formulaire.setValue(element.numero) : ""}
         numVersion={element ? Formulaire.setValue(element.numVersion) : ""}
-        numPatch={element ? Formulaire.setValue(element.numPatch) : ""}
         isPatch={element ? element.isPatch : false}
         name={element ? Formulaire.setValue(element.name) : ""}
         dateAt={element ? Formulaire.setValueDate(element.dateAt) : moment().format("YYYY-MM-DD")}
 		contentCreated={element ? Formulaire.setValue(element.contentCreated) : ""}
 		contentUpdated={element ? Formulaire.setValue(element.contentUpdated) : ""}
 		contentFix={element ? Formulaire.setValue(element.contentFix) : ""}
+		contentNew={element ? Formulaire.setValue(element.contentNew) : ""}
 		isDraft={element ? element.isDraft : true}
 
 		productSlug={productSlug}
@@ -55,19 +55,20 @@ class Form extends Component {
 		let contentCreated = props.contentCreated ? props.contentCreated : "";
 		let contentUpdated = props.contentUpdated ? props.contentUpdated : "";
 		let contentFix = props.contentFix ? props.contentFix : "";
+		let contentNew = props.contentNew ? props.contentNew : "";
 
 		this.state = {
 			id: props.id,
 			uid: props.uid,
 			numero: props.numero,
 			numVersion: props.numVersion,
-			numPatch: props.numPatch,
 			isPatch: props.isPatch ? [1] : [0],
 			name: props.name,
 			dateAt: props.dateAt,
 			contentCreated: { value: contentCreated, html: contentCreated },
 			contentUpdated: { value: contentUpdated, html: contentUpdated },
 			contentFix: { value: contentFix, html: contentFix },
+			contentNew: { value: contentNew, html: contentNew },
 			isDraft: props.isDraft,
 			errors: [],
 			productSlug: props.productSlug,
@@ -128,7 +129,7 @@ class Form extends Component {
 		e.preventDefault();
 
 		const { context, url, productSlug } = this.props;
-		const { loadSave, numVersion, name, dateAt, isPatch, numPatch } = this.state;
+		const { loadSave, numVersion, name, dateAt } = this.state;
 
 		if(loadSave){
 			Toastr.toast('warning', 'Veuillez re-cliquez sur enregistrer, une sauvegarde était en cours.');
@@ -140,10 +141,6 @@ class Form extends Component {
 				{ type: "text", id: 'name', value: name },
 				{ type: "text", id: 'dateAt', value: dateAt },
 			];
-
-			if(isPatch[0] === 1){
-				paramsToValidate = [...paramsToValidate, ...[{ type: "text", id: 'numPatch', value: numPatch }]];
-			}
 
 			let validate = Validateur.validateur(paramsToValidate)
 			if (!validate.code) {
@@ -166,7 +163,7 @@ class Form extends Component {
 
 	render () {
         const { context } = this.props;
-		const { errors, numero, numVersion, isPatch, numPatch,  name, dateAt, contentCreated, contentUpdated, contentFix } = this.state;
+		const { errors, numero, numVersion, isPatch, name, dateAt, contentCreated, contentUpdated, contentFix, contentNew } = this.state;
 
         let params0 = { errors: errors, onChange: this.handleChange };
         let params1 = { errors: errors, onUpdateData: this.handleChangeTinyMCE };
@@ -217,15 +214,6 @@ class Form extends Component {
 								</Switcher>
 							</div>
 						</div>
-						{isPatch[0] === 1
-							? <div className="flex gap-4">
-								<div className="w-full">
-									<Input identifiant="numPatch" valeur={numPatch} {...params0}>Numéro de patch</Input>
-								</div>
-								<div className="w-full"></div>
-							</div>
-							: null
-						}
                     </div>
                 </div>
                 <div className="grid gap-2 xl:grid-cols-3 xl:gap-6">
@@ -235,17 +223,22 @@ class Form extends Component {
                     <div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
 						<div>
 							<TinyMCE type={99} identifiant='contentCreated' valeur={contentCreated.value} {...params1}>
-								Ajouts
+								Nouveautés
 							</TinyMCE>
 						</div>
 						<div>
 							<TinyMCE type={99} identifiant='contentUpdated' valeur={contentUpdated.value} {...params1}>
-								Modifications
+								Améliorations
 							</TinyMCE>
 						</div>
 						<div>
 							<TinyMCE type={99} identifiant='contentFix' valeur={contentFix.value} {...params1}>
 								Correctifs
+							</TinyMCE>
+						</div>
+						<div>
+							<TinyMCE type={99} identifiant='contentNew' valeur={contentNew.value} {...params1}>
+								Actualités
 							</TinyMCE>
 						</div>
                     </div>

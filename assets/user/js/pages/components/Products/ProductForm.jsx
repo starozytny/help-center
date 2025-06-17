@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import axios from "axios";
+import { uid } from "uid";
 import Routing from '@publicFolder/bundles/fosjsrouting/js/router.min.js';
 
 import { Input, InputFile, Radiobox, Switcher } from "@tailwindComponents/Elements/Fields";
@@ -26,6 +27,7 @@ export function ProductFormulaire ({ context, element }) {
         context={context}
         url={url}
         type={element ? Formulaire.setValue(element.type) : 0}
+        uid={element ? Formulaire.setValue(element.uid) : uid()}
         name={element ? Formulaire.setValue(element.name) : ""}
         website={element ? Formulaire.setValue(element.url) : ""}
         description={element ? Formulaire.setValue(element.description) : ""}
@@ -48,6 +50,7 @@ class Form extends Component {
 
 		this.state = {
 			type: props.type,
+			uid: props.uid,
 			name: props.name,
 			website: props.website,
 			starter: props.starter,
@@ -151,7 +154,7 @@ class Form extends Component {
 									Type de produit
 								</Radiobox>
 							</div>
-							<div class="w-full">
+							<div className="w-full">
 								<Switcher items={internItems} identifiant="isIntern" valeur={isIntern} {...params0}>
 									Produit interne
 								</Switcher>

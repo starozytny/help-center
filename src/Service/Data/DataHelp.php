@@ -22,6 +22,7 @@ class DataHelp
     {
         return ($obj)
             ->setName($this->sanitizeData->trimData($data->name))
+            ->setUid($this->sanitizeData->trimData($data->uid))
             ->setType((int) $data->type)
             ->setSlug($this->sanitizeData->slugString($data->name))
             ->setUrl($this->sanitizeData->trimData($data->website))
@@ -94,12 +95,12 @@ class DataHelp
             ->setUid($this->sanitizeData->trimData($data->uid))
             ->setName($this->sanitizeData->trimData($data->name))
             ->setNumVersion($this->sanitizeData->trimData($data->numVersion))
-            ->setNumPatch($this->sanitizeData->trimData($data->numPatch))
             ->setIsPatch((int) $data->isPatch[0])
             ->setDateAt($this->sanitizeData->createDate($data->dateAt))
             ->setContentCreated($this->sanitizeData->trimData($data->contentCreated->html))
             ->setContentUpdated($this->sanitizeData->trimData($data->contentUpdated->html))
             ->setContentFix($this->sanitizeData->trimData($data->contentFix->html))
+            ->setContentNew($this->sanitizeData->trimData($data->contentNew->html))
         ;
     }
 }

@@ -46,6 +46,10 @@ class HeChangelog
     #[Groups(['changelog_list', 'changelog_form'])]
     private ?string $contentFix = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['changelog_list', 'changelog_form'])]
+    private ?string $contentNew = null;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Groups(['changelog_list'])]
     private ?\DateTimeInterface $createdAt = null;
@@ -61,10 +65,6 @@ class HeChangelog
     #[ORM\Column]
     #[Groups(['changelog_list', 'changelog_form'])]
     private ?\DateTime $dateAt = null;
-
-    #[ORM\Column(length: 50, nullable: true)]
-    #[Groups(['changelog_list', 'changelog_form'])]
-    private ?string $numPatch = null;
 
     #[ORM\Column]
     #[Groups(['changelog_list', 'changelog_form'])]
@@ -160,6 +160,18 @@ class HeChangelog
         return $this;
     }
 
+    public function getContentNew(): ?string
+    {
+        return $this->contentNew;
+    }
+
+    public function setContentNew(?string $contentNew): static
+    {
+        $this->contentNew = $contentNew;
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -204,18 +216,6 @@ class HeChangelog
     public function setDateAt(\DateTime $dateAt): static
     {
         $this->dateAt = $dateAt;
-
-        return $this;
-    }
-
-    public function getNumPatch(): ?string
-    {
-        return $this->numPatch;
-    }
-
-    public function setNumPatch(?string $numPatch): static
-    {
-        $this->numPatch = $numPatch;
 
         return $this;
     }
