@@ -46,7 +46,7 @@ export function TinyMCE (props){
             initialValue={val}
             init={{
                 browser_spellcheck: true,
-                contextmenu: false,
+                contextmenu: 'spellchecker',
                 menubar: false,
                 plugins: [
                     'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
@@ -55,7 +55,7 @@ export function TinyMCE (props){
                     'image', 'autoresize', 'emoticons'
                 ],
                 toolbar: 'undo redo | blocks | ' +
-                    'bold italic forecolor | ' + (type === 99 ? '' : 'image') + ' emoticons | ' +
+                    'bold italic forecolor | ' + (type === 99 ? '' : 'image') + ' emoticons | link |' +
                     'alignleft aligncenter alignright alignjustify | ' +
                     'bullist numlist outdent indent | ' +
                     'removeformat | help',
