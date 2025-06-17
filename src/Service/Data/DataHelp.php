@@ -22,6 +22,7 @@ class DataHelp
     {
         return ($obj)
             ->setName($this->sanitizeData->trimData($data->name))
+            ->setUid($this->sanitizeData->trimData($data->uid))
             ->setType((int) $data->type)
             ->setSlug($this->sanitizeData->slugString($data->name))
             ->setUrl($this->sanitizeData->trimData($data->website))

@@ -28,6 +28,7 @@ class HeProduct extends DataEntity
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['product_form'])]
     private ?string $uid = null;
 
     #[ORM\Column(length: 255)]
