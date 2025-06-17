@@ -78,7 +78,7 @@ class ChangelogController extends AbstractController
             )
         )
     )]
-    #[Route('/generate/range/{productUid}', name: 'generate_by_range', methods: 'POST')]
+    #[Route('/generate/range/{productUid}/{fromNumVersion}/{toNumVersion}', name: 'generate_by_range', methods: 'POST')]
     public function generateByRange($productUid, $fromNumVersion, $toNumVersion, ApiResponse $apiResponse,
                                     HeChangelogRepository $repository, ChangelogsService $changelogsService,
                                     HeProductRepository $productRepository): Response
