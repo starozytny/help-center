@@ -223,12 +223,12 @@ class Form extends Component {
                     <div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
 						<div>
 							<TinyMCE type={99} identifiant='contentCreated' valeur={contentCreated.value} {...params1}>
-								Ajouts
+								Nouveautés
 							</TinyMCE>
 						</div>
 						<div>
 							<TinyMCE type={99} identifiant='contentUpdated' valeur={contentUpdated.value} {...params1}>
-								Modifications
+								Améliorations
 							</TinyMCE>
 						</div>
 						<div>
@@ -238,7 +238,7 @@ class Form extends Component {
 						</div>
 						<div>
 							<TinyMCE type={99} identifiant='contentNew' valeur={contentNew.value} {...params1}>
-								Nouveautés
+								Actualités
 							</TinyMCE>
 						</div>
                     </div>
