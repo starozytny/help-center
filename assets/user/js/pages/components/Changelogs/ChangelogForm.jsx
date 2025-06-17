@@ -176,12 +176,15 @@ class Form extends Component {
                     <div>
                         <div className="font-medium text-lg">Identification</div>
 						<div className="text-gray-600 text-sm">
-							{context === "create"
-								? <p class="font-semibold">Le numéro est attribué automatiquement à la création. <br/></p>
-								: null
-							}
 							<p>
-								La date n'apparait pas dans le HTML.
+								La date n'apparait pas dans le fichier HTML.
+								<br/>
+								Activer <i>Est-ce un patch ?</i>, permet d'avoir la mention [PATCH] dans le titre afin de le distinguer.
+								<br/><br/>
+								<u>Recommandation</u> : Suivre le même pattern de version + patch afin d'avoir une chronologie cohérente.
+								<br/>
+								(exemple : 3000.0.0.1P001)
+
 							</p>
 						</div>
                     </div>
@@ -198,15 +201,15 @@ class Form extends Component {
 						}
 						<div className="flex gap-4">
 							<div className="w-full">
-								<Input type="date" identifiant="dateAt" valeur={dateAt} {...params0}>Date</Input>
+								<Input identifiant="name" valeur={name} {...params0}>Titre</Input>
 							</div>
 							<div className="w-full">
-								<Input identifiant="name" valeur={name} {...params0}>Titre</Input>
+								<Input type="date" identifiant="dateAt" valeur={dateAt} {...params0}>Date</Input>
 							</div>
 						</div>
 						<div className="flex gap-4">
 							<div className="w-full">
-								<Input identifiant="numVersion" valeur={numVersion} {...params0}>Numéro de version</Input>
+								<Input identifiant="numVersion" valeur={numVersion} {...params0} placeholder="ex: 3000.0.0.1P001">Numéro de version + patch</Input>
 							</div>
 							<div className="w-full">
 								<Switcher items={patchItems} identifiant="isPatch" valeur={isPatch} {...params0}>
