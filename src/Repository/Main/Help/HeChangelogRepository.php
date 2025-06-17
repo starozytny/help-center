@@ -4,6 +4,7 @@ namespace App\Repository\Main\Help;
 
 use App\Entity\Main\Help\HeChangelog;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,34 +38,34 @@ class HeChangelogRepository extends ServiceEntityRepository
     /**
      * @return HeChangelog[] Returns an array of HeChangelog objects
      */
-    public function findLastTenBeforeNumero(int $numero): array
+    public function findBetweenNumVersion(string $productUid, string $minNumero, string $maxNumero): array
     {
         return $this->createQueryBuilder('e')
-            ->where('e.numero <= :numero')
-            ->setParameter('numero', $numero)
-            ->orderBy('e.numero', 'DESC')
-            ->setMaxResults(10)
+            ->where('p.uid LIKE :productUid AND e.numVersion BETWEEN :minNumero AND :maxNumero AND e.isDraft = false')
+            ->join('e.product','p')
+            ->setParameter('minNumero', $minNumero)
+            ->setParameter('maxNumero', $maxNumero)
+            ->setParameter('productUid', $productUid)
+            ->orderBy('e.numVersion', 'DESC')
             ->getQuery()
             ->getResult();
     }
 
     /**
-     * @return HeChangelog[] Returns an array of HeChangelog objects
+     * @throws NonUniqueResultException
      */
-    public function findBetweenNumeros(string $productUid, int $minNumero, int $maxNumero): array
+    public function findLastByNumVersion(string $productUid, string $numVersion): ?HeChangelog
     {
         return $this->createQueryBuilder('e')
-            ->where('p.uid LIKE :productUid AND e.numero BETWEEN :minNumero AND :maxNumero')
+            ->where('p.uid LIKE :productUid AND e.numVersion < :numVersion AND e.isDraft = false')
             ->join('e.product','p')
-            ->setParameter('minNumero', $minNumero)
-            ->setParameter('maxNumero', $maxNumero)
+            ->setParameter('numVersion', $numVersion)
             ->setParameter('productUid', $productUid)
-            ->orderBy('e.numero', 'DESC')
+            ->orderBy('e.numVersion', 'DESC')
+            ->setMaxResults(1)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
-
-
 
     //    /**
     //     * @return HeChangelog[] Returns an array of HeChangelog objects

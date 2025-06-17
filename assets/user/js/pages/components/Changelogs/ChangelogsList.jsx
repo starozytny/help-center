@@ -12,8 +12,8 @@ export function ChangelogsList ({ data, highlight, onModal, productSlug }) {
                 <div className="item item-header uppercase text-sm text-gray-600">
                     <div className="item-content">
                         <div className="item-infos">
-                            <div className="col-1">Numéros</div>
-                            <div className="col-2">Version/Titre</div>
+                            <div className="col-1">Version</div>
+                            <div className="col-2">Titre</div>
                             <div className="col-3">Aperçu</div>
                             <div className="col-4 actions" />
                         </div>
