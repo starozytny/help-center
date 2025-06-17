@@ -51,20 +51,31 @@ class HeChangelogRepository extends ServiceEntityRepository
     /**
      * @return HeChangelog[] Returns an array of HeChangelog objects
      */
-    public function findBetweenNumeros(string $productUid, int $minNumero, int $maxNumero): array
+    public function findBetweenNumVersion(string $productUid, string $minNumero, string $maxNumero): array
     {
         return $this->createQueryBuilder('e')
-            ->where('p.uid LIKE :productUid AND e.numero BETWEEN :minNumero AND :maxNumero')
+            ->where('p.uid LIKE :productUid AND e.numVersion BETWEEN :minNumero AND :maxNumero')
             ->join('e.product','p')
             ->setParameter('minNumero', $minNumero)
             ->setParameter('maxNumero', $maxNumero)
             ->setParameter('productUid', $productUid)
-            ->orderBy('e.numero', 'DESC')
+            ->orderBy('e.numVersion', 'DESC')
             ->getQuery()
             ->getResult();
     }
 
-
+    public function findLastByNumVersion(string $productUid, string $numVersion): ?HeChangelog
+    {
+        return $this->createQueryBuilder('e')
+            ->where('p.uid LIKE :productUid AND e.numVersion < :numVersion')
+            ->join('e.product','p')
+            ->setParameter('numVersion', $numVersion)
+            ->setParameter('productUid', $productUid)
+            ->orderBy('e.numVersion', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
     //    /**
     //     * @return HeChangelog[] Returns an array of HeChangelog objects

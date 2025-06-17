@@ -23,16 +23,15 @@ export function ChangelogsItem ({ elem, highlight, onModal, productSlug }) {
 		<div className="item-content">
 			<div className="item-infos">
 				<div className="col-1">
-					<div>
-						<div className="font-bold">{elem.isDraft ? "Brouillon" : elem.numero}</div>
+					<div className="flex flex-col gap-1">
+						<div>
+							{elem.isDraft ? <Badge type="gray">Brouillon</Badge> : <Badge type="blue">{elem.numVersion}</Badge>}
+						</div>
 						<div className="text-gray-600 text-sm">{Sanitaze.toDateFormat(elem.dateAt, 'LL')}</div>
 					</div>
 				</div>
 				<div className="col-2">
-					<div className="flex gap-2">
-						<Badge type="blue">{elem.numVersion}</Badge>
-						<div className="font-medium">{elem.name}</div>
-					</div>
+					<div className="font-medium">{elem.name}</div>
 				</div>
 				<div className="col-3">
 					<ButtonIconA type="default" icon="vision" target="_blank"
