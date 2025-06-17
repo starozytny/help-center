@@ -41,6 +41,7 @@ export function ChangelogFormulaire ({ context, element, productSlug }) {
 		contentCreated={element ? Formulaire.setValue(element.contentCreated) : ""}
 		contentUpdated={element ? Formulaire.setValue(element.contentUpdated) : ""}
 		contentFix={element ? Formulaire.setValue(element.contentFix) : ""}
+		contentNew={element ? Formulaire.setValue(element.contentNew) : ""}
 		isDraft={element ? element.isDraft : true}
 
 		productSlug={productSlug}
@@ -54,6 +55,7 @@ class Form extends Component {
 		let contentCreated = props.contentCreated ? props.contentCreated : "";
 		let contentUpdated = props.contentUpdated ? props.contentUpdated : "";
 		let contentFix = props.contentFix ? props.contentFix : "";
+		let contentNew = props.contentNew ? props.contentNew : "";
 
 		this.state = {
 			id: props.id,
@@ -66,6 +68,7 @@ class Form extends Component {
 			contentCreated: { value: contentCreated, html: contentCreated },
 			contentUpdated: { value: contentUpdated, html: contentUpdated },
 			contentFix: { value: contentFix, html: contentFix },
+			contentNew: { value: contentNew, html: contentNew },
 			isDraft: props.isDraft,
 			errors: [],
 			productSlug: props.productSlug,
@@ -160,7 +163,7 @@ class Form extends Component {
 
 	render () {
         const { context } = this.props;
-		const { errors, numero, numVersion, isPatch, name, dateAt, contentCreated, contentUpdated, contentFix } = this.state;
+		const { errors, numero, numVersion, isPatch, name, dateAt, contentCreated, contentUpdated, contentFix, contentNew } = this.state;
 
         let params0 = { errors: errors, onChange: this.handleChange };
         let params1 = { errors: errors, onUpdateData: this.handleChangeTinyMCE };
@@ -231,6 +234,11 @@ class Form extends Component {
 						<div>
 							<TinyMCE type={99} identifiant='contentFix' valeur={contentFix.value} {...params1}>
 								Correctifs
+							</TinyMCE>
+						</div>
+						<div>
+							<TinyMCE type={99} identifiant='contentNew' valeur={contentNew.value} {...params1}>
+								Nouveautés
 							</TinyMCE>
 						</div>
                     </div>

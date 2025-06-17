@@ -46,6 +46,10 @@ class HeChangelog
     #[Groups(['changelog_list', 'changelog_form'])]
     private ?string $contentFix = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['changelog_list', 'changelog_form'])]
+    private ?string $contentNew = null;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Groups(['changelog_list'])]
     private ?\DateTimeInterface $createdAt = null;
@@ -152,6 +156,18 @@ class HeChangelog
     public function setContentFix(?string $contentFix): static
     {
         $this->contentFix = $contentFix;
+
+        return $this;
+    }
+
+    public function getContentNew(): ?string
+    {
+        return $this->contentNew;
+    }
+
+    public function setContentNew(?string $contentNew): static
+    {
+        $this->contentNew = $contentNew;
 
         return $this;
     }

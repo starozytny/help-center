@@ -100,6 +100,7 @@ class DataHelp
             ->setContentCreated($this->sanitizeData->trimData($data->contentCreated->html))
             ->setContentUpdated($this->sanitizeData->trimData($data->contentUpdated->html))
             ->setContentFix($this->sanitizeData->trimData($data->contentFix->html))
+            ->setContentNew($this->sanitizeData->trimData($data->contentNew->html))
         ;
     }
 }
