@@ -39,11 +39,14 @@ export function TinyMCE (props){
             {children}
         </label>
         <Editor
+            licenseKey='gpl'
             tinymceScriptSrc={location.origin + '/tinymce/tinymce.min.js'}
             onInit={(evt, editor) => editorRef.current = editor}
             id={identifiant}
             initialValue={val}
             init={{
+                browser_spellcheck: true,
+                contextmenu: false,
                 menubar: false,
                 plugins: [
                     'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
