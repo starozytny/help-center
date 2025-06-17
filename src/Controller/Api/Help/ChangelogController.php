@@ -6,6 +6,7 @@ use App\Repository\Main\Help\HeChangelogRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Service\ApiResponse;
 use App\Service\Changelogs\ChangelogsService;
+use Doctrine\ORM\NonUniqueResultException;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,10 +29,9 @@ class ChangelogController extends AbstractController
      * Génère un changelog HTML entre deux versions.
      *
      * Cette route permet de générer un changelog HTML entre deux numéros de version donnés.
-
      * @throws SyntaxError
      * @throws RuntimeError
-     * @throws LoaderError
+     * @throws LoaderError|NonUniqueResultException
      */
     #[OA\Parameter(
         name: 'productUid',
@@ -89,8 +89,8 @@ class ChangelogController extends AbstractController
             return $apiResponse->apiJsonResponseBadRequest('Produit inconnu.');
         }
 
-        $fromObj = $repository->findOneBy(['product' => $product, 'numVersion' => $fromNumVersion], ['numero' => 'ASC']);
-        $toObj = $repository->findOneBy(['product' => $product, 'numVersion' => $toNumVersion], ['numero' => 'DESC']);
+        $fromObj = $repository->findOneBy(['product' => $product, 'numVersion' => $fromNumVersion, 'isDraft' => false], ['numero' => 'ASC']);
+        $toObj = $repository->findOneBy(['product' => $product, 'numVersion' => $toNumVersion, 'isDraft' => false], ['numero' => 'DESC']);
 
         if(!$toObj){
             return $apiResponse->apiJsonResponseBadRequest('Vérifiez l\'existence des numéros de version renseignés.');
