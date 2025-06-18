@@ -36,7 +36,10 @@ input:disabled{
 }
 
 ul{
-  list-style: disc;
+  margin-left: 36px;
+}
+
+.MsoListParagraphCxSpFirst, .MsoListParagraphCxSpMiddle, .MsoListParagraphCxSpLast{
   margin-left: 36px;
 }
 
@@ -117,6 +120,10 @@ input[type=number] {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+  }
+
+  ul, ol, .MsoListParagraphCxSpFirst, .MsoListParagraphCxSpMiddle, .MsoListParagraphCxSpLast {
+    list-style: revert;
   }
 }
 

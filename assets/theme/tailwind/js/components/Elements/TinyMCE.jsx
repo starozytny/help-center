@@ -55,11 +55,16 @@ export function TinyMCE (props){
                     'image', 'autoresize', 'emoticons'
                 ],
                 toolbar: 'undo redo | blocks | ' +
-                    'bold italic forecolor | ' + (type === 99 ? '' : 'image') + ' emoticons | link |' +
+                    'bold italic underline forecolor | ' + (type === 99 ? '' : 'image') + ' emoticons link |' +
                     'alignleft aligncenter alignright alignjustify | ' +
                     'bullist numlist outdent indent | ' +
-                    'removeformat | help',
-                content_style: 'body { font-family:Barlow,Helvetica,Arial,sans-serif; font-size:14px }',
+                    'removeformat code',
+                content_style: `
+                    body { font-family:Barlow,Helvetica,Arial,sans-serif; font-size:14px }
+                    p.MsoListParagraph, p.MsoListParagraphCxSpFirst, p.MsoListParagraphCxSpMiddle, p.MsoListParagraphCxSpLast {
+                        margin-left: 36px;
+                    }
+                `,
                 automatic_uploads: true,
                 images_upload_url: Routing.generate(URL_UPLOAD_IMAGE, parametres),
             }}

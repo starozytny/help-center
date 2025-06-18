@@ -194,7 +194,7 @@ class Form extends Component {
 								<Input identifiant="numero" valeur={numero} {...params0}>
 									Numéro
 									<br/>
-									<span class="text-yellow-600">En cas de changement, le compteur automatique ne sera pas affecté.</span>
+									<span className="text-yellow-600">En cas de changement, le compteur automatique ne sera pas affecté.</span>
 								</Input>
 							</div>
 							: null
