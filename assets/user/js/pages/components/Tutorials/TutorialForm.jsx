@@ -214,7 +214,7 @@ class Form extends Component {
                                     Statut *
                                 </Radiobox>
                             </div>
-                            <div class="w-full">
+                            <div className="w-full">
                                 <Radiobox items={visibilityItems} identifiant="visibility" valeur={visibility} {...params0}>
                                     Visibilité *
                                 </Radiobox>

@@ -116,7 +116,7 @@ class Form extends Component {
                     </div>
 					<div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
 						<div className="flex gap-4">
-							<div class="w-full">
+							<div className="w-full">
 								<Radiobox items={visibilityItems} identifiant="visibility" valeur={visibility} {...params0}>
 									Visibilité *
 								</Radiobox>
