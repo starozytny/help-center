@@ -47,7 +47,7 @@ export function TinyMCE (props){
             init={{
                 browser_spellcheck: true,
                 contextmenu: 'spellchecker',
-                menubar: false,
+                menubar: true,
                 plugins: [
                     'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
                     'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
@@ -56,7 +56,7 @@ export function TinyMCE (props){
                 ],
                 toolbar: 'undo redo | blocks | ' +
                     'bold italic underline forecolor | ' + (type === 99 ? '' : 'image') + ' emoticons link |' +
-                    'alignleft aligncenter alignright alignjustify | ' +
+                    'alignleft aligncenter alignright alignjustify ' +
                     'bullist numlist outdent indent | ' +
                     'removeformat code',
                 content_style: `

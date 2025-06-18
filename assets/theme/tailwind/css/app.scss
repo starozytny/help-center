@@ -125,6 +125,10 @@ input[type=number] {
   ul, ol, .MsoListParagraphCxSpFirst, .MsoListParagraphCxSpMiddle, .MsoListParagraphCxSpLast {
     list-style: revert;
   }
+
+  table{
+    border: revert;
+  }
 }
 
 @layer base {
