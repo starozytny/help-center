@@ -68,7 +68,7 @@
             <div class="flex flex-col gap-12 mt-8">
                 {% for elem in lastData %}
                 <div class="w-full relative mx-auto grid gap-4 md:gap-8 xl:grid-cols-3">
-                    <div class="col-span-2">
+                    <div class="w-full xl:col-span-2">
                         <div class="flex flex-col gap-8 md:flex-row">
                             <div class="w-full">
                                 <div class="p-4 bg-white border border-gray-100 shadow-sm rounded-lg">
@@ -123,7 +123,7 @@
                         </div>
                     </div>
                     {% if elem.contentNew and elem.contentNew != "" and elem.contentNew != "<p><br></p>" %}
-                        <div>
+                        <div class="w-full">
                             <div class="p-4 bg-white border border-gray-100 shadow-sm rounded-lg">
                                 <div class="h-8">
                                     <div class="text-xl font-semibold text-blue-500">Actualités</div>
