@@ -40,6 +40,7 @@ export function ChangelogsItem ({ elem, highlight, onModal, productSlug }) {
 					</ButtonIconA>
 				</div>
 				<div className="col-4 actions">
+					<ButtonIcon type="default" icon="copy" onClick={() => onModal("duplicate", elem)}>Dupliquer</ButtonIcon>
 					<ButtonIconA type="default" icon="pencil" onClick={urlUpdate}>Modifier</ButtonIconA>
 					<ButtonIcon type="default" icon="trash" onClick={() => onModal("delete", elem)}>Supprimer</ButtonIcon>
 				</div>

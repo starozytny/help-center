@@ -8,6 +8,7 @@ use App\Repository\Main\Help\HeChangelogRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Service\ApiResponse;
 use App\Service\Data\DataHelp;
+use App\Service\SanitizeData;
 use App\Service\ValidatorService;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -118,5 +119,25 @@ class ChangelogController extends AbstractController
         $repository->remove($obj, true);
 
         return $apiResponse->apiJsonResponseSuccessful("ok");
+    }
+
+    #[Route('/duplicate/{id}', name: 'duplicate', options: ['expose' => true], methods: 'POST')]
+    public function duplicate(Request $request, HeChangelog $obj, ApiResponse $apiResponse,
+                              HeChangelogRepository $repository, SanitizeData $sanitizeData): Response
+    {
+        $data = json_decode($request->getContent());
+
+        $product = $obj->getProduct();
+
+        $newObj = clone $obj;
+
+        $newObj->setNumero($product->getNumeroChangelogVersion() + 1);
+        $newObj->setNumVersion($sanitizeData->trimData($data->numVersion));
+
+        $product->setNumeroChangelogVersion($product->getNumeroChangelogVersion() + 1);
+
+        $repository->save($newObj, true);
+
+        return $apiResponse->apiJsonResponseCustom(['id' => $newObj->getId()]);
     }
 }
