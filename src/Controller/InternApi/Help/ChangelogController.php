@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Uid\Uuid;
 
 #[Route('/intern/api/help/changelogs', name: 'intern_api_help_changelogs_')]
 #[IsGranted('ROLE_ADMIN')]
@@ -131,8 +132,14 @@ class ChangelogController extends AbstractController
 
         $newObj = clone $obj;
 
+        $newObj->setIsDraft(true);
         $newObj->setNumero($product->getNumeroChangelogVersion() + 1);
         $newObj->setNumVersion($sanitizeData->trimData($data->numVersion));
+        $newObj->setUid(Uuid::v7()->toBase58());
+        $newObj->setDateAt(new DateTime());
+        $newObj->setName($obj->getName() . " (duplicate)");
+        $newObj->setCreatedAt(new DateTime());
+        $newObj->setUpdatedAt(null);
 
         $product->setNumeroChangelogVersion($product->getNumeroChangelogVersion() + 1);
 
