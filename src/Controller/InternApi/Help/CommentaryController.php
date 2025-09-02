@@ -7,7 +7,7 @@ use App\Entity\Main\User;
 use App\Repository\Main\Help\HeCommentaryRepository;
 use App\Repository\Main\Help\HeDocumentationRepository;
 use App\Repository\Main\Help\HeTutorialRepository;
-use App\Service\ApiResponse;
+use App\Service\Api\ApiResponse;
 use App\Service\Data\DataHelp;
 use App\Service\MailerService;
 use App\Service\SettingsService;

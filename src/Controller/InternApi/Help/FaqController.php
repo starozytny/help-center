@@ -8,7 +8,7 @@ use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
 use App\Repository\Main\Help\HeCategoryRepository;
 use App\Repository\Main\Help\HeQuestionRepository;
-use App\Service\ApiResponse;
+use App\Service\Api\ApiResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;

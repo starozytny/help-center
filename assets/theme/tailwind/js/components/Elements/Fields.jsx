@@ -16,11 +16,9 @@ import { ComboboxMultiple, ComboboxSimple } from "@shadcnComponents/elements/Com
  * INPUT View
  ***************************************/
 export function InputView (props) {
-	const { identifiant, valeur, errors, children, cursor = "" } = props;
+	const { identifiant, valeur, errors, children, cursor = "", bgColor = "bg-gray-100" } = props;
 
 	let error = getError(errors, identifiant);
-
-	let styleInput = "block bg-gray-100 w-full rounded-md border-0 py-2 px-3 text-sm text-gray-900 ring-1 ring-inset placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-500";
 
 	return <>
 		<label htmlFor={identifiant} className="block text-sm font-medium leading-6 text-gray-900">
@@ -28,7 +26,11 @@ export function InputView (props) {
 		</label>
 		<div className="relative rounded-md shadow-sm">
 			<input type="text" name={identifiant} id={identifiant} value={valeur === null ? "" : valeur} disabled={true}
-				   className={styleInput + " " + (error ? "ring-red-400" : "ring-gray-300")} />
+				   className={cn(
+					   'block bg-gray-100 w-full rounded-md border-0 py-2 px-3 text-sm text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-500',
+					   bgColor,
+					   error && "ring-red-400"
+				   )} />
 		</div>
 		<ErrorContent error={error} />
 	</>
@@ -168,7 +170,7 @@ Input.propTypes = {
 	autocomplete: PropTypes.string,
 	placeholder: PropTypes.string,
 	password: PropTypes.bool,
-	min: PropTypes.number,
+	min: PropTypes.any,
 	max: PropTypes.number,
 }
 
@@ -178,12 +180,21 @@ Input.propTypes = {
 export function InputCity (props) {
 	const { identifiant, valeur, errors, onChange, children, placeholder = "", autocomplete = "on", cities, openCities, onSelectCity } = props;
 
+	const [city, setCity] = useState(valeur);
 	const [isOpen, setIsOpen] = useState(openCities === identifiant);
 
 	useEffect(() => {
 		setIsOpen(openCities === identifiant)
 	}, [props.openCities]);
 
+	useEffect(() => {
+		setCity("")
+	}, [props.cities]);
+
+	let handleChange = (identifiant, value) => {
+		setCity(value);
+		onSelectCity(identifiant, value);
+	}
 
 	let error = getError(errors, identifiant);
 
@@ -194,26 +205,14 @@ export function InputCity (props) {
 			{children}
 		</label>
 		<div className="relative rounded-md">
-			<div className={`fixed top-0 left-0 w-full h-full inset-0 bg-gray-500 bg-opacity-75 transition-opacity ease-out duration-300 ${isOpen ? "opacity-100 z-10" : "opacity-0 -z-10"}`}
-				 onClick={() => setIsOpen(false)}></div>
-			<input type="text" name={identifiant} id={identifiant} value={valeur}
-				   placeholder={placeholder} onChange={onChange} autoComplete={autocomplete}
-				   className={styleInput + " w-full " + (error ? "ring-red-400" : "ring-gray-300")}
-			/>
-			{cities && <div className={`relative ${isOpen ? "z-10" : ""}`}>
-				<div className={isOpen ? "absolute block top-0 left-0 z-10" : "hidden"}>
-					<div className="w-64 max-h-64 overflow-y-auto origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-						<div className="py-2">
-							{cities.map((ci, index) => {
-								return <div className="w-full flex px-2 py-1.5 cursor-pointer hover:bg-gray-100"
-											key={index} onClick={() => onSelectCity(identifiant, ci.city)}>
-									{ci.city}
-								</div>
-							})}
-						</div>
-					</div>
-				</div>
-			</div>}
+			{cities && cities.length > 1
+				? <SelectShadcn identifiant={identifiant} valeur={city} items={cities}
+								errors={[]} onSelect={handleChange} noEmpty={true} open={isOpen} onOpenChange={setIsOpen} />
+				: <input type="text" name={identifiant} id={identifiant} value={valeur}
+						 placeholder={placeholder} onChange={onChange} autoComplete={autocomplete}
+						 className={styleInput + " w-full " + (error ? "ring-red-400" : "ring-gray-300")}
+				/>
+			}
 		</div>
 		<ErrorContent error={error} />
 	</>
@@ -391,20 +390,30 @@ export function Radiobox ({
 			isChecked = true
 		}
 
-		let styleLabel = "block text-sm font-medium leading-6 " + labelClass;
-		if (styleType === "fat") {
-			styleLabel = "block text-sm font-medium leading-6 cursor-pointer px-3 py-2 rounded-full ring-1 ring-inset "
-				+ (isChecked ? "bg-blue-700 ring-blue-700 text-slate-50" : "bg-white hover:bg-gray-50 ring-gray-300 text-gray-900")
-				+ " " + labelClass
-		}
-
-		return <div className="flex items-center gap-2" key={index}>
+		return <div className={cn("flex items-center gap-2", styleType === "box-icon" && "w-full")} key={index}>
 			<input type="radio" id={elem.identifiant} name={identifiant} value={elem.value} onClick={onChange} defaultChecked={isChecked}
-				   className={styleType === "fat" ? "hidden" : "h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"} />
+				   className={styleType ? "hidden" : "h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-600"} />
 			<label htmlFor={elem.identifiant}
-				   className={`${styleLabel}`}
+				   className={cn("block text-sm font-medium leading-6",
+					   styleType === "fat" && "cursor-pointer px-3 py-2 rounded-full ring-1 ring-inset bg-white ring-gray-300 text-gray-900 hover:bg-gray-50",
+					   (styleType === "fat" && isChecked) && "bg-blue-700 ring-blue-700 text-slate-50 hover:bg-blue-700",
+					   styleType === "box" && "relative overflow-hidden leading-normal cursor-pointer px-6 py-2 rounded-md bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50 text-gray-900",
+					   (styleType === "box" && isChecked) && "ring-blue-700",
+					   styleType === "box-icon" && "relative w-full overflow-hidden flex flex-col gap-2 items-center justify-center cursor-pointer p-6 rounded-md bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50 text-gray-900 text-base",
+					   (styleType === "box-icon" && isChecked) && "ring-blue-700",
+					   labelClass
+				   )}
 			>
+				{styleType === "box-icon" && <span className={`icon-${elem.icon} text-xl`}></span>}
 				{elem.label}
+				{(styleType === "box" || styleType === "box-icon") && isChecked
+					? <div className="absolute -top-[14px] -right-[14px]">
+						<div className="bg-blue-600 w-10 h-8 rotate-[40deg] flex justify-center items-end pb-1">
+							<span className="icon-check1 inline-block translate-y-0.5 text-xs text-white -rotate-[38deg]"></span>
+						</div>
+					</div>
+					: null
+				}
 			</label>
 		</div>
 	})
@@ -437,7 +446,7 @@ Radiobox.propTypes = {
  * SELECT Custom
  ***************************************/
 export function SelectShadcn (props) {
-	const { identifiant, valeur, items, errors, onSelect, children, placeholder, withGroup, noEmpty } = props;
+	const { identifiant, valeur, items, errors, onSelect, children, placeholder, withGroup, noEmpty, open, onOpenChange } = props;
 
 	let error = getError(errors, identifiant);
 
@@ -447,11 +456,22 @@ export function SelectShadcn (props) {
 		</label>
 		<div className="relative rounded-md">
 			<SelectSimple identifiant={identifiant} items={items} valeur={valeur} onSelect={onSelect}
-						  placeholder={placeholder} withGroup={withGroup} noEmpty={noEmpty}
+						  placeholder={placeholder} withGroup={withGroup} noEmpty={noEmpty} open={open} onOpenChange={onOpenChange}
 						  btnClassName={error ? "border-red-500" : "border-gray-300"} />
 		</div>
 		<ErrorContent error={error} />
 	</>
+}
+
+SelectShadcn.propTypes = {
+	items: PropTypes.array.isRequired,
+	identifiant: PropTypes.string.isRequired,
+	valeur: PropTypes.node.isRequired,
+	errors: PropTypes.array.isRequired,
+	onSelect: PropTypes.func.isRequired,
+	children: PropTypes.node,
+	noEmpty: PropTypes.bool,
+	withGroup: PropTypes.bool,
 }
 
 export function SelectCombobox (props) {
@@ -477,8 +497,20 @@ export function SelectCombobox (props) {
 	</>
 }
 
+SelectCombobox.propTypes = {
+	items: PropTypes.array.isRequired,
+	identifiant: PropTypes.string.isRequired,
+	valeur: PropTypes.node.isRequired,
+	errors: PropTypes.array.isRequired,
+	onSelect: PropTypes.func.isRequired,
+	children: PropTypes.node,
+	toSort: PropTypes.bool,
+}
+
 export function SelectComboboxMultiple (props) {
-	const { identifiant, valeur, items, errors, onSelect, onChange, children, placeholder, toSort, withInput, withItems = true } = props;
+	const {
+		identifiant, valeur, items, errors, onSelect, onChange, children, placeholder, toSort, withInput,
+		withItems = true, onlyValue = false, btnClassName } = props;
 
 	let error = getError(errors, identifiant);
 
@@ -492,11 +524,21 @@ export function SelectComboboxMultiple (props) {
 		</label>
 		<div className="w-full relative rounded-md">
 			<ComboboxMultiple identifiant={identifiant} items={items} valeurs={valeur} onSelect={onSelect} onChange={onChange}
-							  placeholder={placeholder} withInput={withInput} withItems={withItems}
-							  btnClassName={error ? "border-red-500" : "border-gray-300"} />
+							  placeholder={placeholder} withInput={withInput} withItems={withItems} onlyValue={onlyValue}
+							  btnClassName={cn(error ? "border-red-500" : "border-gray-300", btnClassName)} />
 		</div>
 		<ErrorContent error={error} />
 	</>
+}
+
+SelectComboboxMultiple.propTypes = {
+	items: PropTypes.array.isRequired,
+	identifiant: PropTypes.string.isRequired,
+	valeur: PropTypes.array.isRequired,
+	errors: PropTypes.array.isRequired,
+	onSelect: PropTypes.func.isRequired,
+	children: PropTypes.node,
+	toSort: PropTypes.bool,
 }
 
 /***************************************

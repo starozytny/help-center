@@ -147,7 +147,7 @@ export class Users extends Component {
 		let self = this;
 		let instance = axios.create();
 		instance.interceptors.request.use((config) => {
-			self.blocked.current.handleUpdateFooter(<ButtonIcon type={element.blocked ? "blue" : "red"} icon="chart-3" />);
+			self.blocked.current.handleUpdateFooter(<ButtonIcon type={element.isBlocked ? "blue" : "red"} icon="chart-3" />);
 			return config;
 		}, function (error) {
 			modalBlocked(self, element);
@@ -156,7 +156,7 @@ export class Users extends Component {
 		instance({ method: "PUT", url: Routing.generate(URL_SWITCH_BLOCKED, { 'token': element.token }), data: {} })
 			.then(function (response) {
 				let elem = response.data;
-				Toastr.toast('info', elem.blocked ? "Utilisateur bloqué" : "Utilisateur débloqué");
+				Toastr.toast('info', elem.isBlocked ? "Utilisateur bloqué" : "Utilisateur débloqué");
 				modalBlocked(self, elem);
 				self.handleUpdateList(elem, "update")
 				instance.interceptors.request.clear();
@@ -197,7 +197,7 @@ export class Users extends Component {
 								perPage={perPage} onUpdate={this.handleUpdateData} onChangeCurrentPage={this.handleChangeCurrentPage} />
 
 					<ModalDelete refModal={this.delete} element={element} routeName={URL_DELETE_ELEMENT}
-								 title="Supprimer cet utilisateur" msgSuccess="Utilisateur supprimé"
+								 title="Supprimer cet utilisateur" msgSuccess="Utilisateur supprimé."
 								 onUpdateList={this.handleUpdateList}>
 						Êtes-vous sûr de vouloir supprimer définitivement cet utilisateur ?
 					</ModalDelete>
@@ -210,7 +210,7 @@ export class Users extends Component {
 						   content={<MailFormulaire identifiant="mail" from={userEmail} element={element} tos={dataImmuable} />}
 						   footer={null} />
 					<Modal ref={this.blocked} identifiant="blocked" maxWidth={414}
-						   title={element ? (element.blocked ? "Déblocage" : "Blocage") + " de " + element.lastname : ""}
+						   title={element ? (element.isBlocked ? "Déblocage" : "Blocage") + " de " + element.lastname : ""}
 						   content={null} footer={null} />
 				</>
 			}
@@ -229,8 +229,8 @@ function modalBlocked (self, element) {
 		Le blocage d'un utilisateur lui interdit l'accès au site par ce compte. <br /><br />
 		Le déblocage d'un utilisateur lui redonne accès au site par ce compte.
 	</p>);
-	self.blocked.current.handleUpdateFooter(<Button type={element.blocked ? "blue" : "red"} onClick={self.handleBlocked}>
-		{element.blocked ? "Débloquer" : "Bloquer"}
+	self.blocked.current.handleUpdateFooter(<Button type={element.isBlocked ? "blue" : "red"} onClick={self.handleBlocked}>
+		{element.isBlocked ? "Débloquer" : "Bloquer"}
 	</Button>);
 	self.blocked.current.handleUpdateCloseTxt("Annuler");
 }

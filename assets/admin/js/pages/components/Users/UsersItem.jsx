@@ -10,8 +10,8 @@ import Toastr from "@tailwindFunctions/toastr";
 
 import { setHighlightClass, useHighlight } from "@commonHooks/item";
 
-import { ButtonIcon, ButtonIconA, ButtonIconDropdown } from "@tailwindComponents/Elements/Button";
 import { Badge } from "@tailwindComponents/Elements/Badge";
+import { ButtonIcon, ButtonIconA, ButtonIconDropdown, DropdownItem, DropdownItemA } from "@tailwindComponents/Elements/Button";
 
 const URL_UPDATE_PAGE = "admin_users_update";
 const URL_READ_PAGE = "admin_users_read";
@@ -30,79 +30,70 @@ export function UsersItem ({ elem, highlight, onModal }) {
 	let urlUpdate = Routing.generate(URL_UPDATE_PAGE, { 'id': elem.id });
 	let urlRead = Routing.generate(URL_READ_PAGE, { 'id': elem.id });
 	let urlPass = Routing.generate(URL_PASSWORD_PAGE, { 'id': elem.id });
+    let blocked = !elem.isAdmin && (elem.isBlocked || elem.society.isBlocked);
 
 	let lastLoginAt = elem.lastLoginAt ? moment(elem.lastLoginAt) : null;
 
-	let styleItemDropdown = "w-full inline-block px-2 py-1.5 cursor-pointer hover:bg-gray-100";
+    let menu = [
+        { data: <DropdownItem icon="refresh" onClick={() => onModal("reinit", elem)}>
+                Générer un nouveau mot de passe
+        </DropdownItem> },
+        { data: <DropdownItemA icon="lock-1" onClick={urlPass}>
+                Modifier son mot de passe
+        </DropdownItemA> },
+        { data: <DropdownItem icon="email-edit" onClick={() => onModal("mail", elem)}>
+                Envoyer un mail
+        </DropdownItem> },
+        { data: <DropdownItem icon={elem.isBlocked ? "unlock" : "disabled"} onClick={() => onModal("blocked", elem)}>
+                {elem.isBlocked ? "Débloquer" : "Bloquer"}
+        </DropdownItem> },
+    ]
 
-	let menu = [
-		{
-			data: <a className={styleItemDropdown} onClick={() => onModal("reinit", elem)}>
-				<span className="icon-refresh" />
-				<span className="pl-1">Générer un nouveau mot de passe</span>
-			</a>
-		},
-		{
-			data: <a className={styleItemDropdown} href={urlPass}>
-				<span className="icon-lock-1" />
-				<span className="pl-1">Modifier son mot de passe</span>
-			</a>
-		},
-		{
-			data: <a className={styleItemDropdown} onClick={() => onModal("mail", elem)}>
-				<span className="icon-email-edit" />
-				<span className="pl-1">Envoyer un mail</span>
-			</a>
-		},
-		{
-			data: <a className={styleItemDropdown} onClick={() => onModal("blocked", elem)}>
-				<span className={"icon-" + (elem.blocked ? "unlock" : "disabled")} />
-				<span className="pl-1">{elem.blocked ? "Débloquer" : "Bloquer"}</span>
-			</a>
-		}
-	]
-
-	return <div className={`item${setHighlightClass(nHighlight)} border-t hover:bg-slate-50`} ref={refItem}>
-		<div className="item-content">
-			<div className="item-infos">
-				<div className="col-1 flex flex-row gap-4">
-					<a href={urlRead} className="w-16 h-16 rounded-md overflow-hidden">
-						{elem.avatarFile
-							? <img src={elem.avatarFile} alt="avatar" className="w-full h-full object-cover" />
-							: <div className="h-full w-full rounded-md bg-gray-300 flex items-center justify-center font-semibold">
-								{elem.lastname.slice(0, 1) + elem.firstname.slice(0, 1)}
-							</div>
-						}
-					</a>
-					<div className="leading-4">
-						<div className={"font-medium mb-1" + (elem.blocked ? " blocked" : "")}>
-							<span>{elem.lastname} {elem.firstname}</span>
-							{elem.blocked ? <span className="icon-disabled" title="Bloqué" /> : null}
-						</div>
-						<div className="text-gray-600 text-sm">{elem.society.code} - {elem.society.name}</div>
-						<div className="text-gray-600 text-sm cursor-pointer" onClick={handleCopyToken}>
-							<span>Copier le Token</span> <span className="icon-copy text-blue-500" />
-						</div>
-						<div className="text-gray-600 text-sm mt-1">{lastLoginAt ? "connecté " + lastLoginAt.fromNow() : ""}</div>
-					</div>
-				</div>
-				<div className="col-2 leading-5">
-					<div className={elem.blocked ? "blocked" : ""}>{elem.username}</div>
-					<div className="text-gray-600 text-sm">{elem.email}</div>
-				</div>
-				<div className="col-3">
-					<Badge type={elem.blocked ? "red" : getBadgeType(elem.highRoleCode)}>
-						{elem.highRole} {elem.blocked ? <span className="icon-disabled pl-1" title="Bloqué" /> : ""}
-					</Badge>
-				</div>
-				<div className="col-4 actions">
-					<ButtonIconA type="default" icon="pencil" onClick={urlUpdate}>Modifier</ButtonIconA>
-					<ButtonIcon type="default" icon="trash" onClick={() => onModal("delete", elem)}>Supprimer</ButtonIcon>
-					<ButtonIconDropdown icon="more" items={menu} />
-				</div>
-			</div>
-		</div>
-	</div>
+    return <div className={`item${setHighlightClass(nHighlight)} border-t hover:bg-slate-50`} ref={refItem}>
+        <div className="item-content">
+            <div className="item-infos">
+                <div className="col-1 flex flex-row gap-4">
+                    <a href={urlRead} className="w-16 h-16 rounded-md overflow-hidden">
+                        {blocked
+                            ? <div className="w-full h-full bg-gray-600 flex items-center justify-center text-slate-50">
+                                <span className="icon-disabled !text-xl !font-semibold"></span>
+                            </div>
+                            : elem.avatarFile
+                                ? <img src={elem.avatarFile} alt="avatar" className="w-full h-full object-cover" />
+                                : <div className="h-full w-full rounded-md bg-gray-300 flex items-center justify-center font-semibold">
+                                    {elem.lastname.slice(0, 1) + elem.firstname.slice(0, 1)}
+                                </div>
+                        }
+                    </a>
+                    <div className="leading-4">
+                        <div className={blocked ? "blocked" : ""}>
+                            <div className={"font-medium mb-1" + (blocked ? " blocked" : "")}>
+                                <span>{elem.lastname} {elem.firstname}</span>
+                                {blocked ? <span className="icon-disabled" title="Bloqué" /> : null}
+                            </div>
+                            <div className="text-gray-600">{elem.society.code} - {elem.society.name}</div>
+                            <div className="text-gray-600 text-sm mt-1">{lastLoginAt ? "connecté " + lastLoginAt.fromNow() : ""}</div>
+                        </div>
+                        {elem.society.isBlocked ? <span className="text-xs text-red-500 font-medium">(Société bloquée)</span> : ""}
+                    </div>
+                </div>
+                <div className={`col-2 leading-5 ${blocked ? "blocked" : ""}`}>
+                    <div>{elem.username}</div>
+                    <div className="text-gray-600 text-sm">{elem.email}</div>
+                </div>
+                <div className={`col-3 ${blocked ? "blocked" : ""}`}>
+                    <Badge type={blocked ? "red" : getBadgeType(elem.highRoleCode)}>
+                        {elem.highRole} {blocked ? <span className="icon-disabled pl-1" title="Bloqué" /> : ""}
+                    </Badge>
+                </div>
+                <div className="col-4 actions">
+                    <ButtonIconA type="default" icon="pencil" onClick={urlUpdate}>Modifier</ButtonIconA>
+                    <ButtonIcon type="default" icon="trash" onClick={() => onModal("delete", elem)}>Supprimer</ButtonIcon>
+                    <ButtonIconDropdown icon="more" items={menu} />
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 UsersItem.propTypes = {

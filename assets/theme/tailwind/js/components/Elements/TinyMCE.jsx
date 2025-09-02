@@ -65,6 +65,9 @@ export function TinyMCE (props){
                         margin-left: 36px;
                     }
                 `,
+                relative_urls: false,
+                remove_script_host: false,
+                convert_urls: false,
                 automatic_uploads: true,
                 images_upload_url: Routing.generate(URL_UPLOAD_IMAGE, parametres),
             }}

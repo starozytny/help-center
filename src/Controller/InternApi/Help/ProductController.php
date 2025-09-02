@@ -8,7 +8,7 @@ use App\Entity\Main\Help\HeQuestion;
 use App\Entity\Main\Help\HeTutorial;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Repository\Main\Help\HeQuestionRepository;
-use App\Service\ApiResponse;
+use App\Service\Api\ApiResponse;
 use App\Service\Data\DataHelp;
 use App\Service\FileUploader;
 use App\Service\SanitizeData;

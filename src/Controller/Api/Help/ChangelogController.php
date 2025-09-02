@@ -4,7 +4,7 @@ namespace App\Controller\Api\Help;
 
 use App\Repository\Main\Help\HeChangelogRepository;
 use App\Repository\Main\Help\HeProductRepository;
-use App\Service\ApiResponse;
+use App\Service\Api\ApiResponse;
 use App\Service\Changelogs\ChangelogsService;
 use Doctrine\ORM\NonUniqueResultException;
 use OpenApi\Attributes as OA;
@@ -93,26 +93,30 @@ class ChangelogController extends AbstractController
         $toObj = $repository->findOneBy(['product' => $product, 'numVersion' => $toNumVersion, 'isDraft' => false], ['numero' => 'DESC']);
 
         if(!$toObj){
-            return $apiResponse->apiJsonResponseBadRequest('Vérifiez l\'existence des numéros de version renseignés.');
-        }
-
-        if($fromObj){
-            if($fromObj->getNumVersion() > $toObj->getNumVersion()){
-                return $apiResponse->apiJsonResponseBadRequest('La version ' . $fromNumVersion . ' est supérieur à la version ' . $toNumVersion . '.');
-            }
-
-            $objs = $repository->findBetweenNumVersion($productUid, $fromObj->getNumVersion(), $toObj->getNumVersion());
+            $toObj = $fromObj;
+            $objs = $repository->findBetweenNumVersion($productUid, $fromObj->getNumVersion(), 999999);
         }else{
-            //cas have object inferior
-            $lastObj = $repository->findLastByNumVersion($productUid, $fromNumVersion);
-            if($lastObj){
-                $objs = $repository->findBetweenNumVersion($productUid, $lastObj->getNumVersion(), $toObj->getNumVersion());
-                if(count($objs) > 1){
-                    array_pop($objs);
+            if($fromObj){
+                if($fromObj->getNumVersion() > $toObj->getNumVersion()){
+                    return $apiResponse->apiJsonResponseBadRequest('La version ' . $fromNumVersion . ' est supérieur à la version ' . $toNumVersion . '.');
                 }
+
+                $objs = $repository->findBetweenNumVersion($productUid, $fromObj->getNumVersion(), $toObj->getNumVersion());
             }else{
-                //cas no object inferior
-                $objs = $repository->findBetweenNumVersion($productUid, 0, $toObj->getNumVersion());
+                //cas have object inferior
+                $lastObj = $repository->findLastByNumVersion($productUid, $fromNumVersion);
+                if($lastObj){
+                    $objs = $repository->findBetweenNumVersion($productUid, $lastObj->getNumVersion(), $toObj->getNumVersion());
+                    if(count($objs) > 1){
+                        array_pop($objs);
+                    }
+                    if(count($objs) == 0){
+                        $objs = $repository->findBetweenNumVersion($productUid, 0, $toObj->getNumVersion());
+                    }
+                }else{
+                    //cas no object inferior
+                    $objs = $repository->findBetweenNumVersion($productUid, 0, $toObj->getNumVersion());
+                }
             }
         }
 

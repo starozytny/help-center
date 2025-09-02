@@ -5,7 +5,7 @@ namespace App\Controller\InternApi;
 use App\Entity\Main\Settings;
 use App\Entity\Main\Society;
 use App\Repository\Main\SocietyRepository;
-use App\Service\ApiResponse;
+use App\Service\Api\ApiResponse;
 use App\Service\CommandService;
 use App\Service\Data\DataMain;
 use App\Service\FileUploader;
@@ -88,7 +88,10 @@ class SocietyController extends AbstractController
                 $obj->setIsGenerated(true);
             }else{
                 $multipleDatabase->updateManager($settings, $oldCode, $obj->getCode());
-                $obj->setIsActivated(false);
+
+                if(!$obj->isIsGenerated()){
+                    $obj->setIsActivated(false);
+                }
             }
         }
 
@@ -160,5 +163,19 @@ class SocietyController extends AbstractController
         return $apiResponse->apiJsonResponse($obj, Society::LIST);
     }
 
+    #[Route('/switch/blocked/{id}', name: 'switch_blocked', options: ['expose' => true], methods: ['PUT'])]
+    public function switchBlocked($id, SocietyRepository $repository, ApiResponse $apiResponse): JsonResponse
+    {
+        $obj = $repository->findOneBy(['id' => $id]);
 
+        if($obj->getCode() == 999){
+            return $apiResponse->apiJsonResponseBadRequest("Vous ne pouvez pas bloquer cette société.");
+        }
+
+        $obj->setIsBlocked(!$obj->isIsBlocked());
+
+        $repository->save($obj, true);
+
+        return $apiResponse->apiJsonResponse($obj, Society::LIST);
+    }
 }

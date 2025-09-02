@@ -6,7 +6,7 @@ use App\Entity\Main\Changelog;
 use App\Entity\Main\Help\HeChangelog;
 use App\Repository\Main\Help\HeChangelogRepository;
 use App\Repository\Main\Help\HeProductRepository;
-use App\Service\ApiResponse;
+use App\Service\Api\ApiResponse;
 use App\Service\Data\DataHelp;
 use App\Service\SanitizeData;
 use App\Service\ValidatorService;

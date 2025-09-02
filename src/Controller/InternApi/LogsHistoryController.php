@@ -4,7 +4,7 @@ namespace App\Controller\InternApi;
 
 use App\Entity\Main\LogHistory;
 use App\Repository\Main\LogHistoryRepository;
-use App\Service\ApiResponse;
+use App\Service\Api\ApiResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;

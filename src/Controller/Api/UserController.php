@@ -6,7 +6,7 @@ use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Society;
 use App\Entity\Main\User;
 use App\Repository\Main\UserRepository;
-use App\Service\ApiResponse;
+use App\Service\Api\ApiResponse;
 use App\Service\Data\DataMain;
 use App\Service\ValidatorService;
 use Doctrine\Persistence\ManagerRegistry;
