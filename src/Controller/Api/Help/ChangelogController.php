@@ -4,7 +4,7 @@ namespace App\Controller\Api\Help;
 
 use App\Repository\Main\Help\HeChangelogRepository;
 use App\Repository\Main\Help\HeProductRepository;
-use App\Service\ApiResponse;
+use App\Service\Api\ApiResponse;
 use App\Service\Changelogs\ChangelogsService;
 use Doctrine\ORM\NonUniqueResultException;
 use OpenApi\Attributes as OA;

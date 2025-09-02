@@ -6,7 +6,7 @@ use App\Entity\Main\Help\HeCategory;
 use App\Repository\Main\Help\HeCategoryRepository;
 use App\Repository\Main\Help\HeProductRepository;
 use App\Repository\Main\Help\HeQuestionRepository;
-use App\Service\ApiResponse;
+use App\Service\Api\ApiResponse;
 use App\Service\Data\DataHelp;
 use App\Service\ValidatorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -6,7 +6,7 @@ use App\Entity\Main\Help\HeDocumentation;
 use App\Repository\Main\Help\HeCommentaryRepository;
 use App\Repository\Main\Help\HeDocumentationRepository;
 use App\Repository\Main\Help\HeProductRepository;
-use App\Service\ApiResponse;
+use App\Service\Api\ApiResponse;
 use App\Service\Data\DataHelp;
 use App\Service\ValidatorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
