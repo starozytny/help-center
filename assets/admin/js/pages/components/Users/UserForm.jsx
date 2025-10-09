@@ -67,7 +67,6 @@ class Form extends Component {
 	}
 
 	componentDidMount = () => {
-
 		let self = this;
 		axios({ method: "GET", url: Routing.generate(URL_SELECT_SOCIETIES), data: {} })
 			.then(function (response) {
@@ -86,8 +85,6 @@ class Form extends Component {
 	}
 
 	handleChange = (e) => {
-		const { roles } = this.state
-
 		let name = e.currentTarget.name;
 		let value = e.currentTarget.value;
 
