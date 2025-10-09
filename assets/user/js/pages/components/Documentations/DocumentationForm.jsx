@@ -10,7 +10,7 @@ import Validateur from "@commonFunctions/validateur";
 
 import { Button } from "@tailwindComponents/Elements/Button";
 import { TinyMCE } from "@tailwindComponents/Elements/TinyMCE";
-import { Input, Radiobox, Switcher } from "@tailwindComponents/Elements/Fields";
+import { Input, InputFile, Radiobox, Switcher } from "@tailwindComponents/Elements/Fields";
 
 const URL_INDEX_PAGE = "user_help_documentation_read";
 const URL_UPDATE_PAGE = "user_help_documentation_update";
@@ -35,6 +35,7 @@ export function DocumentationFormulaire ({ context, element, productSlug }) {
         visibility={element ? Formulaire.setValue(element.visibility) : 0}
         isTwig={element ? Formulaire.setValue(element.isTwig ? 1 : 0) : 0}
 		twigName={element ? Formulaire.setValue(element.twigName) : ""}
+		pdfFile={element ? Formulaire.setValue(element.pdfFile) : ""}
     />
 }
 
@@ -62,6 +63,8 @@ class Form extends Component {
 			twigName: props.twigName,
 			errors: [],
 		}
+
+		this.file = React.createRef();
 	}
 
 	handleChange = (e) => {
@@ -105,7 +108,16 @@ class Form extends Component {
 		} else {
 			let self = this;
 			Formulaire.loader(true);
-			axios({ method: context === "update" ? "PUT" : "POST", url: url, data: this.state })
+
+			let formData = new FormData();
+			formData.append("data", JSON.stringify(this.state));
+
+			let file = this.file.current;
+			if (file.state.files.length > 0) {
+				formData.append("file", file.state.files[0]);
+			}
+
+			axios({ method: "POST", url: url, data: formData, headers: { 'Content-Type': 'multipart/form-data' } })
 				.then(function (response) {
 					if (!stay) {
 						location.href = Routing.generate(URL_INDEX_PAGE, { p_slug: productSlug, slug: response.data.slug });
@@ -128,7 +140,7 @@ class Form extends Component {
 	}
 
 	render () {
-		const { context, productSlug } = this.props;
+		const { context, productSlug, pdfFile } = this.props;
 		const { errors, name, status, description, content, visibility, isTwig, twigName } = this.state;
 
 		let params0 = { errors: errors, onChange: this.handleChange }
@@ -191,6 +203,11 @@ class Form extends Component {
                         </div>
                     </div>
                     <div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
+						<div>
+							<InputFile ref={this.file} type="simple" identifiant="pdf" valeur={pdfFile} {...params0}>
+								Fichier PDF <span className="text-sm text-gray-600">(facultatif)</span>
+							</InputFile>
+						</div>
 						<div>
 							<Switcher items={twigItems} identifiant="isTwig" valeur={isTwig} {...params0}>
 								Contenu physique

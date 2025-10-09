@@ -17,6 +17,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class HeDocumentation extends DataEntity
 {
     const FOLDER = "images/editor/documentations";
+    const FOLDER_PDFS = "pdfs/documentations";
 
     const FORM = ['doc_form'];
     const READ = ['doc_read'];
@@ -84,6 +85,10 @@ class HeDocumentation extends DataEntity
     #[ORM\OneToMany(mappedBy: 'documentation', targetEntity: HeCommentary::class)]
     private Collection $commentaries;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['doc_form'])]
+    private ?string $pdf = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -93,6 +98,12 @@ class HeDocumentation extends DataEntity
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    #[Groups(['doc_form'])]
+    public function getPdfFile(): ?string
+    {
+        return $this->getFileOrDefault($this->pdf, self::FOLDER_PDFS . "/" . $this->product->getUid(), null);
     }
 
     public function getName(): ?string
@@ -287,6 +298,18 @@ class HeDocumentation extends DataEntity
                 $commentary->setDocumentation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPdf(): ?string
+    {
+        return $this->pdf;
+    }
+
+    public function setPdf(?string $pdf): static
+    {
+        $this->pdf = $pdf;
 
         return $this;
     }

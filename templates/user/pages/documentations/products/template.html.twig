@@ -46,6 +46,12 @@
             <h2 class="text-5xl font-bold">{{ elem.name }}</h2>
             <div class="text-gray-600 text-sm">{{ elem.description | raw }}</div>
         </div>
+        {% if elem.pdfFile %}
+            <a href="{{ elem.pdfFile }}" target="_blank" class="text-sm text-gray-600 hover:text-black">
+                <span class="icon-file"></span>
+                <span class="underline pl-1">Visionner au format PDF</span>
+            </a>
+        {% endif %}
         <div>
             {% block main_content_in %}{% endblock %}
         </div>
