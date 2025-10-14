@@ -204,7 +204,7 @@ class Form extends Component {
                     </div>
                     <div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
 						<div>
-							<InputFile ref={this.file} type="simple" identifiant="pdf" valeur={pdfFile} {...params0}>
+							<InputFile ref={this.file} type="simple" identifiant="pdf" valeur={pdfFile} {...params0} accept={"*"}>
 								Fichier PDF <span className="text-sm text-gray-600">(facultatif)</span>
 							</InputFile>
 						</div>
