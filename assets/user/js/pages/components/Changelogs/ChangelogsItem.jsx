@@ -7,7 +7,7 @@ import Sanitaze from "@commonFunctions/sanitaze";
 import { setHighlightClass, useHighlight } from "@commonHooks/item";
 
 import { Badge } from "@tailwindComponents/Elements/Badge";
-import { ButtonIcon, ButtonIconA } from "@tailwindComponents/Elements/Button";
+import { ButtonIcon, ButtonIconA, ButtonIconDropdown, DropdownItem, DropdownItemA } from "@tailwindComponents/Elements/Button";
 
 const URL_UPDATE_PAGE = "user_help_changelogs_update";
 const URL_PREVIEW_FILE = "user_help_changelogs_preview_html";
@@ -19,30 +19,42 @@ export function ChangelogsItem ({ elem, highlight, onModal, productSlug }) {
 
 	let urlUpdate = Routing.generate(URL_UPDATE_PAGE, { p_slug: productSlug, id: elem.id });
 
+	let menu = [
+		{ data: <DropdownItem icon="copy" onClick={() => onModal("duplicate", elem)}>
+				Dupliquer
+			</DropdownItem> },
+		{ data: <DropdownItemA icon="pencil" onClick={urlUpdate}>
+				Modifier
+			</DropdownItemA> },
+		{ data: <DropdownItem icon="trash" onClick={() => onModal("delete", elem)}>
+				Supprimer
+			</DropdownItem> },
+	]
+
 	return <div className={`item${setHighlightClass(nHighlight)} border-t hover:bg-slate-50`} ref={refItem}>
 		<div className="item-content">
 			<div className="item-infos">
 				<div className="col-1">
-					<div className="flex flex-col gap-1">
-						<div>
-							{elem.isDraft ? <Badge type="gray">Brouillon</Badge> : <Badge type="blue">{elem.numVersion}</Badge>}
-						</div>
-						<div className="text-gray-600 text-sm">{Sanitaze.toDateFormat(elem.dateAt, 'LL')}</div>
-					</div>
+					<div className="font-bold">{elem.numero}</div>
 				</div>
 				<div className="col-2">
-					<div className="font-medium">{elem.name}</div>
+					<Badge type={elem.isDraft ? "gray" : "blue"} classnames="rounded-full">{elem.numVersion}</Badge>
 				</div>
 				<div className="col-3">
+					<div className="font-medium">{elem.name}</div>
+				</div>
+				<div className="col-4">
+					<div className="text-gray-600 text-sm">{Sanitaze.toDateFormat(elem.dateAt, 'll')}</div>
+				</div>
+				<div className="col-5">
+					{elem.isPatch ? <Badge type="yellow">Patch</Badge> : <Badge type="green">Majeure</Badge>}
+				</div>
+				<div className="col-6 actions">
 					<ButtonIconA type="default" icon="vision" target="_blank"
 								 onClick={Routing.generate(URL_PREVIEW_FILE, {p_slug: productSlug, id: elem.id})}>
 						Aperçu
 					</ButtonIconA>
-				</div>
-				<div className="col-4 actions">
-					<ButtonIcon type="default" icon="copy" onClick={() => onModal("duplicate", elem)}>Dupliquer</ButtonIcon>
-					<ButtonIconA type="default" icon="pencil" onClick={urlUpdate}>Modifier</ButtonIconA>
-					<ButtonIcon type="default" icon="trash" onClick={() => onModal("delete", elem)}>Supprimer</ButtonIcon>
+					<ButtonIconDropdown icon="more" items={menu} />
 				</div>
 			</div>
 		</div>

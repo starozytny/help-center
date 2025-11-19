@@ -1,26 +1,25 @@
 .items-changelogs{
   .item-infos{
-    $col1: 200px; $col3: 200px; $col4: 72px; $colGap: 24px;
+    $col1: 48px; $col2: 120px; $col4: 120px; $col5: 72px; $col6: 76px; $colGap: 40px;
     @media (min-width:768px) {
       & > .col-1{ width: $col1; }
-      & > .col-2{
-        width: calc(100% - $col1 - $col3 - $col4 - $colGap);
+      & > .col-2{ width: $col2; }
+      & > .col-3{
+        width: calc(100% - $col1 - $col2 - $col4 - $col5 - $col6 - $colGap);
       }
-      & > .col-3{ width: $col3; }
-      & > .col-4.actions{ width: $col4; }
+      & > .col-4{ width: $col4; }
+      & > .col-5{ width: $col5; }
+      & > .col-6.actions{ width: $col6; }
     }
     @media (min-width:1280px) {
-      $col1: 240px; $col3: 240px;
-      & > .col-1{ width: $col1; }
-      & > .col-2{
-        width: calc(100% - $col1 - $col3 - $col4 - $colGap);
+      $col2: 160px; $col4: 160px; $col5: 100px;
+      & > .col-2{ width: $col2; }
+      & > .col-3{
+        width: calc(100% - $col1 - $col2 - $col4 - $col5 - $col6 - $colGap);
+        max-width: 568px;
       }
-      & > .col-3{ width: $col3; }
-    }
-    @media (min-width:1536px) {
-      & > .col-2{
-        width: 568px;
-      }
+      & > .col-4{ width: $col4; }
+      & > .col-5{ width: $col5; }
     }
   }
 }

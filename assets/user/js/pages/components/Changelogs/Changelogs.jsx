@@ -32,7 +32,7 @@ export class Changelogs extends Component {
 		this.state = {
 			perPage: List.getSessionPerpage(SESSION_PERPAGE, 20),
 			currentPage: 0,
-			sorter: Sort.compareNumVersionInverseThenDateAtInverse,
+			sorter: Sort.compareNumeroInverse,
 			loadingData: true,
 			element: null,
 			numVersion: "",

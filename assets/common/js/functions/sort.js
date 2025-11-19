@@ -90,6 +90,10 @@ function compareNumVersionInverseThenDateAtInverse(a, b){
     return comparison(b.dateAt, a.dateAt);
 }
 
+function compareNumeroInverse(a, b){
+    return comparison(b.numero, a.numero);
+}
+
 function comparison (objA, objB){
     if(objA === objB){
         return 0;
@@ -121,4 +125,5 @@ module.exports = {
     compareLabel,
     compareNumVersionInverseThenDateAtInverse,
     compareNumeroInverseThenDateAtInverse,
+    compareNumeroInverse,
 }
