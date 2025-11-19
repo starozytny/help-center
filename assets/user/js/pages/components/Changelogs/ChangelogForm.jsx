@@ -193,14 +193,6 @@ class Form extends Component {
 						</div>
                     </div>
                     <div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
-						{context === "update"
-							? <div className="w-full">
-								<Input identifiant="numero" valeur={numero} {...params0}>
-									Numéro interne
-								</Input>
-							</div>
-							: null
-						}
 						<div className="flex gap-4">
 							<div className="w-full">
 								<Input identifiant="name" valeur={name} {...params0}>Titre</Input>
