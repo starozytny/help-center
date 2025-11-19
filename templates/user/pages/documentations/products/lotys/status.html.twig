@@ -1,67 +1,96 @@
 {% extends 'user/pages/documentations/products/template.html.twig' %}
 
 {% block main_content_in %}
-    <div class="py-6">
-        <h3 class="text-3xl font-bold">Les différents statuts</h3>
-        <div class="mt-4">
-            <ul>
-                <li><span class="text-gray-500 font-semibold">Brouillon</span> : En cours de rédaction, inéligible à la publication.</li>
-                <li><span class="text-blue-500 font-semibold">Actif</span> : Les informations principales sont renseignées. Éligible à la publication.</li>
-                <li><span class="text-red-500 font-semibold">Inactif</span> : Inéligible à la publication sauf si l'option <i>Continuer sa publication</i> est active.</li>
-                <li><span class="text-yellow-500 font-semibold">Archive</span> : Bien conservé en base de donnée et invisible de la liste des biens.</li>
-            </ul>
+    <div class="flex flex-col gap-12">
+        <section>
+            <h2 class="{{ style_article_title }}">Les différents statuts</h2>
+            <div class="{{ style_article_content }}">
+                <p>
+                    Les status permettent d'organiser et catégoriser les annonces ainsi que savoir s'ils peuvent être publiés.
+                </p>
+                <div class="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Publication</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Comment ?</th>
+                        </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-indigo-600">Brouillon</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><span class="icon-close"></span></td>
+                            <td class="px-6 py-4 text-sm text-gray-700">
+                                Annonce en cours de rédaction.
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-700">
+                                En cliquant sur <i>Sauvegardant en brouillon</i> dans le formulaire d'édition d'un bien.
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-indigo-600">Actif</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><span class="icon-check1"></span></td>
+                            <td class="px-6 py-4 text-sm text-gray-700">
+                                Annonce remplie avec les champs obligatoires.
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-700">
+                                En cliquant sur <i>Enregistrant le bien</i> dans le formulaire d'édition d'un bien, uniquement si
+                                les informations obligatoires sont renseignées.
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-indigo-600">Inactif</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><span class="icon-close"></span> / <span class="icon-check1"></span></td>
+                            <td class="px-6 py-4 text-sm text-gray-700">
+                                Annonce désactivée.
+                                <br>
+                                <span class="text-xs">Peut être publié sur le site agence (géré par Logilink) sous le statut de <b>Vendu</b>, si l'option est cochée.</span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-700">
+                                En cliquant sur <i>Bien vendu/loué</i> ou <i>Désactiver</i> dans la liste des biens.
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-indigo-600">Archive</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><span class="icon-close"></span></td>
+                            <td class="px-6 py-4 text-sm text-gray-700">
+                                Conservé en archive pour une meilleure gestion.
+                                <br>
+                                Apparaît en jaune dans la liste des biens en archive.
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-700">
+                                En cliquant sur <i>Archiver</i> dans la liste des biens.
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-            {% if is_granted('ROLE_ADMIN') %}
-                <div class="mt-8">
-                    <div class="bg-white rounded-md border border-red-500">
-                        <div class="p-4 font-medium bg-red-400 text-white rounded-t-md">
-                            Administrateurs
-                        </div>
-                        <div class="p-4">
-                            <ul>
-                                <li><span class="text-gray-500 font-semibold">Brouillon</span> : status = 3, isDraft = true</li>
-                                <li><span class="text-blue-500 font-semibold">Actif</span> : status = 1</li>
-                                <li><span class="text-red-500 font-semibold">Inactif</span> : status = 0</li>
-                                <li><span class="text-yellow-500 font-semibold">Archive</span> : status = 2, isArchived = true</li>
-                            </ul>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="bg-red-100 border-l-4 border-red-500 p-4 mt-4 rounded-r-lg">
+                        <div class="flex items-start">
+                            <i class="fas fa-exclamation-triangle text-red-500 mt-1 mr-3"></i>
+                            <div>
+                                <p class="text-red-800 text-xs font-medium">
+                                    Visible uniquement pour les administrateurs.
+                                </p>
+                                <h4 class="font-semibold text-red-900 mb-1">Codification des statuts en base de données.</h4>
+                                <div class="text-red-800 text-sm mt-4">
+                                    <ul>
+                                        <li><span class="font-semibold">Brouillon</span> : 3 + <span class="font-semibold">isDraft</span> : true</li>
+                                        <li><span class="font-semibold">Actif</span> : 1</li>
+                                        <li><span class="font-semibold">Inactif</span> : 0</li>
+                                        <li><span class="font-semibold">Archive</span> : 2 + <span class="font-semibold">isArchived</span> : true</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endif %}
-        </div>
-    </div>
-    <div class="py-6">
-        <h3 class="text-3xl font-bold">Comment un bien possède le statut <span class="text-gray-500">Brouillon</span> ?</h3>
-        <div class="mt-4">
-            Dans le formulaire de création ou d'édition d'un bien, quand l'utilisateur clique sur le bouton <b>Sauvegarder en brouillon</b> ou <b>Sauvegarder</b>.
-            <br>
-            Le bien apparaît en gris dans la liste des biens. Ce statut permet de préparer la diffusion de l'annonce.
-        </div>
-    </div>
-    <div class="py-6">
-        <h3 class="text-3xl font-bold">Comment un bien possède le statut <span class="text-blue-500">Actif</span> ?</h3>
-        <div class="mt-4">
-            Dans le formulaire de création ou d'édition d'un bien, quand l'utilisateur clique sur le bouton <b>Enregistrer</b> ou <b>Enregistrer et rester</b>.
-            <br>
-            Le bien apparaît en blue dans la liste des biens. Ce statut permet de rendre le bien éligible à la diffusion de l'annonce.
-        </div>
-    </div>
-    <div class="py-6">
-        <h3 class="text-3xl font-bold">Comment un bien possède le statut <span class="text-red-500">Inactif</span> ?</h3>
-        <div class="mt-4">
-            <ul>
-                <li>Lors de la vente/location du bien, en cliquant sur <b>Bien vendu/loué</b>.</li>
-                <li>Manuellement, en cliquant sur <b>Désactiver</b></li>.
-            </ul>
-            Le bien apparaît en rouge dans la liste des biens. Ce statut permet de rendre le bien inéligible à la diffusion de l'annonce sauf si l'option <i>Continuer sa publication</i> est active.
-        </div>
-    </div>
-    <div class="py-6">
-        <h3 class="text-3xl font-bold">Comment un bien possède le statut <span class="text-yellow-500">Archive</span> ?</h3>
-        <div class="mt-4">
-            Manuellement, en cliquant sur <b>Archiver</b>.
-            <br>
-            Le bien apparaît dans les archives. Ce statut permet de rendre le bien inéligible à la diffusion de l'annonce et d'avoir une bonne organisation des biens.
-        </div>
+                {% endif %}
+            </div>
+        </section>
     </div>
 {% endblock %}
