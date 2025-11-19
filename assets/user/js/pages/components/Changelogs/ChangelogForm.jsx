@@ -179,26 +179,20 @@ class Form extends Component {
 							<p>
 								La date n'apparait pas dans le fichier HTML.
 								<br/>
-								Activer <i>Est-ce un patch ?</i>, permet d'avoir la mention [PATCH] dans le titre afin de le distinguer.
-								<br/><br/>
-								<u>Recommandation</u> : Suivre le même pattern de version + patch afin d'avoir une chronologie cohérente.
 								<br/>
-								(exemple : 3000.0.0.1P001)
-
+								<u>Recommandation du patron des versions</u> : XXXX_X_X_XPXXX
+								<br/>
 							</p>
+							<div className="text-xs mt-1">
+								exemple :
+								<div className="pl-4">
+									- 3001_0_0_0
+									<br/> - 3000_0_0_1P001
+								</div>
+							</div>
 						</div>
                     </div>
                     <div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
-						{context === "update"
-							? <div className="w-full">
-								<Input identifiant="numero" valeur={numero} {...params0}>
-									Numéro
-									<br/>
-									<span className="text-yellow-600">En cas de changement, le compteur automatique ne sera pas affecté.</span>
-								</Input>
-							</div>
-							: null
-						}
 						<div className="flex gap-4">
 							<div className="w-full">
 								<Input identifiant="name" valeur={name} {...params0}>Titre</Input>
@@ -209,7 +203,7 @@ class Form extends Component {
 						</div>
 						<div className="flex gap-4">
 							<div className="w-full">
-								<Input identifiant="numVersion" valeur={numVersion} {...params0} placeholder="ex: 3000.0.0.1P001">Numéro de version + patch</Input>
+								<Input identifiant="numVersion" valeur={numVersion} {...params0} placeholder="ex: 3000_0_0_1P001">Numéro de version</Input>
 							</div>
 							<div className="w-full">
 								<Switcher items={patchItems} identifiant="isPatch" valeur={isPatch} {...params0}>

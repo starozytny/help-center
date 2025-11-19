@@ -32,7 +32,7 @@ export class Changelogs extends Component {
 		this.state = {
 			perPage: List.getSessionPerpage(SESSION_PERPAGE, 20),
 			currentPage: 0,
-			sorter: Sort.compareNumVersionInverseThenDateAtInverse,
+			sorter: Sort.compareNumeroInverse,
 			loadingData: true,
 			element: null,
 			numVersion: "",
@@ -160,15 +160,15 @@ export class Changelogs extends Component {
 
 
 					<Modal ref={this.duplicate} identifiant="duplicate" maxWidth={414}
-						   title={element ? "Duplication de " + element.numVersion + " - " + element.name : ""}
+						   title={element ? "Duplication de :" + element.numVersion : ""}
 						   content={element
 							   ? <div>
 								   <p>
 									   Êtes-vous sûr de vouloir supprimer définitivement ce changelog : <b>{element ? element.numVersion : ""}</b> ?
 								   </p>
 								   <div className="mt-2">
-									   <Input identifiant="numVersion" valeur={numVersion} {...params0} placeholder="ex: 3000.0.0.1P001">
-										   Numéro de version + patch
+									   <Input identifiant="numVersion" valeur={numVersion} {...params0} placeholder="ex: 3000_0_0_1P001">
+										   Numéro de version
 									   </Input>
 								   </div>
 							   </div>

@@ -68,8 +68,11 @@ class ChangelogController extends AbstractController
 
         if($type === "create" || ($type === "update" && $data->isDraft)){
             $obj->setIsDraft(false);
-            $obj->setNumero($product->getNumeroChangelogVersion() + 1);
-            $product->setNumeroChangelogVersion($product->getNumeroChangelogVersion() + 1);
+
+            if($obj->getNumero() == null){
+                $obj->setNumero($product->getNumeroChangelogVersion() + 1);
+                $product->setNumeroChangelogVersion($product->getNumeroChangelogVersion() + 1);
+            }
         }
 
         $noErrors = $validator->validate($obj);
@@ -137,7 +140,7 @@ class ChangelogController extends AbstractController
         $newObj->setNumVersion($sanitizeData->trimData($data->numVersion));
         $newObj->setUid(Uuid::v7()->toBase58());
         $newObj->setDateAt(new DateTime());
-        $newObj->setName($obj->getName() . " (duplicate)");
+        $newObj->setName($obj->getName() . " (copie)");
         $newObj->setCreatedAt(new DateTime());
         $newObj->setUpdatedAt(null);
 
