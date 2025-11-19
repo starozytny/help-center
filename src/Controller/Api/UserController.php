@@ -36,7 +36,7 @@ class UserController extends AbstractController
     public function list(UserRepository $repository, ApiResponse $apiResponse): Response
     {
         return $apiResponse->apiJsonResponse(
-            $repository->findBy(['blocked' => false], ['firstname' => 'ASC']),
+            $repository->findBy(['isBlocked' => false], ['firstname' => 'ASC']),
             User::EXTERNAL_SELECT
         );
     }

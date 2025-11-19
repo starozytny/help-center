@@ -41,6 +41,9 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     #[Groups(['user_list', 'user_form', 'user_ext_select', 'user_log', 'user_me'])]
     private ?string $username = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $societyCode = null;
+
     #[ORM\Column]
     #[Groups(['user_form', 'user_me'])]
     private array $roles = [];
@@ -199,6 +202,18 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     public function setUsername(string $username): self
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    public function getSocietyCode(): ?string
+    {
+        return $this->societyCode;
+    }
+
+    public function setSocietyCode(?string $societyCode): static
+    {
+        $this->societyCode = $societyCode;
 
         return $this;
     }
