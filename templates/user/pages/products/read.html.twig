@@ -84,7 +84,7 @@
                 <div class="text-gray-800">Retrouvez les réponses aux questions les plus demandées sur le {{ typeString }}.</div>
                 <div class="mt-4">
                     <div id="help_faq_list"
-                         data-role="{{ app.user.admin ? "admin" : "user" }}"
+                         data-role="{{ app.user.isAdmin ? "admin" : "user" }}"
                          data-category="{{ app.request.get('cat') }}"
                          data-product-id="{{ elem.id }}"
                          data-product-slug="{{ elem.slug }}"

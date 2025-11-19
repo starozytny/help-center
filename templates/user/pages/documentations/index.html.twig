@@ -6,7 +6,7 @@
 {% set page_subtitle %}Liste des documentations{% endset %}
 
 {% set page_actions %}
-    {% if app.user.admin %}
+    {% if app.user.isAdmin %}
         {% include 'layout/components/tailwind/buttons/button.html.twig' with {
             btn_link: path('user_help_documentation_create', {p_slug: product.slug}),
             btn_type: 'blue',
@@ -55,7 +55,7 @@
                                         </div>
                                     </div>
                                 </a>
-                                {% if app.user.admin %}
+                                {% if app.user.isAdmin %}
                                     <div class="mt-2 px-2 flex gap-2 justify-between">
                                         {% if el.twig == 1 %}
                                             <div class="text-xs text-gray-400">[Twig]</div>
