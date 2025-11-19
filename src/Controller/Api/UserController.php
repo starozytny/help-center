@@ -72,7 +72,9 @@ class UserController extends AbstractController
         $society = $em->getRepository(Society::class)->findOneBy(['code' => 999]);
         if(!$society) return $this->createNotFoundException('Society not found.');
 
-        $obj = $dataEntity->setDataUserFromAPI(new User(), $data);
+        $existe = $em->getRepository(User::class)->findOneBy(['societyCode' => $data->societyCode]);
+
+        $obj = $dataEntity->setDataUserFromAPI($existe ?: new User(), $data);
         $obj->setPassword($passwordHasher->hashPassword($obj, uniqid()));
 
         $obj->setSociety($society);

@@ -8,7 +8,7 @@ import Formulaire from "@commonFunctions/formulaire";
 import Validateur from "@commonFunctions/validateur";
 
 import { Button } from "@tailwindComponents/Elements/Button";
-import { LoaderElements } from "@tailwindComponents/Elements/Loader";
+import { LoaderElements, LoadingInput } from "@tailwindComponents/Elements/Loader";
 import { Checkbox, Input, InputFile, SelectCombobox } from "@tailwindComponents/Elements/Fields";
 
 const URL_SELECT_SOCIETIES = "intern_api_selection_societies";
@@ -30,11 +30,12 @@ export function UserFormulaire ({ context, element, products }) {
         url={url}
         society={element ? Formulaire.setValue(element.society.id) : ""}
         username={element ? Formulaire.setValue(element.username) : ""}
+        societyCode={element ? Formulaire.setValue(element.societyCode) : ""}
         firstname={element ? Formulaire.setValue(element.firstname) : ""}
         lastname={element ? Formulaire.setValue(element.lastname) : ""}
         email={element ? Formulaire.setValue(element.email) : ""}
         avatarFile={element ? Formulaire.setValue(element.avatarFile) : null}
-        roles={element ? Formulaire.setValue(element.roles, []) : []}
+        roles={element ? Formulaire.setValue(element.roles, []) : ['ROLE_USER']}
         access={element ? Formulaire.setValue(element.access, []) : []}
 
         products={products}
@@ -53,6 +54,7 @@ class Form extends Component {
         this.state = {
             society: props.society,
             username: props.username,
+			societyCode: props.societyCode,
             firstname: props.firstname,
             lastname: props.lastname,
             email: props.email,
@@ -67,6 +69,9 @@ class Form extends Component {
 	}
 
 	componentDidMount = () => {
+		const { context } = this.props;
+		const { society } = this.state;
+
 		let self = this;
 		axios({ method: "GET", url: Routing.generate(URL_SELECT_SOCIETIES), data: {} })
 			.then(function (response) {
@@ -76,7 +81,13 @@ class Form extends Component {
 					itemsSocieties.push({ value: elem.value, label: elem.label })
 				})
 
-				self.setState({ loadData: false })
+				let nSociety = society;
+				if(context === "create" && itemsSocieties.length === 1){
+					nSociety = itemsSocieties[0].value;
+				}
+
+
+				self.setState({ society: nSociety, loadData: false })
 			})
 			.catch(function (error) {
 				Formulaire.displayErrors(self, error);
@@ -109,7 +120,6 @@ class Form extends Component {
 
 		let paramsToValidate = [
 			{ type: "text", id: 'username', value: username },
-			{ type: "text", id: 'firstname', value: firstname },
 			{ type: "text", id: 'lastname', value: lastname },
 			{ type: "email", id: 'email', value: email },
 			{ type: "array", id: 'roles', value: roles },
@@ -145,7 +155,7 @@ class Form extends Component {
 
 	render () {
 		const { context, avatarFile, products } = this.props;
-		const { errors, loadData, username, firstname, lastname, email, password, roles, society, access } = this.state;
+		const { errors, loadData, username, societyCode, firstname, lastname, email, password, roles, society, access } = this.state;
 
 		let rolesItems = [
 			{ value: 'ROLE_ADMIN', identifiant: 'admin', label: 'Admin' },
@@ -168,18 +178,40 @@ class Form extends Component {
 						<div className="font-medium text-lg">Identification</div>
 						<div className="text-gray-600 text-sm">
 							Le nom d'utilisateur est automatiquement formaté, les espaces et les accents sont supprimés ou remplacés.
-							{context === "create" ? <span><br /><br />Attention, le nom d'utilisateur ne pourra plus être modifié.</span> : ""}
+							{context === "create" ? <span><br /><u>Attention</u>, le nom d'utilisateur ne pourra plus être modifié.</span> : ""}
+							<br/><br/>
+							Le code société correspond au code de référence chez Logilink afin de ne pas créer x utilisateurs pour une même société.
 						</div>
 					</div>
-					<div className="bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
-						<div className="flex gap-4">
+					<div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
+						<div className="flex flex-col gap-4 md:flex-row">
 							<div className="w-full">
 								<Input valeur={username} identifiant="username" {...params0}>Nom utilisateur</Input>
+							</div>
+							<div className="w-full">
+								<Input valeur={societyCode} identifiant="societyCode" {...params0} placeholder="">Code société <span className="text-xs text-gray-600">(facultatif)</span></Input>
 							</div>
 							<div className="w-full">
 								<Input valeur={email} identifiant="email" {...params0} type="email">Adresse e-mail</Input>
 							</div>
 						</div>
+						<div>
+							<Checkbox identifiant="roles" valeur={roles} items={rolesItems} {...params0} classItems="flex gap-4">
+								Rôles
+							</Checkbox>
+						</div>
+						{loadData
+							? <div>
+								<LoadingInput>Société</LoadingInput>
+							</div>
+							: <div>
+								<SelectCombobox identifiant="society" valeur={society} items={itemsSocieties}
+												{...params1} toSort={true} placeholder="Sélectionner une société..">
+									Société
+								</SelectCombobox>
+							</div>
+						}
+
 					</div>
 				</div>
 
@@ -193,30 +225,11 @@ class Form extends Component {
 					<div className="flex flex-col gap-4 bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
 						<div className="flex gap-4">
 							<div className="w-full">
-								<Input identifiant="firstname" valeur={firstname} {...params0}>Prénom</Input>
+								<Input identifiant="firstname" valeur={firstname} {...params0}>Prénom <span className="text-xs text-gray-600">(facultatif)</span></Input>
 							</div>
 							<div className="w-full">
-								<Input identifiant="lastname" valeur={lastname} {...params0}>Nom</Input>
+								<Input identifiant="lastname" valeur={lastname} {...params0}>Nom / Désignation</Input>
 							</div>
-						</div>
-
-						<div>
-							<Checkbox identifiant="roles" valeur={roles} items={rolesItems} {...params0} classItems="flex gap-4">
-								Rôles
-							</Checkbox>
-						</div>
-
-						<div>
-							{loadData
-								? <>
-									<label>Société</label>
-									<LoaderElements text="Récupération des sociétés..." />
-								</>
-								: <SelectCombobox identifiant="society" valeur={society} items={itemsSocieties}
-												  {...params1} toSort={true} placeholder="Sélectionner une société..">
-									Société
-								</SelectCombobox>
-							}
 						</div>
 
 						<div>
@@ -224,9 +237,20 @@ class Form extends Component {
 								Avatar <span className="text-sm text-gray-600">(facultatif)</span>
 							</InputFile>
 						</div>
+					</div>
+				</div>
 
+				<div className="grid gap-2 xl:grid-cols-3 xl:gap-6">
+					<div>
+						<div className="font-medium text-lg">Accès</div>
+						<div className="text-gray-600 text-sm">
+							Permet à l'utilisateur de pouvoir voir les pages des produits sélectionnés.
+						</div>
+					</div>
+					<div className="bg-white p-4 rounded-md ring-1 ring-inset ring-gray-200 xl:col-span-2">
 						<div>
-							<Checkbox items={accessItems} identifiant="access" valeur={access} {...params0} styleType="fat" classItems="flex gap-2">
+							<Checkbox items={accessItems} identifiant="access" valeur={access} {...params0}
+									  styleType="fat" classItems="flex gap-2 flex-wrap">
 								Accès aux logiciels
 							</Checkbox>
 						</div>
