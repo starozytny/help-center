@@ -56,8 +56,8 @@ class UserController extends AbstractController
     /**
      * Créer un utilisateur selon la société
      */
-    #[Route('/create/user/by/society', name: 'create_by_society', methods: 'POST')]
-    public function createBySociety(Request $request, ManagerRegistry $doctrine,
+    #[Route('/sync/user', name: 'sync_user', methods: 'POST')]
+    public function syncUser(Request $request, ManagerRegistry $doctrine,
                                     UserRepository $repository, ApiResponse $apiResponse,
                                     DataMain $dataEntity, ValidatorService $validator,
                                     UserPasswordHasherInterface $passwordHasher): NotFoundHttpException|JsonResponse
