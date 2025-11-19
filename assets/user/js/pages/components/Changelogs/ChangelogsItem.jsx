@@ -41,6 +41,7 @@ export function ChangelogsItem ({ elem, highlight, onModal, productSlug }) {
 					<Badge type={elem.isDraft ? "gray" : "blue"} classnames="rounded-full">{elem.numVersion}</Badge>
 				</div>
 				<div className="col-3">
+					{elem.isDraft ? <div className="text-xs text-gray-500">Brouillon</div> : null}
 					<div className="font-medium">{elem.name}</div>
 				</div>
 				<div className="col-4">
