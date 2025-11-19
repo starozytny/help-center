@@ -1,35 +1,34 @@
 <div class="mt-16">
     <h2 class="text-4xl font-bold border-b">{{ commentaries | length }} Commentaire{{ commentaries | length > 1 ? "s" : "" }}</h2>
-    <div class="my-4 pb-8 border-b">
+    <div class="my-4 pb-6">
         <div id="commentary_create" data-reference-id="{{ elem.id }}">
             {% include "layout/components/tailwind/loaders/loader.html.twig" %}
         </div>
     </div>
-    <div class="flex flex-col gap-12">
-        {% for commentary in commentaries %}
-            <div class="flex flex-col gap-2">
-                <div class="flex gap-2">
-                    <div>
-                        {% if commentary.user and commentary.user.avatarFile %}
-                            <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center font-semibold">
-                                <img src={{ commentary.user.avatarFile }} alt="avatar" class="w-full h-full object-cover" />
-                            </div>
-
-                        {% else %}
-                            <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center font-semibold">
-                                <span class="icon-user"></span>
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div>
-                        <div class="font-semibold">{{ commentary.user ? commentary.user.firstname : "Utilisateur supprimé" }}</div>
-                        <div class="text-gray-600 text-xs">{{ commentary.createdAt | date('d/m/Y \\à H\\hi') }}</div>
-                    </div>
-                </div>
+    {% if commentaries | length > 0 %}
+    <div class="flex flex-col gap-2">
+        {% for commentary in commentaries | sort((a,b) => b.createdAt <=> a.createdAt) %}
+            <div class="flex gap-2 bg-white p-4 border rounded-md">
                 <div>
-                    {{ commentary.message }}
+                    {% if commentary.user and commentary.user.avatarFile %}
+                        <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center font-semibold">
+                            <img src="{{ commentary.user.avatarFile }}" alt="avatar" class="w-full h-full object-cover" />
+                        </div>
+                    {% else %}
+                        <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center font-semibold">
+                            <span class="icon-user"></span>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="w-full">
+                    <div class="font-semibold">{{ commentary.user ? commentary.user.lastname : "Utilisateur supprimé" }}</div>
+                    <div class="text-gray-600 text-xs">{{ commentary.createdAt | date('d/m/Y \\à H\\hi') }}</div>
+                    <div class="mt-2">
+                        {{ commentary.message | raw }}
+                    </div>
                 </div>
             </div>
         {% endfor %}
     </div>
+    {% endif %}
 </div>

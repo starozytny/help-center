@@ -64,7 +64,7 @@ Button.propTypes = {
 	]),
 }
 
-export function ButtonIcon ({ type, icon, onClick, children, tooltipWidth, tooltipPosition, customBtn = "" }) {
+export function ButtonIcon ({ type, icon, onClick, children, tooltipWidth, tooltipPosition, tooltipColors = "bg-gray-800 text-slate-50", customBtn = "" }) {
 	const colorVariants = {
 		red: 'bg-red-600 text-slate-50 hover:bg-red-500',
 		blue: 'bg-blue-600 text-slate-50 hover:bg-blue-500 ring-1 ring-inset ring-blue-600',
@@ -87,7 +87,7 @@ export function ButtonIcon ({ type, icon, onClick, children, tooltipWidth, toolt
 				   className={`relative inline-flex items-center justify-center rounded-md text-lg px-2 py-2 shadow-sm ${colorVariants[type]} ${customBtn}`}>
 		<span className={`icon-${icon} ${iconColorVariants[type]}`}></span>
 		{children
-			? <span className={`tooltip bg-gray-800 text-slate-50 py-1 px-2 rounded absolute ${tooltipPos} text-xs hidden`}
+			? <span className={`tooltip ${tooltipColors} py-1 px-2 rounded absolute ${tooltipPos} text-xs hidden`}
 					style={divStyle}>
 				{children}
 		</span>
@@ -129,7 +129,7 @@ export function ButtonIconA ({ type, icon, onClick, children, target = "", toolt
 	return <a href={onClick} target={target}
 			  className={`relative inline-flex justify-center rounded-md text-lg px-2 py-2 shadow-sm ${colorVariants[type]}`}>
 		<span className={`icon-${icon} ${iconColorVariants[type]}`}></span>
-		<span className="tooltip bg-gray-300 py-1 px-2 rounded absolute -top-7 right-0 text-xs hidden"
+		<span className="tooltip bg-gray-800 text-slate-50 py-1 px-2 rounded absolute -top-7 right-0 text-xs hidden"
 			  style={divStyle}>
 			{children}
 		</span>

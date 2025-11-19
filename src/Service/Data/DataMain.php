@@ -5,9 +5,7 @@ namespace App\Service\Data;
 use App\Entity\Main\Agenda\AgEvent;
 use App\Entity\Main\Changelog;
 use App\Entity\Main\Contact;
-use App\Entity\Main\Help\HeCategory;
 use App\Entity\Main\Help\HeProduct;
-use App\Entity\Main\Help\HeQuestion;
 use App\Entity\Main\Mail;
 use App\Entity\Main\Notification;
 use App\Entity\Main\Settings;
@@ -30,6 +28,7 @@ class DataMain
 
         return ($obj)
             ->setUsername($this->sanitizeData->fullSanitize($data->username))
+            ->setSocietyCode($this->sanitizeData->trimData($data->societyCode))
             ->setFirstname($this->sanitizeData->sanitizeString($data->firstname))
             ->setLastname($this->sanitizeData->sanitizeString($data->lastname))
             ->setEmail($data->email)
@@ -39,7 +38,7 @@ class DataMain
     public function setDataUserFromAPI(User $obj, $data): User
     {
         $em = $this->registry->getManager();
-        $products = $em->getRepository(HeProduct::class)->findBy(['name' => $data->access]);
+        $products = $em->getRepository(HeProduct::class)->findBy(['uid' => $data->access]);
 
         $access = [];
         foreach($products as $product){
@@ -48,10 +47,11 @@ class DataMain
 
         return ($obj)
             ->setUsername($this->sanitizeData->fullSanitize($data->username))
+            ->setSocietyCode($this->sanitizeData->trimData($data->societyCode))
             ->setFirstname($this->sanitizeData->sanitizeString($data->firstname))
             ->setLastname($this->sanitizeData->sanitizeString($data->lastname))
             ->setRoles(['ROLE_USER'])
-            ->setAccess($access)
+            ->setAccess(array_merge($obj->getAccess(), $access))
             ->setEmail($data->email)
         ;
     }

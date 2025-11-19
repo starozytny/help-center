@@ -18,7 +18,6 @@ function searchStartWith (value, search){
 }
 
 function searchContainsWith (value, search){
-    console.log(value);
     let val = value.toLowerCase();
     val = Sanitaze.removeAccents(val);
     return val.search(search) !== -1
@@ -29,8 +28,9 @@ function switchFunction(type, search, v) {
         case "user":
             if(searchContainsWith(v.username, search)
                 || searchStartWith(v.email, search)
-                || searchContainsWith(v.firstname, search)
+                || (v.firstname && searchContainsWith(v.firstname, search))
                 || searchContainsWith(v.lastname, search)
+                || (v.societyCode && searchContainsWith(v.societyCode, search))
             ){
                 return v;
             }

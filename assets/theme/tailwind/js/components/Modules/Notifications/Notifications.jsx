@@ -169,7 +169,7 @@ export class Notifications extends Component {
                 ? <ButtonIcon type="menu" icon="chart-3" customBtn={customBtn} />
                 : <div ref={this.wrapperRef} className="relative">
                     <ButtonIcon type="menu" icon="notification" onClick={this.handleOpen}
-                                tooltipPosition="bottom-4 right-[44px]" customBtn={customBtn}>
+                                tooltipColors="bg-gray-300 text-black" customBtn={customBtn}>
                         Notifications
                     </ButtonIcon>
                     {taille > 0 && <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-yellow-400"></div>}

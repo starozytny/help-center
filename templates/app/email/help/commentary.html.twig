@@ -1,13 +1,13 @@
 {% extends 'app/email/template/template.html.twig' %}
 
-{% block preheader %}Commentaire.{% endblock %}
+{% block preheader %}Commentaire pour {{ name }}.{% endblock %}
 
 {% block title %}Commentaire{% endblock %}
 
 {% block body %}
     <div>
         <p style="width: 540px;">
-            Message en {{ type }} : <br>
+            Message en <i>{{ type }}</i> pour <b>{{ name }}</b> : <br>
             {{ elem.message }}
         </p>
     </div>

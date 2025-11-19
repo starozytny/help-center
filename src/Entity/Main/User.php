@@ -41,6 +41,10 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     #[Groups(['user_list', 'user_form', 'user_ext_select', 'user_log', 'user_me'])]
     private ?string $username = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['user_list', 'user_form', 'user_ext_select', 'user_me'])]
+    private ?string $societyCode = null;
+
     #[ORM\Column]
     #[Groups(['user_form', 'user_me'])]
     private array $roles = [];
@@ -63,7 +67,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
     #[Groups(['user_list', 'user_form', 'user_ext_select', 'user_me'])]
     private ?string $lastname = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['user_list', 'user_form', 'user_ext_select', 'user_me'])]
     private ?string $firstname = null;
 
@@ -203,6 +207,18 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
         return $this;
     }
 
+    public function getSocietyCode(): ?string
+    {
+        return $this->societyCode;
+    }
+
+    public function setSocietyCode(?string $societyCode): static
+    {
+        $this->societyCode = $societyCode;
+
+        return $this;
+    }
+
     /**
      * A visual identifier that represents this user.
      *
@@ -304,7 +320,7 @@ class User extends DataEntity implements UserInterface, PasswordAuthenticatedUse
         return $this->firstname;
     }
 
-    public function setFirstname(string $firstname): self
+    public function setFirstname(?string $firstname): self
     {
         $this->firstname = $firstname;
 

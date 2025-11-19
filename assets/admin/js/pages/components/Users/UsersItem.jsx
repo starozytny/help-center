@@ -61,7 +61,7 @@ export function UsersItem ({ elem, highlight, onModal }) {
                             : elem.avatarFile
                                 ? <img src={elem.avatarFile} alt="avatar" className="w-full h-full object-cover" />
                                 : <div className="h-full w-full rounded-md bg-gray-300 flex items-center justify-center font-semibold">
-                                    {elem.lastname.slice(0, 1) + elem.firstname.slice(0, 1)}
+                                    {elem.lastname.slice(0, 2).toUpperCase()}
                                 </div>
                         }
                     </a>
@@ -71,10 +71,9 @@ export function UsersItem ({ elem, highlight, onModal }) {
                                 <span>{elem.lastname} {elem.firstname}</span>
                                 {blocked ? <span className="icon-disabled" title="Bloqué" /> : null}
                             </div>
-                            <div className="text-gray-600">{elem.society.code} - {elem.society.name}</div>
+                            <div className="text-gray-600">{elem.societyCode}</div>
                             <div className="text-gray-600 text-sm mt-1">{lastLoginAt ? "connecté " + lastLoginAt.fromNow() : ""}</div>
                         </div>
-                        {elem.society.isBlocked ? <span className="text-xs text-red-500 font-medium">(Société bloquée)</span> : ""}
                     </div>
                 </div>
                 <div className={`col-2 leading-5 ${blocked ? "blocked" : ""}`}>
