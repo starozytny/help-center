@@ -40,7 +40,7 @@
                 <span class="icon-right-arrow"></span>
             </a>
         </div>
-        {% if app.user and app.user.admin %}
+        {% if app.user and app.user.isAdmin %}
             <div class="p-2 border-t grid grid-cols-3 text-center divide-x">
                 <a href="{{ path('user_help_product_update', {slug: elem.slug}) }}"
                    class="text-sm underline cursor-pointer hover:text-gray-700">

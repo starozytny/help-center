@@ -5,18 +5,18 @@
 {% set main_class = "sm:min-h-[calc(100vh-100px-64px)] xl:min-h-[calc(100vh-100px-80px)]" %}
 
 {% block main_content %}
-    <div class="px-6 lg:px-8 sm:min-h-[calc(100vh-100px-64px)] xl:min-h-[calc(100vh-100px-80px)]">
+    <div class="px-6 lg:px-8 sm:min-h-[calc(100vh-100px-64px)] xl:min-h-[calc(100vh-100px-80px)]" style="background-image: url('{{ asset('build/app/images/help.jpg') }}'); background-size: cover;">
         <div class="mx-auto max-w-2xl py-32 sm:py-48">
             <div class="hidden sm:mb-8 sm:flex sm:justify-center">
                 <div class="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                    Centre d'aide en ligne de Logilink
+                    Centre d'aide en ligne de <a href="https://logilink.fr" target="_blank" rel="external" class="font-medium hover:underline">Logilink</a>
                 </div>
             </div>
             <div class="text-center">
-                <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Comment puis-je vous aider ? 👋</h1>
-                <p class="mt-6 text-lg leading-8 text-gray-600">Accéder aux documentations, F.A.Q et tutoriels pour mieux comprendre comment fonctionne nos logiciels !</p>
+                <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Comment puis-je <span class="text-blue-500">vous</span> aider ? 👋</h1>
+                <p class="mt-6 text-lg leading-8 bg-white/80 p-2 rounded-md text-gray-600">Trouvez rapidement des réponses à toutes vos questions sur nos logiciels</p>
                 <div class="mt-10 flex items-center justify-center gap-x-6">
-                    <a href="{{ path('app_login') }}" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    <a href="{{ path('app_login') }}" class="rounded-md bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                         Accéder à mon espace
                     </a>
                 </div>
@@ -26,9 +26,9 @@
 
     <div class="px-6 lg:px-8 bg-gray-800 py-24">
         <div class="flex flex-col justify-center items-center">
-            <h2 class="text-4xl font-bold text-white">Produits ⚒️</h2>
+            <h2 class="text-4xl font-bold text-white">Nos solutions informatiques ⚒️</h2>
             <div class="text-gray-300">
-                Parcourez la documentation et les questions fréquentes de nos logiciels et webservices !
+                Optimisez votre utilisation avec nos meilleures pratiques !
             </div>
         </div>
 

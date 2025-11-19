@@ -4,7 +4,7 @@
 {% set page_subtitle %}Liste de nos produits avec un centre d'aide{% endset %}
 
 {% set page_actions %}
-    {% if app.user.admin %}
+    {% if app.user.isAdmin %}
         {% include 'layout/components/tailwind/buttons/button.html.twig' with {
             btn_link: path('user_help_product_create'),
             btn_type: 'blue',
