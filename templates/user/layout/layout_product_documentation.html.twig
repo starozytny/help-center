@@ -46,7 +46,7 @@
 
 {% set menu = menu | merge([
     {
-        name: "Documentation", dropdown: true,
+        name: "Documentations", dropdown: true,
         path: path('user_help_documentation_index', {p_slug: product.slug}),
         matchRoute: ['user_help_documentation_read', 'user_help_documentation_index', 'user_help_documentation_create', 'user_help_documentation_update'],
         items : menuDocumentations
