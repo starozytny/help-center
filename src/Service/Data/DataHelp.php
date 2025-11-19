@@ -81,7 +81,7 @@ class DataHelp
     {
         return ($obj)
             ->setUser($user)
-            ->setMessage($this->sanitizeData->trimData($data->message))
+            ->setMessage($this->sanitizeData->textareaValue($data->message))
         ;
     }
 

@@ -36,12 +36,15 @@ class CommentaryController extends AbstractController
         $type = $data->type;
         $obj = $dataEntity->setDataCommentary(new HeCommentary(), $data, $user);
 
+        $name = "";
         if($type == "documentation"){
             $reference = $documentationRepository->findOneBy(['id' => $data->referenceId]);
             $obj->setDocumentation($reference);
+            $name = $reference->getProduct()->getName() . " - " . $reference->getName();
         }else if($type == "tutorial"){
             $reference = $tutorialRepository->findOneBy(['id' => $data->referenceId]);
             $obj->setTutorial($reference);
+            $name = $reference->getProduct()->getName() . " - " . $reference->getName();
         }
 
         $noErrors = $validator->validate($obj);
@@ -53,10 +56,10 @@ class CommentaryController extends AbstractController
 
         if(!$mailerService->sendMail(
             [$settingsService->getEmailContact()],
-            "Commentaire en " . $type,
-            "Commentaire en " . $type,
+            "Commentaire en " . $type . " pour : " . $name,
+            "Commentaire en " . $type . " pour : " . $name,
             'app/email/help/commentary.html.twig',
-            ['type' => $type, 'elem' => $obj, 'settings' => $settingsService->getSettings()],
+            ['type' => $type, 'name' => $name, 'elem' => $obj, 'settings' => $settingsService->getSettings()],
         )) {
             return $apiResponse->apiJsonResponseValidationFailed([[
                 'name' => 'to',
