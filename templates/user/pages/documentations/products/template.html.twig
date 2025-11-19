@@ -48,7 +48,7 @@
         </div>
         {% if elem.pdfFile %}
             {% if ".pdf" in elem.pdfFile %}
-                <iframe src="{{ elem.pdfFile }}" class="w-full h-full min-h-96 bg-white"></iframe>
+                <iframe src="{{ elem.pdfFile }}" class="w-full h-full min-h-screen bg-white"></iframe>
             {% elseif ".jpg" in elem.pdfFile or ".png" in elem.pdfFile or ".jpeg" in elem.pdfFile %}
                 <img src="{{ elem.pdfFile }}" class="w-full h-full bg-white" alt="image" />
             {% else %}
