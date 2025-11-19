@@ -11,15 +11,15 @@
     {% include "layout/components/page-loader.html.twig" %}
 
     <div id="body-content" class="relative overflow-hidden">
-        <nav class="relative z-20">
+        <nav class="relative bg-gray-900 z-20">
             <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
                 <div class="flex h-16 xl:h-20 items-center justify-between">
                     <div class="w-full flex items-center justify-between">
                         <a href="{{ path('app_homepage') }}" class="flex flex-shrink-0 items-center">
                             <img class="h-8 w-auto" src="{{ asset('build/app/images/logo.png') }}" alt="Logilink centre d'aide">
                         </a>
-                        <div>
-                            Centre d'aide en ligne de <span class="font-semibold">Logilink</span>
+                        <div class="text-slate-50">
+                            Centre d'aide en ligne de <a href="https://logilink.fr" target="_blank" rel="external" class="font-semibold hover:underline">Logilink</a>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
         </nav>
 
         <div style="background-image: url('{{ asset('build/app/images/help.jpg') }}'); background-size: cover;">
-            <main class="relative z-10 {{ main_class is defined ? main_class : "mx-auto max-w-screen-2xl sm:min-h-[calc(100vh-100px-64px)] xl:min-h-[calc(100vh-100px-80px)] p-4 lg:p-8" }}">
+            <main class="relative z-10 {{ main_class is defined ? main_class : "mx-auto max-w-screen-2xl min-h-[calc(100vh-212px-64px)] sm:min-h-[calc(100vh-100px-64px)] xl:min-h-[calc(100vh-100px-80px)] p-4 lg:p-8" }}">
                 {% block main_content %}{% endblock %}
             </main>
         </div>

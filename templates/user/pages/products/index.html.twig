@@ -6,7 +6,7 @@
 {% set page_actions %}
     {% if app.user.isAdmin %}
         {% include 'layout/components/tailwind/buttons/button.html.twig' with {
-            btn_link: path('user_help_product_create'),
+            btn_link: path('admin_products_create'),
             btn_type: 'blue',
             btn_icon: 'add',
             btn_text: 'Ajouter un produit'

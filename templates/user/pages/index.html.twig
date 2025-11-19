@@ -8,67 +8,14 @@
         <div class="flex flex-col gap-2">
             <div>
                 {% include 'layout/components/tailwind/buttons/button.html.twig' with {
-                    btn_link: path('user_help_product_create'),
+                    btn_link: path('admin_products_create'),
                     btn_type: 'blue',
                     btn_icon: 'add',
                     btn_text: 'Ajouter un produit'
                 } %}
             </div>
             <div class="flex flex-col gap-4 md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-
-                {% for elem in products %}
-                    <div class="bg-white border rounded-md">
-                        <div class="flex gap-4 items-center p-4 min-h-32">
-                            <a class="w-16 h-16 bg-gray-200 rounded-md p-2 flex justify-center items-center"
-                               href="{{ path('user_help_product_read', {slug: elem.slug}) }}">
-                                <img src="{{ asset(elem.logoFile) }}" alt="Logo {{ elem.name }}">
-                            </a>
-                            <div>
-                                {% if is_granted('ROLE_ADMIN') %}
-                                    <div class="text-xs text-gray-600">UID: {{ elem.uid }}</div>
-                                {% endif %}
-                                <a class="font-semibold text-lg" href="{{ path('user_help_product_read', {slug: elem.slug}) }}">
-                                    {{ elem.name }}
-                                </a>
-                                {% if elem.url %}
-                                    <div>
-                                        <a href="https://{{ elem.url }}" title="{{ elem.url }}" target="_blank" class="text-sm text-blue-500 hover:underline">
-                                            <span class="pr-1">{{ elem.url }}</span>
-                                            <span class="icon-link-2 !text-sm"></span>
-                                        </a>
-                                    </div>
-                                {% endif %}
-                                {% if elem.intern %}
-                                    <div>
-                                        {% include "layout/components/tailwind/badges/badge.html.twig" with {
-                                            badge_type: "red",
-                                            badge_text: "Interne"
-                                        } %}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        {% if app.user and app.user.isAdmin %}
-                            <div class="p-2 border-t grid grid-cols-3 text-center divide-x">
-                                <a href="{{ path('user_help_product_update', {slug: elem.slug}) }}"
-                                   class="text-sm underline cursor-pointer hover:text-gray-700">
-                                    Modifier
-                                </a>
-                                <a href="{{ path('user_help_changelogs_index', {p_slug: elem.slug}) }}"
-                                   class="text-sm underline cursor-pointer hover:text-gray-700">
-                                    Changelogs
-                                </a>
-                                <div class="delete-product"
-                                     data-id="{{ elem.id }}"
-                                     data-name="{{ elem.name }}"
-                                >
-                                    <div class="text-sm underline cursor-not-allowed hover:text-gray-700">Supprimer</div>
-                                </div>
-                            </div>
-                        {% endif %}
-                    </div>
-                {% endfor %}
+                {% include "user/pages/products/components/products_light.html.twig" %}
             </div>
         </div>
     {% else %}

@@ -4,7 +4,6 @@ namespace App\Controller\User;
 
 use App\Entity\Enum\Help\HelpStatut;
 use App\Entity\Main\Help\HeCategory;
-use App\Entity\Main\Help\HeProduct;
 use App\Entity\Main\Help\HeQuestion;
 use App\Entity\Main\User;
 use App\Repository\Main\Help\HeDocumentationRepository;
@@ -89,27 +88,6 @@ class ProductController extends AbstractController
             'docs' => $documentations,
             'tutorials' => $tutorials,
             'canRead' => in_array($obj->getId(), $user->getAccess()) || ($this->isGranted('ROLE_ADMIN') && $obj->isIntern() || $this->isGranted("ROLE_ADMIN"))
-        ]);
-    }
-
-    #[Route('/ajouter', name: 'product_create')]
-    #[IsGranted('ROLE_ADMIN')]
-    public function productCreate(): Response
-    {
-        return $this->render('user/pages/products/create.html.twig');
-    }
-
-    #[Route('/modifier/{slug}', name: 'product_update')]
-    #[IsGranted('ROLE_ADMIN')]
-    public function productUpdate($slug, HeProductRepository $productRepository, SerializerInterface $serializer): Response
-    {
-        $obj = $productRepository->findOneBy(['slug' => $slug]);
-
-        $element = $serializer->serialize($obj, 'json', ['groups' => HeProduct::FORM]);
-
-        return $this->render('user/pages/products/update.html.twig', [
-            'elem' => $obj,
-            'element' => $element,
         ]);
     }
 

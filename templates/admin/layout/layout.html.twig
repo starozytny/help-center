@@ -19,6 +19,11 @@
         matchRoute: ['admin_users_index', 'admin_users_create', 'admin_users_update', 'admin_users_read', 'admin_users_password']
     },
     {
+        name: "Produits", icon: "book",
+        path: path('admin_products_index'),
+        matchRoute: ['admin_products_index', 'admin_products_create', 'admin_products_update']
+    },
+    {
         name: "Changelogs", icon: "refresh1",
         path: path('admin_changelogs_index'),
         matchRoute: ['admin_changelogs_index', 'admin_changelogs_create', 'admin_changelogs_update']
@@ -69,15 +74,15 @@
 ] %}
 
 {% block footer %}
-    <div class="bg-white px-4 py-8 sm:px-6 lg:px-8">
+    <div class="bg-black/90 px-4 py-8 text-sm sm:px-6 lg:px-8">
         <div class="mx-auto max-w-screen-2xl pt-4 flex flex-col text-center lg:flex-row lg:text-left gap-2 justify-center">
-            <p>&copy; 2024 - <a href="https://logilink.fr" class="text-blue-600">Logilink.fr</a></p>
-            <span>-</span>
-            <a class="text-gray-600 hover:text-gray-900" href="{{ path('app_mentions') }}">Mentions légales</a>
-            <a class="text-gray-600 hover:text-gray-900" href="{{ path('app_politique') }}">Politique de confidentialité</a>
-            <a class="text-gray-600 hover:text-gray-900" href="{{ path('app_cookies') }}">Gestion des cookies</a>
+            <p class="text-gray-300">&copy; 2024 - <a href="https://logilink.fr" class="text-blue-600">Logilink.fr</a></p>
+            <span class="text-gray-300">-</span>
+            <a class="text-gray-300 hover:text-white" href="{{ path('app_mentions') }}">Mentions légales</a>
+            <a class="text-gray-300 hover:text-white" href="{{ path('app_politique') }}">Politique de confidentialité</a>
+            <a class="text-gray-300 hover:text-white" href="{{ path('app_cookies') }}">Gestion des cookies</a>
             {% if is_granted('ROLE_ADMIN') %}
-                <a class="text-gray-600 hover:text-gray-900" href="{{ path('admin_homepage') }}">Espace administrateur</a>
+                <a class="text-gray-300 hover:text-white" href="{{ path('admin_homepage') }}">Espace administrateur</a>
             {% endif %}
         </div>
     </div>
