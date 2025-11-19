@@ -1,11 +1,11 @@
-{% extends 'user/pages/products/template.html.twig' %}
+{% extends 'admin/pages/products/template.html.twig' %}
 
 {% set page_title %}Création d'un produit{% endset %}
 {% set page_subtitle %}Créez une page spécifique pour un produit.{% endset %}
 
 {% set page_actions %}
     {% include 'layout/components/tailwind/buttons/button.html.twig' with {
-        btn_link: path('user_help_products_index'),
+        btn_link: path('admin_products_index'),
         btn_type: 'default',
         btn_icon: 'left-arrow',
         btn_text: 'Retourner à la liste'
@@ -14,6 +14,6 @@
 
 {% block main_content %}
     <div id="products_create">
-        {% include "layout/components/loader.html.twig" %}
+        {% include "layout/components/tailwind/loaders/loader.html.twig" %}
     </div>
 {% endblock %}

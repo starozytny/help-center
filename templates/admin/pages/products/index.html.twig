@@ -1,0 +1,24 @@
+{% extends 'admin/pages/products/template.html.twig' %}
+
+{% set page_title %}Produits{% endset %}
+{% set page_subtitle %}Liste de nos produits{% endset %}
+
+{% set page_actions %}
+    {% include 'layout/components/tailwind/buttons/button.html.twig' with {
+        btn_link: path('admin_products_create'),
+        btn_type: 'blue',
+        btn_icon: 'add',
+        btn_text: 'Ajouter un produit'
+    } %}
+{% endset %}
+
+{% block main_content %}
+    <div class="flex flex-col gap-4 md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+        {% include "user/pages/products/components/products_light.html.twig" %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('user_homepage') }}
+{% endblock %}
